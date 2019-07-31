@@ -11,8 +11,9 @@ else
       path="./resources/clients/$client"
       if [ -d $path ]
       then
-            echo "Copy files for client $client..."
-            cp -r $path ./src
+            echo "Copy resources for client $client..."
+            cp -r $path/* ./src
+            echo "finished copying client resources"
       else
             echo "Directory $path DOES NOT exists!"
       fi
