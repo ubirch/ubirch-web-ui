@@ -1,15 +1,18 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
-/** Ionic CSS Variables **/
+/* Set variables for all modes */
 :root {
+  /* Set the font family of the entire app */
+  --ion-font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
+
   /** primary **/
-  --ion-color-primary: #3880ff;
-  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary: #222222;
+  --ion-color-primary-rgb: 34,34,34;
   --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #1e1e1e;
+  --ion-color-primary-tint: #383838;
 
   /** secondary **/
   --ion-color-secondary: #0cd1e8;
@@ -74,4 +77,19 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  ion-fab{
+    ion-fab-button{
+      --border-width : 1px;
+    }
+  }
+}
+
+/* Set text color of the entire app for iOS only */
+.ios {
+
+}
+
+/* Set text color of the entire app for Material Design only */
+.md {
 }

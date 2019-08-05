@@ -21,6 +21,7 @@ export const environment = {
   client_description_filename: 'description.md',
   client_favicon_filename: 'favicon.ico',
   client_name: 'ubirch GmbH',
+  add_client_name_to_logo: true,
   keycloak: keycloakConfig
 };
 

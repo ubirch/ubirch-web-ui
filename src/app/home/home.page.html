@@ -3,15 +3,21 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      uBirch GmbH
-    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)='openClientUrl()'>
+        <img [src]="clientLogoPath" class="logo">
+        <ng-container *ngIf="addClientNameToLogo">
+          {{clientName}}
+        </ng-container>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)='doLogout()'>
+        <ion-icon slot="start" name="close-circle"></ion-icon>
+        Logout
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
-  <ion-fab vertical="bottom" horizontal="end">
-    <ion-fab-button (click)='doLogout()'>
-      <ion-icon name="close-circle"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-header>
 
 <ion-content>
@@ -19,7 +25,7 @@
     <ion-row class="ion-align-items-center">
       <ion-col>
         <div>
-          <img src="/assets/images/uBirch_Logo.jpg" alt="" />
+          <img [src]="clientStartImgPath" [alt]="clientName" />
         </div>
       </ion-col>
       <ion-col>
@@ -27,7 +33,7 @@
           <ion-card-header>
           </ion-card-header>
           <ion-card-content>
-            <markdown [src]="'/assets/md/description.md'" (load)="onLoad($event)" (error)="onError($event)"></markdown>
+            <markdown [src]="clientDescriptionPath" (load)="onLoad($event)" (error)="onError($event)"></markdown>
           </ion-card-content>
         </div>
       </ion-col>

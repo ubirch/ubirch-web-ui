@@ -16,6 +16,7 @@ export const environment = {
   client_description_filename: 'description.md',
   client_favicon_filename: 'favicon.ico',
   client_name: '<CLIENT_NAME_FOR_HEADER>',
+  add_client_name_to_logo: true,
   keycloak: keycloakConfig
 };
 
