@@ -11,5 +11,10 @@ const keycloakConfig: KeycloakConfig = {
 
 export const environment = {
   production: true,
+  client_logo_filename: 'UBIRCH_Bildmarke_black.svg',
+  client_startpage_image_filename: 'UBIRCH_Wort_Bildmarke_black.svg',
+  client_description_filename: 'description.md',
+  client_favicon_filename: 'favicon.ico',
+  client_name: 'ubirch GmbH',
   keycloak: keycloakConfig
 };

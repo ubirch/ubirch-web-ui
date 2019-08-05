@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
 import {initializer} from './utils/app-init';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {MarkdownModule} from 'ngx-markdown';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +20,9 @@ import {initializer} from './utils/app-init';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    HttpClientModule,
+    MarkdownModule.forRoot({ loader: HttpClient })
   ],
   providers: [
     StatusBar,

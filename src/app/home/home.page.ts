@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {KeycloakService} from 'keycloak-angular';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,18 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(
+      private keycloakService: KeycloakService ) { }
 
+  doLogout() {
+    this.keycloakService.logout();
+  }
+
+  onLoad(event) {
+    console.log('client description loaded');
+  }
+
+  onError(event) {
+    console.log('Error loading client description');
+  }
 }

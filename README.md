@@ -12,6 +12,33 @@
 
 * [Node.js](https://nodejs.org/)
 
+## Preparation for Different Clients
+
+For each client create a folder with the clients name in the ./resources/clients folder with the following structure:
+
+  > 
+    > environments
+         > environment.ts
+         > environment.prod.ts
+    > assets
+         > icon
+              > favicon.ico
+         > images
+              > logo.svg
+              > start_img.svg
+         > md
+              > description.md
+    > theme
+         > variables.scss
+
+If you name the files differently, you have to add the filenames in the properties in environment.ts and environment.prod.ts.
+
+Run preprocessor shell script to copy environment files, assets - images, icon,... - and the theme folder 
+from resources folder to src folder (as a preparation to serve, build or deploy the project):
+
+```
+    ./preprocess4client.sh <CLIENT_NAME>
+```
 
 ## Run App locally
 
