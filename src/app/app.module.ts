@@ -14,7 +14,9 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MarkdownModule} from 'ngx-markdown';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -22,12 +24,12 @@ import {MarkdownModule} from 'ngx-markdown';
     AppRoutingModule,
     KeycloakAngularModule,
     HttpClientModule,
-    MarkdownModule.forRoot({ loader: HttpClient })
+    MarkdownModule.forRoot({loader: HttpClient})
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     {
       provide: APP_INITIALIZER,
       useFactory: initializer,
@@ -35,6 +37,7 @@ import {MarkdownModule} from 'ngx-markdown';
       deps: [KeycloakService]
     }
   ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

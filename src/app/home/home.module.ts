@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import {MarkdownModule} from 'ngx-markdown';
+import {ComponentsModule} from '../components/components.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {MarkdownModule} from 'ngx-markdown';
         component: HomePage
       }
     ]),
-    MarkdownModule.forChild()
+    MarkdownModule.forChild(),
+    ComponentsModule
   ],
   declarations: [HomePage]
 })
