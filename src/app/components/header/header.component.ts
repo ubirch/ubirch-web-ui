@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {KeycloakService} from 'keycloak-angular';
 import {environment} from '../../../environments/environment';
 
 @Component({
@@ -9,9 +8,7 @@ import {environment} from '../../../environments/environment';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(
-      private keycloakService: KeycloakService
-  ) { }
+  constructor() { }
 
   clientName = environment.client_name || 'Mandant';
   addClientNameToLogo = environment.client_name || false;
@@ -20,10 +17,6 @@ export class HeaderComponent implements OnInit {
   clientLogoPath = '/assets/images/' + this.clientLogoFileName;
 
   ngOnInit() {}
-
-  doLogout() {
-    this.keycloakService.logout();
-  }
 
   openClientUrl() {
     console.log('Open Client Url not yet implemented!');

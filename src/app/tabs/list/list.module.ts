@@ -4,9 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
-import { HomePage } from './home.page';
-import {MarkdownModule} from 'ngx-markdown';
-import {ComponentsModule} from '../components/components.module';
+import { ListPage } from './list.page';
+import {ComponentsModule} from '../../components/components.module';
 
 @NgModule({
   imports: [
@@ -16,12 +15,11 @@ import {ComponentsModule} from '../components/components.module';
     RouterModule.forChild([
       {
         path: '',
-        component: HomePage
+        component: ListPage
       }
     ]),
-    MarkdownModule.forChild(),
     ComponentsModule
   ],
-  declarations: [HomePage]
+  declarations: [ListPage]
 })
-export class HomePageModule {}
+export class ListPageModule {}
