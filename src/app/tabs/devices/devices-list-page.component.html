@@ -1,0 +1,16 @@
+<ubirch-web-ui-header></ubirch-web-ui-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of deviceStubs">
+      <ng-container *ngIf="item.deviceType">
+        <ion-icon *ngIf="item.deviceType.iconFileName" [src]="item.deviceType.iconFileName" slot="start"></ion-icon>
+        <ion-icon *ngIf="!item.deviceType.iconFileName && item.deviceType.iconId" [name]="item.deviceType.iconId" slot="start"></ion-icon>
+      </ng-container>
+      {{item.description}}
+      <div class="item-note" slot="end">
+        {{item.hwDeviceId}}
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

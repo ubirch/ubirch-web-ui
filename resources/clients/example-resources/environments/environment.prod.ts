@@ -17,5 +17,8 @@ export const environment = {
   client_favicon_filename: 'favicon.ico',
   client_name: '<CLIENT_NAME_FOR_HEADER>',
   add_client_name_to_logo: true,
-  keycloak: keycloakConfig
+  keycloak: keycloakConfig,
+  default_device_type: 'unknownDeviceType',
+  POLLING_INTERVAL_MILLISECONDS: 2500,
+  LIST_ITEMS_PER_PAGE: 10
 };

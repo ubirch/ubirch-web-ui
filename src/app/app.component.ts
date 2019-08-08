@@ -13,13 +13,13 @@ import {KeycloakService} from 'keycloak-angular';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
+      title: 'Startseite',
       url: '/home',
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
+      title: 'Devices',
+      url: '/list-devices',
       icon: 'list'
     }
   ];

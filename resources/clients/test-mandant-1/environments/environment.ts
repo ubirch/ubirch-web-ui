@@ -22,7 +22,10 @@ export const environment = {
   client_favicon_filename: 'favicon.ico',
   client_name: 'ubirch GmbH',
   add_client_name_to_logo: true,
-  keycloak: keycloakConfig
+  keycloak: keycloakConfig,
+  default_device_type: 'unknownDeviceType',
+  POLLING_INTERVAL_MILLISECONDS: 60000,
+  LIST_ITEMS_PER_PAGE: 10
 };
 
 /*

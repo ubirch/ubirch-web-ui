@@ -32,4 +32,6 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-/src/assets/
+/src/assets/client/
+/src/environments/
+/src/theme/variables.scss

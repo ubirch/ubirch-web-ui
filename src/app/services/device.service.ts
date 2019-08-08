@@ -1,0 +1,57 @@
+import { Injectable } from '@angular/core';
+import {DeviceStub} from '../models/device-stub';
+import {Observable, of} from 'rxjs';
+import {Device} from '../models/device';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DeviceService {
+
+    private inputs: any[] = [];
+    private devices: Device[] = [];
+    private stubs: Device[] = [];
+
+  constructor() {
+    this.inputs.push({
+        id: '7895ef02-e735-4d60-9405-8907afd16a1c',
+        hwDeviceId: '5c38ea3f-a2c7-47b7-811a-1a8f980e9364',
+        description: 'Ates Testdevice 1',
+        deviceType: '{"key": "testSensor","name": { "de": "Testsensor","en": "test sensor"}, "iconId": "happy"}',
+        owner: {
+          id: 'd489eaf0-268b-4336-9e9d-daea62c5d0ac',
+          username: 'testuser',
+          lastname: 'Testa',
+          firstname: 'Rosa'
+        },
+        groups: [],
+        deviceConfig: '{"i": 900,"th": 3600}',
+        apiConfig: '{"url": "https://test.test.de","password": "802921c2-a2e7-4d8f-b828-1c5aee2d3c38"}'
+      });
+    this.inputs.push({
+          id: '562237ce-da95-4a8f-9772-bd4ca119cfc5',
+          hwDeviceId: 'c1e7b024-7314-4785-ab7a-dea0185256a9',
+          description: 'Ates Testdevice 2',
+          deviceType: '{"key":"lightSensor","name":{"de":"Helligkeitssensor","en":"light sensor"},' +
+              '"iconFileName":"ion-sensor-type-light.svg"}',
+          owner: {
+              id: 'd489eaf0-268b-4336-9e9d-daea62c5d0ac',
+              username: 'testuser',
+              lastname: 'Testa',
+              firstname: 'Rosa'
+          },
+          groups: [],
+          deviceConfig: '{"i": 300,"th": 2500}',
+          apiConfig: '{"url": "https://test.test.de","password": "802921c2-a2e7-4d8f-b828-1c5aee2d3c38"}'
+    });
+  }
+
+  public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DeviceStub[]> {
+      return of(this.inputs.map(item => new DeviceStub(item)));
+  }
+
+  public updateDevice(device: Device): Observable<Device> {
+      // TODO: before sending a device stringify every property that is here an object but a string on the other side
+      return of(null);
+  }
+}

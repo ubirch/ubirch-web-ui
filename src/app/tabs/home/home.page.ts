@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {KeycloakService} from 'keycloak-angular';
 import {environment} from '../../../environments/environment';
 
 @Component({
@@ -13,10 +12,10 @@ export class HomePage {
   ) { }
 
   clientStartImgFileName = environment.client_startpage_image_filename || 'start_img.svg';
-  clientStartImgPath = '/assets/images/' + this.clientStartImgFileName;
+  clientStartImgPath = '/assets/client/images/' + this.clientStartImgFileName;
 
   clientDescriptionFileName = environment.client_description_filename || 'description.md';
-  clientDescriptionPath = '/assets/md/' + this.clientDescriptionFileName;
+  clientDescriptionPath = '/assets/client/md/' + this.clientDescriptionFileName;
 
 
   onLoad(event) {

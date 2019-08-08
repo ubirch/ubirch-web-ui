@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   addClientNameToLogo = environment.client_name || false;
 
   clientLogoFileName = environment.client_logo_filename || 'logo.svg';
-  clientLogoPath = '/assets/images/' + this.clientLogoFileName;
+  clientLogoPath = '/assets/client/images/' + this.clientLogoFileName;
 
   ngOnInit() {}
 

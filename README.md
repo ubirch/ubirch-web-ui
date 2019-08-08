@@ -23,15 +23,27 @@ For each client create a folder with the clients name in the ./resources/clients
     > assets
          > icon
               > favicon.ico
+              > ... add device type icon files here if you wanna use them
          > images
               > logo.svg
               > start_img.svg
          > md
               > description.md
     > theme
-         > variables.scss
+         > client_style.scss
 
 If you name the files differently, you have to add the filenames in the properties in environment.ts and environment.prod.ts.
+
+### Adding your own deviceType icons
+
+There are two possibilities:
+
+1. You can use any ionicon from: https://ionicons.com 
+ -> you add the name of the ionicon to the property "iconId" of the device type
+
+2. You can add your own svg icon
+ -> add the icon into your resources folder under "assets/icons/" 
+and add the filename to the property "iconFileName" of the device type
 
 Run preprocessor shell script to copy environment files, assets - images, icon,... - and the theme folder 
 from resources folder to src folder (as a preparation to serve, build or deploy the project):

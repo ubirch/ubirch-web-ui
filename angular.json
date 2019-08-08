@@ -33,7 +33,7 @@
             ],
             "styles": [
               {
-                "input": "src/theme/variables.scss"
+                "input": "src/theme/client_style.scss"
               },
               {
                 "input": "src/global.scss"

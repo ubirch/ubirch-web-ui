@@ -12,8 +12,8 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/home/home.module').then(m => m.HomePageModule)
   },
   {
-    path: 'list',
-    loadChildren: () => import('./tabs/list/list.module').then(m => m.ListPageModule)
+    path: 'list-devices',
+    loadChildren: () => import('./tabs/devices/devices.module').then(m => m.ListPageModule)
   }
 ];
 
