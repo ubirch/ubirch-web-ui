@@ -19,6 +19,7 @@ export class DevicesListPage implements OnInit {
   // pagination params
   totalItems: number;
   currentPage = 1;
+  ionite: string;
 
   constructor(
       private deviceService: DeviceService

@@ -12,6 +12,7 @@ import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
 import {initializer} from './utils/app-init';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MarkdownModule} from 'ngx-markdown';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {MarkdownModule} from 'ngx-markdown';
     AppRoutingModule,
     KeycloakAngularModule,
     HttpClientModule,
-    MarkdownModule.forRoot({loader: HttpClient})
+    MarkdownModule.forRoot({loader: HttpClient}),
+    BrowserAnimationsModule
   ],
   providers: [
     StatusBar,
