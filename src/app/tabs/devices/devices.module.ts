@@ -4,9 +4,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
-import { DevicesListPage } from './devices-list-page.component';
+import { DevicesListPage } from './devices-list-page/devices-list-page.component';
 import {ComponentsModule} from '../../components/components.module';
 import {MaterialModule} from '../../components/material-components/material.module';
+import {DeviceDetailsComponent} from './device-details/device-details.component';
 
 @NgModule({
   imports: [
@@ -18,11 +19,27 @@ import {MaterialModule} from '../../components/material-components/material.modu
     RouterModule.forChild([
       {
         path: '',
+        redirectTo: 'list',
+        pathMatch: 'full'
+      },
+      {
+        path: 'list',
         component: DevicesListPage
+      },
+      {
+        path: 'details',
+        children: [
+          {
+            path: ':id',
+            component: DeviceDetailsComponent
+          }]
       }
     ]),
     ComponentsModule
   ],
-  declarations: [DevicesListPage]
+  declarations: [
+      DevicesListPage,
+    DeviceDetailsComponent
+  ]
 })
 export class ListPageModule {}

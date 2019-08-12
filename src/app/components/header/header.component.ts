@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {environment} from '../../../environments/environment';
 
 @Component({
@@ -7,6 +7,7 @@ import {environment} from '../../../environments/environment';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Input() defaultHref: string = undefined;
 
   constructor() { }
 

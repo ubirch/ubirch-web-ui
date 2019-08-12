@@ -19,7 +19,7 @@ export class AppComponent {
     },
     {
       title: 'Devices',
-      url: '/list-devices',
+      url: '/devices',
       icon: 'list'
     }
   ];

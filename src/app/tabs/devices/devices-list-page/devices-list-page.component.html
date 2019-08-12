@@ -2,7 +2,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let item of deviceStubs">
+    <ion-item *ngFor="let item of deviceStubs" [routerLink]="['../details', item.hwDeviceId]">
       <ng-container *ngIf="item.deviceType">
         <button mat-icon-button
                 [matTooltip]="item.deviceType.name['de']">

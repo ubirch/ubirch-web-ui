@@ -1,15 +1,16 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button [defaultHref]="defaultHref"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
       <ion-button (click)='openClientUrl()'>
         <img [src]="clientLogoPath" class="logo">
         <ng-container *ngIf="addClientNameToLogo">
           {{clientName}}
         </ng-container>
       </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

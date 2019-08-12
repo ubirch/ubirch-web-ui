@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {DeviceStub} from '../../models/device-stub';
-import {DeviceService} from '../../services/device.service';
+import {DeviceStub} from '../../../models/device-stub';
+import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-list',

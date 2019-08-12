@@ -12,7 +12,7 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/home/home.module').then(m => m.HomePageModule)
   },
   {
-    path: 'list-devices',
+    path: 'devices',
     loadChildren: () => import('./tabs/devices/devices.module').then(m => m.ListPageModule)
   }
 ];
