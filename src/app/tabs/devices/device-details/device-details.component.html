@@ -1,5 +1,10 @@
 <ubirch-web-ui-header defaultHref="devices"></ubirch-web-ui-header>
 
-<p>
-  device-details works!
-</p>
+<ng-container *ngIf="curDevice">
+  <p>hwDeviceId: {{curDevice.hwDeviceId}}</p>
+  <p>description: {{curDevice.description}}</p>
+  <p>deviceType: {{curDevice.deviceType.name['de']}}</p>
+  <p>Owner: {{curDevice.owner.firstname}} {{curDevice.owner.lastname}}</p>
+  <p>APIConfig: {{curDevice.apiConfig}}</p>
+  <p>deviceConfig: {{curDevice.deviceConfig}}</p>
+</ng-container>

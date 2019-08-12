@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {DeviceService} from '../../../services/device.service';
+import {Device} from '../../../models/device';
 
 @Component({
   selector: 'app-device-details',
@@ -8,13 +10,21 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class DeviceDetailsComponent implements OnInit {
 
+  curDevice: Device;
   constructor(
-      private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private deviceService: DeviceService
   ) { }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    console.log(`Loded id: ${id}`);
+    if (id) {
+      this.deviceService.loadDevice(id)
+        .subscribe(
+            loadedDevice => this.curDevice = new Device(loadedDevice)
+        );
+    } else {
+      // TODO: handle url missmatch!!!!
+    }
   }
-
 }

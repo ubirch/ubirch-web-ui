@@ -50,6 +50,14 @@ export class DeviceService {
       return of(this.inputs.map(item => new DeviceStub(item)));
   }
 
+  public loadDevice(id: string): Observable<Device> {
+      const foundDevices = this.inputs.filter(device => device.hwDeviceId === id );
+      if (foundDevices && foundDevices[0]) {
+          return of(foundDevices[0]);
+      }
+      return of(null);
+  }
+
   public updateDevice(device: Device): Observable<Device> {
       // TODO: before sending a device stringify every property that is here an object but a string on the other side
       return of(null);
