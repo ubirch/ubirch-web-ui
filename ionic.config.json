@@ -1,5 +1,7 @@
 {
   "name": "ubirch-web-ui",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

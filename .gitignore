@@ -35,3 +35,5 @@ UserInterfaceState.xcuserstate
 /src/assets/client/
 /src/environments/
 /src/theme/variables.scss
+/resources/android/
+/resources/ios/

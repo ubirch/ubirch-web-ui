@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatButtonModule, MatFormFieldModule, MatSelectModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material';
 import {MatTooltipModule} from '@angular/material';
 
 
@@ -11,9 +11,7 @@ import {MatTooltipModule} from '@angular/material';
     CommonModule
   ],
   exports: [
-    MatSelectModule,
     MatButtonModule,
-    MatFormFieldModule,
     MatTooltipModule
   ]
 })
