@@ -4,7 +4,6 @@ import {isArray} from 'util';
 import {DeviceType} from './device-type';
 
 export class Device {
-    public id: string;
     public hwDeviceId: string;
     public description: string;
     public deviceType: DeviceType;
@@ -17,7 +16,6 @@ export class Device {
         if (!jsonDevice || !jsonDevice.id) {
             throw new Error(`device constructor call without proper device data: ${jsonDevice}`);
         } else {
-            this.id = jsonDevice.id;
             this.hwDeviceId = jsonDevice.hwDeviceId;
             this.description = jsonDevice.description || '';
             this.deviceType = new DeviceType(jsonDevice.deviceType);

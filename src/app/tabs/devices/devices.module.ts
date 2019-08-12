@@ -13,6 +13,7 @@ import {DeviceDetailsComponent} from './device-details/device-details.component'
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     MaterialModule,
     ReactiveFormsModule,

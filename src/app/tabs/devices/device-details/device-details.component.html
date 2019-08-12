@@ -1,10 +1,24 @@
 <ubirch-web-ui-header defaultHref="devices"></ubirch-web-ui-header>
 
-<ng-container *ngIf="curDevice">
-  <p>hwDeviceId: {{curDevice.hwDeviceId}}</p>
-  <p>description: {{curDevice.description}}</p>
-  <p>deviceType: {{curDevice.deviceType.name['de']}}</p>
-  <p>Owner: {{curDevice.owner.firstname}} {{curDevice.owner.lastname}}</p>
-  <p>APIConfig: {{curDevice.apiConfig}}</p>
-  <p>deviceConfig: {{curDevice.deviceConfig}}</p>
+<ng-container *ngIf="id">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Device Details of</ion-card-subtitle>
+      <ion-card-title>{{id}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="deviceDetailsForm">
+        <ion-item>
+          <ion-label>hwDeviceId:</ion-label>
+          <ion-input formControlName="hwDeviceId" readonly></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>description:</ion-label>
+          <ion-input formControlName="description"></ion-input>
+        </ion-item>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
 </ng-container>

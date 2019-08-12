@@ -1,7 +1,6 @@
 import {DeviceType} from './device-type';
 
 export class DeviceStub {
-    public id: string;
     public hwDeviceId: string;
     public description: string;
     public deviceType: DeviceType;
@@ -10,7 +9,6 @@ export class DeviceStub {
         if (!jsonDevice || !jsonDevice.id) {
             throw new Error(`DeviceStub constructor call without proper device data: ${jsonDevice}`);
         } else {
-            this.id = jsonDevice.id;
             this.hwDeviceId = jsonDevice.hwDeviceId;
             this.description = jsonDevice.description || '';
             this.deviceType = new DeviceType(jsonDevice.deviceType);
