@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {DeviceService} from '../../../services/device.service';
 import {Device} from '../../../models/device';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-device-details',
@@ -17,7 +18,8 @@ export class DeviceDetailsComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private fb: FormBuilder,
-      private deviceService: DeviceService
+      private deviceService: DeviceService,
+      public toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -65,8 +67,21 @@ export class DeviceDetailsComponent implements OnInit {
     });
   }
 
+  async changeDeviceType() {
+    const toast = await this.toastController.create({
+      message: 'Sorry, changing device type not yet implemented...',
+      duration: 4000,
+      color: 'warning'
+    });
+    toast.present();
+  }
+
   private getPrettyJSON(json: string): string {
     return JSON.stringify(JSON.parse(json), null, 2);
+  }
+
+  get deviceType(): any {
+    return this.deviceDetailsForm.get('deviceType').value;
   }
 
   get deviceConfig(): any {

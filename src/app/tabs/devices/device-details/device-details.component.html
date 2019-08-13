@@ -10,19 +10,32 @@
     <ion-card-content>
       <form [formGroup]="deviceDetailsForm">
         <ion-item>
-          <ion-label>hwDeviceId:</ion-label>
+          <ion-label slot="start">hwDeviceId:</ion-label>
           <ion-input formControlName="hwDeviceId" readonly color="medium"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>description:</ion-label>
+          <ion-label slot="start">description:</ion-label>
           <ion-input formControlName="description"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>deviceConfig:</ion-label>
+          <ion-label slot="start">deviceType:</ion-label>
+            <ng-container *ngIf="deviceType">
+                <ion-icon *ngIf="deviceType.iconFileName" [src]="deviceType.iconFileName" slot="start"></ion-icon>
+                <ion-icon *ngIf="!deviceType.iconFileName && deviceType.iconId" [name]="deviceType.iconId" slot="start"></ion-icon>
+                {{deviceType.name['de']}}
+            </ng-container>
+            <ion-button size="small" slot="end" (click)="changeDeviceType()">
+                <ion-icon name="create" slot="start"></ion-icon>
+                change Type
+            </ion-button>
+
+        </ion-item>
+        <ion-item>
+          <ion-label slot="start">deviceConfig:</ion-label>
           <ion-textarea formControlName="deviceConfig"></ion-textarea>
         </ion-item>
         <ion-item>
-          <ion-label>apiConfig:</ion-label>
+          <ion-label slot="start">apiConfig:</ion-label>
           <ion-textarea formControlName="apiConfig" class="config-input"></ion-textarea>
         </ion-item>
       </form>
