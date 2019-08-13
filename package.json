@@ -27,6 +27,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.7.1",
     "cordova-android": "^8.0.0",
+    "cordova-ios": "^5.0.1",
     "core-js": "^2.5.4",
     "keycloak-angular": "^7.0.1",
     "keycloak-js": "^4.5.0",
@@ -80,7 +81,8 @@
       "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

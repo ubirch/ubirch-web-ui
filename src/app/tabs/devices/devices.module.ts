@@ -8,6 +8,7 @@ import { DevicesListPage } from './devices-list-page/devices-list-page.component
 import {ComponentsModule} from '../../components/components.module';
 import {MaterialModule} from '../../components/material-components/material.module';
 import {DeviceDetailsComponent} from './device-details/device-details.component';
+import {MarkdownModule} from 'ngx-markdown';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import {DeviceDetailsComponent} from './device-details/device-details.component'
     IonicModule,
     MaterialModule,
     ReactiveFormsModule,
+    MarkdownModule.forChild(),
     RouterModule.forChild([
       {
         path: '',

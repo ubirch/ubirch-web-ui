@@ -11,11 +11,19 @@
       <form [formGroup]="deviceDetailsForm">
         <ion-item>
           <ion-label>hwDeviceId:</ion-label>
-          <ion-input formControlName="hwDeviceId" readonly></ion-input>
+          <ion-input formControlName="hwDeviceId" readonly color="medium"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>description:</ion-label>
           <ion-input formControlName="description"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>deviceConfig:</ion-label>
+          <ion-textarea formControlName="deviceConfig"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label>apiConfig:</ion-label>
+          <ion-textarea formControlName="apiConfig" class="config-input"></ion-textarea>
         </ion-item>
       </form>
     </ion-card-content>

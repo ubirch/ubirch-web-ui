@@ -34,7 +34,10 @@ export class DeviceDetailsComponent implements OnInit {
 
       this.deviceService.loadDevice(this.id)
         .subscribe(
-            loadedDevice => this.patchDevice(new Device(loadedDevice))
+            loadedDevice =>  {
+              this.patchDevice(new Device(loadedDevice));
+              this.watchFormControls();
+            }
         );
     } else {
       // TODO: handle url missmatch!!!!
@@ -46,8 +49,8 @@ export class DeviceDetailsComponent implements OnInit {
       hwDeviceId: device ? device.hwDeviceId : '',
       description: device ? device.description : '',
       deviceType: device ? device.deviceType : '',
-      deviceConfig: device ? device.deviceConfig : '',
-      apiConfig: device ? device.apiConfig : ''
+      deviceConfig: device ? this.getPrettyJSON(device.deviceConfig) : '',
+      apiConfig: device ? this.getPrettyJSON(device.apiConfig) : ''
     };
     return val;
   }
@@ -56,5 +59,22 @@ export class DeviceDetailsComponent implements OnInit {
     this.deviceDetailsForm.patchValue(this.patchForm(device));
   }
 
+  watchFormControls(): void {
+    this.deviceDetailsForm.valueChanges.subscribe(val => {
+      this.deviceService.updateDevice(val);
+    });
+  }
+
+  private getPrettyJSON(json: string): string {
+    return JSON.stringify(JSON.parse(json), null, 2);
+  }
+
+  get deviceConfig(): any {
+    return this.deviceDetailsForm.get('deviceConfig').value;
+  }
+
+  get apiConfig(): any {
+    return this.deviceDetailsForm.get('apiConfig').value;
+  }
 
 }
