@@ -14,6 +14,8 @@ export class DeviceDetailsComponent implements OnInit {
 
   deviceDetailsForm: FormGroup;
   id: string;
+  private deviceHasUnsavedChanges = false;
+
 
   constructor(
       private route: ActivatedRoute,
@@ -49,6 +51,7 @@ export class DeviceDetailsComponent implements OnInit {
         .subscribe(
             loadedDevice =>  {
               this.patchDevice(new Device(loadedDevice));
+              this.deviceHasUnsavedChanges = false;
               this.watchFormControls();
             }
         );
@@ -85,8 +88,14 @@ export class DeviceDetailsComponent implements OnInit {
 
   watchFormControls(): void {
     this.deviceDetailsForm.valueChanges.subscribe(val => {
-      this.deviceService.updateDevice(val);
+      this.deviceHasUnsavedChanges = true;
     });
+  }
+
+  saveDevice() {
+      this.deviceService.updateDevice(this.deviceDetailsForm).subscribe(
+          _ => this.deviceHasUnsavedChanges = false
+      );
   }
 
   async changeDeviceType() {

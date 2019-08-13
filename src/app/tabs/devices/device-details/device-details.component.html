@@ -43,6 +43,7 @@
           <ion-label slot="start">apiConfig:</ion-label>
           <ion-textarea ngClass="config-area" formControlName="apiConfig" class="config-input"></ion-textarea>
         </ion-item>
+      <ion-button expand="full" *ngIf="deviceHasUnsavedChanges" (click)="saveDevice()">Save</ion-button>
       </form>
     </ion-card-content>
   </ion-card>

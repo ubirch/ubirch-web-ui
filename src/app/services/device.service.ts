@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {DeviceStub} from '../models/device-stub';
 import {Observable, of} from 'rxjs';
 import {Device} from '../models/device';
+import {FormGroup} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -58,8 +59,13 @@ export class DeviceService {
       return of(null);
   }
 
-  public updateDevice(device: Device): Observable<Device> {
+  public updateDevice(deviceDetailsForm: FormGroup): Observable<Device> {
       // TODO: before sending a device stringify every property that is here an object but a string on the other side
       return of(null);
   }
+
+    storeUnsavedChangesOfDevice(val: any): boolean {
+        // TODO: how will we store changes of device before saving it?
+        return true;
+    }
 }
