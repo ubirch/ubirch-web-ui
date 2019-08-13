@@ -25,6 +25,11 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-textarea.native-textarea.sc-ion-textarea-md {
+.config-area textarea.native-textarea.sc-ion-textarea-md {
   min-height: 150px;
+  border: solid 1px lightgrey;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  border-radius: 4px;
+  margin-bottom: 5px;
+  background-color: #eee;
 }

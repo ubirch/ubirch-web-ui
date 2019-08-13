@@ -28,7 +28,18 @@ export class DeviceDetailsComponent implements OnInit {
       this.deviceDetailsForm = this.fb.group({
         hwDeviceId: [''],
         description: [''],
-        deviceType: [''],
+        deviceType: this.fb.group( {
+          key: [''],
+          name: [''],
+          iconId: [''],
+          iconFileName: ['']
+        }),
+        owner: this.fb.group( {
+          id: [''],
+          username: [''],
+          lastname: [''],
+          firstname: ['']
+        }),
         deviceConfig: [''],
         apiConfig: ['']
       });
@@ -48,9 +59,20 @@ export class DeviceDetailsComponent implements OnInit {
 
   private patchForm(device?: Device): any {
     const val = {
-      hwDeviceId: device ? device.hwDeviceId : '',
-      description: device ? device.description : '',
-      deviceType: device ? device.deviceType : '',
+      hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
+      description: device && device.description ? device.description : '',
+      deviceType: device && device.deviceType ? {
+        key: device.deviceType.key,
+        name: device.deviceType.name,
+        iconId: device.deviceType.iconId,
+        iconFileName: device.deviceType.iconFileName
+      } : null,
+      owner: device && device.owner ? {
+        id: device.owner.id,
+        username: device.owner.username,
+        lastname: device.owner.lastname,
+        firstname: device.owner.firstname
+      } : null,
       deviceConfig: device ? this.getPrettyJSON(device.deviceConfig) : '',
       apiConfig: device ? this.getPrettyJSON(device.apiConfig) : ''
     };
@@ -78,6 +100,16 @@ export class DeviceDetailsComponent implements OnInit {
 
   private getPrettyJSON(json: string): string {
     return JSON.stringify(JSON.parse(json), null, 2);
+  }
+
+  get owner(): any {
+    const owner = this.deviceDetailsForm.get('owner');
+    if (owner) {
+      const val = owner.value;
+      return val.firstname + ' ' + val.lastname;
+    } else {
+      return '';
+    }
   }
 
   get deviceType(): any {

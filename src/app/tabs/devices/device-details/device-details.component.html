@@ -26,17 +26,22 @@
             </ng-container>
             <ion-button size="small" slot="end" (click)="changeDeviceType()">
                 <ion-icon name="create" slot="start"></ion-icon>
-                change Type
+                change
             </ion-button>
-
+        </ion-item>
+        <ion-item>
+          <ion-label slot="start">Owner:</ion-label>
+          <ion-text *ngIf="owner" slot="start">
+            {{owner}}
+          </ion-text>
         </ion-item>
         <ion-item>
           <ion-label slot="start">deviceConfig:</ion-label>
-          <ion-textarea formControlName="deviceConfig"></ion-textarea>
+          <ion-textarea ngClass="config-area" formControlName="deviceConfig"></ion-textarea>
         </ion-item>
         <ion-item>
           <ion-label slot="start">apiConfig:</ion-label>
-          <ion-textarea formControlName="apiConfig" class="config-input"></ion-textarea>
+          <ion-textarea ngClass="config-area" formControlName="apiConfig" class="config-input"></ion-textarea>
         </ion-item>
       </form>
     </ion-card-content>
