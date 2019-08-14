@@ -4,15 +4,25 @@ import {Observable, of} from 'rxjs';
 import {Device} from '../models/device';
 import {FormGroup} from '@angular/forms';
 import {DeviceType} from '../models/device-type';
+import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
+import {environment} from '../../environments/environment';
+import {ToastController} from '@ionic/angular';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeviceService {
+    url = environment.serverUrl + environment.apiPrefix;
+    itemStubsUrl = this.url + 'devices/getDevicesUser';  // URL to web api to access a list of itemStubs for lists
+
 
     private inputs: any[] = [];
 
-  constructor() {
+  constructor(
+      private utils: UbirchWebUIUtilsService,
+      private http: HttpClient
+  ) {
     this.inputs.push({
         id: '7895ef02-e735-4d60-9405-8907afd16a1c',
         hwDeviceId: '5c38ea3f-a2c7-47b7-811a-1a8f980e9364',
@@ -52,7 +62,12 @@ export class DeviceService {
 
 
     public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DeviceStub[]> {
-      return of(this.inputs.map(item => new DeviceStub(item)));
+        const url = UbirchWebUIUtilsService.addParamsToURL(
+            this.itemStubsUrl,
+            pageNum,
+            pageSize);
+
+        return this.http.get<DeviceStub[]>(url);
   }
 
   public loadDevice(id: string): Observable<Device> {
@@ -68,8 +83,8 @@ export class DeviceService {
       return of(null);
   }
 
-    storeUnsavedChangesOfDevice(val: any): boolean {
-        // TODO: how will we store changes of device before saving it?
-        return true;
-    }
+  storeUnsavedChangesOfDevice(val: any): boolean {
+    // TODO: how will we store changes of device before saving it?
+    return true;
+  }
 }

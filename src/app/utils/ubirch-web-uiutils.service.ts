@@ -8,6 +8,26 @@ export class UbirchWebUIUtilsService {
 
   constructor() { }
 
+  static defaultPageSize = 20;
+
+  public static addParamsToURL(url: string, pageNum: number, pageSize: number): string {
+
+    if (pageNum !== undefined && pageNum > 0) {
+
+      // inizialize pageSize if not defined by paginator
+      if (pageSize === undefined) {
+        pageSize = this.defaultPageSize;
+      }
+
+      // calc first item index from pageNum
+      const startNum = (pageNum * pageSize) - pageSize;
+
+      url += `/from/${startNum}/maxrows/${pageSize}`;
+    }
+    return url;
+
+  }
+
   static parseBoolean(value: any): boolean {
     if (value === true || value === false) {
       return value;

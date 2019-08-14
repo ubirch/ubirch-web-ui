@@ -11,6 +11,8 @@ const keycloakConfig: KeycloakConfig = {
 
 export const environment = {
   production: true,
+  serverUrl: '<REST_API_DEV_SERVER_URI>',
+  apiPrefix: '/ubirch-web-ui/api/v1/',
   client_logo_filename: 'logo.svg',
   client_startpage_image_filename: 'start_img.svg',
   client_description_filename: 'description.md',

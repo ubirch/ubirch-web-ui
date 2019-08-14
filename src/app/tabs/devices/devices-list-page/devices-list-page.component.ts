@@ -29,11 +29,6 @@ export class DevicesListPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.deviceService.reloadDeviceStubs()
-        .subscribe(
-            devices =>
-                this.deviceStubs = devices
-        );
     this.restartPolling();
   }
 
@@ -44,8 +39,9 @@ export class DevicesListPage implements OnInit {
           .pipe(
               startWith(0),
               switchMap(() => this.deviceService.reloadDeviceStubs(
-                  this.currentPage,
-                  environment.LIST_ITEMS_PER_PAGE
+                  // TODO: activate pagination
+                  // this.currentPage,
+                  // environment.LIST_ITEMS_PER_PAGE
               ))
           )
           .subscribe(

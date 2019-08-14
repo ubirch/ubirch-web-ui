@@ -6,11 +6,11 @@
 import {KeycloakConfig} from 'keycloak-angular';
 
 const keycloakConfig: KeycloakConfig = {
-  url: 'https://id.dev.ubirch.com/auth',
-  realm: 'test-mandant-1',
+  url: 'http://localhost:8080/auth',
+  realm: 'test-realm',
   clientId: 'ubirch-2.0-user-access-local',
   credentials: {
-    secret: '16506143-c691-4975-b7e0-ccb8f5e22447'
+    secret: 'd8caf6bd-df8c-433c-870b-e99ca9743337'
   }
 };
 
