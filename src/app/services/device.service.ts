@@ -3,6 +3,7 @@ import {DeviceStub} from '../models/device-stub';
 import {Observable, of} from 'rxjs';
 import {Device} from '../models/device';
 import {FormGroup} from '@angular/forms';
+import {DeviceType} from '../models/device-type';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,6 @@ import {FormGroup} from '@angular/forms';
 export class DeviceService {
 
     private inputs: any[] = [];
-    private devices: Device[] = [];
-    private stubs: Device[] = [];
 
   constructor() {
     this.inputs.push({
@@ -47,7 +46,12 @@ export class DeviceService {
     });
   }
 
-  public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DeviceStub[]> {
+    public getAllDeviceTypes(): Observable<DeviceType[]> {
+      return of(this.inputs.map(item => new DeviceType(item.deviceType)));
+    }
+
+
+    public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DeviceStub[]> {
       return of(this.inputs.map(item => new DeviceStub(item)));
   }
 

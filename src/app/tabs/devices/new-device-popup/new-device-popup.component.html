@@ -1,0 +1,16 @@
+<ion-content>
+  <form [formGroup]="deviceDetailsForm">
+    <ion-item>
+      <ion-label slot="start">hwDeviceId<ion-text color="danger">*</ion-text>:</ion-label>
+      <ion-input formControlName="hwDeviceId"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label slot="start">description:</ion-label>
+      <ion-input formControlName="description"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label slot="start">deviceType<ion-text color="danger">*</ion-text>:</ion-label>
+    </ion-item>
+    <ion-button expand="full" (click)="createDevice()" [disabled]="!deviceDetailsForm.valid">Create</ion-button>
+  </form>
+</ion-content>

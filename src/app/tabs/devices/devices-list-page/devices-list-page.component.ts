@@ -4,6 +4,8 @@ import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
+import {ModalController} from '@ionic/angular';
+import {NewDevicePopupComponent} from '../new-device-popup/new-device-popup.component';
 
 @Component({
   selector: 'app-list',
@@ -22,7 +24,8 @@ export class DevicesListPage implements OnInit {
   ionite: string;
 
   constructor(
-      private deviceService: DeviceService
+      private deviceService: DeviceService,
+      private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -57,8 +60,10 @@ export class DevicesListPage implements OnInit {
     }
   }
 
-  // add back when alpha.4 is out
-  // navigate(item) {
-  //   this.router.navigate(['/list', JSON.stringify(item)]);
-  // }
+  async presentNewDeviceModal() {
+    const modal = await this.modalController.create({
+        component: NewDevicePopupComponent
+    });
+    return await modal.present();
+  }
 }

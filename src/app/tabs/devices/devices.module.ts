@@ -9,6 +9,7 @@ import {ComponentsModule} from '../../components/components.module';
 import {MaterialModule} from '../../components/material-components/material.module';
 import {DeviceDetailsComponent} from './device-details/device-details.component';
 import {MarkdownModule} from 'ngx-markdown';
+import {NewDevicePopupComponent} from './new-device-popup/new-device-popup.component';
 
 @NgModule({
   imports: [
@@ -41,8 +42,12 @@ import {MarkdownModule} from 'ngx-markdown';
     ComponentsModule
   ],
   declarations: [
-      DevicesListPage,
-    DeviceDetailsComponent
+    DevicesListPage,
+    DeviceDetailsComponent,
+    NewDevicePopupComponent
+  ],
+  entryComponents: [
+      NewDevicePopupComponent
   ]
 })
 export class ListPageModule {}
