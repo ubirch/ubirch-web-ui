@@ -1,8 +1,8 @@
 import {KeycloakConfig} from 'keycloak-angular';
 
 const keycloakConfig: KeycloakConfig = {
-  url: 'https://id.dev.ubirch.com/auth',
-  realm: 'test-mandant-1',
+  url: 'http://localhost:8080/auth',
+  realm: 'test-realm',
   clientId: 'ubirch-2.0-user-access',
   credentials: {
     secret: '' // TODO:create-and-insert!!!

@@ -11,6 +11,10 @@
 ### Prerequisites
 
 * [Node.js](https://nodejs.org/)
+* [ionic framework](https://ionicframework.com/getting-started):
+
+
+        npm install -g ionic
 
 ## Preparation for Different Clients
 

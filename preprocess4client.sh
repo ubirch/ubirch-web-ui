@@ -2,7 +2,7 @@
 
 client=$1
 
-if [ -z "$client" ]
+if [[ -z "$client" ]]
 then
       echo "Please add the name of the client as firt argument!"
       echo "EXAMPLE:"
@@ -12,24 +12,38 @@ else
       themepath="$path/theme"
       envpath="$path/environments"
       assetspath="$path/assets"
-      if [ -d $path ]
+      if [[ -d $path ]]
       then
         echo "Copy resources for client $client..."
-        if [ -d $envpath ]
+        if [[ -d $envpath ]]
         then
             echo "Copy environment settings for client $client..."
-            rm -rf ./src/environments/*
+            if [[ -d ./src/environments ]]
+            then
+                rm -rf ./src/environments/*
+            else
+                mkdir ./src/environments
+            fi
             cp -r $envpath/* ./src/environments/
         fi
-        if [ -d $themepath ]
+        if [[ -d $themepath ]]
         then
             echo "Copy theme for client $client..."
+            if [[ ! -d ./src/theme ]]
+            then
+                mkdir ./src/theme
+            fi
             cp -r $themepath/* ./src/theme/
         fi
-        if [ -d $assetspath ]
+        if [[ -d $assetspath ]]
         then
             echo "Copy assets for client $client..."
-            rm -rf ./src/assets/client/*
+            if [[ -d ./src/assets/client ]]
+            then
+                rm -rf ./src/assets/client/*
+            else
+                mkdir ./src/assets/client
+            fi
             cp -r $assetspath/* ./src/assets/client/
         fi
         echo "finished copying client resources"
