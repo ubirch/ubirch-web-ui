@@ -1,4 +1,6 @@
 import {DeviceType} from './device-type';
+import {DeviceTypeService} from '../services/device-type.service';
+import {tap} from 'rxjs/operators';
 
 export class DeviceStub {
     public hwDeviceId: string;
@@ -6,12 +8,14 @@ export class DeviceStub {
     public deviceType: DeviceType;
 
     constructor(jsonDevice: any) {
-        if (!jsonDevice || !jsonDevice.id) {
+        if (!jsonDevice || !jsonDevice.hwDeviceId) {
             throw new Error(`DeviceStub constructor call without proper device data: ${jsonDevice}`);
         } else {
             this.hwDeviceId = jsonDevice.hwDeviceId;
             this.description = jsonDevice.description || '';
-            this.deviceType = new DeviceType(jsonDevice.deviceType);
+            DeviceTypeService.getDeviceType(jsonDevice.deviceType).subscribe
+                (foundDeviceType =>
+                    this.deviceType = foundDeviceType);
         }
 
         return this;
