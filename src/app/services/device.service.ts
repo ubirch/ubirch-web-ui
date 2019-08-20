@@ -3,7 +3,6 @@ import {DeviceStub} from '../models/device-stub';
 import {Observable, of} from 'rxjs';
 import {Device} from '../models/device';
 import {FormGroup} from '@angular/forms';
-import {DeviceType} from '../models/device-type';
 import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
@@ -15,8 +14,8 @@ import {DeviceTypeService} from './device-type.service';
 })
 export class DeviceService {
     url = environment.serverUrl + environment.apiPrefix;
-    itemStubsUrl = this.url + 'devices/getDevicesUser';  // URL to web api to access a list of itemStubs for lists
-
+    deviceStubsUrl = this.url + 'devices/getDevicesUser';  // URL to web api to access a list of itemStubs for lists
+    oneDeviceUrl = this.url + 'devices/getOneDevice';
 
     private inputs: any[] = [];
 
@@ -75,22 +74,20 @@ export class DeviceService {
   }
 
 
-    public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DeviceStub[]> {
-        const url = UbirchWebUIUtilsService.addParamsToURL(
-            this.itemStubsUrl,
-            pageNum,
-            pageSize);
+  public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DeviceStub[]> {
+    const url = UbirchWebUIUtilsService.addParamsToURL(
+        this.deviceStubsUrl,
+        pageNum,
+        pageSize);
 
-        return this.http.get<DeviceStub[]>(url).pipe(
-            map(jsonDeviceStubs => jsonDeviceStubs.map(stub => new DeviceStub(stub))));
+    return this.http.get<DeviceStub[]>(url).pipe(
+        map(jsonDeviceStubs => jsonDeviceStubs.map(stub => new DeviceStub(stub))));
   }
 
   public loadDevice(id: string): Observable<Device> {
-      const foundDevices = this.inputs.filter(device => device.hwDeviceId === id );
-      if (foundDevices && foundDevices[0]) {
-          return of(foundDevices[0]);
-      }
-      return of(null);
+      const url = `${this.oneDeviceUrl}/${id}`;
+      return this.http.get<Device>(url).pipe(
+          map(jsonDevice => new Device(jsonDevice)));
   }
 
   public updateDevice(deviceDetailsForm: FormGroup): Observable<Device> {
