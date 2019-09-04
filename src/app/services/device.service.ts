@@ -56,6 +56,26 @@ export class DeviceService {
             map(jsonDevice => new Device(jsonDevice)));
     }
 
+    public createDevice(device: Device): Observable<Map<string, string>> {
+      const devicesArray: Device[] = [];
+      devicesArray.push(device);
+      return this.createDevices(devicesArray);
+    }
+
+    public createDevices(devices: Device[]): Observable<Map<string, string>> {
+        const url = `${this.devicesUrl}`;
+        return this.http.post<Device[]>(url, devices).pipe(
+            map(jsonDevices => {
+                const deviceStates: Map<string, string> = new Map();
+                jsonDevices.forEach(deviceState =>
+                    deviceStates.set(
+                        Object.keys(deviceState)[0],
+                        deviceState[Object.keys(deviceState)[0]].state));
+                return deviceStates;
+
+            }));
+    }
+
     public deleteDevice(id: string): Observable<boolean> {
         const url = `${this.devicesUrl}/${id}`;
         return this.http.delete<Device>(url).pipe(

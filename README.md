@@ -38,6 +38,20 @@ For each client create a folder with the clients name in the ./resources/clients
 
 If you name the files differently, you have to add the filenames in the properties in environment.ts and environment.prod.ts.
 
+## Device Types
+
+To Add a new device type for a tenant:
+
+* create a new group in tenant realm of keycloak with name <DEVICE_TYPE>_DeviceConfigGroup
+* add an attribute with key "attributesDeviceGroup" to the new group
+* value of attribute "attributesDeviceGroup" is JSON in the following structure (about icons, see below):
+
+
+    { "type": "<DEVICE_TYPE>",
+      "name": "<DEVICE_TYPE_NAME>",
+      "iconId": "<NAME_OF_IONICON>"
+    }     
+
 ### Adding your own deviceType icons
 
 There are two possibilities:
@@ -45,9 +59,22 @@ There are two possibilities:
 1. You can use any ionicon from: https://ionicons.com 
  -> you add the name of the ionicon to the property "iconId" of the device type
 
+
+    { "type": "light_sensor",
+      "name": "Lichtsensor",
+      "iconId": "lamp"
+    }     
+
 2. You can add your own svg icon
  -> add the icon into your resources folder under "assets/icons/" 
 and add the filename to the property "iconFileName" of the device type
+
+
+       { "type": "default_type",
+         "name": "Sensor",
+         "iconFileName": "default_sensor.svg"
+       }
+
 
 Run preprocessor shell script to copy environment files, assets - images, icon,... - and the theme folder 
 from resources folder to src folder (as a preparation to serve, build or deploy the project):

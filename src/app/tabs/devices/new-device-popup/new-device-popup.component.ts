@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Device} from '../../../models/device';
-import {ToastController} from '@ionic/angular';
+import {ModalController, ToastController} from '@ionic/angular';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-new-device-popup',
@@ -12,6 +13,7 @@ export class NewDevicePopupComponent implements OnInit {
   deviceDetailsForm: FormGroup;
 
   constructor(
+      public modalCtrl: ModalController,
       private fb: FormBuilder,
       public toastController: ToastController
   ) { }
@@ -20,36 +22,27 @@ export class NewDevicePopupComponent implements OnInit {
     this.deviceDetailsForm = this.fb.group({
       hwDeviceId: ['', Validators.required],
       description: [''],
-      deviceType: this.fb.group({
-        key: ['', Validators.required],
-        name: ['', Validators.required],
-        iconId: ['', Validators.required],
-        iconFileName: ['', Validators.required]
-      })
+      deviceType: ['']
     });
-    this.patchForm();
+    this.deviceDetailsForm.setValue(this.patchFormValue());
   }
 
-  private patchForm(device?: Device): any {
+  private patchFormValue(device?: Device): any {
     const val = {
       hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
       description: device && device.description ? device.description : '',
-      deviceType: device && device.deviceType ? {
-        key: device.deviceType.key,
-        name: device.deviceType.name,
-        iconId: device.deviceType.iconId,
-        iconFileName: device.deviceType.iconFileName
-      } : null
+      deviceType: environment.default_device_type
     };
     return val;
   }
 
   async createDevice() {
-    const toast = await this.toastController.create({
-      message: 'Sorry, creating device not yet implemented...',
-      duration: 4000,
-      color: 'warning'
-    });
-    toast.present();
+    this.modalCtrl.dismiss(
+        this.deviceDetailsForm.getRawValue()
+    );
+  }
+
+  get defaultDeviceType(): string {
+    return environment.default_device_type;
   }
 }

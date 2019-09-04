@@ -7,6 +7,7 @@ import {environment} from '../../../../environments/environment';
 import {ModalController, ToastController} from '@ionic/angular';
 import {NewDevicePopupComponent} from '../new-device-popup/new-device-popup.component';
 import {ConfirmDeleteDevicePopupComponent} from '../confirm-delete-device-popup/confirm-delete-device-popup.component';
+import {Device} from '../../../models/device';
 
 @Component({
   selector: 'app-list',
@@ -97,6 +98,17 @@ export class DevicesListPage implements OnInit {
     const modal = await this.modalController.create({
         component: NewDevicePopupComponent
     });
+    modal.onDidDismiss().then((detail: any) => {
+      if (detail !== null && detail.data) {
+        const device = new Device(detail.data);
+        if (device) {
+          this.deviceService.createDevice(device).subscribe(
+              createdDevice => console.log('create new device: ', createdDevice),
+              err => console.log('error: ', err.toString()));
+        }
+      }
+    });
+
     return await modal.present();
   }
 }
