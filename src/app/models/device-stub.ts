@@ -1,6 +1,5 @@
 import {DeviceType} from './device-type';
 import {DeviceTypeService} from '../services/device-type.service';
-import {tap} from 'rxjs/operators';
 
 export class DeviceStub {
     public hwDeviceId: string;

@@ -61,6 +61,7 @@ from resources folder to src folder (as a preparation to serve, build or deploy 
 ### Test in Web Browser
 
 Enter the root directory and call the run-local script
+(requires the keycloak running on localhost:8080 with realm "test-realm" existing)
 
 ```
     ./run-local.sh

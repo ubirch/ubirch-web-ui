@@ -17,6 +17,7 @@ export class HomePage {
   clientDescriptionFileName = environment.client_description_filename || 'description.md';
   clientDescriptionPath = '/assets/client/md/' + this.clientDescriptionFileName;
 
+  clientName = environment.client_name || '';
 
   onLoad(event) {
     console.log('client description loaded');

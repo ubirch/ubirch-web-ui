@@ -9,7 +9,6 @@ export class Device {
     public deviceType: DeviceType;
     public owner: User;
     public groups: Group[];
-    public deviceConfig: string;
     public apiConfig: string;
 
     constructor(jsonDevice: any) {
@@ -18,7 +17,9 @@ export class Device {
         } else {
             this.hwDeviceId = jsonDevice.hwDeviceId;
             this.description = jsonDevice.description || '';
-            this.deviceType = new DeviceType(jsonDevice.deviceType);
+            if (jsonDevice.deviceType) {
+                this.deviceType = new DeviceType(jsonDevice.deviceType);
+            }
             if (jsonDevice.owner) {
                 this.owner = new User(jsonDevice.owner);
             }
@@ -26,7 +27,6 @@ export class Device {
                 this.groups = [];
                 jsonDevice.groups.forEach(group => this.groups.push(new Group(group)));
             }
-            this.deviceConfig = jsonDevice.deviceConfig;
             this.apiConfig = jsonDevice.apiConfig;
         }
 

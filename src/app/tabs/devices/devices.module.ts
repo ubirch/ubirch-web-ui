@@ -10,6 +10,7 @@ import {MaterialModule} from '../../components/material-components/material.modu
 import {DeviceDetailsComponent} from './device-details/device-details.component';
 import {MarkdownModule} from 'ngx-markdown';
 import {NewDevicePopupComponent} from './new-device-popup/new-device-popup.component';
+import {ConfirmDeleteDevicePopupComponent} from './confirm-delete-device-popup/confirm-delete-device-popup.component';
 
 @NgModule({
   imports: [
@@ -44,10 +45,12 @@ import {NewDevicePopupComponent} from './new-device-popup/new-device-popup.compo
   declarations: [
     DevicesListPage,
     DeviceDetailsComponent,
-    NewDevicePopupComponent
+    NewDevicePopupComponent,
+    ConfirmDeleteDevicePopupComponent
   ],
   entryComponents: [
-      NewDevicePopupComponent
+      NewDevicePopupComponent,
+      ConfirmDeleteDevicePopupComponent
   ]
 })
 export class ListPageModule {}

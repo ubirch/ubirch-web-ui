@@ -4,8 +4,9 @@ import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
-import {ModalController} from '@ionic/angular';
+import {ModalController, ToastController} from '@ionic/angular';
 import {NewDevicePopupComponent} from '../new-device-popup/new-device-popup.component';
+import {ConfirmDeleteDevicePopupComponent} from '../confirm-delete-device-popup/confirm-delete-device-popup.component';
 
 @Component({
   selector: 'app-list',
@@ -13,7 +14,6 @@ import {NewDevicePopupComponent} from '../new-device-popup/new-device-popup.comp
   styleUrls: ['devices-list-page.component.scss']
 })
 export class DevicesListPage implements OnInit {
-  private selectedItem: DeviceStub;
   public deviceStubs: Array<DeviceStub> = [];
 
   polling = new Subscription();
@@ -25,8 +25,31 @@ export class DevicesListPage implements OnInit {
 
   constructor(
       private deviceService: DeviceService,
-      private modalController: ModalController
+      private modalController: ModalController,
+      private toastCtrl: ToastController
   ) {}
+
+  toastrContent: Map<string, any> = new Map([
+    ['del', {
+      message: 'Device deleted',
+      duration: 4000,
+      color: 'success'
+    }],
+    ['err', {
+      message: 'Error occurred',
+      duration: 4000,
+      color: 'danger'
+    }]
+  ]);
+
+  async finished(param: string, details?: string) {
+    const content = this.toastrContent.get('del');
+    if (details && content && content.message) {
+      content.message.append(': ' + details);
+    }
+    const toast = await this.toastCtrl.create(content);
+    toast.present();
+  }
 
   ngOnInit() {
     this.restartPolling();
@@ -54,6 +77,20 @@ export class DevicesListPage implements OnInit {
     if (this.polling) {
       this.polling.unsubscribe();
     }
+  }
+
+  async confirmDeviceDelete(device: DeviceStub) {
+    const modal = await this.modalController.create({
+      component: ConfirmDeleteDevicePopupComponent
+    });
+    modal.onDidDismiss().then((detail: any) => {
+      if (detail !== null && detail.data && detail.data.confirmed) {
+        this.deviceService.deleteDevice(device.hwDeviceId).subscribe(_ =>
+            this.finished('del'), err => this.finished('err', err.toString()));
+      }
+    });
+
+    await modal.present();
   }
 
   async presentNewDeviceModal() {

@@ -11,17 +11,17 @@
 
 <ion-content>
       <ion-list>
-        <ion-item *ngFor="let item of deviceStubs" [routerLink]="['/devices','details', item.hwDeviceId]">
-          <ng-container *ngIf="item.deviceType">
-            <button mat-icon-button
-                    [matTooltip]="item.deviceType.name['de']">
-              <ion-icon *ngIf="item.deviceType.iconFileName" [src]="item.deviceType.iconFileName" slot="start"></ion-icon>
-              <ion-icon *ngIf="!item.deviceType.iconFileName && item.deviceType.iconId" [name]="item.deviceType.iconId" slot="start"></ion-icon>
-            </button>
-          </ng-container>
-          {{item.description}}
+        <ion-item *ngFor="let item of deviceStubs">
+          <ion-label [routerLink]="['/devices','details', item.hwDeviceId]">
+            <h2>{{item.description}}</h2>
+            <h3>{{item.hwDeviceId}}</h3>
+            <p>state not available</p>
+          </ion-label>
           <div class="item-note" slot="end">
-            {{item.hwDeviceId}}
+            <ion-button (click)="confirmDeviceDelete(item)" color="danger">
+              <ion-icon name="trash"></ion-icon>
+              <ion-label>delete</ion-label>
+            </ion-button>
           </div>
         </ion-item>
       </ion-list>

@@ -7,7 +7,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-subtitle>Device Details of</ion-card-subtitle>
-      <ion-card-title>{{id}}</ion-card-title>
+      <ion-card-title>{{hwDeviceId}}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
@@ -19,28 +19,6 @@
         <ion-item>
           <ion-label slot="start">description:</ion-label>
           <ion-input formControlName="description"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label slot="start">deviceType:</ion-label>
-            <ng-container *ngIf="deviceType">
-                <ion-icon *ngIf="deviceType.iconFileName" [src]="deviceType.iconFileName" slot="start"></ion-icon>
-                <ion-icon *ngIf="!deviceType.iconFileName && deviceType.iconId" [name]="deviceType.iconId" slot="start"></ion-icon>
-                {{deviceType.name['de']}}
-            </ng-container>
-            <ion-button size="small" slot="end" (click)="changeDeviceType()">
-                <ion-icon name="create" slot="start"></ion-icon>
-                change
-            </ion-button>
-        </ion-item>
-        <ion-item>
-          <ion-label slot="start">Owner:</ion-label>
-          <ion-text *ngIf="owner" slot="start">
-            {{owner}}
-          </ion-text>
-        </ion-item>
-        <ion-item>
-          <ion-label slot="start">deviceConfig:</ion-label>
-          <ion-textarea ngClass="config-area" formControlName="deviceConfig"></ion-textarea>
         </ion-item>
         <ion-item>
           <ion-label slot="start">apiConfig:</ion-label>
