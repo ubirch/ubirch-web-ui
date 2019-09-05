@@ -99,9 +99,11 @@ export class DeviceService {
             const hwDeviceIds = data.hwDeviceId.split(',');
             hwDeviceIds.forEach(id => {
                 data.hwDeviceId = id.trim();
-                const device = new Device(data);
-                if (device) {
-                    devicesArray.push(device);
+                if (data.hwDeviceId && data.hwDeviceId.length > 0) {
+                    const device = new Device(data);
+                    if (device) {
+                        devicesArray.push(device);
+                    }
                 }
             });
         }

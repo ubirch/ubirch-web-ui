@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {DeviceStub} from '../../../models/device-stub';
 import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
-import {startWith, switchMap} from 'rxjs/operators';
+import {catchError, startWith, switchMap, tap} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {ModalController, ToastController} from '@ionic/angular';
 import {NewDevicePopupComponent} from '../new-device-popup/new-device-popup.component';
 import {ConfirmDeleteDevicePopupComponent} from '../confirm-delete-device-popup/confirm-delete-device-popup.component';
-import {Device} from '../../../models/device';
+import {CreatedDevicesListPopupComponent} from '../created-devices-list-popup/created-devices-list-popup.component';
 
 @Component({
   selector: 'app-list',
@@ -35,6 +35,11 @@ export class DevicesListPage implements OnInit {
       message: 'Device deleted',
       duration: 4000,
       color: 'success'
+    }],
+      ['cancl_del', {
+      message: 'Deleting Device canceled',
+      duration: 4000,
+      color: 'light'
     }],
     ['cancl_create', {
       message: 'Device creation canceled',
@@ -91,8 +96,18 @@ export class DevicesListPage implements OnInit {
     });
     modal.onDidDismiss().then((detail: any) => {
       if (detail !== null && detail.data && detail.data.confirmed) {
-        this.deviceService.deleteDevice(device.hwDeviceId).subscribe(_ =>
-            this.finished('del'), err => this.finished('err', err.toString()));
+        this.deviceService.deleteDevice(
+            device.hwDeviceId)
+            .subscribe(
+                _ => {
+                  this.restartPolling();
+                  this.finished('del');
+                },
+                err => this.finished(
+                    'err',
+                    err.toString()));
+      } else {
+        this.finished('cancl_del');
       }
     });
 
@@ -108,12 +123,27 @@ export class DevicesListPage implements OnInit {
           this.deviceService.createDevicesFromData(
               details.data)
               .subscribe(
-              createdDevice => console.log('create new device: ', createdDevice),
-              err => console.log('error: ', err.toString()));
+              createdDevice => {
+                this.restartPolling();
+                this.presentDevicesCreatedModal(createdDevice);
+              },
+                  err => this.finished(
+                      'err',
+                      ': something went wrong during devices creation: ' + err.message));
       } else {
         this.finished('cancl_create');
       }
     });
-    return await modal.present();
+    await modal.present();
+  }
+
+  async presentDevicesCreatedModal(createdDevice: Map<string, string>) {
+    const modal = await this.modalController.create({
+      component: CreatedDevicesListPopupComponent,
+      componentProps: {
+        deviceCreateStates: createdDevice
+      }
+    });
+    await modal.present();
   }
 }

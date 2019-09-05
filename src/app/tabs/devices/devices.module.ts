@@ -11,6 +11,7 @@ import {DeviceDetailsComponent} from './device-details/device-details.component'
 import {MarkdownModule} from 'ngx-markdown';
 import {NewDevicePopupComponent} from './new-device-popup/new-device-popup.component';
 import {ConfirmDeleteDevicePopupComponent} from './confirm-delete-device-popup/confirm-delete-device-popup.component';
+import {CreatedDevicesListPopupComponent} from './created-devices-list-popup/created-devices-list-popup.component';
 
 @NgModule({
   imports: [
@@ -46,11 +47,13 @@ import {ConfirmDeleteDevicePopupComponent} from './confirm-delete-device-popup/c
     DevicesListPage,
     DeviceDetailsComponent,
     NewDevicePopupComponent,
-    ConfirmDeleteDevicePopupComponent
+    ConfirmDeleteDevicePopupComponent,
+    CreatedDevicesListPopupComponent
   ],
   entryComponents: [
-      NewDevicePopupComponent,
-      ConfirmDeleteDevicePopupComponent
+    NewDevicePopupComponent,
+    ConfirmDeleteDevicePopupComponent,
+    CreatedDevicesListPopupComponent
   ]
 })
 export class ListPageModule {}

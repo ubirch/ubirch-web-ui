@@ -1,0 +1,17 @@
+<ion-content>
+  <ion-text>
+    <h2>Devices created</h2>
+    <h3>Device creation states:</h3>
+    <ion-list>
+      <ion-item *ngFor="let item of deviceCreateStates | keyvalue"
+                [routerLink]="['/devices','details', item.key]" (click)="close()">
+        <ion-label >
+          <h2>{{item.key}}</h2>
+        </ion-label>
+        <ion-label >
+          <h2>{{item.value}}</h2>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-text>
+</ion-content>
