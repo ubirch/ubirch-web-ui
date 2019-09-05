@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DeviceStub} from '../../../models/device-stub';
 import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
-import {catchError, startWith, switchMap, tap} from 'rxjs/operators';
+import {startWith, switchMap} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {ModalController, ToastController} from '@ionic/angular';
 import {NewDevicePopupComponent} from '../new-device-popup/new-device-popup.component';
