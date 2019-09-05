@@ -8,7 +8,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {DeviceTypeService} from './device-type.service';
-import {CreateDevicesFormData} from '../tabs/devices/new-device-popup/new-device-popup.component';
+import {CreateDevicesFormData} from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
 
 @Injectable({
   providedIn: 'root'

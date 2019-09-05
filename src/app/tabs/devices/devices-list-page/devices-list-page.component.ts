@@ -5,9 +5,9 @@ import {interval, Subscription} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {ModalController, ToastController} from '@ionic/angular';
-import {NewDevicePopupComponent} from '../new-device-popup/new-device-popup.component';
-import {ConfirmDeleteDevicePopupComponent} from '../confirm-delete-device-popup/confirm-delete-device-popup.component';
-import {CreatedDevicesListPopupComponent} from '../created-devices-list-popup/created-devices-list-popup.component';
+import {NewDevicePopupComponent} from './popups/new-device-popup/new-device-popup.component';
+import {ConfirmDeleteDevicePopupComponent} from './popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
+import {CreatedDevicesListPopupComponent} from './popups/created-devices-list-popup/created-devices-list-popup.component';
 
 @Component({
   selector: 'app-list',

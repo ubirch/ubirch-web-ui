@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Device} from '../../../models/device';
+import {Device} from '../../../../../models/device';
 import {ModalController, ToastController} from '@ionic/angular';
-import {environment} from '../../../../environments/environment';
+import {environment} from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-new-device-popup',
