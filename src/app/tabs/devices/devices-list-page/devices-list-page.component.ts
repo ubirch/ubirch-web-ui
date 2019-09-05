@@ -36,6 +36,11 @@ export class DevicesListPage implements OnInit {
       duration: 4000,
       color: 'success'
     }],
+    ['cancl_create', {
+      message: 'Device creation canceled',
+      duration: 4000,
+      color: 'warning'
+    }],
     ['err', {
       message: 'Error occurred',
       duration: 4000,
@@ -44,7 +49,7 @@ export class DevicesListPage implements OnInit {
   ]);
 
   async finished(param: string, details?: string) {
-    const content = this.toastrContent.get('del');
+    const content = this.toastrContent.get(param);
     if (details && content && content.message) {
       content.message.append(': ' + details);
     }
@@ -98,17 +103,17 @@ export class DevicesListPage implements OnInit {
     const modal = await this.modalController.create({
         component: NewDevicePopupComponent
     });
-    modal.onDidDismiss().then((detail: any) => {
-      if (detail !== null && detail.data) {
-        const device = new Device(detail.data);
-        if (device) {
-          this.deviceService.createDevice(device).subscribe(
+    modal.onDidDismiss().then((details: any) => {
+      if (details && details.data) {
+          this.deviceService.createDevicesFromData(
+              details.data)
+              .subscribe(
               createdDevice => console.log('create new device: ', createdDevice),
               err => console.log('error: ', err.toString()));
-        }
+      } else {
+        this.finished('cancl_create');
       }
     });
-
     return await modal.present();
   }
 }

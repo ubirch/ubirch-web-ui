@@ -8,6 +8,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {DeviceTypeService} from './device-type.service';
+import {CreateDevicesFormData} from '../tabs/devices/new-device-popup/new-device-popup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -56,9 +57,8 @@ export class DeviceService {
             map(jsonDevice => new Device(jsonDevice)));
     }
 
-    public createDevice(device: Device): Observable<Map<string, string>> {
-      const devicesArray: Device[] = [];
-      devicesArray.push(device);
+    public createDevicesFromData(data: CreateDevicesFormData): Observable<Map<string, string>> {
+      const devicesArray: Device[] = this.data2Devices(data);
       return this.createDevices(devicesArray);
     }
 
@@ -92,4 +92,21 @@ export class DeviceService {
     // TODO: how will we store changes of device before saving it?
     return true;
   }
+
+    private data2Devices(data: CreateDevicesFormData): Device[] {
+        const devicesArray: Device[] = [];
+        if (data && data.hwDeviceId) {
+            const hwDeviceIds = data.hwDeviceId.split(',');
+            hwDeviceIds.forEach(id => {
+                data.hwDeviceId = id.trim();
+                const device = new Device(data);
+                if (device) {
+                    devicesArray.push(device);
+                }
+            });
+        }
+        return devicesArray;
+
+    }
+
 }

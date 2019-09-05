@@ -15,9 +15,25 @@ export class NewDevicePopupComponent implements OnInit {
   constructor(
       public modalCtrl: ModalController,
       private fb: FormBuilder,
-      public toastController: ToastController
+      public toastCtrl: ToastController
   ) { }
 
+  toastrContent: Map<string, any> = new Map([
+    ['err', {
+      message: 'Error occurred',
+      duration: 4000,
+      color: 'danger'
+    }]
+  ]);
+
+  async finished(param: string, details?: string) {
+    const content = this.toastrContent.get(param);
+    if (details && content && content.message) {
+      content.message +=  ': ' + details;
+    }
+    const toast = await this.toastCtrl.create(content);
+    toast.present();
+  }
   ngOnInit() {
     this.deviceDetailsForm = this.fb.group({
       hwDeviceId: ['', Validators.required],
@@ -37,12 +53,28 @@ export class NewDevicePopupComponent implements OnInit {
   }
 
   async createDevice() {
-    this.modalCtrl.dismiss(
-        this.deviceDetailsForm.getRawValue()
-    );
+    const details = this.deviceDetailsForm.getRawValue();
+    if (details) {
+      this.modalCtrl.dismiss(
+          new CreateDevicesFormData(details)
+      );
+    } else {
+      this.finished('err', 'No device data entered');
+    }
   }
 
   get defaultDeviceType(): string {
     return environment.default_device_type;
+  }
+}
+
+export class CreateDevicesFormData {
+  hwDeviceId: string;
+  description: string;
+  deviceType: string;
+
+  constructor(props) {
+    Object.assign(this, props);
+    return this;
   }
 }
