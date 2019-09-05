@@ -83,10 +83,25 @@ export class DeviceService {
             catchError( _ => of(false)));
     }
 
-    public updateDevice(deviceDetailsForm: FormGroup): Observable<Device> {
+    public updateDeviceFromData(data: FormGroup): Observable<Device> {
+      if (data && data.value) {
+          const device = new Device(data.value);
+          if (device && device.hwDeviceId) {
+              return this.updateDevice(device);
+          } else {
+              return of(null);
+          }
+      }
+    }
+
+    public updateDevice(device: Device): Observable<Device> {
       // TODO: before sending a device stringify every property that is here an object but a string on the other side
-      return of(null);
-  }
+        const url = `${this.devicesUrl}/${device.hwDeviceId}`;
+        return this.http.put<Device>(url, device).pipe(
+            map(jsonDevice => new Device(jsonDevice)),
+            catchError( _ => of(null)));
+
+    }
 
   storeUnsavedChangesOfDevice(val: any): boolean {
     // TODO: how will we store changes of device before saving it?

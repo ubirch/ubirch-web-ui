@@ -51,7 +51,7 @@ export class DeviceDetailsComponent implements OnInit {
       hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
       description: device && device.description ? device.description : '',
       apiConfig: device && device.apiConfig && device.apiConfig.length > 0 ?
-          this.getPrettyJSON(device.apiConfig) : 'NO API CONFIG AVAILABLE'
+          this.getPrettyJSON(device.apiConfig) : undefined
     };
     return val;
   }
@@ -67,17 +67,16 @@ export class DeviceDetailsComponent implements OnInit {
   }
 
   saveDevice() {
-      this.deviceService.updateDevice(this.deviceDetailsForm).subscribe(
-          _ => this.deviceHasUnsavedChanges = false
+      this.deviceService.updateDeviceFromData(this.deviceDetailsForm).subscribe(
+          updatedDevice => {
+              this.patchForm(updatedDevice);
+              this.deviceHasUnsavedChanges = false;
+          }
       );
   }
 
   private getPrettyJSON(json: string): string {
     return JSON.stringify(JSON.parse(json), null, 2);
-  }
-
-  get apiConfig(): any {
-    return this.deviceDetailsForm.get('apiConfig').value;
   }
 
   get hwDeviceId(): any {
