@@ -16,7 +16,6 @@ export class DeviceDetailsComponent implements OnInit {
   id: string;
   private deviceHasUnsavedChanges = false;
 
-
   constructor(
       private route: ActivatedRoute,
       private fb: FormBuilder,
@@ -51,7 +50,8 @@ export class DeviceDetailsComponent implements OnInit {
     const val = {
       hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
       description: device && device.description ? device.description : '',
-      apiConfig: device ? this.getPrettyJSON(device.apiConfig) : ''
+      apiConfig: device && device.apiConfig && device.apiConfig.length > 0 ?
+          this.getPrettyJSON(device.apiConfig) : 'NO API CONFIG AVAILABLE'
     };
     return val;
   }
