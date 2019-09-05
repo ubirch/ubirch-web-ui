@@ -120,16 +120,21 @@ export class DevicesListPage implements OnInit {
     });
     modal.onDidDismiss().then((details: any) => {
       if (details && details.data) {
-          this.deviceService.createDevicesFromData(
-              details.data)
-              .subscribe(
-              createdDevice => {
-                this.restartPolling();
-                this.presentDevicesCreatedModal(createdDevice);
-              },
-                  err => this.finished(
+        this.deviceService.createDevicesFromData(
+            details.data)
+            .subscribe(
+                createdDevice => {
+                  this.restartPolling();
+                  this.presentDevicesCreatedModal(createdDevice);
+                },
+                err => {
+                  this.restartPolling();
+                  const errMsg = 'something went wrong during devices creation: ' + err.message;
+                  this.presentDevicesCreatedModal(err, errMsg);
+                  this.finished(
                       'err',
-                      ': something went wrong during devices creation: ' + err.message));
+                      ': ' + errMsg );
+                });
       } else {
         this.finished('cancl_create');
       }
@@ -137,11 +142,12 @@ export class DevicesListPage implements OnInit {
     await modal.present();
   }
 
-  async presentDevicesCreatedModal(createdDevice: Map<string, string>) {
+  async presentDevicesCreatedModal(createdDevice: Map<string, string>, errMeg?: string) {
     const modal = await this.modalController.create({
       component: CreatedDevicesListPopupComponent,
       componentProps: {
-        deviceCreateStates: createdDevice
+        deviceCreateStates: createdDevice,
+        errorMessage: errMeg
       }
     });
     await modal.present();

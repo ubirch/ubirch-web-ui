@@ -8,7 +8,20 @@ import {ModalController} from '@ionic/angular';
 })
 export class CreatedDevicesListPopupComponent implements OnInit {
 
-  @Input() deviceCreateStates: Map<string, string>;
+  private successful: Map<string, string> = new Map<string, string>();
+  private failed: Map<string, string>;
+
+  @Input()
+  set deviceCreateStates(deviceCreateStates: Map<string, string>) {
+    deviceCreateStates.forEach((state: string, id: string) => {
+      if (state === 'ok') {
+        this.successful.set(id, state);
+      } else {
+        this.failed.set(id, state);
+      }
+    });
+  }
+  @Input() errorMessage: string;
 
   constructor(
       private modalCtrl: ModalController
