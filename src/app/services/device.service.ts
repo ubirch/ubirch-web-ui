@@ -21,24 +21,7 @@ export class DeviceService {
       private utils: UbirchWebUIUtilsService,
       private deviceTypeService: DeviceTypeService,
       private http: HttpClient
-  ) {
-      //   {
-      //     id: '562237ce-da95-4a8f-9772-bd4ca119cfc5',
-      //     hwDeviceId: 'c1e7b024-7314-4785-ab7a-dea0185256a9',
-      //     description: 'Ates Testdevice 2',
-      //     deviceType: '{"key":"thermal_sensor","name":{"de":"Temperatursensor","en":"thermal sensor"},' +
-      //         '"iconId":"thermometer"}',
-      //     owner: {
-      //         id: 'd489eaf0-268b-4336-9e9d-daea62c5d0ac',
-      //         username: 'testuser',
-      //         lastname: 'Testa',
-      //         firstname: 'Rosa'
-      //     },
-      //     groups: [],
-      //     deviceConfig: '{"i": 300,"th": 2500}',
-      //     apiConfig: '{"url": "https://test.test.de","password": "802921c2-a2e7-4d8f-b828-1c5aee2d3c38"}'
-      // }
-  }
+  ) { }
 
 
     public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DeviceStub[]> {
