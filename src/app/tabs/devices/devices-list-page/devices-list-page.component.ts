@@ -14,7 +14,7 @@ import {CreatedDevicesListPopupComponent} from './popups/created-devices-list-po
   templateUrl: 'devices-list-page.component.html',
   styleUrls: ['devices-list-page.component.scss']
 })
-export class DevicesListPage implements OnInit {
+export class DevicesListPage {
   public deviceStubs: Array<DeviceStub> = [];
 
   polling = new Subscription();
@@ -62,7 +62,7 @@ export class DevicesListPage implements OnInit {
     toast.present();
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.restartPolling();
   }
 

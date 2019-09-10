@@ -23,7 +23,11 @@ export class DeviceService {
       private http: HttpClient
   ) { }
 
-
+    /**
+     * load a couple of deviceStubs for the list of devices; pagination included
+     * @param pageNum number of the page for pagination
+     * @param pageSize how many devices are maximal paged
+     */
     public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DeviceStub[]> {
     const url = UbirchWebUIUtilsService.addParamsToURL(
         this.devicesUrl,
@@ -34,17 +38,32 @@ export class DeviceService {
         map(jsonDeviceStubs => jsonDeviceStubs.map(stub => new DeviceStub(stub))));
     }
 
+    /**
+     * load device
+     * @param id hwDeviceId of the device that should be loaded
+     */
     public loadDevice(id: string): Observable<Device> {
         const url = `${this.devicesUrl}/${id}`;
         return this.http.get<Device>(url).pipe(
             map(jsonDevice => new Device(jsonDevice)));
     }
 
+    /**
+     * create devices from form fields, containing a list of hwDeviceIds, a deviceType and (optionally) a description
+     * All created devices get the same description and deviceType
+     * @param data of type CreateDevicesFormData: containing a list of hwDeviceIds, a deviceType and (optionally) a description.
+     * Returns a Map, containing the hwDeviceIds and the state of creation: "OK" if successfully created
+     */
     public createDevicesFromData(data: CreateDevicesFormData): Observable<Map<string, string>> {
       const devicesArray: Device[] = this.data2Devices(data);
       return this.createDevices(devicesArray);
     }
 
+    /**
+     * bulk creation of a list of devices
+     * @param list of devices to be registered in backend
+     * Returns a Map, containing the hwDeviceIds and the state of creation: "OK" if successfully created
+     */
     public createDevices(devices: Device[]): Observable<Map<string, string>> {
         const url = `${this.devicesUrl}`;
         return this.http.post<Device[]>(url, devices).pipe(
@@ -59,6 +78,11 @@ export class DeviceService {
             }));
     }
 
+    /**
+     * delete device
+     * we assume that user already confirmed the deletion
+     * @param id of the device that shall be deleted
+     */
     public deleteDevice(id: string): Observable<boolean> {
         const url = `${this.devicesUrl}/${id}`;
         return this.http.delete<Device>(url).pipe(
@@ -66,6 +90,11 @@ export class DeviceService {
             catchError( _ => of(false)));
     }
 
+    /**
+     * if device already loaded, the current loaded device is patched with form data;
+     * if no item
+     * @param data form data, containing several device properties
+     */
     public updateDeviceFromData(data: FormGroup): Observable<Device> {
       if (data && data.value) {
           const device = new Device(data.value);

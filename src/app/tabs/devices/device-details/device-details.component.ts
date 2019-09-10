@@ -15,6 +15,7 @@ export class DeviceDetailsComponent implements OnInit {
   deviceDetailsForm: FormGroup;
   id: string;
   private deviceHasUnsavedChanges = false;
+  loadedDevice: Device;
 
   constructor(
       private route: ActivatedRoute,
@@ -36,9 +37,12 @@ export class DeviceDetailsComponent implements OnInit {
       this.deviceService.loadDevice(this.id)
         .subscribe(
             loadedDevice =>  {
-              this.patchDevice(new Device(loadedDevice));
-              this.deviceHasUnsavedChanges = false;
-              this.watchFormControls();
+              this.loadedDevice = new Device(loadedDevice);
+              if (this.loadedDevice) {
+                this.deviceDetailsForm.patchValue(this.patchForm(this.loadedDevice));
+                this.deviceHasUnsavedChanges = false;
+                this.watchFormControls();
+              }
             }
         );
     } else {
@@ -56,10 +60,6 @@ export class DeviceDetailsComponent implements OnInit {
     return val;
   }
 
-  private patchDevice(device: Device) {
-    this.deviceDetailsForm.patchValue(this.patchForm(device));
-  }
-
   watchFormControls(): void {
     this.deviceDetailsForm.valueChanges.subscribe(val => {
       this.deviceHasUnsavedChanges = true;
@@ -67,9 +67,10 @@ export class DeviceDetailsComponent implements OnInit {
   }
 
   saveDevice() {
-      this.deviceService.updateDeviceFromData(this.deviceDetailsForm).subscribe(
+    this.deviceService.updateDevice(this.loadedDevice.patchDevice(this.deviceDetailsForm.value)).subscribe(
           updatedDevice => {
-              this.patchForm(updatedDevice);
+              this.loadedDevice = new Device(updatedDevice);
+              this.patchForm(this.loadedDevice);
               this.deviceHasUnsavedChanges = false;
           }
       );
