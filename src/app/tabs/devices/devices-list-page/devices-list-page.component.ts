@@ -56,7 +56,7 @@ export class DevicesListPage {
   async finished(param: string, details?: string) {
     const content = this.toastrContent.get(param);
     if (details && content && content.message) {
-      content.message.append(': ' + details);
+      content.message = content.message + ': ' + details;
     }
     const toast = await this.toastCtrl.create(content);
     toast.present();

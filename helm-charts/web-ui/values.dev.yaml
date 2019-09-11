@@ -37,7 +37,7 @@ adminUi:
       realmName: "test-realm"
       secret: "d674503c-a91d-4d05-bd91-8173cb182bec"
       clientName: "ubirch GmbH"
-      defaultDeviceType: "unknownDeviceType"
+      defaultDeviceType: "default_type"
 
   env:
     serverUrl: "https://api.console.dev.ubirch.com"
