@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {DeviceStub} from '../../../models/device-stub';
 import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
@@ -64,6 +64,10 @@ export class DevicesListPage {
 
   ionViewWillEnter() {
     this.restartPolling();
+  }
+
+  ionViewWillLeave() {
+    this.stopPolling();
   }
 
   private restartPolling() {
