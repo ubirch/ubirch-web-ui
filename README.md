@@ -16,9 +16,42 @@
 
         npm install -g ionic
 
-## Preparation for Different Clients
+## Preparation for Different Tenants
 
-For each client create a folder with the clients name in the ./resources/clients folder with the following structure:
+### Keycloak configuration
+
+For each tenant we have to create a new tenant realm in the keycloak 
+and connect it with the ubirch-2.0 centralised login realm (for single sign on).
+
+A script in the keycloak/realm-templates folder can create the import files for that. 
+Call create-new-tenant-realm4import.sh with the following parameters:
+
+1. the name of the tenant realm
+2. the server url with protocol and port if needed
+    
+Example:
+
+     ./create-new-tenant-realm4import.sh test-tenant-realm http://localhost:8080
+
+It will create two files:
+ * <REALM_NAME>-import.json
+ * <REALM_NAME>-connector-import.json
+ 
+TODO:
+
+1. in your keycloak instance create a new realm from file <REALM_NAME>-import.json
+2. in your ubirch-2.0 realm create a new client from file <REALM_NAME>-connector-import.json 
+to connect your ubirch-2.0 realm with your new realm in your keycloak instance for single sign on
+3. regenerate a new secret for the connector client in ubrich-2.0 realm
+4. add this secret to OpenId Connect Config of the IdentityProvider in your new tenant realm
+
+You also have to regenerate a new secret for the ubirch-2.0-user-access client in the new tenant realm:
+Add this secret to the environment settings of the app (see next section)
+
+
+### Tenant Resources
+
+For each tenant create a folder with the tenants name in the ./resources/clients folder with the following structure:
 
   > 
     > environments
@@ -87,12 +120,23 @@ from resources folder to src folder (as a preparation to serve, build or deploy 
 
 ### Test in Web Browser
 
-Enter the root directory and call the run-local script
+Enter the root directory and call the run-local script:
+
+without parameter the app is started with the test-realm tenant configuration
 (requires the keycloak running on localhost:8080 with realm "test-realm" existing)
 
 ```
     ./run-local.sh
 ```
+
+If you want to start another tenant configuration append the name of the tenant from resources folder
+
+Example:
+
+```
+    ./run-local.sh ubirch-default-realm
+```
+
 
 ### Test on Mobile Device
 

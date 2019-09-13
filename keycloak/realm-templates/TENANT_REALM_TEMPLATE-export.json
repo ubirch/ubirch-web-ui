@@ -301,6 +301,7 @@
         }
       ],
       "admin-cli": [],
+      "ubirch-2.0-user-access": [],
       "broker": [
         {
           "id": "45ba99db-d284-479c-8c00-68ae838b1749",
@@ -443,6 +444,67 @@
         "phone",
         "offline_access",
         "microprofile-jwt"
+      ]
+    },
+    {
+      "id": "15a7f0d3-3f2b-4f3d-8cf3-762cd0a03d63",
+      "clientId": "ubirch-2.0-user-access",
+      "name": "uBirch AdminUI 2.0",
+      "description": "uBirch AdminUI 2.0 auf localhost",
+      "rootUrl": "http://localhost:9101",
+      "adminUrl": "http://localhost:9101",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "**********",
+      "redirectUris": [
+        "http://localhost:9101/*",
+        "<SERVER_URL>/auth/realms/test-realm/broker/ubirch-2.0-keycloak-users/endpoint"
+      ],
+      "webOrigins": [
+        "http://localhost:9101"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": false,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "saml.assertion.signature": "false",
+        "saml.force.post.binding": "false",
+        "saml.multivalued.roles": "false",
+        "saml.encrypt": "false",
+        "access.token.signed.response.alg": "ES256",
+        "saml.server.signature": "false",
+        "saml.server.signature.keyinfo.ext": "false",
+        "exclude.session.state.from.auth.response": "false",
+        "id.token.signed.response.alg": "ES256",
+        "saml_force_name_id_format": "false",
+        "saml.client.signature": "false",
+        "tls.client.certificate.bound.access.tokens": "false",
+        "saml.authnstatement": "false",
+        "display.on.consent.screen": "false",
+        "saml.onetimeuse.condition": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "defaultClientScopes": [
+        "web-origins",
+        "role_list",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access"
       ]
     },
     {
