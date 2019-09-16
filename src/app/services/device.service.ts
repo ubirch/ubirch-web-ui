@@ -9,6 +9,7 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {DeviceTypeService} from './device-type.service';
 import {CreateDevicesFormData} from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
+import {DevicesListWrapper} from '../models/devices-list-wrapper';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +35,11 @@ export class DeviceService {
         pageNum,
         pageSize);
 
-    return this.http.get<DeviceStub[]>(url).pipe(
-        map(jsonDeviceStubs => jsonDeviceStubs.map(stub => new DeviceStub(stub))));
+    return this.http.get<DevicesListWrapper[]>(url).pipe(
+        map(listWrapper => {
+            const wrapper = new DevicesListWrapper(listWrapper);
+            return wrapper.devices;
+        }));
     }
 
     /**

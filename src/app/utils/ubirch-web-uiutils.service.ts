@@ -18,11 +18,9 @@ export class UbirchWebUIUtilsService {
       if (pageSize === undefined) {
         pageSize = this.defaultPageSize;
       }
+      const pageParam = pageNum - 1;
 
-      // calc first item index from pageNum
-      const startNum = (pageNum * pageSize) - pageSize;
-
-      url += `/from/${startNum}/maxrows/${pageSize}`;
+      url += `/page/${pageParam}/size/${pageSize}`;
     }
     return url;
 

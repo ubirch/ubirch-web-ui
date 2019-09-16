@@ -77,9 +77,8 @@ export class DevicesListPage {
           .pipe(
               startWith(0),
               switchMap(() => this.deviceService.reloadDeviceStubs(
-                  // TODO: activate pagination
-                  // this.currentPage,
-                  // environment.LIST_ITEMS_PER_PAGE
+                  this.currentPage,
+                  environment.LIST_ITEMS_PER_PAGE
               ))
           )
           .subscribe(
