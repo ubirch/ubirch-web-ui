@@ -9,9 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
    * display list of devices with creation state if returned
    * handle e.g. http-404 error with toast
 - device list filter
+- add spinner while loading data
 - adapt ui design
 
-## [0.0.4] - 2019-09-13
+## [0.0.4] - 2019-09-16
 ### Added
 - changelog
 - Creation process for new tenant -> create keycoak configuration/import files for new tenant
