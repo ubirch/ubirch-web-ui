@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {DeviceStub} from '../../../models/device-stub';
 import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
-import {startWith, switchMap} from 'rxjs/operators';
+import {startWith, switchMap, tap} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {ModalController, ToastController} from '@ionic/angular';
 import {NewDevicePopupComponent} from './popups/new-device-popup/new-device-popup.component';
 import {ConfirmDeleteDevicePopupComponent} from './popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {CreatedDevicesListPopupComponent} from './popups/created-devices-list-popup/created-devices-list-popup.component';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-list',
@@ -15,13 +16,14 @@ import {CreatedDevicesListPopupComponent} from './popups/created-devices-list-po
   styleUrls: ['devices-list-page.component.scss']
 })
 export class DevicesListPage {
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public deviceStubs: Array<DeviceStub> = [];
 
   polling = new Subscription();
 
   // pagination params
-  totalItems: number;
-  currentPage = 1;
+  totalItems = 0;
+  pageSize = environment.LIST_ITEMS_PER_PAGE;
   ionite: string;
 
   constructor(
@@ -66,6 +68,15 @@ export class DevicesListPage {
     this.restartPolling();
   }
 
+  ionViewDidEnter() {
+    this.paginator.page
+        .pipe(
+            tap(() => this.restartPolling())
+        )
+        .subscribe();
+
+  }
+
   ionViewWillLeave() {
     this.stopPolling();
   }
@@ -77,13 +88,15 @@ export class DevicesListPage {
           .pipe(
               startWith(0),
               switchMap(() => this.deviceService.reloadDeviceStubs(
-                  this.currentPage,
-                  environment.LIST_ITEMS_PER_PAGE
+                  this.paginator.pageIndex,
+                  this.pageSize
               ))
           )
           .subscribe(
-              devices =>
-                  this.deviceStubs = devices
+              wrapper => {
+                this.totalItems = wrapper.totalDevicesSize || 0;
+                this.deviceStubs = wrapper.devices || [];
+              }
           );
   }
 

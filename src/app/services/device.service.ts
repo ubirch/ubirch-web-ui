@@ -29,17 +29,14 @@ export class DeviceService {
      * @param pageNum number of the page for pagination
      * @param pageSize how many devices are maximal paged
      */
-    public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DeviceStub[]> {
+    public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DevicesListWrapper> {
     const url = UbirchWebUIUtilsService.addParamsToURL(
         this.devicesUrl,
         pageNum,
         pageSize);
 
     return this.http.get<DevicesListWrapper[]>(url).pipe(
-        map(listWrapper => {
-            const wrapper = new DevicesListWrapper(listWrapper);
-            return wrapper.devices;
-        }));
+        map(listWrapper => new DevicesListWrapper(listWrapper)));
     }
 
     /**

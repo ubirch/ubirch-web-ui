@@ -12,15 +12,14 @@ export class UbirchWebUIUtilsService {
 
   public static addParamsToURL(url: string, pageNum: number, pageSize: number): string {
 
-    if (pageNum !== undefined && pageNum > 0) {
+    if (pageNum !== undefined && pageNum >= 0) {
 
       // inizialize pageSize if not defined by paginator
       if (pageSize === undefined) {
         pageSize = this.defaultPageSize;
       }
-      const pageParam = pageNum - 1;
 
-      url += `/page/${pageParam}/size/${pageSize}`;
+      url += `/page/${pageNum}/size/${pageSize}`;
     }
     return url;
 
