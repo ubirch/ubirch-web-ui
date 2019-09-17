@@ -28,10 +28,13 @@ Call create-new-tenant-realm4import.sh with the following parameters:
 
 1. the name of the tenant realm
 2. the server url with protocol and port if needed
+3. the web app url of the ubirch web ui with protocol and port if needed
     
-Example:
+Examples:
 
-     ./create-new-tenant-realm4import.sh test-tenant-realm http://localhost:8080
+     ./create-new-tenant-realm4import.sh test-tenant-realm http://localhost:8080 http://localhost:9101
+     
+     ./create-new-tenant-realm4import.sh ubirch-default-realm https://id.dev.ubirch.com https://console.dev.ubirch.com
 
 It will create two files:
  * <REALM_NAME>-import.json
