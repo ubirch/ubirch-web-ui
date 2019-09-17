@@ -451,18 +451,18 @@
       "clientId": "ubirch-2.0-user-access",
       "name": "uBirch AdminUI 2.0",
       "description": "uBirch AdminUI 2.0 auf localhost",
-      "rootUrl": "http://localhost:9101",
-      "adminUrl": "http://localhost:9101",
+      "rootUrl": "<WEBAPP_URL>",
+      "adminUrl": "<WEBAPP_URL>",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "http://localhost:9101/*",
+        "<WEBAPP_URL>/*",
         "<SERVER_URL>/auth/realms/test-realm/broker/ubirch-2.0-keycloak-users/endpoint"
       ],
       "webOrigins": [
-        "http://localhost:9101"
+        "<WEBAPP_URL>"
       ],
       "notBefore": 0,
       "bearerOnly": false,
