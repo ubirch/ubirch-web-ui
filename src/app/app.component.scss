@@ -4,3 +4,44 @@
 // styles are for the entire app and not just one component. Additionally, this 
 // file can hold Sass mixins, functions, and placeholder classes to be imported 
 // and used throughout the application.
+
+.logo {
+  max-height: 250px;
+}
+
+.ubirch-brand {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+ion-content, ion-menu, ion-header, ion-toolbar, ion-title, ion-list, ion-item, ion-menu-toggle, ion-icon, ion-label {
+  --background: none;
+  --color: #ffffff;
+}
+
+.active-menu-item {
+  background: rgba(255,255,255,0.2);
+}
+
+.list-md {
+  background-color: transparent;
+}
+
+ion-icon {
+  color: #ffffff;
+  height: 30px;
+  width: 30px;
+}
+
+ion-label.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
+  font-size: 18px;
+}
+
+.item .sc-ion-label-md-h {
+  margin: 5px 0;
+  line-height: 1.2 !important;
+}
+
+ion-footer {
+  margin-bottom: 100px;
+}

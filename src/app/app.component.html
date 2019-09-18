@@ -1,31 +1,59 @@
 <ion-app>
   <ion-split-pane>
     <ion-menu type="overlay">
-      <ion-header>
+      <ion-header no-border>
         <ion-toolbar>
-          <ion-title>Menu</ion-title>
+          <ion-grid>
+            <ion-row class="ion-justify-content-center ion-margin-top">
+              <ion-col size="10">
+                <div>
+                  <img [src]="clientLogoPath" class="logo">
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-justify-content-center" *ngIf="addClientNameToLogo">
+              <ion-col>
+                <div class="ion-text-center">
+                  <h4>{{clientName}}</h4>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-toolbar>
       </ion-header>
       <ion-content>
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
-                {{p.title}}
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-          <ion-menu-toggle auto-hide="false">
-            <ion-item (click)='doLogout()'>
-              <ion-icon slot="start" name="close-circle"></ion-icon>
-              <ion-label>
-                Logout
-              </ion-label>
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" routerLinkActive="active-menu-item" lines="none">
+              <ion-grid>
+                <ion-row class="ion-justify-content-center">
+                  <ion-col size="8" class="ion-align-items-center">
+                    <ion-icon src="{{'assets/app-icons/'+p.icon}}" class="ion-padding-end ion-float-start  ion-padding-vertical"></ion-icon>
+                    <ion-label class="ion-float-left ion-padding-vertical">
+                      {{p.title}}
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
+      <ion-footer>
+        <ion-item>
+          <ion-grid>
+            <ion-row class="ion-justify-content-center">
+              <ion-col size="8" class="ion-align-items-center">
+                <img [src]="clientLogoPath" class="ion-padding-end ion-float-start ubirch-brand">
+                <ion-label class="ion-float-left ion-padding-vertical">
+                  powered by<br/>
+                  ubirch GmbH
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-footer>
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>
   </ion-split-pane>

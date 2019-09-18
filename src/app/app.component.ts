@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {KeycloakService} from 'keycloak-angular';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -13,22 +14,32 @@ import {KeycloakService} from 'keycloak-angular';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Startseite',
+      title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'home.svg'
     },
     {
-      title: 'Devices',
+      title: 'Things',
       url: '/devices',
-      icon: 'list'
+      icon: 'list.svg'
+    },
+    {
+      title: 'Logout',
+      url: '/logout',
+      icon: 'logout.svg'
     }
   ];
+
+  clientName = environment.client_name || 'Mandant';
+  addClientNameToLogo = environment.client_name || false;
+
+  clientLogoFileName = environment.client_logo_filename || 'logo.svg';
+  clientLogoPath = '/assets/client/images/' + this.clientLogoFileName;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private keycloakService: KeycloakService
+    private statusBar: StatusBar
   ) {
     this.initializeApp();
   }
@@ -39,9 +50,5 @@ export class AppComponent {
       this.splashScreen.hide();
       console.log('version 0.0.4');
     });
-  }
-
-  doLogout() {
-    this.keycloakService.logout();
   }
 }

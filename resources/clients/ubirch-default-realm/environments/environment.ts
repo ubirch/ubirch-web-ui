@@ -18,7 +18,7 @@ export const environment = {
   production: false,
   serverUrl: 'http://localhost:8081',
   apiPrefix: '/ubirch-web-ui/api/v1/',
-  client_logo_filename: 'UBIRCH_Bildmarke_black.svg',
+  client_logo_filename: 'UBIRCH_Wort_Bildmarke_white.svg',
   client_startpage_image_filename: 'UBIRCH_Wort_Bildmarke_black.svg',
   client_description_filename: 'description.md',
   client_favicon_filename: 'favicon.ico',

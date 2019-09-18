@@ -25,6 +25,15 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+body {
+  background: url(/assets/app-images/ubirch_grey_bg.jpg) no-repeat center/cover fixed;
+}
+
+ion-toolbar {
+  height: 350px;
+}
+
+
 .config-area textarea.native-textarea.sc-ion-textarea-md {
   min-height: 150px;
   border: solid 1px lightgrey;
