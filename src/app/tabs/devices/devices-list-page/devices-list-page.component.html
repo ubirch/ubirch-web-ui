@@ -1,12 +1,10 @@
-
-<div slot="fixed">
-  <ion-item slot="end">
-    <ion-button size="small" slot="end" (click)="presentNewDeviceModal()">
-      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-      new device
-    </ion-button>
-  </ion-item>
-</div>
+<ubirch-web-ui-header
+        title="Your Devices"
+        headerRightLabel="Total Devices:"
+        [headerRightValue]="totalDevices"
+        [actionButtons]="actionButtons"
+        (buttonClicked)="handleButtonClick($event)"
+></ubirch-web-ui-header>
 
 <ion-content>
   <mat-paginator #paginator

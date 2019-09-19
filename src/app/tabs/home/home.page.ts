@@ -17,7 +17,7 @@ export class HomePage {
     iconName: 'settings',
     action: 'changeUserProfile'
   })];
-  activeDevices = 42;
+  activeDevices = 21;
   username = 'Max Mustermann';
 
   handleButtonClick(action: string) {

@@ -9,6 +9,7 @@ import {NewDevicePopupComponent} from './popups/new-device-popup/new-device-popu
 import {ConfirmDeleteDevicePopupComponent} from './popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {CreatedDevicesListPopupComponent} from './popups/created-devices-list-popup/created-devices-list-popup.component';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {HeaderActionButton} from '../../../components/header/header-action-button';
 
 @Component({
   selector: 'app-list',
@@ -54,6 +55,22 @@ export class DevicesListPage {
       color: 'danger'
     }]
   ]);
+
+  actionButtons = [new HeaderActionButton({
+    color: 'success',
+    label: 'Add New Device',
+    iconName: 'add-circle-outline',
+    action: 'addDevice'
+  })];
+  totalDevices = 42;
+
+  handleButtonClick(action: string) {
+    switch (action) {
+      case 'addDevice':
+        this.presentNewDeviceModal();
+        break;
+    }
+  }
 
   async finished(param: string, details?: string) {
     const content = this.toastrContent.get(param);
