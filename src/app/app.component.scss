@@ -14,9 +14,12 @@
   max-height: 100px;
 }
 
-ion-content, ion-menu, ion-header, ion-toolbar, ion-title, ion-list, ion-item, ion-menu-toggle, ion-icon, ion-label {
+ion-content, ion-menu, ion-item {
   --background: none;
-  --color: #ffffff;
+  color: #ffffff;
+  --color-activated: #ffffff;
+  --color-focused: #ffffff;
+  --color-hover: #e6e6e6;
 }
 
 .active-menu-item {
@@ -35,6 +38,7 @@ ion-icon {
 
 ion-label.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
   font-size: 18px;
+  font-weight: 400;
 }
 
 .item .sc-ion-label-md-h {
@@ -44,4 +48,11 @@ ion-label.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
 
 ion-footer {
   margin-bottom: 100px;
+}
+
+ion-icon {
+  padding: 20px;
+}
+ion-label {
+  padding: 20px;
 }

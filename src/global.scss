@@ -29,10 +29,11 @@ body {
   background: url(/assets/app-images/ubirch_grey_bg.jpg) no-repeat center/cover fixed;
 }
 
-ion-toolbar {
+ion-header ion-toolbar:first-child {
   height: 350px;
+  --ion-padding: 50px;
+  padding-top: 50px;
 }
-
 
 .config-area textarea.native-textarea.sc-ion-textarea-md {
   min-height: 150px;
@@ -41,4 +42,14 @@ ion-toolbar {
   border-radius: 4px;
   margin-bottom: 5px;
   background-color: #eee;
+}
+
+.page-title {
+  font-size: 45px;
+  font-weight: normal;
+  margin-bottom: 50px;
+}
+
+ion-button {
+  --border-radius: 0;
 }
