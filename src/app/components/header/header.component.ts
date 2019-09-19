@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {environment} from '../../../environments/environment';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {HeaderActionButton} from './header-action-button';
 
 @Component({
   selector: 'ubirch-web-ui-header',
@@ -7,20 +7,18 @@ import {environment} from '../../../environments/environment';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @Input() defaultHref: string = undefined;
+  @Input() title = '';
+  @Input() actionButtons: HeaderActionButton[] = [];
+  @Input() headerRightLabel = '';
+  @Input() headerRightValue: string;
+  @Output() buttonClicked = new EventEmitter<string>();
 
   constructor() { }
 
-  clientName = environment.client_name || 'Mandant';
-  addClientNameToLogo = environment.client_name || false;
-
-  clientLogoFileName = environment.client_logo_filename || 'logo.svg';
-  clientLogoPath = '/assets/client/images/' + this.clientLogoFileName;
-
   ngOnInit() {}
 
-  openClientUrl() {
-    console.log('Open Client Url not yet implemented!');
+  _buttonClicked(action: string) {
+    this.buttonClicked.emit(action);
   }
 
 }

@@ -1,16 +1,46 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-      <ion-back-button [defaultHref]="defaultHref"></ion-back-button>
-    </ion-buttons>
-    <ion-buttons slot="start">
-      <ion-button (click)='openClientUrl()'>
-        <img [src]="clientLogoPath" class="logo">
-        <ng-container *ngIf="addClientNameToLogo">
-          {{clientName}}
-        </ng-container>
-      </ion-button>
-    </ion-buttons>
+  <ion-toolbar padding-horizontal padding-top>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <div class="ion-text-left page-title">
+            {{title}}
+          </div>
+        </ion-col>
+        <ion-col size="6">
+          <div class="ion-text-right" *ngIf="headerRightValue">
+            <ion-grid>
+              <ion-row class="ion-justify-content-end">
+                <ion-col size="8" class="ion-align-items-center">
+                  <ion-label  class="header-right-label">
+                    {{headerRightLabel}}
+                  </ion-label>
+                  <span>{{headerRightValue}}</span>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <div class="ion-justify-content-start">
+            <ion-button *ngFor="let but of actionButtons" [color]="but.color" (click)="_buttonClicked(but.action)">
+                <ion-icon *ngIf="but.iconPath; else buttonWithIcon" slot="start" [src]="but.iconPath" name="settings"></ion-icon>
+                <ng-template #buttonWithIcon>
+                    <ion-icon slot="start" [name]="but.iconName"></ion-icon>
+                </ng-template>
+              {{but.label}}
+            </ion-button>
+          </div>
+        </ion-col>
+        <ion-col size="6">
+          <div class="ion-justify-content-end">
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
