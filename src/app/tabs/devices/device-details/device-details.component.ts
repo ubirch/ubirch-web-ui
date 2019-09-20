@@ -4,6 +4,7 @@ import {DeviceService} from '../../../services/device.service';
 import {Device} from '../../../models/device';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ToastController} from '@ionic/angular';
+import {HeaderActionButton} from '../../../components/header/header-action-button';
 
 @Component({
   selector: 'app-device-details',
@@ -16,6 +17,7 @@ export class DeviceDetailsComponent implements OnInit {
   id: string;
   private deviceHasUnsavedChanges = false;
   loadedDevice: Device;
+  creationDate = 'September 6, 2019, 2:19 pm';
 
   constructor(
       private route: ActivatedRoute,
@@ -23,6 +25,21 @@ export class DeviceDetailsComponent implements OnInit {
       private deviceService: DeviceService,
       public toastController: ToastController
   ) { }
+
+  actionButtons = [new HeaderActionButton({
+    color: 'dark',
+    label: 'Back to DevicesList',
+    iconName: 'arrow-back',
+    action: 'back2DevicesList'
+  })];
+
+  handleButtonClick(action: string) {
+    switch (action) {
+      case 'back2DevicesList':
+        console.log('back2DevicesList: NOT YET IMPLEMENTED!!!');
+        break;
+    }
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -82,6 +99,10 @@ export class DeviceDetailsComponent implements OnInit {
 
   get hwDeviceId(): any {
     return this.deviceDetailsForm.get('hwDeviceId').value;
+  }
+
+  get title(): string {
+    return this.loadedDevice ? this.loadedDevice.description : '';
   }
 
 }

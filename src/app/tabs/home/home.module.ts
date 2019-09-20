@@ -5,7 +5,6 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
-import {MarkdownModule} from 'ngx-markdown';
 import {ComponentsModule} from '../../components/components.module';
 
 @NgModule({
@@ -19,7 +18,6 @@ import {ComponentsModule} from '../../components/components.module';
         component: HomePage
       }
     ]),
-    MarkdownModule.forChild(),
     ComponentsModule
   ],
   declarations: [HomePage]

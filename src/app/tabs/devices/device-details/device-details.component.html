@@ -1,4 +1,10 @@
-<ubirch-web-ui-header defaultHref="devices"></ubirch-web-ui-header>
+<ubirch-web-ui-header
+        [title]="title"
+        headerRightLabel="Created:"
+        [headerRightValue]="creationDate"
+        [actionButtons]="actionButtons"
+        (buttonClicked)="handleButtonClick($event)"
+></ubirch-web-ui-header>
 
 <ion-content>
   <ng-container *ngIf="id">

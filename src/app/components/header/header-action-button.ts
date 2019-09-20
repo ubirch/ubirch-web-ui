@@ -6,6 +6,7 @@ export class HeaderActionButton {
     public iconPath: string;
     public color: string;
     public action: string; // for eventEmitter
+    public isBackButton: boolean;
 
     constructor(jsonUser: any) {
         if (jsonUser) {
@@ -14,6 +15,7 @@ export class HeaderActionButton {
             this.iconPath = jsonUser.iconPath;
             this.color = jsonUser.color || 'dark';
             this.action = jsonUser.action || 'undefined';
+            this.isBackButton = jsonUser.isBackButton || false;
         }
         return this;
     }
