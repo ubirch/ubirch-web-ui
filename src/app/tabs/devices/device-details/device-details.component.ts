@@ -32,7 +32,7 @@ export class DeviceDetailsComponent implements OnInit {
             color: 'light'
         }],
         ['save', {
-            message: 'Device changes saved',
+            message: '<ion-icon src="assets/app-icons/information.svg"></ion-icon>    Device changes saved',
             duration: 4000,
             color: 'success'
         }],
