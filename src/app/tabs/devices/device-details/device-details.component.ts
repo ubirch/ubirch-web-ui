@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DeviceService} from '../../../services/device.service';
 import {Device} from '../../../models/device';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ToastController} from '@ionic/angular';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
-import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-device-details',
@@ -25,7 +24,7 @@ export class DeviceDetailsComponent implements OnInit {
       private fb: FormBuilder,
       private deviceService: DeviceService,
       public toastController: ToastController,
-      public location: Location
+      public router: Router
   ) { }
 
   actionButtons = [new HeaderActionButton({
@@ -38,7 +37,7 @@ export class DeviceDetailsComponent implements OnInit {
   handleButtonClick(action: string) {
     switch (action) {
       case 'back2DevicesList':
-        this.location.back();
+        this.router.navigate(['devices']);
         break;
     }
   }
