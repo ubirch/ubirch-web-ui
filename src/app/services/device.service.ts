@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import {DeviceStub} from '../models/device-stub';
 import {Observable, of} from 'rxjs';
 import {Device} from '../models/device';
 import {FormGroup} from '@angular/forms';
 import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {DeviceTypeService} from './device-type.service';
 import {CreateDevicesFormData} from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
 import {DevicesListWrapper} from '../models/devices-list-wrapper';
+import {UserService} from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,7 @@ export class DeviceService {
   constructor(
       private utils: UbirchWebUIUtilsService,
       private deviceTypeService: DeviceTypeService,
+      private userService: UserService,
       private http: HttpClient
   ) { }
 
@@ -36,7 +37,12 @@ export class DeviceService {
         pageSize);
 
     return this.http.get<DevicesListWrapper[]>(url).pipe(
-        map(listWrapper => new DevicesListWrapper(listWrapper)));
+        map(listWrapper => new DevicesListWrapper(listWrapper)),
+        tap(listWrapper => {
+            if (listWrapper && listWrapper.totalDevicesSize) {
+                this.userService.setNumberOfDevices(listWrapper.totalDevicesSize);
+            }
+        }));
     }
 
     /**

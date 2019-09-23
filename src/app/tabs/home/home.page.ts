@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HeaderActionButton} from '../../components/header/header-action-button';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   constructor(
+      private userService: UserService
   ) { }
 
   actionButtons = [new HeaderActionButton({
@@ -17,8 +19,8 @@ export class HomePage {
     iconName: 'settings',
     action: 'changeUserProfile'
   })];
-  activeDevices = 21;
-  username = 'Max Mustermann';
+  activeDevices = 0;
+  username = '';
 
   handleButtonClick(action: string) {
     switch (action) {
@@ -27,4 +29,16 @@ export class HomePage {
         break;
     }
   }
+
+  ngOnInit(): void {
+    this.userService.observableAccountInfo.subscribe(accountInfo => {
+      if (accountInfo) {
+        this.username = accountInfo.user.toString();
+        this.activeDevices = accountInfo.numberOfDevices;
+      } else {
+        this.userService.getAccountInfo().subscribe();
+      }
+    });
+  }
+
 }

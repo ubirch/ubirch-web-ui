@@ -13,4 +13,10 @@ export class User {
         }
         return this;
     }
+
+    public toString(): string {
+        const userStr = this.lastname ?
+            (this.firstname ? this.firstname + ' ' + this.lastname : this.lastname) : this.username ? this.username : '';
+        return userStr;
+    }
 }

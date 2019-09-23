@@ -22,22 +22,22 @@ export class DeviceDetailsComponent implements OnInit {
 
   toastrContent: Map<string, any> = new Map([
         ['del', {
-            message: 'Device deleted',
+            message: 'Thing deleted',
             duration: 4000,
             color: 'success'
         }],
         ['cancl_del', {
-            message: 'Deleting Device canceled',
+            message: 'Deleting Things canceled',
             duration: 4000,
             color: 'light'
         }],
         ['save', {
-            message: '<ion-icon src="assets/app-icons/information.svg"></ion-icon>    Device changes saved',
+            message: '<ion-icon src="assets/app-icons/information.svg"></ion-icon>    Changes on Thing saved',
             duration: 4000,
             color: 'success'
         }],
         ['cancl_save', {
-            message: 'Device details changes discarded',
+            message: 'Changes on Details of Thing discarded',
             duration: 4000,
             color: 'light'
         }],
@@ -59,7 +59,7 @@ export class DeviceDetailsComponent implements OnInit {
 
   actionButtons = [new HeaderActionButton({
     color: 'dark',
-    label: 'Back to DevicesList',
+    label: 'Back to Things List',
     iconPath: 'assets/app-icons/back-button.svg',
     action: 'back2DevicesList'
   })];
@@ -99,7 +99,7 @@ export class DeviceDetailsComponent implements OnInit {
         this.reloadDevice(this.id);
     } else {
       // handle url missmatch!!!!
-        this.finished('err', 'devices details url called without hwDeviceId');
+        this.finished('err', 'things details url called without ID');
         this.router.navigate(['devices']);
     }
   }

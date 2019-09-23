@@ -62,7 +62,6 @@ export class DevicesListPage {
     iconName: 'add-circle-outline',
     action: 'addDevice'
   })];
-  totalDevices = 42;
 
   handleButtonClick(action: string) {
     switch (action) {
