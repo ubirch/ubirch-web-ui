@@ -6,11 +6,17 @@
         (buttonClicked)="handleButtonClick($event)"
 ></ubirch-web-ui-header>
 
-<ion-content padding>
-  <mat-paginator #paginator
-                 [length]="totalItems"
-                 [pageSize]="pageSize">
-  </mat-paginator>
+<ion-content padding-horizontal>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
+      <ion-col size="12">
+        <mat-paginator #paginator
+                       [length]="totalItems"
+                       [pageSize]="pageSize">
+        </mat-paginator>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-list>
     <ion-item *ngFor="let item of deviceStubs">
       <ion-label [routerLink]="['/devices','details', item.hwDeviceId]">
