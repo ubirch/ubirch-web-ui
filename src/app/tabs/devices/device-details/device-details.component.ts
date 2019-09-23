@@ -5,6 +5,7 @@ import {Device} from '../../../models/device';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ToastController} from '@ionic/angular';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-device-details',
@@ -23,20 +24,21 @@ export class DeviceDetailsComponent implements OnInit {
       private route: ActivatedRoute,
       private fb: FormBuilder,
       private deviceService: DeviceService,
-      public toastController: ToastController
+      public toastController: ToastController,
+      public location: Location
   ) { }
 
   actionButtons = [new HeaderActionButton({
     color: 'dark',
     label: 'Back to DevicesList',
-    iconName: 'arrow-back',
+    iconPath: 'assets/app-icons/back-button.svg',
     action: 'back2DevicesList'
   })];
 
   handleButtonClick(action: string) {
     switch (action) {
       case 'back2DevicesList':
-        console.log('back2DevicesList: NOT YET IMPLEMENTED!!!');
+        this.location.back();
         break;
     }
   }
@@ -91,6 +93,14 @@ export class DeviceDetailsComponent implements OnInit {
               this.deviceHasUnsavedChanges = false;
           }
       );
+  }
+
+  deleteDevice() {
+    console.log('DELETE DEVICE FROM DETAILS NOT YET IMPLEMENTED');
+  }
+
+  discardChanges() {
+    console.log('Discard changes of device properties NOT YET IMPLEMENTED');
   }
 
   private getPrettyJSON(json: string): string {
