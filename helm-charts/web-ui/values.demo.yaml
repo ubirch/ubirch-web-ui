@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: ubirch/ubirch-web-ui
-  tag: latest
+  tag: demo
   pullPolicy: Always
 
 service:
@@ -23,15 +23,15 @@ ingress:
     kubernetes.io/ingress.allow-http: "false"
   path: /
   hosts:
-    - console.dev.ubirch.com
+    - console.demo.ubirch.com
   tls:
-    - secretName: console-dev-ubirch-com-certificate
+    - secretName: console-demo-ubirch-com-certificate
       hosts:
-        - console.dev.ubirch.com
+        - console.demo.ubirch.com
 
 adminUi:
   keyCloak:
-    url: "https://id.dev.ubirch.com/auth"
+    url: "https://id.demo.ubirch.com/auth"
     clientId: "ubirch-2.0-user-access"
     testRealm:
       realmName: "ubirch-default-realm"
