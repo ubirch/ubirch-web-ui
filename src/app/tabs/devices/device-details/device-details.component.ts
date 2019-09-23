@@ -3,8 +3,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DeviceService} from '../../../services/device.service';
 import {Device} from '../../../models/device';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {ToastController} from '@ionic/angular';
+import {ModalController, ToastController} from '@ionic/angular';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
+import {ConfirmDeleteDevicePopupComponent} from '../devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 
 @Component({
   selector: 'app-device-details',
@@ -19,12 +20,41 @@ export class DeviceDetailsComponent implements OnInit {
   loadedDevice: Device;
   creationDate = 'September 6, 2019, 2:19 pm';
 
-  constructor(
+  toastrContent: Map<string, any> = new Map([
+        ['del', {
+            message: 'Device deleted',
+            duration: 4000,
+            color: 'success'
+        }],
+        ['cancl_del', {
+            message: 'Deleting Device canceled',
+            duration: 4000,
+            color: 'light'
+        }],
+        ['save', {
+            message: 'Device changes saved',
+            duration: 4000,
+            color: 'success'
+        }],
+        ['cancl_save', {
+            message: 'Device details changes discarded',
+            duration: 4000,
+            color: 'light'
+        }],
+        ['err', {
+            message: 'Error occurred',
+            duration: 4000,
+            color: 'danger'
+        }]
+    ]);
+
+    constructor(
       private route: ActivatedRoute,
       private fb: FormBuilder,
       private deviceService: DeviceService,
-      public toastController: ToastController,
-      public router: Router
+      public toastCtrl: ToastController,
+      public router: Router,
+      private modalCtrl: ModalController
   ) { }
 
   actionButtons = [new HeaderActionButton({
@@ -37,35 +67,55 @@ export class DeviceDetailsComponent implements OnInit {
   handleButtonClick(action: string) {
     switch (action) {
       case 'back2DevicesList':
-        this.router.navigate(['devices']);
+        this.navigate2DevicesList();
         break;
     }
+  }
+
+  async finished(param: string, details?: string) {
+      const content = this.toastrContent.get(param);
+      if (details && content && content.message) {
+          content.message = content.message + ': ' + details;
+      }
+      const toast = await this.toastCtrl.create(content);
+      toast.present();
+  }
+
+
+  navigate2DevicesList() {
+      this.router.navigate(['devices']);
   }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
+        this.reloadDevice(this.id);
+    } else {
+      // handle url missmatch!!!!
+        this.finished('err', 'devices details url called without hwDeviceId');
+        this.router.navigate(['devices']);
+    }
+  }
+
+  reloadDevice(id: string) {
       this.deviceDetailsForm = this.fb.group({
-        hwDeviceId: [''],
-        description: [''],
-        apiConfig: ['']
+          hwDeviceId: [''],
+          description: [''],
+          apiConfig: ['']
       });
       this.patchForm();
 
       this.deviceService.loadDevice(this.id)
-        .subscribe(
-            loadedDevice =>  {
-              this.loadedDevice = new Device(loadedDevice);
-              if (this.loadedDevice) {
-                this.deviceDetailsForm.patchValue(this.patchForm(this.loadedDevice));
-                this.deviceHasUnsavedChanges = false;
-                this.watchFormControls();
+          .subscribe(
+              loadedDevice =>  {
+                  this.loadedDevice = new Device(loadedDevice);
+                  if (this.loadedDevice) {
+                      this.deviceDetailsForm.patchValue(this.patchForm(this.loadedDevice));
+                      this.deviceHasUnsavedChanges = false;
+                      this.watchFormControls();
+                  }
               }
-            }
-        );
-    } else {
-      // TODO: handle url missmatch!!!!
-    }
+          );
   }
 
   private patchForm(device?: Device): any {
@@ -89,17 +139,40 @@ export class DeviceDetailsComponent implements OnInit {
           updatedDevice => {
               this.loadedDevice = new Device(updatedDevice);
               this.patchForm(this.loadedDevice);
+              this.finished('save');
               this.deviceHasUnsavedChanges = false;
           }
       );
   }
 
-  deleteDevice() {
-    console.log('DELETE DEVICE FROM DETAILS NOT YET IMPLEMENTED');
+  async confirmDeviceDelete() {
+      const modal = await this.modalCtrl.create({
+          component: ConfirmDeleteDevicePopupComponent
+      });
+      modal.onDidDismiss().then((detail: any) => {
+          if (detail !== null && detail.data && detail.data.confirmed) {
+              this.deviceService.deleteDevice(
+                  this.loadedDevice.hwDeviceId)
+                  .subscribe(
+                      _ => {
+                          this.navigate2DevicesList();
+                          this.finished('del');
+                      },
+                      err => this.finished(
+                          'err',
+                          err.toString()));
+          } else {
+              this.finished('cancl_del');
+          }
+      });
+      await modal.present();
   }
 
   discardChanges() {
-    console.log('Discard changes of device properties NOT YET IMPLEMENTED');
+      this.finished('cancl_save');
+      if (this.id) {
+          this.reloadDevice(this.id);
+      }
   }
 
   private getPrettyJSON(json: string): string {

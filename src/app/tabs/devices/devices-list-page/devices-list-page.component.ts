@@ -29,7 +29,7 @@ export class DevicesListPage {
 
   constructor(
       private deviceService: DeviceService,
-      private modalController: ModalController,
+      private modalCtrl: ModalController,
       private toastCtrl: ToastController
   ) {}
 
@@ -124,7 +124,7 @@ export class DevicesListPage {
   }
 
   async confirmDeviceDelete(device: DeviceStub) {
-    const modal = await this.modalController.create({
+    const modal = await this.modalCtrl.create({
       component: ConfirmDeleteDevicePopupComponent
     });
     modal.onDidDismiss().then((detail: any) => {
@@ -148,7 +148,7 @@ export class DevicesListPage {
   }
 
   async presentNewDeviceModal() {
-    const modal = await this.modalController.create({
+    const modal = await this.modalCtrl.create({
         component: NewDevicePopupComponent
     });
     modal.onDidDismiss().then((details: any) => {
@@ -176,7 +176,7 @@ export class DevicesListPage {
   }
 
   async presentDevicesCreatedModal(createdDevice: Map<string, string>, errMeg?: string) {
-    const modal = await this.modalController.create({
+    const modal = await this.modalCtrl.create({
       component: CreatedDevicesListPopupComponent,
       componentProps: {
         deviceCreateStates: createdDevice,
