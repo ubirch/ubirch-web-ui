@@ -24,8 +24,16 @@ export class Device {
         this.hwDeviceId = jsonDevice.hwDeviceId;
         this.description = jsonDevice.description || '';
         this.deviceType = jsonDevice.deviceType || environment.default_device_type;
-        this.apiConfig = jsonDevice.apiConfig || '';
-        this.deviceConfig = jsonDevice.deviceConfig || '';
+        this.apiConfig = '';
+        this.deviceConfig = '';
+        if (jsonDevice.attributes) {
+            if (jsonDevice.attributes.attributesApiGroup && jsonDevice.attributes.attributesApiGroup.length > 0) {
+                this.apiConfig = jsonDevice.attributes.attributesApiGroup[0];
+            }
+            if (jsonDevice.attributes.attributesDeviceGroup && jsonDevice.attributes.attributesDeviceGroup.length > 0) {
+                this.deviceConfig = jsonDevice.attributes.attributesDeviceGroup[0];
+            }
+        }
 
         if (jsonDevice.owner) {
             this.owner = new User(jsonDevice.owner);

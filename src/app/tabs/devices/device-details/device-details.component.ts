@@ -87,6 +87,13 @@ export class DeviceDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.deviceDetailsForm = this.fb.group({
+      hwDeviceId: [''],
+      description: [''],
+      apiConfig: ['']
+    });
+    this.patchForm();
+
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
         this.reloadDevice(this.id);
@@ -98,17 +105,10 @@ export class DeviceDetailsComponent implements OnInit {
   }
 
   reloadDevice(id: string) {
-      this.deviceDetailsForm = this.fb.group({
-          hwDeviceId: [''],
-          description: [''],
-          apiConfig: ['']
-      });
-      this.patchForm();
-
       this.deviceService.loadDevice(this.id)
           .subscribe(
               loadedDevice =>  {
-                  this.loadedDevice = new Device(loadedDevice);
+                  this.loadedDevice = loadedDevice;
                   if (this.loadedDevice) {
                       this.deviceDetailsForm.patchValue(this.patchForm(this.loadedDevice));
                       this.deviceHasUnsavedChanges = false;
