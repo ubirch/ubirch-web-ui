@@ -5,12 +5,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- device list filter
+- add spinner while loading data
+- device list with two columns
+- add device creation date
+
+## [0.1] - 2019-09-24
+First styled functional complete version (just filtering devices list missing)
+
+### Added
 - handle failed bulk creation of devices
    * display list of devices with creation state if returned
    * handle e.g. http-404 error with toast
-- device list filter
-- add spinner while loading data
-- adapt ui design
+- adapt ui design: styled
+
+### Changed
+- renamed several labels in UI:
+    * hwDeviceId -> ID
+    * device -> thing
+    * create -> register 
+
+### Removed
+- static device creation date dummy (no creation date displayed currently)
 
 ## [0.0.4] - 2019-09-16
 ### Added
