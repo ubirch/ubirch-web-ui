@@ -124,7 +124,10 @@ export class DevicesListPage {
 
   async confirmDeviceDelete(device: DeviceStub) {
     const modal = await this.modalCtrl.create({
-      component: ConfirmDeleteDevicePopupComponent
+      component: ConfirmDeleteDevicePopupComponent,
+      componentProps: {
+        devices: [device]
+      }
     });
     modal.onDidDismiss().then((detail: any) => {
       if (detail !== null && detail.data && detail.data.confirmed) {

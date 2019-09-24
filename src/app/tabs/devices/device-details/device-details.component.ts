@@ -147,7 +147,10 @@ export class DeviceDetailsComponent implements OnInit {
 
   async confirmDeviceDelete() {
       const modal = await this.modalCtrl.create({
-          component: ConfirmDeleteDevicePopupComponent
+          component: ConfirmDeleteDevicePopupComponent,
+          componentProps: {
+              devices: [this.loadedDevice]
+          }
       });
       modal.onDidDismiss().then((detail: any) => {
           if (detail !== null && detail.data && detail.data.confirmed) {

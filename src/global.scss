@@ -29,6 +29,11 @@ body {
   background: url(/assets/app-images/ubirch_grey_bg.jpg) no-repeat center/cover fixed;
 }
 
+a {
+  color: var(--ion-color-dark);
+  cursor: pointer;
+}
+
 ion-header ion-toolbar:first-child {
   height: 350px;
   --ion-padding: 50px;
@@ -55,4 +60,11 @@ ion-button {
 
 .padding-row {
   height: 100px;
+}
+
+.icon-color-white {
+  fill:#fff;
+}
+.icon-color-black {
+  fill:#000;
 }

@@ -1,11 +1,57 @@
 <ion-content>
-  <ion-text>
-    <h2>Delete Device - Please Confirm</h2>
-    <p>Do you really want to delete the selected devices?</p>
-    <p>If you delete a device all stored data of this device will get lost.</p>
-  </ion-text>
-  <ion-button expand="full" (click)="deleteDevice()" >
-    <ion-icon name="trash"></ion-icon>
-    <ion-label>delete</ion-label>
-  </ion-button>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-end padding-row">
+      <ion-text><h1><a (click)="dismiss()">X</a></h1></ion-text>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-center">
+          <h1><ion-icon src="assets/app-icons/delete.svg"></ion-icon> Delete Thing</h1>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-start">
+          <p>Do you really want to delete the selected thing?</p>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-start">
+          <ion-item *ngFor="let device of devices">
+            <ion-label>
+              <h2>Device 1:</h2>
+              <p>{{device.hwDeviceId}}</p>
+              <p>{{device.description}}</p>
+            </ion-label>
+          </ion-item>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-start">
+          <p><strong>Note:</strong> If you delete a thing all stored data of this thing will get lost.</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+  <ion-row>
+      <ion-col>
+        <ion-button color="danger" expand="full" (click)="deleteDevice()" margin-vertical>
+          <ion-label>Delete</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button color="light" expand="full" (click)="dismiss()" >
+          <ion-label>Cancel</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
  </ion-content>
