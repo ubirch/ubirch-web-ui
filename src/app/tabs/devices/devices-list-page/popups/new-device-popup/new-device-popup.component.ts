@@ -66,6 +66,13 @@ export class NewDevicePopupComponent implements OnInit {
   get defaultDeviceType(): string {
     return environment.default_device_type;
   }
+
+  dismiss() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.modalCtrl.dismiss();
+  }
+
 }
 
 export class CreateDevicesFormData {

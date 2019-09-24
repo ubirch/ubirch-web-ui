@@ -1,14 +1,57 @@
 <ion-content>
-  <form [formGroup]="deviceDetailsForm">
-    <ion-item>
-      <ion-label slot="start">hwDeviceId<ion-text color="danger">*</ion-text>:</ion-label>
-      <ion-input formControlName="hwDeviceId"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label slot="start">description:</ion-label>
-      <ion-input formControlName="description"></ion-input>
-    </ion-item>
+  <ion-grid class="popup-grid">
+    <ion-row class="ion-align-items-center ion-justify-content-end popup-padding-row">
+      <ion-text><h1><a (click)="dismiss()">X</a></h1></ion-text>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-center">
+          <h1>Register new Things</h1>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card padding>
+          <ion-card-content>
+            <form [formGroup]="deviceDetailsForm">
+              <ion-item margin-bottom>
+                <ion-label slot="start">ID:<ion-text color="danger">*</ion-text>:</ion-label>
+                <ion-textarea rows="3" formControlName="hwDeviceId"></ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-label slot="start">Description:</ion-label>
+                <ion-input formControlName="description"></ion-input>
+              </ion-item>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-start">
+          <p><strong>Note:</strong> By using a ( , ) you can directly register more than one thing.</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-    <ion-button expand="full" (click)="createDevice()" [disabled]="!deviceDetailsForm.valid">Create</ion-button>
-  </form>
+  <ion-grid class="popup-grid">
+    <ion-row>
+      <ion-col>
+        <ion-button color="success" expand="full" margin-vertical
+                    (click)="createDevice()" [disabled]="!deviceDetailsForm.valid">
+          <ion-label>Register</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button color="light" expand="full" (click)="dismiss()" >
+          <ion-label>Cancel</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

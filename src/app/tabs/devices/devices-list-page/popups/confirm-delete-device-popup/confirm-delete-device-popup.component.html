@@ -1,6 +1,6 @@
 <ion-content>
-  <ion-grid>
-    <ion-row class="ion-align-items-center ion-justify-content-end padding-row">
+  <ion-grid class="popup-grid">
+    <ion-row class="ion-align-items-center ion-justify-content-end popup-padding-row">
       <ion-text><h1><a (click)="dismiss()">X</a></h1></ion-text>
     </ion-row>
     <ion-row>
@@ -38,7 +38,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-grid>
+  <ion-grid class="popup-grid">
   <ion-row>
       <ion-col>
         <ion-button color="danger" expand="full" (click)="deleteDevice()" margin-vertical>
