@@ -29,8 +29,11 @@ export class CreatedDevicesListPopupComponent implements OnInit {
 
   ngOnInit() {}
 
-  close() {
+  dismiss() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
     this.modalCtrl.dismiss();
   }
+
 
 }

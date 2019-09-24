@@ -1,38 +1,68 @@
 <ion-content>
-  <ion-text>
-    <h2>Devices created</h2>
-    <h3>Device creation states:</h3>
-    <ng-container *ngIf="successful && successful.size > 0">
-      <ion-list>
-        <ion-item *ngFor="let item of successful | keyvalue"
-                  [routerLink]="['/devices','details', item.key]" (click)="close()">
-          <ion-label >
-            <h2>{{item.key}}</h2>
-          </ion-label>
-          <ion-label >
-            <h2>{{item.value}}</h2>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ng-container>
-    <ng-container *ngIf="errorMessage">
-      <ion-text  color="danger">
-        <ion-icon name="alert" color="danger"></ion-icon>
-        {{errorMessage}}
-      </ion-text>
-    </ng-container>
-    <ng-container *ngIf="failed && failed.size > 0">
-      <ion-list>
-        <ion-item *ngFor="let item of failed | keyvalue"
-                  [routerLink]="['/devices','details', item.key]" (click)="close()">
-          <ion-label >
-            <h2>{{item.key}}</h2>
-          </ion-label>
-          <ion-label >
-            <h2>{{item.value}}</h2>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ng-container>
-  </ion-text>
+  <ion-grid class="popup-grid">
+    <ion-row class="ion-align-items-center ion-justify-content-end popup-padding-row">
+      <ion-text><h1><a (click)="dismiss()">X</a></h1></ion-text>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-center">
+          <h1>Things registered</h1>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-start">
+          <p>Things Registration State:</p>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-start">
+          <ng-container *ngIf="successful && successful.size > 0">
+            <ion-list>
+              <ion-item-divider>
+                <ion-label>These Things have been registered successfully:</ion-label>
+              </ion-item-divider>
+              <ion-item *ngFor="let item of successful | keyvalue"
+                        [routerLink]="['/devices','details', item.key]" (click)="dismiss()">
+                <ion-label >
+                  <h2>{{item.key}}</h2>
+                </ion-label>
+                <ion-label >
+                  <h2>{{item.value}}</h2>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+          <ng-container *ngIf="failed && failed.size > 0">
+            <ion-list>
+              <ion-item-divider>
+                <ion-label>Registration of the following Things failed:</ion-label>
+              </ion-item-divider>
+              <ion-item *ngFor="let item of failed | keyvalue"
+                        [routerLink]="['/devices','details', item.key]" (click)="dismiss()">
+                <ion-label >
+                  <h2>{{item.key}}</h2>
+                </ion-label>
+                <ion-label >
+                  <h2>{{item.value}}</h2>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="popup-grid">
+    <ion-row>
+      <ion-col>
+        <ion-button color="dark" expand="full" (click)="dismiss()" >
+          <ion-label>Go to Things Overview</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
