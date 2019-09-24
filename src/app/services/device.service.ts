@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {Device} from '../models/device';
 import {FormGroup} from '@angular/forms';
 import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
@@ -10,6 +10,7 @@ import {DeviceTypeService} from './device-type.service';
 import {CreateDevicesFormData} from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
 import {DevicesListWrapper} from '../models/devices-list-wrapper';
 import {UserService} from './user.service';
+import {isArray} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -73,16 +74,28 @@ export class DeviceService {
      */
     public createDevices(devices: Device[]): Observable<Map<string, string>> {
         const url = `${this.devicesUrl}`;
-        return this.http.post<Device[]>(url, devices).pipe(
-            map(jsonDevices => {
-                const deviceStates: Map<string, string> = new Map();
-                jsonDevices.forEach(deviceState =>
-                    deviceStates.set(
-                        Object.keys(deviceState)[0],
-                        deviceState[Object.keys(deviceState)[0]].state));
-                return deviceStates;
-
+        return this.http.post<any[]>(url, devices).pipe(
+            map(jsonDevices =>
+                this.extractDevicesCreationStates(jsonDevices)),
+            catchError(error => {
+                if (error.error && isArray(error.error)) {
+                    return throwError(this.extractDevicesCreationStates(error.error, true));
+                } else {
+                    // server-side error
+                    return throwError(`Error Code: ${error.status}\nMessage: ${error.message}`);
+                }
             }));
+    }
+
+    private extractDevicesCreationStates(jsonDevices: any[], errorOcc?: boolean): Map<string, string> {
+
+        const deviceStates: Map<string, string> = new Map();
+
+        jsonDevices.forEach(deviceState =>
+            deviceStates.set(
+                Object.keys(deviceState)[0],
+                deviceState[Object.keys(deviceState)[0]].state === 'ok' ?  'ok' : deviceState[Object.keys(deviceState)[0]].error));
+        return deviceStates;
     }
 
     /**

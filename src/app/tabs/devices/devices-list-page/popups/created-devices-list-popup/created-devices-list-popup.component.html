@@ -27,10 +27,10 @@
               </ion-item-divider>
               <ion-item *ngFor="let item of successful | keyvalue"
                         [routerLink]="['/devices','details', item.key]" (click)="dismiss()">
-                <ion-label >
+                <ion-label slot="start">
                   <h2>{{item.key}}</h2>
                 </ion-label>
-                <ion-label >
+                <ion-label slot="end">
                   <h2>{{item.value}}</h2>
                 </ion-label>
               </ion-item>
@@ -39,16 +39,15 @@
           <ng-container *ngIf="failed && failed.size > 0">
             <ion-list>
               <ion-item-divider>
-                <ion-label>Registration of the following Things failed:</ion-label>
+                  <ion-label color="danger"><strong>Registration of the following Things failed:</strong></ion-label>
               </ion-item-divider>
-              <ion-item *ngFor="let item of failed | keyvalue"
-                        [routerLink]="['/devices','details', item.key]" (click)="dismiss()">
-                <ion-label >
+              <ion-item *ngFor="let item of failed | keyvalue">
+                <ion-label color="danger" slot="start">
                   <h2>{{item.key}}</h2>
                 </ion-label>
-                <ion-label >
-                  <h2>{{item.value}}</h2>
-                </ion-label>
+                <ion-textarea rows="2" color="danger" slot="end">
+                  {{item.value}}
+                </ion-textarea>
               </ion-item>
             </ion-list>
           </ng-container>
