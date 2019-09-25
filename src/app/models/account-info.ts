@@ -9,7 +9,7 @@ export class AccountInfo {
             if (jsonAccount.user) {
                 this.user = new User(jsonAccount.user);
             }
-            this.numberOfDevices = jsonAccount.numberOfDevices;
+            this.numberOfDevices = jsonAccount.numberOfDevices || 0;
         }
         return this;
     }

@@ -28,7 +28,7 @@ export class UserService {
     } else {
       return this.http.get<any>(this.accountUrl).pipe(
           tap(jsonAccount =>
-              this.currentAccount = jsonAccount.user && jsonAccount.numberDevices ?
+              this.currentAccount = jsonAccount.user ?
                   {user: new User(jsonAccount.user), numberOfDevices: jsonAccount.numberDevices } : undefined ),
           map(_ => this.currentAccount ? this.currentAccount.user : undefined));
     }
@@ -40,7 +40,7 @@ export class UserService {
     } else {
       return this.http.get<any>(this.accountUrl).pipe(
           tap(jsonAccount => {
-            this.currentAccount = jsonAccount.user && jsonAccount.numberDevices ?
+            this.currentAccount = jsonAccount.user ?
                 new AccountInfo({
                   user: new User(jsonAccount.user),
                   numberOfDevices: jsonAccount.numberDevices
