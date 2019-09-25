@@ -44,6 +44,11 @@
         </ion-col>
         <ion-col size="6">
           <div class="ion-justify-content-end">
+            <ng-container *ngIf="addSearchBarWithPlaceholder">
+              <ion-searchbar color="light" debounce="500"
+                             [placeholder]="addSearchBarWithPlaceholder" (ionChange)="_startSearch($event)">
+              </ion-searchbar>
+            </ng-container>
           </div>
         </ion-col>
       </ion-row>

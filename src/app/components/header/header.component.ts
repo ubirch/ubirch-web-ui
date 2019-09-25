@@ -11,7 +11,9 @@ export class HeaderComponent implements OnInit {
   @Input() actionButtons: HeaderActionButton[] = [];
   @Input() headerRightLabel = '';
   @Input() headerRightValue: string;
+  @Input() addSearchBarWithPlaceholder: string;
   @Output() buttonClicked = new EventEmitter<string>();
+  @Output() startSearch = new EventEmitter<string>();
 
   constructor() { }
 
@@ -19,6 +21,10 @@ export class HeaderComponent implements OnInit {
 
   _buttonClicked(action: string) {
     this.buttonClicked.emit(action);
+  }
+
+  _startSearch(searchStr: any) {
+    this.startSearch.emit(searchStr);
   }
 
 }

@@ -62,6 +62,10 @@ ion-icon.md.hydrated {
   margin: 0 10px;
 }
 
+.mat-paginator.invisible {
+  display: none;
+}
+
 .padding-row {
   height: 100px;
 }
@@ -76,6 +80,21 @@ ion-icon.md.hydrated {
 
 .sc-ion-card-md-h {
   --background: #f0f0f0;
+  box-shadow: none;
+}
+
+.sc-ion-label-md-s h2 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.sc-ion-label-md-s h3 {
+  margin-top: 3px;
+  margin-bottom: 4px;
+}
+
+.searchbar-input.sc-ion-searchbar-md {
   box-shadow: none;
 }
 

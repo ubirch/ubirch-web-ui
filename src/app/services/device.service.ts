@@ -18,6 +18,7 @@ import {isArray} from 'util';
 export class DeviceService {
     url = environment.serverUrl + environment.apiPrefix;
     devicesUrl = this.url + 'devices';  // URL to web api to access devices
+    searchUrl = this.devicesUrl + '/search';  // URL to web api to search devices by hwDeviceId or description (substrings)
 
   constructor(
       private utils: UbirchWebUIUtilsService,
@@ -44,6 +45,18 @@ export class DeviceService {
                 this.userService.setNumberOfDevices(listWrapper.totalDevicesSize);
             }
         }));
+    }
+
+    public searchDevices(searchStr: string): Observable<DevicesListWrapper> {
+        const url = `${this.searchUrl}/${searchStr}`;
+
+        return this.http.get<DevicesListWrapper[]>(url).pipe(
+            map(listWrapper => new DevicesListWrapper(listWrapper)),
+            tap(listWrapper => {
+                if (listWrapper && listWrapper.totalDevicesSize) {
+                    this.userService.setNumberOfDevices(listWrapper.totalDevicesSize);
+                }
+            }));
     }
 
     /**

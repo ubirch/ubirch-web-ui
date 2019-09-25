@@ -1,9 +1,11 @@
 <ubirch-web-ui-header
         title="Your Things"
-        headerRightLabel="Total Things:"
-        [headerRightValue]="totalItems"
+        [headerRightLabel]="headerRightLabel"
+        [headerRightValue]="headerRightValue"
         [actionButtons]="actionButtons"
         (buttonClicked)="handleButtonClick($event)"
+        addSearchBarWithPlaceholder="Filter Things by description or ID"
+        (startSearch)="search($event)"
 ></ubirch-web-ui-header>
 
 <ion-content padding-horizontal>
@@ -11,6 +13,7 @@
     <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
       <ion-col size="12">
         <mat-paginator #paginator
+                       [ngClass]="{'invisible': searchActive()}"
                        [length]="totalItems"
                        [pageSize]="pageSize">
         </mat-paginator>

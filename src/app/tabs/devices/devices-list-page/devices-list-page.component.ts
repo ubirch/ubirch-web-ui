@@ -25,7 +25,11 @@ export class DevicesListPage {
   // pagination params
   totalItems = 0;
   pageSize = environment.LIST_ITEMS_PER_PAGE;
-  ionite: string;
+  /**
+   * If searchStr is set, the search is activated and pagination deactivated!!
+   */
+  searchStr: string;
+  numOfFilteredItems = 0;
 
   constructor(
       private deviceService: DeviceService,
@@ -103,14 +107,23 @@ export class DevicesListPage {
       this.polling = interval(environment.POLLING_INTERVAL_MILLISECONDS)
           .pipe(
               startWith(0),
-              switchMap(() => this.deviceService.reloadDeviceStubs(
-                  this.paginator.pageIndex,
-                  this.pageSize
-              ))
+              switchMap(() => {
+                if (this.searchActive()) {
+                  return this.deviceService.searchDevices(
+                      this.searchStr
+                  );
+                } else {
+                  return this.deviceService.reloadDeviceStubs(
+                      this.paginator ? this.paginator.pageIndex : 0,
+                      this.pageSize
+                  );
+                }
+              })
           )
           .subscribe(
               wrapper => {
                 this.totalItems = wrapper.totalDevicesSize || 0;
+                this.numOfFilteredItems = wrapper.filteredDevicesSize || 0;
                 this.deviceStubs = wrapper.devices || [];
               }
           );
@@ -120,6 +133,16 @@ export class DevicesListPage {
     if (this.polling) {
       this.polling.unsubscribe();
     }
+  }
+
+  search(event: any) {
+    const searchStr = event.target.value;
+    if (searchStr && searchStr.trim() !== '') {
+      this.searchStr = searchStr;
+    } else {
+      this.searchStr = undefined;
+    }
+    this.restartPolling();
   }
 
   async confirmDeviceDelete(device: DeviceStub) {
@@ -186,5 +209,17 @@ export class DevicesListPage {
       }
     });
     await modal.present();
+  }
+
+  searchActive(): boolean {
+    return this.searchStr && this.searchStr.trim().length > 0;
+  }
+
+  get headerRightLabel(): string {
+    return this.searchActive() ? 'Filtered Things: ' : 'Total Things:';
+  }
+
+  get headerRightValue(): number {
+    return this.searchActive() ? this.numOfFilteredItems : this.totalItems;
   }
 }
