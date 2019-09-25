@@ -5,10 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- device list filter
 - add spinner while loading data
 - device list with two columns
+
+## [0.1.1] - 2019-09-25
+
+### Added
+- device list filter
 - add device creation date
+
+### Changed
+
+### Removed
 
 ## [0.1] - 2019-09-24
 First styled functional complete version (just filtering devices list missing)
