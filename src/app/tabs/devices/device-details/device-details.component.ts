@@ -18,7 +18,6 @@ export class DeviceDetailsComponent implements OnInit {
   id: string;
   private deviceHasUnsavedChanges = false;
   loadedDevice: Device;
-  creationDate = 'September 6, 2019, 2:19 pm';
 
   toastrContent: Map<string, any> = new Map([
         ['del', {

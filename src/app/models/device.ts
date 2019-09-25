@@ -5,6 +5,7 @@ import {environment} from '../../environments/environment';
 
 export class Device {
     public hwDeviceId: string;
+    public created: string; // timestamp
     public description: string;
     public deviceType: string;
     public ownerId: string;
@@ -22,6 +23,7 @@ export class Device {
         }
 
         this.hwDeviceId = jsonDevice.hwDeviceId;
+        this.created = jsonDevice.created;
         this.description = jsonDevice.description || '';
         this.deviceType = jsonDevice.deviceType || environment.default_device_type;
         this.apiConfig = '';
