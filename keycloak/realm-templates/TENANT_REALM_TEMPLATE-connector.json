@@ -5,7 +5,7 @@
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "<PLEASE REGENERATE NEW ONE AND ADD HERE>",
       "redirectUris": [
         "<SERVER_URL>/auth/realms/TENANT_REALM_TEMPLATE/broker/ubirch-2.0-centralised-user-auth/endpoint",
         "<SERVER_URL>/auth/realms/TENANT_REALM_TEMPLATE/broker/ubirch-2.0-centralised-user-auth/endpoint/logout_response"

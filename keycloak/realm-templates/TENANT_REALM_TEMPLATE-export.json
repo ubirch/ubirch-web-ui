@@ -1496,6 +1496,26 @@
         }
       },
       {
+        "id": "f9f0e112-ff7c-4eb5-add3-1874c9a670f6",
+        "name": "ecdsa-generated",
+        "providerId": "ecdsa-generated",
+        "subComponents": {},
+        "config": {
+          "ecdsaEllipticCurveKey": [
+            "P-256"
+          ],
+          "active": [
+            "true"
+          ],
+          "priority": [
+            "0"
+          ],
+          "enabled": [
+            "true"
+          ]
+        }
+      },
+      {
         "id": "7476b43f-e991-4105-9040-bd6db8e4060b",
         "name": "rsa-generated",
         "providerId": "rsa-generated",

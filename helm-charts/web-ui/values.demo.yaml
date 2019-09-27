@@ -35,7 +35,7 @@ adminUi:
     clientId: "ubirch-2.0-user-access"
     testRealm:
       realmName: "ubirch-default-realm"
-      secret: "425bae4e-1904-4a6b-b977-f26fc0590ccc"
+      secret: "72364be2-dc60-4978-b9a4-5930a0238255"
       clientName: "ubirch GmbH"
       defaultDeviceType: "default_type"
 

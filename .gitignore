@@ -39,3 +39,4 @@ UserInterfaceState.xcuserstate
 /resources/ios/
 /keycloak/realm-templates/*.json.swp
 /keycloak/realm-templates/*-import.json
+/*-import.json
