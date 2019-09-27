@@ -29,11 +29,11 @@ export class Device {
         this.apiConfig = '';
         this.deviceConfig = '';
         if (jsonDevice.attributes) {
-            if (jsonDevice.attributes.attributesApiGroup && jsonDevice.attributes.attributesApiGroup.length > 0) {
-                this.apiConfig = jsonDevice.attributes.attributesApiGroup[0];
+            if (jsonDevice.attributes.apiConfig && jsonDevice.attributes.apiConfig.length > 0) {
+                this.apiConfig = jsonDevice.attributes.apiConfig[0];
             }
-            if (jsonDevice.attributes.attributesDeviceGroup && jsonDevice.attributes.attributesDeviceGroup.length > 0) {
-                this.deviceConfig = jsonDevice.attributes.attributesDeviceGroup[0];
+            if (jsonDevice.attributes.deviceConfig && jsonDevice.attributes.deviceConfig.length > 0) {
+                this.deviceConfig = jsonDevice.attributes.deviceConfig[0];
             }
         }
 
