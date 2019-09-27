@@ -18,12 +18,14 @@
 
 ## Preparation for Different Tenants
 
+If you need to create the ubirch 2.0 central login realm, see at the end of this ReadMe.
+
 ### Keycloak configuration
 
 For each tenant we have to create a new tenant realm in the keycloak 
 and connect it with the ubirch-2.0 centralised login realm (for single sign on).
 
-A script in the keycloak/realm-templates folder can create the import files for that. 
+A script in the root folder can create the import files for that. 
 Call create-new-tenant-realm4import.sh with the following parameters:
 
 1. the name of the tenant realm
@@ -166,3 +168,14 @@ Run the App:
 Important !!!!!! -> you need to be connected via the same WIFI as the computer on which the app is started !!
 
 The devapp scans the network for apps on port 4100 and lists them if found some.
+
+
+## ubirch 2.0 central login realm
+
+can be created from keycloak/realm-templates/ubirch_2.0_REALM-export.json:
+
+1. login as administrator in your keycloak instance
+2. click 'create a new realm'
+3. select keycloak/realm-templates/ubirch_2.0_REALM-export.json as import file
+4. create
+

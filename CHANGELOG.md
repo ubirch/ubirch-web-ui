@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add spinner while loading data
 - device list with two columns
 
+## [0.1.2] - 2019-09-27
+
+### Added
+- added a real-creation file for creating the ubirch 2.0 central login realm
+- added documentation screenshots
+
+### Changed
+- fixed bug: apiConfig and deviceConfig attributes has been renamed on REST endpoint
+- fixed bug: if user had no devices userAccount creation ran into an endless loop
+
+### Removed
+
 ## [0.1.1] - 2019-09-25
 
 ### Added
