@@ -8,8 +8,8 @@ import {ModalController} from '@ionic/angular';
 })
 export class CreatedDevicesListPopupComponent implements OnInit {
 
-  private successful: Map<string, string> = new Map<string, string>();
-  private failed: Map<string, string> = new Map<string, string>();
+  successful: Map<string, string> = new Map<string, string>();
+  failed: Map<string, string> = new Map<string, string>();
 
   @Input()
   set deviceCreateStates(deviceCreateStates: Map<string, string>) {
