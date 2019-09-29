@@ -169,6 +169,17 @@ Important !!!!!! -> you need to be connected via the same WIFI as the computer o
 
 The devapp scans the network for apps on port 4100 and lists them if found some.
 
+## Deployment
+
+### 
+
+Call:
+
+    ionic build --prod
+
+The code will be generated to folder:
+
+    /www
 
 ## ubirch 2.0 central login realm
 
