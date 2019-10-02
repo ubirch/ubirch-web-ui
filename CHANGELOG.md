@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add spinner while loading data
 - device list with two columns
 
+## [0.1.4] - 2019-10-02
+
+### Added
+
+### Changed
+- fixed bug: unify attribute names: numberDevices, total_device_size, totalItems => numberOfDevices
+
+### Removed
+- button 'Change User Profile' removed (out commented) because account management is currently not yet available
+
 ## [0.1.2] - 2019-09-27
 
 ### Added

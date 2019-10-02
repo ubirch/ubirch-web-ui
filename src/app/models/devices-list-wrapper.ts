@@ -3,7 +3,7 @@ import {isArray} from 'util';
 
 export class DevicesListWrapper {
     public devices: DeviceStub[];
-    public totalDevicesSize: number;
+    public numberOfDevices: number;
     public filteredDevicesSize: number;
 
     constructor(jsonWrapper: any) {
@@ -14,7 +14,7 @@ export class DevicesListWrapper {
             if (jsonWrapper.devices && isArray(jsonWrapper.devices)) {
                 // pagination result
                 this.devices = jsonWrapper.devices.map(device => new DeviceStub(device));
-                this.totalDevicesSize = jsonWrapper.total_device_size || 0;
+                this.numberOfDevices = jsonWrapper.numberOfDevices || 0;
             } else if (isArray(jsonWrapper)) {
                 // filter result
                 this.devices = jsonWrapper.map(device => new DeviceStub(device));

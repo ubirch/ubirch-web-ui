@@ -23,7 +23,7 @@ export class DevicesListPage {
   polling = new Subscription();
 
   // pagination params
-  totalItems = 0;
+  numberOfDevices = 0;
   pageSize = environment.LIST_ITEMS_PER_PAGE;
   /**
    * If searchStr is set, the search is activated and pagination deactivated!!
@@ -122,7 +122,7 @@ export class DevicesListPage {
           )
           .subscribe(
               wrapper => {
-                this.totalItems = wrapper.totalDevicesSize || 0;
+                this.numberOfDevices = wrapper.numberOfDevices || 0;
                 this.numOfFilteredItems = wrapper.filteredDevicesSize || 0;
                 this.deviceStubs = wrapper.devices || [];
               }
@@ -220,6 +220,6 @@ export class DevicesListPage {
   }
 
   get headerRightValue(): number {
-    return this.searchActive() ? this.numOfFilteredItems : this.totalItems;
+    return this.searchActive() ? this.numOfFilteredItems : this.numberOfDevices;
   }
 }

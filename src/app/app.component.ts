@@ -47,7 +47,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      console.log('version 0.1.3');
+      console.log('version 0.1.4');
     });
   }
 }

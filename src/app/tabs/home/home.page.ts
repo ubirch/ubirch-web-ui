@@ -13,12 +13,14 @@ export class HomePage implements OnInit {
       private userService: UserService
   ) { }
 
-  actionButtons = [new HeaderActionButton({
-    color: 'dark',
-    label: 'Change User Profile',
-    iconName: 'settings',
-    action: 'changeUserProfile'
-  })];
+  actionButtons = [
+//    new HeaderActionButton({
+//      color: 'dark',
+//     label: 'Change User Profile',
+//      iconName: 'settings',
+//      action: 'changeUserProfile'
+//    })
+  ];
   activeDevices = 0;
   username = '';
 

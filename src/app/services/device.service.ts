@@ -41,8 +41,8 @@ export class DeviceService {
     return this.http.get<DevicesListWrapper[]>(url).pipe(
         map(listWrapper => new DevicesListWrapper(listWrapper)),
         tap(listWrapper => {
-            if (listWrapper && listWrapper.totalDevicesSize) {
-                this.userService.setNumberOfDevices(listWrapper.totalDevicesSize);
+            if (listWrapper && listWrapper.numberOfDevices) {
+                this.userService.setNumberOfDevices(listWrapper.numberOfDevices);
             }
         }));
     }
@@ -53,8 +53,8 @@ export class DeviceService {
         return this.http.get<DevicesListWrapper[]>(url).pipe(
             map(listWrapper => new DevicesListWrapper(listWrapper)),
             tap(listWrapper => {
-                if (listWrapper && listWrapper.totalDevicesSize) {
-                    this.userService.setNumberOfDevices(listWrapper.totalDevicesSize);
+                if (listWrapper && listWrapper.numberOfDevices) {
+                    this.userService.setNumberOfDevices(listWrapper.numberOfDevices);
                 }
             }));
     }
