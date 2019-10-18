@@ -24,7 +24,7 @@ sed -i.bak "s%@@UBIRCH_TR_ENV_SERVURL@@%${UBIRCH_TR_ENV_SERVURL}%" src/environme
 echo "Replacing variables UBIRCH_TR_API_PREF in src/environments/environment.ts"
 sed -i.bak "s%@@UBIRCH_TR_API_PREF@@%${UBIRCH_TR_API_PREF}%" src/environments/environment.ts
 
-echo "Replacing variables UBIRCHy f_TR_CLIENT_NAME in src/environments/environment.ts"
+echo "Replacing variables UBIRCH_TR_CLIENT_NAME in src/environments/environment.ts"
 sed -i.bak "s%@@UBIRCH_TR_CLIENT_NAME@@%${UBIRCH_TR_CLIENT_NAME}%" src/environments/environment.ts
 
 echo "Replacing variables UBIRCH_TR_DEFAULT_DEVICE_TYPE in src/environments/environment.ts"
