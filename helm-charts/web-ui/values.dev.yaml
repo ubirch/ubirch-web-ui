@@ -32,10 +32,10 @@ ingress:
 adminUi:
   keyCloak:
     url: "https://id.dev.ubirch.com/auth"
-    clientId: "ubirch-2.0-user-access-local"
+    clientId: "ubirch-2.0-user-access"
     testRealm:
-      realmName: "test-realm"
-      secret: "d674503c-a91d-4d05-bd91-8173cb182bec"
+      realmName: "ubirch-default-realm"
+      secret: "425bae4e-1904-4a6b-b977-f26fc0590ccc"
       clientName: "ubirch GmbH"
       defaultDeviceType: "default_type"
 

@@ -1,0 +1,72 @@
+<ubirch-web-ui-header
+        [title]="title"
+        headerRightLabel="Created:"
+        [headerRightValue]="loadedDevice && (loadedDevice.created | date: 'MMMM dd, yyyy, h:mm a')"
+        [actionButtons]="actionButtons"
+        (buttonClicked)="handleButtonClick($event)"
+></ubirch-web-ui-header>
+
+<ng-container *ngIf="id">
+  <ion-tabs padding-horizontal>
+    <ion-tab tab="settings">
+      <ion-content fullscreen class="ion-padding">
+        <ion-grid>
+          <ion-row class="ion-align-items-center ion-justify-content-end padding-row">
+            <ion-button  color="danger" (click)="confirmDeviceDelete()">
+              <ion-icon slot="end" src="assets/app-icons/delete.svg"></ion-icon>
+              delete
+            </ion-button>
+          </ion-row>
+        </ion-grid>
+        <ion-card padding>
+          <ion-card-content>
+            <form [formGroup]="deviceDetailsForm">
+              <ion-item margin-bottom>
+                <ion-label slot="start">ID:</ion-label>
+                <ion-input formControlName="hwDeviceId" readonly color="medium"></ion-input>
+              </ion-item>
+              <ion-item margin-bottom>
+                <ion-label slot="start">description:</ion-label>
+                <ion-input formControlName="description"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label slot="start">apiConfig:</ion-label>
+                <ion-textarea margin-vertical ngClass="config-area" class="config-input" readonly
+                              formControlName="apiConfig" placeholder="NO API CONFIG AVAILABLE"></ion-textarea>
+              </ion-item>
+            </form>
+            <ion-grid>
+              <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
+                <ion-col size="6">
+                  <ion-button color="success"  expand="full" *ngIf="deviceHasUnsavedChanges" (click)="saveDevice()">
+                    <ion-icon slot="start" name="save"></ion-icon>
+                    Save
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-align-items-center ion-justify-content-center">
+                <ion-col size="2">
+                  <ion-button color="light"  expand="full" *ngIf="deviceHasUnsavedChanges" (click)="discardChanges()">
+                    Cancel
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ion-tab>
+
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="settings">
+        <ion-icon name="settings"></ion-icon>
+        <ion-label>Schedule</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="keys">
+        <ion-icon name="key"></ion-icon>
+        <ion-label>Schedule</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+
+  </ion-tabs>
+</ng-container>

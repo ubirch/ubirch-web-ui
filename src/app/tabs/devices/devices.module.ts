@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { DevicesListPage } from './devices-list-page/devices-list-page.component';
 import {ComponentsModule} from '../../components/components.module';
 import {MaterialModule} from '../../components/material-components/material.module';
-import {DeviceDetailsComponent} from './device-details/device-details.component';
+import {DeviceDetailsComponent} from './device-details_/device-details.component';
 import {MarkdownModule} from 'ngx-markdown';
 import {NewDevicePopupComponent} from './devices-list-page/popups/new-device-popup/new-device-popup.component';
 import {ConfirmDeleteDevicePopupComponent} from './devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
@@ -37,7 +37,7 @@ import {CreatedDevicesListPopupComponent} from './devices-list-page/popups/creat
         children: [
           {
             path: ':id',
-            component: DeviceDetailsComponent
+            loadChildren: './device-details/device-details.module#DeviceDetailsPageModule'
           }]
       }
     ]),

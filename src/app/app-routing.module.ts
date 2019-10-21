@@ -18,7 +18,8 @@ const routes: Routes = [
   {
     path: 'logout',
     loadChildren: () => import('./tabs/logout/logout.module').then(m => m.LogoutPageModule)
-  }
+  },
+  { path: 'device-details', loadChildren: './tabs/devices/device-details/device-details.module#DeviceDetailsPageModule' }
 ];
 
 @NgModule({
