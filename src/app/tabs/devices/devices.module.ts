@@ -37,8 +37,9 @@ import {CreatedDevicesListPopupComponent} from './devices-list-page/popups/creat
         children: [
           {
             path: ':id',
-            loadChildren: './device-details/device-details.module#DeviceDetailsPageModule'
-          }]
+            loadChildren: () => import('./device-details/device-details.module').then(m => m.DeviceDetailsPageModule)
+          }
+        ]
       }
     ]),
     ComponentsModule
