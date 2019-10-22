@@ -1,9 +1,21 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>device-details</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!--
+<ubirch-web-ui-header
+        [title]="title"
+        headerRightLabel="Created:"
+        [headerRightValue]="loadedDevice && (loadedDevice.created | date: 'MMMM dd, yyyy, h:mm a')"
+        [actionButtons]="actionButtons"
+        (buttonClicked)="handleButtonClick($event)"
+></ubirch-web-ui-header>
+-->
 
-<ion-content>
+<ion-tabs>
+  <ion-tab-bar slot="top">
 
-</ion-content>
+    <ion-tab-button tab="settings">
+      <ion-icon name="settings"></ion-icon>
+      <ion-label>ThingsSettings</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+
+</ion-tabs>
