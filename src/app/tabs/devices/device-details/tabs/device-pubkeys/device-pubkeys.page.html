@@ -1,9 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>device-pubkeys</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
+<ng-container *ngIf="pubKeyList; else NO_LIST">!!!! LIST FOUND !!!!</ng-container>
+  <ng-template #NO_LIST>NO LIST.....</ng-template>
 </ion-content>
