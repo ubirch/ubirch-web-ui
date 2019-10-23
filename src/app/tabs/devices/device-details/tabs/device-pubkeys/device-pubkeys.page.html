@@ -1,4 +1,10 @@
 <ion-content>
-<ng-container *ngIf="pubKeyList; else NO_LIST">!!!! LIST FOUND !!!!</ng-container>
+<ng-container *ngIf="pubKeyList; else NO_LIST">
+  <ngx-datatable
+    [columns]="columnNames"
+    [rows]="pubKeyList"
+  >
+  </ngx-datatable>
+</ng-container>
   <ng-template #NO_LIST>NO LIST.....</ng-template>
 </ion-content>
