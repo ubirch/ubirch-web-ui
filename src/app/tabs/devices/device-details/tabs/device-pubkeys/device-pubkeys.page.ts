@@ -13,7 +13,6 @@ export class DevicePubkeysPage implements OnInit {
     @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
     loadedDevice: Device;
-    public columnNames: any[];
     public pubKeyList: PubKeyInfo[];
 
   constructor(
@@ -22,18 +21,6 @@ export class DevicePubkeysPage implements OnInit {
   ) { }
 
   ngOnInit() {
-      // Define the columns for the data table
-      // (based off the names of the keys in the JSON file)
-      this.columnNames = [
-          { prop: 'pubKey', name: 'öffentlicher Schlüssel', minWidth: '350'},
-          { prop: 'pubKeyId', name: 'SchlüsselID'},
-          { prop: 'algorithm', name: 'Algorithmus' },
-          { prop: 'created', name: 'erzeugt', pipe: { transform: this.datePipe } },
-          { prop: 'validNotBefore', name: 'gültig ab', pipe: { transform: this.datePipe } },
-          { prop: 'validNotAfter', name: 'ungültig ab', pipe: { transform: this.datePipe } },
-          { prop: 'signed', name: 'signiert' }
-      ];
-
       this.deviceService.observableCurrentDevice
         .subscribe(
             loadedDevice =>  {
@@ -42,14 +29,11 @@ export class DevicePubkeysPage implements OnInit {
                 // load pubKeys
                 this.keyService.getPubKeysOfThing(this.loadedDevice.hwDeviceId)
                     .subscribe( pubKeyList =>
-                        this.pubKeyList = pubKeyList && pubKeyList.length > 0 ? pubKeyList : undefined );
+                        // list of pubKeys, sort by validNotAfter
+                        this.pubKeyList = pubKeyList && pubKeyList.length > 0 ? pubKeyList.sort(KeyService.compareKeys) : undefined );
+                  // TODO: filter pubKeys that are not yet/no longer valid from the valid ones
               }
             }
         );
   }
-
-    datePipe(value: any, ...args: any[]) {
-        return new Date(value).toLocaleString('de');
-    }
-
 }

@@ -16,6 +16,29 @@ export class KeyService {
       private http: HttpClient
   ) { }
 
+  /**
+   * compare fkt: a pubKey pk1 comes before another pubKey pk2 if pk1.validNotAfter > pk2.validNotAfter (validUntil is later)
+   * @param pk1 first pubKey that should be compared
+   * @param pk2 second pubKey that should be compared
+   */
+  public static compareKeys(pk1: PubKeyInfo, pk2: PubKeyInfo): number {
+    if (pk1 && pk2 && pk1.validNotAfter && pk2.validNotAfter) {
+      if (pk1.validNotAfter > pk2.validNotAfter) {
+        return -1;
+      }
+      if (pk1.validNotAfter < pk2.validNotAfter) {
+        return 1;
+      }
+      return 0;
+    } else {
+      return 0;
+    }
+  }
+
+  /**
+   * get list of pubKeys registered for a thing from ubirch key server
+   * @param id hwDeviceId of the thing
+   */
   public getPubKeysOfThing(id: string): Observable<PubKeyInfo[]> {
     const url = `${this.pubKeyUrl}/${id}`;
     return this.http.get<any>(url).pipe(

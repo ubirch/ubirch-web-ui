@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { DevicePubkeysPage } from './device-pubkeys.page';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 
 const routes: Routes = [
   {
@@ -20,7 +19,6 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    NgxDatatableModule,
     RouterModule.forChild(routes)
   ],
   declarations: [DevicePubkeysPage]
