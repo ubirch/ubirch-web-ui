@@ -30,20 +30,19 @@ export class PubKeyInfo {
                 this.validNotBefore = jsonPubKey.pubKeyInfo.validNotBefore;
                 this.validNotAfter = jsonPubKey.pubKeyInfo.validNotAfter;
             }
-            if (jsonPubKey.signature) {
-                this.signed = this.verifySignature();
-            } else {
-                this.signed = false;
-            }
+            this.signed = this.verifySignature(jsonPubKey);
         } else {
             console.log('Tried to create pubKey from nothing');
         }
     }
 
-    private verifySignature(): boolean {
+    private verifySignature(key: any): boolean {
         // TODO: verify signature
-        console.warn('Verifying signature not yet implemented!!!!!');
-        return false;
+        if (key.signature) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

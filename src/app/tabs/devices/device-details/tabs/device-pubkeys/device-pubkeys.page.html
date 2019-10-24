@@ -2,7 +2,7 @@
   <ng-container *ngIf="pubKeyList; else NO_LIST">
     <ion-list>
       <ion-item *ngFor="let pubkey of pubKeyList" color="light" class="device-list-item" lines="none" margin-bottom>
-        <ion-label [routerLink]="['/devices','details', pubkey.hwDeviceId]" class="devices-list-item-content">
+        <ion-label class="devices-list-item-content">
           <ion-row justify-content-center>
             <ion-col size="10">
               <h1 text-wrap>PubKey: {{pubkey.pubKey}}</h1>
