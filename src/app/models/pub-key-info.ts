@@ -36,8 +36,11 @@ export class PubKeyInfo {
         }
     }
 
+    /**
+     * check if pubKey has signature added (no verification of signature performed)
+     * @param key pubKey in JSON format responded from ubirch key server
+     */
     private verifySignature(key: any): boolean {
-        // TODO: verify signature
         if (key.signature) {
             return true;
         } else {
