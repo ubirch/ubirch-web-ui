@@ -1,19 +1,40 @@
 <ion-content class="ion-padding">
   <ng-container *ngIf="pubKeyList; else NO_LIST">
-    <ngx-datatable
-      [columns]="columnNames"
-      [rows]="pubKeyList"
-      [sortType]="'multi'"
-      [headerHeight]="50"
-      [footerHeight]="50"
-      [rowHeight]="50"
-      scrollbarH=true
-    >
-    </ngx-datatable>
-
-    <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
-      {{value | date:'dd.MM.yyyy'}}
-    </ng-template>
+    <ion-list>
+      <ion-item *ngFor="let pubkey of pubKeyList" color="light" class="device-list-item" lines="none" margin-bottom>
+        <ion-label [routerLink]="['/devices','details', pubkey.hwDeviceId]" class="devices-list-item-content">
+          <ion-row justify-content-center>
+            <ion-col size="10">
+              <h1 text-wrap>PubKey: {{pubkey.pubKey}}</h1>
+              <ion-row>
+                <ion-col size="7">
+                  <h2 text-wrap>PubKeyId: {{pubkey.pubKeyId}}</h2>
+                  <p>({{pubkey.algorithm}})</p>
+                </ion-col>
+                <ion-col size="5">
+                  <ion-row>
+                    <ion-col size="5">erzeugt:</ion-col>
+                    <ion-col size="7">{{pubkey.created | date: 'dd.MM.yyyy, HH:mm:ss'}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="5">gültig ab:</ion-col>
+                    <ion-col size="7">{{pubkey.validNotBefore | date: 'dd.MM.yyyy, HH:mm:ss'}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="5">ungültig ab:</ion-col>
+                    <ion-col size="7">{{pubkey.validNotAfter | date: 'dd.MM.yyyy, HH:mm:ss'}}</ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="2" justify-content-center align-items-center>
+              <img *ngIf="pubkey.signed" src="assets/app-icons/ubirch_verify_right.png">
+              <img *ngIf="!pubkey.signed" src="assets/app-icons/ubirch_verify_wrong.png">
+            </ion-col>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+    </ion-list>
   </ng-container>
   <ng-template #NO_LIST>NO LIST.....</ng-template>
 </ion-content>

@@ -6,6 +6,7 @@ export class PubKeyInfo {
     public created: string;
     public validNotBefore: string;
     public validNotAfter: string;
+    public signed: boolean;
 
     /**
      *
@@ -29,9 +30,20 @@ export class PubKeyInfo {
                 this.validNotBefore = jsonPubKey.pubKeyInfo.validNotBefore;
                 this.validNotAfter = jsonPubKey.pubKeyInfo.validNotAfter;
             }
+            if (jsonPubKey.signature) {
+                this.signed = this.verifySignature();
+            } else {
+                this.signed = false;
+            }
         } else {
             console.log('Tried to create pubKey from nothing');
         }
+    }
+
+    private verifySignature(): boolean {
+        // TODO: verify signature
+        console.warn('Verifying signature not yet implemented!!!!!');
+        return false;
     }
 
 }
