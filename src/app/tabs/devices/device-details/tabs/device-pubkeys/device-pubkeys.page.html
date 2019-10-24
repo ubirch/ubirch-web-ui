@@ -1,10 +1,19 @@
-<ion-content>
-<ng-container *ngIf="pubKeyList; else NO_LIST">
-  <ngx-datatable
-    [columns]="columnNames"
-    [rows]="pubKeyList"
-  >
-  </ngx-datatable>
-</ng-container>
+<ion-content class="ion-padding">
+  <ng-container *ngIf="pubKeyList; else NO_LIST">
+    <ngx-datatable
+      [columns]="columnNames"
+      [rows]="pubKeyList"
+      [sortType]="'multi'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="50"
+      scrollbarH=true
+    >
+    </ngx-datatable>
+
+    <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+      {{value | date:'dd.MM.yyyy'}}
+    </ng-template>
+  </ng-container>
   <ng-template #NO_LIST>NO LIST.....</ng-template>
 </ion-content>

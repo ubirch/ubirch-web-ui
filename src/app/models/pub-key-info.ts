@@ -1,6 +1,7 @@
 export class PubKeyInfo {
     public hwDeviceId: string;
     public pubKey: string;
+    public pubKeyId: string;
     public algorithm: string;
     public created: string;
     public validNotBefore: string;
@@ -22,6 +23,7 @@ export class PubKeyInfo {
             if (jsonPubKey.pubKeyInfo) {
                 this.hwDeviceId = jsonPubKey.pubKeyInfo.hwDeviceId;
                 this.pubKey = jsonPubKey.pubKeyInfo.pubKey;
+                this.pubKeyId = jsonPubKey.pubKeyInfo.pubKeyId;
                 this.algorithm = jsonPubKey.pubKeyInfo.algorithm;
                 this.created = jsonPubKey.pubKeyInfo.created;
                 this.validNotBefore = jsonPubKey.pubKeyInfo.validNotBefore;
