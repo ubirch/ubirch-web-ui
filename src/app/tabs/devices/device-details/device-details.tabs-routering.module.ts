@@ -1,30 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {DeviceDetailsPage} from './device-details.page';
+
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: DeviceDetailsPage,
     children: [
       {
         path: '',
-        redirectTo: 'settings',
-        pathMatch: 'full',
-      },
-      {
-        path: 'settings',
-        loadChildren: () => import('./tabs/device-settings/device-settings.module').then(m => m.DeviceSettingsPageModule)
-      },
-      {
-        path: 'pubkeys',
-        loadChildren: () => import('./tabs/device-pubkeys/device-pubkeys.module').then(m => m.DevicePubkeysPageModule)
+        loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
       }
     ]
-  },
-  {
-    path: '',
-    redirectTo: 'tabs/settings',
-    pathMatch: 'full'
   }
 ];
 

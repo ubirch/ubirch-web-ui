@@ -1,4 +1,3 @@
-<!--
 <ubirch-web-ui-header
         [title]="title"
         headerRightLabel="Created:"
@@ -6,21 +5,5 @@
         [actionButtons]="actionButtons"
         (buttonClicked)="handleButtonClick($event)"
 ></ubirch-web-ui-header>
--->
 
-<ion-tabs>
-  <ion-tab-bar slot="top">
-
-    <ion-tab-button tab="settings">
-      <ion-icon name="settings"></ion-icon>
-      <ion-label>ThingsSettings</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="pubkeys">
-      <ion-icon name="key"></ion-icon>
-      <ion-label>PublicKeys</ion-label>
-    </ion-tab-button>
-
-  </ion-tab-bar>
-
-</ion-tabs>
+<ion-router-outlet></ion-router-outlet>

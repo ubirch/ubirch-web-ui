@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
 import {Device} from '../../../models/device';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DeviceService} from '../../../services/device.service';
-import {ModalController, ToastController} from '@ionic/angular';
+import {ToastController} from '@ionic/angular';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
-import {ConfirmDeleteDevicePopupComponent} from '../devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 
 @Component({
   selector: 'app-device-details',

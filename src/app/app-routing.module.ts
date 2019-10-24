@@ -19,7 +19,8 @@ const routes: Routes = [
     path: 'logout',
     loadChildren: () => import('./tabs/logout/logout.module').then(m => m.LogoutPageModule)
   },
-  { path: 'device-pubkeys', loadChildren: './tabs/devices/device-details/tabs/device-pubkeys/device-pubkeys.module#DevicePubkeysPageModule' }
+  { path: 'device-pubkeys', loadChildren: './tabs/devices/device-details/tabs/device-pubkeys/device-pubkeys.module#DevicePubkeysPageModule' },
+  { path: 'tabs', loadChildren: './tabs/devices/device-details/tabs/tabs.module#TabsPageModule' }
 ];
 
 @NgModule({
