@@ -49,7 +49,6 @@ export class DevicePubkeysPage implements OnInit {
   }
 
     datePipe(value: any, ...args: any[]) {
-      // TODO: add time
         return new Date(value).toLocaleString('de');
     }
 
