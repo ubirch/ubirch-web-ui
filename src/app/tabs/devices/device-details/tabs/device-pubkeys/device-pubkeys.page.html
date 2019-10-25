@@ -1,6 +1,7 @@
 <ion-content class="ion-padding">
   <ng-container *ngIf="pubKeyList; else NO_LIST">
     <ion-list>
+      <!-- TODO: lowlight pubKeys that are not yet/no longer valid -->
       <ion-item *ngFor="let pubkey of pubKeyList" color="light" class="device-list-item" lines="none" margin-bottom>
         <ion-label class="devices-list-item-content">
           <ion-row justify-content-center>

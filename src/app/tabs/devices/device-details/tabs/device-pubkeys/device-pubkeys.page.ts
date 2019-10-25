@@ -4,6 +4,8 @@ import {Device} from '../../../../../models/device';
 import {KeyService} from '../../../../../services/key.service';
 import {PubKeyInfo} from '../../../../../models/pub-key-info';
 import {environment} from '../../../../../../environments/environment';
+import {interval, Subscription} from 'rxjs';
+import {startWith, switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-device-pubkeys',
@@ -13,6 +15,8 @@ import {environment} from '../../../../../../environments/environment';
 export class DevicePubkeysPage implements OnInit {
     @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
+    polling = new Subscription();
+
     loadedDevice: Device;
     public pubKeyList: PubKeyInfo[];
 
@@ -21,24 +25,50 @@ export class DevicePubkeysPage implements OnInit {
       private keyService: KeyService
   ) { }
 
-  ngOnInit() {
+    ionViewWillEnter() {
+        this.restartPolling();
+    }
+
+    ngOnInit() {
       this.deviceService.observableCurrentDevice
         .subscribe(
             loadedDevice =>  {
               this.loadedDevice = loadedDevice;
-              if (this.loadedDevice && this.loadedDevice.hwDeviceId) {
-                // load pubKeys
-                this.keyService.getPubKeysOfThing(this.loadedDevice.hwDeviceId)
-                    .subscribe( pubKeyList =>
-                        // list of pubKeys, sort by validNotAfter
-                        this.pubKeyList = pubKeyList && pubKeyList.length > 0 ? pubKeyList.sort(KeyService.compareKeys) : undefined );
-                  // TODO: filter pubKeys that are not yet/no longer valid from the valid ones
-              }
+              this.restartPolling();
             }
         );
   }
 
-  get DATE_TIME_ZONE_FORMAT(): string {
+    ionViewWillLeave() {
+        this.stopPolling();
+    }
+
+    private restartPolling() {
+        this.stopPolling();
+
+        this.polling = interval(environment.POLLING_INTERVAL_MILLISECONDS)
+            .pipe(
+                startWith(0),
+                switchMap(() => {
+                    if (this.loadedDevice && this.loadedDevice.hwDeviceId) {
+                        // load pubKeys
+                        return this.keyService.getPubKeysOfThing(this.loadedDevice.hwDeviceId);
+                    }
+                })
+            )
+            .subscribe( pubKeyList =>
+                // list of pubKeys, sort by validNotAfter
+                this.pubKeyList = pubKeyList && pubKeyList.length > 0 ?
+                    pubKeyList.sort(KeyService.compareKeys) : undefined );
+    }
+
+    private stopPolling() {
+        if (this.polling) {
+            this.polling.unsubscribe();
+        }
+    }
+
+    get DATE_TIME_ZONE_FORMAT(): string {
       return environment.DATE_TIME_ZONE_FORMAT;
   }
 }
