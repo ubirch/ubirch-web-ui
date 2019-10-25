@@ -1,0 +1,9 @@
+<ubirch-web-ui-header
+        [title]="title"
+        headerRightLabel="Created:"
+        [headerRightValue]="loadedDevice && (loadedDevice.created | date: 'MMMM dd, yyyy, h:mm a')"
+        [actionButtons]="actionButtons"
+        (buttonClicked)="handleButtonClick($event)"
+></ubirch-web-ui-header>
+
+<ion-router-outlet></ion-router-outlet>

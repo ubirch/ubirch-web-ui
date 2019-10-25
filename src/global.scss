@@ -104,3 +104,21 @@ ion-icon.md.hydrated {
 .icon-color-black {
   fill:#000;
 }
+app-tabs.ion-page {
+  margin-top: 350px;
+}
+
+ion-tab-bar {
+  --background: var(--ion-color-light);
+}
+
+ion-tab-button {
+  --ripple-color: var(--ion-color-medium);
+  --color: var(--ion-color-dark);
+  --color-selected: var(--ion-color-medium);
+}
+
+ion-tab-button.tab-selected {
+  --background: var(--ion-color-dark) !important;
+  --color-selected: var(--ion-color-light);
+}

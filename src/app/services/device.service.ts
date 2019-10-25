@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, of, throwError} from 'rxjs';
+import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import {Device} from '../models/device';
 import {FormGroup} from '@angular/forms';
 import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
@@ -19,8 +19,12 @@ export class DeviceService {
     url = environment.serverUrl + environment.apiPrefix;
     devicesUrl = this.url + 'devices';  // URL to web api to access devices
     searchUrl = this.devicesUrl + '/search';  // URL to web api to search devices by hwDeviceId or description (substrings)
+    private currentDevice: Device;
+    private behaviorSubject = new BehaviorSubject<Device>(this.currentDevice);
+    public observableCurrentDevice: Observable<Device> = this.behaviorSubject.asObservable();
 
-  constructor(
+
+    constructor(
       private utils: UbirchWebUIUtilsService,
       private deviceTypeService: DeviceTypeService,
       private userService: UserService,
@@ -33,20 +37,24 @@ export class DeviceService {
      * @param pageSize how many devices are maximal paged
      */
     public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DevicesListWrapper> {
-    const url = UbirchWebUIUtilsService.addParamsToURL(
-        this.devicesUrl,
-        pageNum,
-        pageSize);
+        const url = UbirchWebUIUtilsService.addParamsToURL(
+            this.devicesUrl,
+            pageNum,
+            pageSize);
 
-    return this.http.get<DevicesListWrapper[]>(url).pipe(
-        map(listWrapper => new DevicesListWrapper(listWrapper)),
-        tap(listWrapper => {
-            if (listWrapper && listWrapper.numberOfDevices) {
-                this.userService.setNumberOfDevices(listWrapper.numberOfDevices);
-            }
+        return this.http.get<DevicesListWrapper[]>(url).pipe(
+            map(listWrapper => new DevicesListWrapper(listWrapper)),
+            tap(listWrapper => {
+                if (listWrapper && listWrapper.numberOfDevices) {
+                    this.userService.setNumberOfDevices(listWrapper.numberOfDevices);
+                }
         }));
     }
 
+    /**
+     * return a list of devices where the hwDeviceId OR the description contains the given search string
+     * @param searchStr substring to search for
+     */
     public searchDevices(searchStr: string): Observable<DevicesListWrapper> {
         const url = `${this.searchUrl}/${searchStr}`;
 
@@ -66,7 +74,12 @@ export class DeviceService {
     public loadDevice(id: string): Observable<Device> {
         const url = `${this.devicesUrl}/${id}`;
         return this.http.get<Device>(url).pipe(
-            map(jsonDevice => new Device(jsonDevice)));
+            map(jsonDevice => {
+                    const respDevice = new Device(jsonDevice);
+                    this.behaviorSubject.next(respDevice);
+                    return respDevice;
+                })
+        );
     }
 
     /**
@@ -143,7 +156,11 @@ export class DeviceService {
       // TODO: before sending a device stringify every property that is here an object but a string on the other side
         const url = `${this.devicesUrl}/${device.hwDeviceId}`;
         return this.http.put<Device>(url, device).pipe(
-            map(jsonDevice => new Device(jsonDevice)),
+            map(jsonDevice => {
+                const respDevice = new Device(jsonDevice);
+                this.behaviorSubject.next(respDevice);
+                return respDevice;
+            }),
             catchError( _ => of(null)));
 
     }

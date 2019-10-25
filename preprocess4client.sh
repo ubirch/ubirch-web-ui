@@ -6,7 +6,7 @@ if [[ -z "$client" ]]
 then
       echo "Please add the name of the client as first argument!"
       echo "EXAMPLE:"
-      echo "./preprocess4client.sh test-mandant-1"
+      echo "./preprocess4client.sh test-realm"
 else
       path="./resources/clients/$client"
       themepath="$path/theme"
