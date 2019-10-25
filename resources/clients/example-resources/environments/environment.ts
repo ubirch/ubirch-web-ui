@@ -24,7 +24,8 @@ export const environment = {
   keycloak: keycloakConfig,
   default_device_type: 'default_type',
   POLLING_INTERVAL_MILLISECONDS: 2500,
-  LIST_ITEMS_PER_PAGE: 10
+  LIST_ITEMS_PER_PAGE: 10,
+  DATE_TIME_ZONE_FORMAT: 'dd.MM.yyyy, HH:mm:ss (zzz)'
 };
 
 /*

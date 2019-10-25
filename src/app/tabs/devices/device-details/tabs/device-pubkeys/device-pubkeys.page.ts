@@ -3,6 +3,7 @@ import {DeviceService} from '../../../../../services/device.service';
 import {Device} from '../../../../../models/device';
 import {KeyService} from '../../../../../services/key.service';
 import {PubKeyInfo} from '../../../../../models/pub-key-info';
+import {environment} from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-device-pubkeys',
@@ -35,5 +36,9 @@ export class DevicePubkeysPage implements OnInit {
               }
             }
         );
+  }
+
+  get DATE_TIME_ZONE_FORMAT(): string {
+      return environment.DATE_TIME_ZONE_FORMAT;
   }
 }
