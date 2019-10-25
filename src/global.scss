@@ -104,70 +104,21 @@ ion-icon.md.hydrated {
 .icon-color-black {
   fill:#000;
 }
-
-.datatable-header {
-  background: rgba(164, 192, 214,1);
-  padding: 1em 0 0 1em;
+app-tabs.ion-page {
+  margin-top: 350px;
 }
 
-.datatable-header-cell {
-  font-size: 1.2em;
-  font-weight: bold;
+ion-tab-bar {
+  --background: var(--ion-color-light);
 }
 
-.datatable-body-row {
-  padding: 0;
+ion-tab-button {
+  --ripple-color: var(--ion-color-medium);
+  --color: var(--ion-color-dark);
+  --color-selected: var(--ion-color-medium);
 }
 
-.datatable-row-even {
-  background: rgba(240, 240, 240, 1);
-}
-
-.datatable-row-odd {
-  background: rgba(255, 255, 255,1);
-}
-
-.datatable-body-cell {
-  font-size: 1.2em;
-  padding: 1em;
-}
-
-
-// Style footer appearance
-.datatable-footer {
-  background: rgba(218, 226, 234,1);
-  padding: 0 1em 0 1em;
-
-  .pager {
-    li {
-      padding: 0 1em !important;
-
-      a {
-        color: rgba(68, 68, 68, 1);
-        text-decoration: none;
-      }
-    }
-  }
-}
-
-
-// Style rules for the footer pagination elements
-.datatable-icon-done-all:before {
-  content: ">>";
-}
-
-.datatable-icon-left:before {
-  content: "<";
-}
-
-.datatable-icon-right:before {
-  content: ">";
-}
-
-.datatable-icon-skip:before {
-  content: ">>";
-}
-
-.datatable-icon-prev:before {
-  content: "<<";
+ion-tab-button.tab-selected {
+  --background: var(--ion-color-dark) !important;
+  --color-selected: var(--ion-color-light);
 }
