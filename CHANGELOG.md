@@ -5,8 +5,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- verify hash
+- display verification chain in graph
 - add spinner while loading data
-- device list with two columns
+
+(device list with two columns -> wont be done)
+
+## [0.2] - 2019-10-25
+
+### Added
+- Display List of PubKeys of Thing
+
+### Changed
+- added tabs to things details:
+  * settings
+  * pubKeys
+
+### Removed
+
 
 ## [0.1.4] - 2019-10-02
 
