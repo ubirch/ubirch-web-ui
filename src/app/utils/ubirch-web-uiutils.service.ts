@@ -51,4 +51,10 @@ export class UbirchWebUIUtilsService {
           return value.toString();
       }
   }
+
+  public static copyToClipboard(val: string) {
+    /* To copy any Text */
+    navigator.clipboard.writeText(val);
+  }
+
 }

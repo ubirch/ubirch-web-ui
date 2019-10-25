@@ -6,6 +6,7 @@ import {PubKeyInfo} from '../../../../../models/pub-key-info';
 import {environment} from '../../../../../../environments/environment';
 import {interval, of, Subscription} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
+import {UbirchWebUIUtilsService} from '../../../../../utils/ubirch-web-uiutils.service';
 
 @Component({
   selector: 'app-device-pubkeys',
@@ -75,18 +76,7 @@ export class DevicePubkeysPage implements OnInit {
     }
 
     copyToClipboard(val: string) {
-        /* To copy any Text */
-            const selBox = document.createElement('textarea');
-            selBox.style.position = 'fixed';
-            selBox.style.left = '0';
-            selBox.style.top = '0';
-            selBox.style.opacity = '0';
-            selBox.value = val;
-            document.body.appendChild(selBox);
-            selBox.focus();
-            selBox.select();
-            document.execCommand('copy');
-            document.body.removeChild(selBox);
+      UbirchWebUIUtilsService.copyToClipboard(val);
     }
 
 }
