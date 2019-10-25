@@ -4,7 +4,7 @@ import {Device} from '../../../../../models/device';
 import {KeyService} from '../../../../../services/key.service';
 import {PubKeyInfo} from '../../../../../models/pub-key-info';
 import {environment} from '../../../../../../environments/environment';
-import {interval, Subscription} from 'rxjs';
+import {interval, of, Subscription} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
 
 @Component({
@@ -53,6 +53,8 @@ export class DevicePubkeysPage implements OnInit {
                     if (this.loadedDevice && this.loadedDevice.hwDeviceId) {
                         // load pubKeys
                         return this.keyService.getPubKeysOfThing(this.loadedDevice.hwDeviceId);
+                    } else {
+                        return of(null);
                     }
                 })
             )
@@ -70,5 +72,21 @@ export class DevicePubkeysPage implements OnInit {
 
     get DATE_TIME_ZONE_FORMAT(): string {
       return environment.DATE_TIME_ZONE_FORMAT;
-  }
+    }
+
+    copyToClipboard(val: string) {
+        /* To copy any Text */
+            const selBox = document.createElement('textarea');
+            selBox.style.position = 'fixed';
+            selBox.style.left = '0';
+            selBox.style.top = '0';
+            selBox.style.opacity = '0';
+            selBox.value = val;
+            document.body.appendChild(selBox);
+            selBox.focus();
+            selBox.select();
+            document.execCommand('copy');
+            document.body.removeChild(selBox);
+    }
+
 }
