@@ -22,3 +22,7 @@ ion-button div {
 .devices-list-item-content {
   margin: 20px;
 }
+
+ion-label.devices-list-item-content {
+  cursor: pointer;
+}
