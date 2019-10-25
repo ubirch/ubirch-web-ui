@@ -15,7 +15,6 @@ import {ConfirmDeleteDevicePopupComponent} from '../../../devices-list-page/popu
 export class DeviceSettingsPage implements OnInit {
 
   deviceDetailsForm: FormGroup;
-  // id: string;
   private deviceHasUnsavedChanges = false;
   loadedDevice: Device;
 
@@ -48,7 +47,6 @@ export class DeviceSettingsPage implements OnInit {
   ]);
 
   constructor(
-  //     private route: ActivatedRoute,
       private fb: FormBuilder,
       private deviceService: DeviceService,
       public toastCtrl: ToastController,
@@ -56,21 +54,6 @@ export class DeviceSettingsPage implements OnInit {
       private modalCtrl: ModalController
   ) { }
 
-  // actionButtons = [new HeaderActionButton({
-  //   color: 'dark',
-  //   label: 'Back to Things List',
-  //   iconPath: 'assets/app-icons/back-button.svg',
-  //   action: 'back2DevicesList'
-  // })];
-  //
-  // handleButtonClick(action: string) {
-  //   switch (action) {
-  //     case 'back2DevicesList':
-  //       this.navigate2DevicesList();
-  //       break;
-  //   }
-  // }
-  //
   async finished(param: string, details?: string) {
     const content = this.toastrContent.get(param);
     if (details && content && content.message) {
@@ -103,31 +86,7 @@ export class DeviceSettingsPage implements OnInit {
                 }
               }
           );
-
-    //
-  //   this.id = this.route.snapshot.paramMap.get('id');
-  //   if (this.id) {
-  //     this.reloadDevice(this.id);
-  //   } else {
-  //     // handle url missmatch!!!!
-  //     this.finished('err', 'things details url called without ID');
-  //     this.router.navigate(['devices']);
-  //   }
   }
-
-  // reloadDevice(id: string) {
-  //   this.deviceService.loadDevice(this.id)
-  //       .subscribe(
-  //           loadedDevice =>  {
-  //             this.loadedDevice = loadedDevice;
-  //             if (this.loadedDevice) {
-  //               this.deviceDetailsForm.patchValue(this.patchForm(this.loadedDevice));
-  //               this.deviceHasUnsavedChanges = false;
-  //               this.watchFormControls();
-  //             }
-  //           }
-  //       );
-  // }
 
   private patchForm(device?: Device): any {
     const val = {
@@ -190,12 +149,4 @@ export class DeviceSettingsPage implements OnInit {
   private getPrettyJSON(json: string): string {
     return JSON.stringify(JSON.parse(json), null, 2);
   }
-
-  // get hwDeviceId(): any {
-  //   return this.deviceDetailsForm.get('hwDeviceId').value;
-  // }
-  //
-  // get title(): string {
-  //   return this.loadedDevice ? this.loadedDevice.description : '';
-  // }
 }

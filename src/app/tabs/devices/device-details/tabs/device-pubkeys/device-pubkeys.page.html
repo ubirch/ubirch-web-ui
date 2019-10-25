@@ -1,4 +1,4 @@
-<ion-content class="ion-padding">
+<ion-content >
   <ng-container *ngIf="pubKeyList; else NO_LIST">
     <ion-list>
       <!-- TODO: lowlight pubKeys that are not yet/no longer valid -->
@@ -42,5 +42,13 @@
       </ion-item>
     </ion-list>
   </ng-container>
-  <ng-template #NO_LIST>NO LIST.....</ng-template>
+  <ng-template #NO_LIST>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="6">
+        <div class="ion-text-center">
+          <h1>There seams to be no public keys available for this thing...</h1>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ng-template>
 </ion-content>
