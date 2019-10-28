@@ -39,11 +39,20 @@ spec:
             - name: UBIRCH_KC_URL
               value: {{ .Values.adminUi.keyCloak.url }}
             - name: UBIRCH_TR_KC_REALM
-              value: {{ .Values.adminUi.keyCloak.testRealm.realmName }}
+              valueFrom:
+                secretKeyRef:
+                  name: ubs.admin-ui
+                  key: realm
             - name: UBIRCH_KC_CLIENTID
-              value: {{ .Values.adminUi.keyCloak.clientId }}
+              valueFrom:
+                secretKeyRef:
+                  name: ubs.admin-ui
+                  key: client_id
             - name: UBIRCH_TR_KC_CRED_SECRET
-              value: {{ .Values.adminUi.keyCloak.testRealm.secret }}
+              valueFrom:
+                secretKeyRef:
+                  name: ubs.admin-ui
+                  key: password
             - name: UBIRCH_TR_ENV_SERVURL
               value: {{ .Values.adminUi.env.serverUrl }}
             - name: UBIRCH_TR_API_PREF
