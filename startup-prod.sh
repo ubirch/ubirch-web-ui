@@ -2,7 +2,7 @@
 
 env
 
-bash preprocess4client.sh UBIRCH_TR_KC_REALM
+bash preprocess4client.sh "${UBIRCH_TR_KC_REALM}"
 rm src/environments/environment.ts
 mv src/environments/environment.prod.ts src/environments/environment.ts
 
