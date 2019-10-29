@@ -52,6 +52,14 @@ spec:
               value: {{ .Values.adminUi.keyCloak.testRealm.clientName }}
             - name: UBIRCH_TR_DEFAULT_DEVICE_TYPE
               value: {{ .Values.adminUi.keyCloak.testRealm.defaultDeviceType }}
+            - name: UBIRCH_TR_ENV_KEYSERVICE_SERVURL
+              value: {{ .Values.adminUi.env.keyserviceUrl }}
+            - name: UBIRCH_TR_API_KEYSERVICE_PREF
+              value: {{ .Values.adminUi.env.keyservicePrefix }}
+            - name: UBIRCH_TR_ENV_TRUSTSERVICE_SERVURL
+              value: {{ .Values.adminUi.env.trustserviceUrl }}
+            - name: UBIRCH_TR_API_VERIFY_PREF
+              value: {{ .Values.adminUi.env.verifyPrefix }}              
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}

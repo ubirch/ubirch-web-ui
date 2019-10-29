@@ -42,6 +42,10 @@ adminUi:
   env:
     serverUrl: "https://api.console.dev.ubirch.com"
     apiPrefix: "/ubirch-web-ui/api/v1/"
+    keyserviceUrl: "https://key.dev.ubirch.com"
+    keyservicePrefix: "/api/keyService/v1/"
+    trustserviceUrl: "https://verify.prod.ubirch.com"
+    verifyPrefix: "/api/verify/"
 
 
 resources:
