@@ -7,6 +7,7 @@ import {environment} from '../../../../../../environments/environment';
 import {interval, of, Subscription} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
 import {UbirchWebUIUtilsService} from '../../../../../utils/ubirch-web-uiutils.service';
+import {LoadingController} from '@ionic/angular';
 
 @Component({
   selector: 'app-device-pubkeys',
@@ -23,7 +24,8 @@ export class DevicePubkeysPage implements OnInit {
 
   constructor(
       private deviceService: DeviceService,
-      private keyService: KeyService
+      private keyService: KeyService,
+      private loadingController: LoadingController
   ) { }
 
     ionViewWillEnter() {
