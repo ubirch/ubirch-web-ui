@@ -9,32 +9,43 @@
 ></ubirch-web-ui-header>
 
 <ion-content padding-horizontal>
-  <ion-grid>
-    <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
-      <ion-col size="12">
-        <mat-paginator #paginator
-                       [ngClass]="{'invisible': searchActive()}"
-                       [length]="numberOfDevices"
-                       [pageSize]="pageSize">
-        </mat-paginator>
+  <ng-container *ngIf="deviceStubs; else NO_LIST">
+    <ion-grid>
+      <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
+        <ion-col size="12">
+          <mat-paginator #paginator
+                         [ngClass]="{'invisible': searchActive()}"
+                         [length]="numberOfDevices"
+                         [pageSize]="pageSize">
+          </mat-paginator>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-list>
+      <ion-item *ngFor="let item of deviceStubs" color="light" class="device-list-item" lines="none" margin-bottom>
+        <ion-label [routerLink]="['/devices','details', item.hwDeviceId]" class="devices-list-item-content">
+          <h2>{{item.description}}</h2>
+          <h3>{{item.hwDeviceId}}</h3>
+          <p>state not available</p>
+        </ion-label>
+        <div class="item-note" slot="end">
+          <ion-button (click)="confirmDeviceDelete(item)" color="danger" class="devices-list-delete-button">
+            <div align-items-center>
+              <ion-icon src="assets/app-icons/delete.svg" class="devices-list-delete-icon"></ion-icon>
+              delete
+            </div>
+          </ion-button>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+  <ng-template #NO_LIST>
+    <ion-row *ngIf="loaded" align-items-center justify-content-center padding>
+      <ion-col size="6">
+        <div class="ion-text-center">
+          <h1>You seem to have no things already.</h1>
+        </div>
       </ion-col>
     </ion-row>
-  </ion-grid>
-  <ion-list>
-    <ion-item *ngFor="let item of deviceStubs" color="light" class="device-list-item" lines="none" margin-bottom>
-      <ion-label [routerLink]="['/devices','details', item.hwDeviceId]" class="devices-list-item-content">
-        <h2>{{item.description}}</h2>
-        <h3>{{item.hwDeviceId}}</h3>
-        <p>state not available</p>
-      </ion-label>
-      <div class="item-note" slot="end">
-        <ion-button (click)="confirmDeviceDelete(item)" color="danger" class="devices-list-delete-button">
-          <div align-items-center>
-            <ion-icon src="assets/app-icons/delete.svg" class="devices-list-delete-icon"></ion-icon>
-            delete
-          </div>
-        </ion-button>
-      </div>
-    </ion-item>
-  </ion-list>
+  </ng-template>
 </ion-content>

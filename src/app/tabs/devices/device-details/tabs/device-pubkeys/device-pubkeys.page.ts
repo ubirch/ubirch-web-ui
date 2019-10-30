@@ -20,7 +20,10 @@ export class DevicePubkeysPage implements OnInit {
     polling = new Subscription();
 
     loadedDevice: Device;
-    public pubKeyList: PubKeyInfo[];
+    pubKeyList: PubKeyInfo[];
+
+    loadingSpinner: Promise<void | HTMLIonLoadingElement>;
+    loaded = false;
 
   constructor(
       private deviceService: DeviceService,
@@ -37,7 +40,7 @@ export class DevicePubkeysPage implements OnInit {
         .subscribe(
             loadedDevice =>  {
               this.loadedDevice = loadedDevice;
-              this.restartPolling();
+              this.restartPolling(true);
             }
         );
   }
@@ -46,7 +49,7 @@ export class DevicePubkeysPage implements OnInit {
         this.stopPolling();
     }
 
-    private restartPolling() {
+    private restartPolling(showSpinner?: boolean) {
         this.stopPolling();
 
         this.polling = interval(environment.POLLING_INTERVAL_MILLISECONDS)
@@ -55,16 +58,23 @@ export class DevicePubkeysPage implements OnInit {
                 switchMap(() => {
                     if (this.loadedDevice && this.loadedDevice.hwDeviceId) {
                         // load pubKeys
+                        if (showSpinner) {
+                          this.showLoader();
+                        }
                         return this.keyService.getPubKeysOfThing(this.loadedDevice.hwDeviceId);
                     } else {
                         return of(null);
                     }
                 })
             )
-            .subscribe( pubKeyList =>
+            .subscribe( pubKeyList => {
                 // list of pubKeys, sort by validNotAfter
                 this.pubKeyList = pubKeyList && pubKeyList.length > 0 ?
-                    pubKeyList.sort(KeyService.compareKeys) : undefined );
+                  pubKeyList.sort(KeyService.compareKeys) : undefined;
+                this.loaded = true;
+                this.hideLoader();
+              }
+            );
     }
 
     private stopPolling() {
@@ -80,5 +90,20 @@ export class DevicePubkeysPage implements OnInit {
     copyToClipboard(val: string) {
       UbirchWebUIUtilsService.copyToClipboard(val);
     }
+
+  showLoader() {
+    this.loadingSpinner = this.loadingController.create({
+      message: 'Loading pubKeys of thing'
+    }).then((res) => {
+      res.present();
+    });
+  }
+
+  hideLoader() {
+    if (this.loadingSpinner) {
+      this.loadingController.dismiss();
+      this.loadingSpinner = undefined;
+    }
+  }
 
 }

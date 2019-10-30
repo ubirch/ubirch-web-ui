@@ -4,7 +4,7 @@ import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
 import {startWith, switchMap, tap} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
-import {ModalController, ToastController} from '@ionic/angular';
+import {LoadingController, ModalController, ToastController} from '@ionic/angular';
 import {NewDevicePopupComponent} from './popups/new-device-popup/new-device-popup.component';
 import {ConfirmDeleteDevicePopupComponent} from './popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {CreatedDevicesListPopupComponent} from './popups/created-devices-list-popup/created-devices-list-popup.component';
@@ -31,10 +31,14 @@ export class DevicesListPage {
   searchStr: string;
   numOfFilteredItems = 0;
 
+  loadingSpinner: Promise<void | HTMLIonLoadingElement>;
+  loaded = false;
+
   constructor(
       private deviceService: DeviceService,
       private modalCtrl: ModalController,
-      private toastCtrl: ToastController
+      private toastCtrl: ToastController,
+      private loadingController: LoadingController
   ) {}
 
   toastrContent: Map<string, any> = new Map([
@@ -85,13 +89,13 @@ export class DevicesListPage {
   }
 
   ionViewWillEnter() {
-    this.restartPolling();
+    this.restartPolling(true);
   }
 
   ionViewDidEnter() {
     this.paginator.page
         .pipe(
-            tap(() => this.restartPolling())
+            tap(() => this.restartPolling(true))
         )
         .subscribe();
 
@@ -101,7 +105,7 @@ export class DevicesListPage {
     this.stopPolling();
   }
 
-  private restartPolling() {
+  private restartPolling(showSpinner?: boolean) {
       this.stopPolling();
 
       this.polling = interval(environment.POLLING_INTERVAL_MILLISECONDS)
@@ -109,10 +113,16 @@ export class DevicesListPage {
               startWith(0),
               switchMap(() => {
                 if (this.searchActive()) {
+                  if (showSpinner) {
+                    this.showLoader();
+                  }
                   return this.deviceService.searchDevices(
                       this.searchStr
                   );
                 } else {
+                  if (showSpinner) {
+                    this.showLoader();
+                  }
                   return this.deviceService.reloadDeviceStubs(
                       this.paginator ? this.paginator.pageIndex : 0,
                       this.pageSize
@@ -125,6 +135,8 @@ export class DevicesListPage {
                 this.numberOfDevices = wrapper.numberOfDevices || 0;
                 this.numOfFilteredItems = wrapper.filteredDevicesSize || 0;
                 this.deviceStubs = wrapper.devices || [];
+                this.loaded = true;
+                this.hideLoader();
               }
           );
   }
@@ -142,7 +154,7 @@ export class DevicesListPage {
     } else {
       this.searchStr = undefined;
     }
-    this.restartPolling();
+    this.restartPolling(true);
   }
 
   async confirmDeviceDelete(device: DeviceStub) {
@@ -221,5 +233,20 @@ export class DevicesListPage {
 
   get headerRightValue(): number {
     return this.searchActive() ? this.numOfFilteredItems : this.numberOfDevices;
+  }
+
+  showLoader() {
+    this.loadingSpinner = this.loadingController.create({
+      message: 'Loading your Things'
+    }).then((res) => {
+      res.present();
+    });
+  }
+
+  hideLoader() {
+    if (this.loadingSpinner) {
+      this.loadingController.dismiss();
+      this.loadingSpinner = undefined;
+    }
   }
 }
