@@ -39,11 +39,20 @@ spec:
             - name: UBIRCH_KC_URL
               value: {{ .Values.adminUi.keyCloak.url }}
             - name: UBIRCH_TR_KC_REALM
-              value: {{ .Values.adminUi.keyCloak.testRealm.realmName }}
+              valueFrom:
+                secretKeyRef:
+                  name: ubs.admin-ui
+                  key: realm
             - name: UBIRCH_KC_CLIENTID
-              value: {{ .Values.adminUi.keyCloak.clientId }}
+              valueFrom:
+                secretKeyRef:
+                  name: ubs.admin-ui
+                  key: client_id
             - name: UBIRCH_TR_KC_CRED_SECRET
-              value: {{ .Values.adminUi.keyCloak.testRealm.secret }}
+              valueFrom:
+                secretKeyRef:
+                  name: ubs.admin-ui
+                  key: password
             - name: UBIRCH_TR_ENV_SERVURL
               value: {{ .Values.adminUi.env.serverUrl }}
             - name: UBIRCH_TR_API_PREF
@@ -52,6 +61,14 @@ spec:
               value: {{ .Values.adminUi.keyCloak.testRealm.clientName }}
             - name: UBIRCH_TR_DEFAULT_DEVICE_TYPE
               value: {{ .Values.adminUi.keyCloak.testRealm.defaultDeviceType }}
+            - name: UBIRCH_TR_ENV_KEYSERVICE_SERVURL
+              value: {{ .Values.adminUi.env.keyserviceUrl }}
+            - name: UBIRCH_TR_API_KEYSERVICE_PREF
+              value: {{ .Values.adminUi.env.keyservicePrefix }}
+            - name: UBIRCH_TR_ENV_TRUSTSERVICE_SERVURL
+              value: {{ .Values.adminUi.env.trustserviceUrl }}
+            - name: UBIRCH_TR_API_VERIFY_PREF
+              value: {{ .Values.adminUi.env.verifyPrefix }}              
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
