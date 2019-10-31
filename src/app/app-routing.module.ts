@@ -16,11 +16,16 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/devices/devices.module').then(m => m.ListPageModule)
   },
   {
+    path: 'verification',
+    loadChildren: () => import('./tabs/verification/verification.module').then(m => m.VerificationPageModule)
+  },
+  {
     path: 'logout',
     loadChildren: () => import('./tabs/logout/logout.module').then(m => m.LogoutPageModule)
   },
   { path: 'device-pubkeys', loadChildren: './tabs/devices/device-details/tabs/device-pubkeys/device-pubkeys.module#DevicePubkeysPageModule' },
-  { path: 'tabs', loadChildren: './tabs/devices/device-details/tabs/tabs.module#TabsPageModule' }
+  { path: 'tabs', loadChildren: './tabs/devices/device-details/tabs/tabs.module#TabsPageModule' },
+  { path: 'verification', loadChildren: './tabs/verification/verification.module#VerificationPageModule' }
 ];
 
 @NgModule({

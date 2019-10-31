@@ -23,6 +23,11 @@ export class AppComponent {
       icon: 'list.svg'
     },
     {
+      title: 'Verification',
+      url: '/verification',
+      icon: 'checkmark-circle-outline.svg'
+    },
+    {
       title: 'Logout',
       url: '/logout',
       icon: 'logout.svg'
