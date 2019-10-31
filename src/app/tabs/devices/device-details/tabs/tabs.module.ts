@@ -22,6 +22,10 @@ const routes: Routes = [
         loadChildren: () => import('./device-settings/device-settings.module').then(m => m.DeviceSettingsPageModule)
       },
       {
+        path: 'state',
+        loadChildren: () => import('./device-state/device-state.module').then(m => m.DeviceStatePageModule)
+      },
+      {
         path: 'pubkeys',
         loadChildren: () => import('./device-pubkeys/device-pubkeys.module').then(m => m.DevicePubkeysPageModule)
       }
