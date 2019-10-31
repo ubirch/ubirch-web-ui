@@ -16,7 +16,7 @@ export const environment = {
   keyServiceServerUrl: '<KEYSERVICE_REST_API_SERVER_URI>',
   keyServiceApiPrefix: '/api/keyService/v1/',
   trustServiceServerUrl: '<TRUSTSERVICE_REST_API_SERVER_URI>',
-  verifyApiPrefix: '/api/verify/',
+  verifyApiPrefix: '/api/upp/verify/',
   client_logo_filename: 'logo.svg',
   client_startpage_image_filename: 'start_img.svg',
   client_description_filename: 'description.md',

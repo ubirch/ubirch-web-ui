@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {catchError, map, tap} from 'rxjs/operators';
 import {PubKeyInfo} from '../models/pub-key-info';
 import {Observable} from 'rxjs';
@@ -11,14 +11,17 @@ import {Observable} from 'rxjs';
 export class TrustService {
 
   public API_URL = environment.trustServiceServerUrl + environment.verifyApiPrefix;
-
+  private getAnchor = 'anchor';
+  private getRecord = 'record';
+  private withPathSuffix = new HttpParams().set('response_form', 'anchors_with_path');
 
   constructor(
       private http: HttpClient
   ) { }
 
   public verifyByHash(vHash: string): Observable<any> {
-    return this.http.post<any>(this.API_URL, vHash).pipe(
+    const url = this.API_URL + this.getRecord;
+    return this.http.post<any>(url, vHash, { params: this.withPathSuffix }).pipe(
       tap(verification => console.log(`hash verified: ${verification}`)),
       map(jsonHashVerification =>
         jsonHashVerification
