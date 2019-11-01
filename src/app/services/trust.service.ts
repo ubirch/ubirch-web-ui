@@ -14,6 +14,7 @@ export class TrustService {
   private getAnchor = 'anchor';
   private getRecord = 'record';
   private withPathSuffix = new HttpParams().set('response_form', 'anchors_with_path');
+  private withoutPathSuffix = new HttpParams().set('response_form', 'anchors_no_path');
 
   constructor(
       private http: HttpClient
