@@ -32,16 +32,17 @@ ingress:
 adminUi:
   keyCloak:
     url: "https://id.dev.ubirch.com/auth"
-    clientId: "ubirch-2.0-user-access"
     testRealm:
-      realmName: "ubirch-default-realm"
-      secret: "425bae4e-1904-4a6b-b977-f26fc0590ccc"
       clientName: "ubirch GmbH"
       defaultDeviceType: "default_type"
 
   env:
     serverUrl: "https://api.console.dev.ubirch.com"
     apiPrefix: "/ubirch-web-ui/api/v1/"
+    keyserviceUrl: "https://key.dev.ubirch.com"
+    keyservicePrefix: "/api/keyService/v1/"
+    trustserviceUrl: "https://verify.prod.ubirch.com"
+    verifyPrefix: "/api/verify/"
 
 
 resources:
