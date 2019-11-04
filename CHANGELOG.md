@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 (device list with two columns -> wont be done)
 
+## [0.2.1] - 2019-11-04
+
+### Added
+
+### Changed
+- fixed bug: spinner was shown on every polling -> problems with focus and nerves
+
+### Removed
+
 ## [0.2] - 2019-10-25
 
 ### Added
