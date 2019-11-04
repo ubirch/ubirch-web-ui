@@ -20,7 +20,6 @@ export class PubKeyInfo {
      */
     constructor(jsonPubKey) {
         if (jsonPubKey) {
-            console.log('jsonPubKey: ' + jsonPubKey);
             if (jsonPubKey.pubKeyInfo) {
                 this.hwDeviceId = jsonPubKey.pubKeyInfo.hwDeviceId;
                 this.pubKey = jsonPubKey.pubKeyInfo.pubKey;

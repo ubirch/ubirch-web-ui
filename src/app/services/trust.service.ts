@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {catchError, map, tap} from 'rxjs/operators';
 import {PubKeyInfo} from '../models/pub-key-info';
 import {Observable} from 'rxjs';
+import {Upp} from '../models/upp';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class TrustService {
     return this.http.post<any>(url, vHash, { params: this.withPathSuffix }).pipe(
       tap(verification => console.log(`hash verified: ${verification}`)),
       map(jsonHashVerification =>
-        jsonHashVerification
+        new Upp(jsonHashVerification)
       ),
       catchError(err => {
         console.log(`hash cannot be verified: ${err}`);
