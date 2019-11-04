@@ -107,20 +107,23 @@ export class DevicesListPage {
 
   private restartPolling(showSpinner?: boolean) {
       this.stopPolling();
+      if (showSpinner) {
+        this.loaded = false;
+      }
 
       this.polling = interval(environment.POLLING_INTERVAL_MILLISECONDS)
           .pipe(
               startWith(0),
               switchMap(() => {
                 if (this.searchActive()) {
-                  if (!this.loaded && showSpinner) {
+                  if (!this.loaded) {
                     this.showLoader();
                   }
                   return this.deviceService.searchDevices(
                       this.searchStr
                   );
                 } else {
-                  if (!this.loaded && showSpinner) {
+                  if (!this.loaded) {
                     this.showLoader();
                   }
                   return this.deviceService.reloadDeviceStubs(
@@ -154,7 +157,6 @@ export class DevicesListPage {
     } else {
       this.searchStr = undefined;
     }
-    this.loaded = false;
     this.restartPolling(true);
   }
 
@@ -171,7 +173,6 @@ export class DevicesListPage {
             device.hwDeviceId)
             .subscribe(
                 _ => {
-                  this.loaded = false;
                   this.restartPolling(true);
                   this.finished('del');
                 },
@@ -196,12 +197,10 @@ export class DevicesListPage {
             details.data)
             .subscribe(
                 createdDevice => {
-                  this.loaded = false;
                   this.restartPolling(true);
                   this.presentDevicesCreatedModal(createdDevice);
                 },
                 err => {
-                  this.loaded = false;
                   this.restartPolling(true);
                   const errMsg = 'something went wrong during devices creation: ' + err.message;
                   this.presentDevicesCreatedModal(err, errMsg);
