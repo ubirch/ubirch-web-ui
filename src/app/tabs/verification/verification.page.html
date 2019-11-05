@@ -1,11 +1,104 @@
 <ubirch-web-ui-header
   title="Verification"
   [headerRightLabel]="headerRightLabel"
-  [headerRightValue]="headerRightValue"
+  [headerRightValue]="hash2Verify"
   addSearchBarWithPlaceholder="Insert hash for verification"
   (startSearch)="checkHash($event)"
 ></ubirch-web-ui-header>
 
+<ng-template #listItem let-nodes="nodes" let-itemType="itemType">
+    <ion-item *ngFor="let node of nodes"
+              color="{{itemType === 'blockchainNode' ? 'success' : 'light'}}"
+               class="device-list-item" lines="none" margin-bottom>
+      <ion-label class="devices-list-item-content">
+        <ion-row justify-content-center>
+          <ion-col size="8">
+            <ion-row margin-bottom *ngIf="itemType === 'treeNode'">
+              <h1 text-wrap>timestamp: {{node.timestamp}}</h1>
+              <h1 text-wrap>hash: {{node.hash}}</h1>
+              <h2 text-wrap>prevHash: {{node.prevHash ? node.prevHash : 'unlinked'}}</h2>
+              <h2 text-wrap>nextHash: {{node.nextHash ? node.nextHash : 'unlinked'}}</h2>
+            </ion-row>
+            <ion-row margin-bottom *ngIf="itemType === 'blockchainNode'">
+              <h1 text-wrap>timestamp: {{node.timestamp}}</h1>
+              <h1 text-wrap>hash: {{node.hash}}</h1>
+              <h2 text-wrap>hash: {{node.prevHash ? node.prevHash : 'unlinked'}}</h2>
+            </ion-row>
+          </ion-col>
+          <ion-col size="4" justify-content-center align-items-center>
+            <h1 text-wrap>type: {{node.type}}</h1>
+          </ion-col>
+        </ion-row>
+      </ion-label>
+    </ion-item>
+</ng-template>
+
+
 <ion-content>
+  <ng-container *ngIf="verifiedUpp; else NO_TREE">
+    <ion-list>
+      <ion-item-divider color="dark">
+        <ion-label>
+          Lower Path
+        </ion-label>
+      </ion-item-divider>
+      <ng-container [ngTemplateOutlet]="listItem"
+                    [ngTemplateOutletContext]="{nodes: verifiedUpp.anchors.lowerPath, itemType: 'treeNode'}"></ng-container>
+      <ng-container [ngTemplateOutlet]="listItem"
+                    [ngTemplateOutletContext]="{nodes: verifiedUpp.anchors.lowerBlockChains, itemType: 'blockchainNode'}"></ng-container>
+
+      <ion-item-divider color="dark">
+        <ion-label>
+          Verified UPP
+        </ion-label>
+      </ion-item-divider>
+
+        <ion-item color='primary'
+                  class="device-list-item" lines="none" margin-bottom>
+          <ion-label class="devices-list-item-content">
+            <ion-row justify-content-center>
+              <ion-col size="8">
+                <ion-row margin-bottom>
+                  <h1 text-wrap>hash: {{verifiedUpp.upp}}</h1>
+                </ion-row>
+              </ion-col>
+              <ion-col size="4" justify-content-center align-items-center>
+                <h1 text-wrap>type: UPP</h1>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+
+        <ion-item-divider color="dark">
+          <ion-label>
+            Upper Path
+          </ion-label>
+        </ion-item-divider>
+      <ng-container [ngTemplateOutlet]="listItem"
+                    [ngTemplateOutletContext]="{nodes: verifiedUpp.anchors.upperPath, itemType: 'treeNode'}"></ng-container>
+      <ng-container [ngTemplateOutlet]="listItem"
+                    [ngTemplateOutletContext]="{nodes: verifiedUpp.anchors.upperBlockChains, itemType: 'blockchainNode'}"></ng-container>
+    </ion-list>
+  </ng-container>
+  <!-- TODO: check for verification_state and show pending -->
+  <ng-template #NO_TREE>
+    <ion-row *ngIf="hash2Verify; else NO_HASH" align-items-center justify-content-center padding>
+      <ion-col size="6">
+        <div class="ion-text-center">
+          <h1>Verification failed!</h1>
+          <p>Your inserted hash {{hash2Verify}} is not anchored in any blockchain.</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+  <ng-template #NO_HASH>
+    <ion-row align-items-center justify-content-center padding>
+      <ion-col size="6">
+        <div class="ion-text-center">
+          <h1>Please insert a hash into search field to verify and view its blockchain anchoring...</h1>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ng-template>
 
 </ion-content>

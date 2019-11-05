@@ -10,12 +10,12 @@ export class AnchorPathNode {
   constructor(jsonNode: any) {
     if (jsonNode) {
       this.label = jsonNode.label;
-      this.timestamp = jsonNode.timestamp;
-      this.type = jsonNode.type;
-      this.hash = jsonNode.hash;
-      this.nextHash = jsonNode.next_hash;
-      this.prevHash = jsonNode.prev_hash;
-      this.signature = jsonNode.signature;
+      this.timestamp = jsonNode.properties.timestamp;
+      this.type = jsonNode.properties.type;
+      this.hash = jsonNode.properties.hash;
+      this.nextHash = jsonNode.properties.next_hash;
+      this.prevHash = jsonNode.properties.prev_hash;
+      this.signature = jsonNode.properties.signature;
     }
     return this;
   }

@@ -6,7 +6,7 @@ export class BlockChainNode extends AnchorPathNode {
   constructor(jsonNode: any) {
     super(jsonNode);
     if (jsonNode) {
-      this.publicChain = jsonNode.public_chain;
+      this.publicChain = jsonNode.properties.public_chain;
     }
     return this;
   }
