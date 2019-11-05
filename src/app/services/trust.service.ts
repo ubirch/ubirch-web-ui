@@ -27,11 +27,7 @@ export class TrustService {
       tap(verification => console.log(`hash verified: ${verification}`)),
       map(jsonHashVerification =>
         new Upp(jsonHashVerification)
-      ),
-      catchError(err => {
-        console.log(`hash cannot be verified: ${err}`);
-        return null;
-      })
+      )
     );
   }
 }

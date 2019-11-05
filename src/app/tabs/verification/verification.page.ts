@@ -3,13 +3,15 @@ import {HeaderActionButton} from '../../components/header/header-action-button';
 import {TrustService} from '../../services/trust.service';
 import {catchError, tap} from 'rxjs/operators';
 import {Upp} from '../../models/upp';
+import {HttpResponseBase} from '@angular/common/http';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
   HASH_INSERTED_UNVERIFIED: 'HASH_INSERTED_UNVERIFIED',
   PENDING: 'PENDING',
   HASH_VERIFIED: 'HASH_VERIFIED',
-  HASH_VERIFICATION_FAILED: 'HASH_VERIFICATION_FAILED'
+  HASH_VERIFICATION_FAILED: 'HASH_VERIFICATION_FAILED',
+  HASH_VERIFICATION_ERROR: 'HASH_VERIFICATION_ERROR'
 };
 
 @Component({
@@ -23,6 +25,7 @@ export class VerificationPage implements OnInit {
   @ViewChild('PENDING', {static: true}) PENDING: TemplateRef<any>;
   @ViewChild('HASH_VERIFIED', {static: true}) HASH_VERIFIED: TemplateRef<any>;
   @ViewChild('HASH_VERIFICATION_FAILED', {static: true}) HASH_VERIFICATION_FAILED: TemplateRef<any>;
+  @ViewChild('HASH_VERIFICATION_ERROR', {static: true}) HASH_VERIFICATION_ERROR: TemplateRef<any>;
 
 
   public headerRightLabel = 'Verified Hash: ';
@@ -47,7 +50,7 @@ export class VerificationPage implements OnInit {
         this.verificationState = VERIFICATION_STATE.PENDING;
         this.truster.verifyByHash(this.hash2Verify).subscribe(
           upp => this.createUppTree(upp),
-          error => this.verificationState = VERIFICATION_STATE.HASH_VERIFICATION_FAILED
+          error => this.handleError(error)
 
       );
       } else {
@@ -68,6 +71,16 @@ export class VerificationPage implements OnInit {
   private createUppTree(upp: Upp) {
     this.verifiedUpp = upp;
     this.verificationState = VERIFICATION_STATE.HASH_VERIFIED;
+  }
+
+  private handleError(error: HttpResponseBase) {
+    if (error && error.status && error.status === 404) {
+      if (error.statusText && error.statusText === 'OK') {
+        this.verificationState = VERIFICATION_STATE.HASH_VERIFICATION_FAILED;
+        return;
+      }
+    }
+    this.verificationState = VERIFICATION_STATE.HASH_VERIFICATION_ERROR;
   }
 
   public get VERIFICATION_STATE(): any {
