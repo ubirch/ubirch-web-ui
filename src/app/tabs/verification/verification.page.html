@@ -12,77 +12,10 @@
 </ion-content>
 
 <ng-template #HASH_VERIFIED let-verifiedUpp="verifiedUpp">
-   <ion-list>
-      <ion-item-divider color="dark">
-        <ion-label>
-          Lower Path
-        </ion-label>
-      </ion-item-divider>
-      <ng-container [ngTemplateOutlet]="listItem"
-                    [ngTemplateOutletContext]="{nodes: verifiedUpp.anchors.lowerPath, itemType: 'treeNode'}"></ng-container>
-      <ng-container [ngTemplateOutlet]="listItem"
-                    [ngTemplateOutletContext]="{nodes: verifiedUpp.anchors.lowerBlockChains, itemType: 'blockchainNode'}"></ng-container>
-
-      <ion-item-divider color="dark">
-        <ion-label>
-          Verified UPP
-        </ion-label>
-      </ion-item-divider>
-
-        <ion-item color='primary'
-                  class="device-list-item" lines="none" margin-bottom>
-          <ion-label class="devices-list-item-content">
-            <ion-row justify-content-center>
-              <ion-col size="8">
-                <ion-row margin-bottom>
-                  <h1 text-wrap>hash: {{verifiedUpp.upp}}</h1>
-                </ion-row>
-              </ion-col>
-              <ion-col size="4" justify-content-center align-items-center>
-                <h1 text-wrap>type: UPP</h1>
-              </ion-col>
-            </ion-row>
-          </ion-label>
-        </ion-item>
-
-        <ion-item-divider color="dark">
-          <ion-label>
-            Upper Path
-          </ion-label>
-        </ion-item-divider>
-      <ng-container [ngTemplateOutlet]="listItem"
-                    [ngTemplateOutletContext]="{nodes: verifiedUpp.anchors.upperPath, itemType: 'treeNode'}"></ng-container>
-      <ng-container [ngTemplateOutlet]="listItem"
-                    [ngTemplateOutletContext]="{nodes: verifiedUpp.anchors.upperBlockChains, itemType: 'blockchainNode'}"></ng-container>
-    </ion-list>
+  <div style="height: 90%; width: 80%; float: left; overflow: auto; overflow-y: hidden">
+    <ng2-cytoscape [elements]="graphData" [layout]="layout"></ng2-cytoscape>
+  </div>
 </ng-template>
-
-  <ng-template #listItem let-nodes="nodes" let-itemType="itemType">
-    <ion-item *ngFor="let node of nodes"
-              color="{{itemType === 'blockchainNode' ? 'success' : 'light'}}"
-              class="device-list-item" lines="none" margin-bottom>
-      <ion-label class="devices-list-item-content">
-        <ion-row justify-content-center>
-          <ion-col size="8">
-            <ion-row margin-bottom *ngIf="itemType === 'treeNode'">
-              <h1 text-wrap>timestamp: {{node.timestamp}}</h1>
-              <h1 text-wrap>hash: {{node.hash}}</h1>
-              <h2 text-wrap>prevHash: {{node.prevHash ? node.prevHash : 'unlinked'}}</h2>
-              <h2 text-wrap>nextHash: {{node.nextHash ? node.nextHash : 'unlinked'}}</h2>
-            </ion-row>
-            <ion-row margin-bottom *ngIf="itemType === 'blockchainNode'">
-              <h1 text-wrap>timestamp: {{node.timestamp}}</h1>
-              <h1 text-wrap>hash: {{node.hash}}</h1>
-              <h2 text-wrap>hash: {{node.prevHash ? node.prevHash : 'unlinked'}}</h2>
-            </ion-row>
-          </ion-col>
-          <ion-col size="4" justify-content-center align-items-center>
-            <h1 text-wrap>type: {{node.type}}</h1>
-          </ion-col>
-        </ion-row>
-      </ion-label>
-    </ion-item>
-  </ng-template>
 
 <ng-template #HASH_VERIFICATION_FAILED>
   <ion-row align-items-center justify-content-center padding>
