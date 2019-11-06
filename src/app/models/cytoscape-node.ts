@@ -12,6 +12,10 @@ export class CytoscapeNode {
   }
 }
 
+/**
+ * Format:
+ *     { data: { id: 'a', name: 'Signup', weight: 100, colorCode: 'blue', shapeType: 'roundrectangle' } }
+ */
 export class CytoscapeNodeData {
   public id: string;
   public name: string;

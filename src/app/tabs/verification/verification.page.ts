@@ -87,11 +87,8 @@ export class VerificationPage implements OnInit {
 
   private createUppTree(upp: Upp) {
     this.graphData = {
-//    { data: { id: 'a', name: 'Signup', weight: 100, colorCode: 'blue', shapeType: 'roundrectangle' } },
-    nodes: upp.allNodes,
-      edges: [
-//        { data: { source: 'a', target: 'b', colorCode: 'blue', strength: 10 } },
-      ]
+      nodes: upp.allNodes,
+      edges: upp.allEdges
     };
     this.verifiedUpp = upp;
     this.verificationState = VERIFICATION_STATE.HASH_VERIFIED;
