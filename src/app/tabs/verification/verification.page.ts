@@ -42,39 +42,27 @@ export class VerificationPage implements OnInit {
     padding: 0
   };
 
-  graphData = {
-    nodes: [
-      { data: { id: 'a', name: 'Signup', weight: 100, colorCode: 'blue', shapeType: 'roundrectangle' } },
-      { data: { id: 'b', name: 'User Profile', weight: 100, colorCode: 'magenta', shapeType: 'roundrectangle' } },
-      { data: { id: 'c', name: 'Billing', weight: 100, colorCode: 'magenta', shapeType: 'roundrectangle' } },
-      { data: { id: 'd', name: 'Sales', weight: 100, colorCode: 'orange', shapeType: 'roundrectangle' } },
-      { data: { id: 'e', name: 'Referral', weight: 100, colorCode: 'orange', shapeType: 'roundrectangle' } },
-      { data: { id: 'f', name: 'Loan', weight: 100, colorCode: 'orange', shapeType: 'roundrectangle' } },
-      { data: { id: 'j', name: 'Support', weight: 100, colorCode: 'red', shapeType: 'ellipse' } },
-      { data: { id: 'k', name: 'Sink Event', weight: 100, colorCode: 'green', shapeType: 'ellipse' } }
-    ],
-    edges: [
-      { data: { source: 'a', target: 'b', colorCode: 'blue', strength: 10 } },
-      { data: { source: 'b', target: 'c', colorCode: 'blue', strength: 10 } },
-      { data: { source: 'c', target: 'd', colorCode: 'blue', strength: 10 } },
-      { data: { source: 'c', target: 'e', colorCode: 'blue', strength: 10 } },
-      { data: { source: 'c', target: 'f', colorCode: 'blue', strength: 10 } },
-      { data: { source: 'e', target: 'j', colorCode: 'red', strength: 10 } },
-      { data: { source: 'e', target: 'k', colorCode: 'green', strength: 10 } }
-    ]
-  };
+  graphData: any;
 
   constructor(
     private truster: TrustService
   ) { }
 
   ngOnInit() {
+    // TODO: remove the following lines (just for testing correct hash)
+    if (this.checkHashVerifyView(
+      // oPV/aJsximYq2DbduTEarm8Jhae4uy61xOB6JIAACnFBCDJjJjBvz1sQNlqEfEAeCq1q5Kl1bv6KGz1y2wKQRw==
+      // NotExistingHash = 'LFTeTv/CkXn4Y2DFWunC5i7VhUbfQvVXoJ7iNt4D5ad9udm4aXJBmhR6+UAODtXXqtzcu0tyRjTF4Sx/JJN2mg==';
+      'oPV/aJsximYq2DbduTEarm8Jhae4uy61xOB6JIAACnFBCDJjJjBvz1sQNlqEfEAeCq1q5Kl1bv6KGz1y2wKQRw==')) {
+      this.verificationState = VERIFICATION_STATE.PENDING;
+      this.truster.verifyByHash(this.hash2Verify).subscribe(
+        upp => this.createUppTree(upp),
+        error => this.handleError(error)
+      );
+    }
   }
 
   private checkHash(event: any) {
-    // oPV/aJsximYq2DbduTEarm8Jhae4uy61xOB6JIAACnFBCDJjJjBvz1sQNlqEfEAeCq1q5Kl1bv6KGz1y2wKQRw==
-    // NotExistingHash = 'LFTeTv/CkXn4Y2DFWunC5i7VhUbfQvVXoJ7iNt4D5ad9udm4aXJBmhR6+UAODtXXqtzcu0tyRjTF4Sx/JJN2mg==';
-
       if (this.checkHashVerifyView(event.target.value)) {
         this.verificationState = VERIFICATION_STATE.PENDING;
         this.truster.verifyByHash(this.hash2Verify).subscribe(
@@ -98,6 +86,13 @@ export class VerificationPage implements OnInit {
   }
 
   private createUppTree(upp: Upp) {
+    this.graphData = {
+//    { data: { id: 'a', name: 'Signup', weight: 100, colorCode: 'blue', shapeType: 'roundrectangle' } },
+    nodes: upp.allNodes,
+      edges: [
+//        { data: { source: 'a', target: 'b', colorCode: 'blue', strength: 10 } },
+      ]
+    };
     this.verifiedUpp = upp;
     this.verificationState = VERIFICATION_STATE.HASH_VERIFIED;
   }
