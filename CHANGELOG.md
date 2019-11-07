@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 (device list with two columns -> wont be done)
 
+## [0.3.0] - 2019-11-07
+
+### Added
+- verification tree: first simple version of verification tree
+
+### Changed
+
+### Removed
+
 ## [0.2.1] - 2019-11-04
 
 ### Added
