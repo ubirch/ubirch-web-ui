@@ -36,10 +36,26 @@ export class VerificationPage implements OnInit {
   public verificationState = VERIFICATION_STATE.NO_HASH;
 
   layout = {
-    name: 'dagre',
-    rankDir: 'LR',
+    name: 'concentric',
     directed: true,
-    padding: 0
+    padding: 50,
+    transform: (node, position) => {
+      switch (node._private.data.name) {
+        case 'UPP':
+          position.y = 300;
+          break;
+        case 'SLAVE_TREE':
+          position.y = 200;
+          break;
+        case 'MASTER_TREE':
+          position.y = 100;
+          break;
+        case 'PUBLIC_CHAIN':
+          position.y = 0;
+          break;
+      }
+      return position;
+    }
   };
 
   graphData: any;
@@ -50,7 +66,7 @@ export class VerificationPage implements OnInit {
 
   ngOnInit() {
     // TODO: remove the following lines (just for testing correct hash)
-    if (this.checkHashVerifyView(
+/*    if (this.checkHashVerifyView(
       // oPV/aJsximYq2DbduTEarm8Jhae4uy61xOB6JIAACnFBCDJjJjBvz1sQNlqEfEAeCq1q5Kl1bv6KGz1y2wKQRw==
       // NotExistingHash = 'LFTeTv/CkXn4Y2DFWunC5i7VhUbfQvVXoJ7iNt4D5ad9udm4aXJBmhR6+UAODtXXqtzcu0tyRjTF4Sx/JJN2mg==';
       'oPV/aJsximYq2DbduTEarm8Jhae4uy61xOB6JIAACnFBCDJjJjBvz1sQNlqEfEAeCq1q5Kl1bv6KGz1y2wKQRw==')) {
@@ -60,6 +76,7 @@ export class VerificationPage implements OnInit {
         error => this.handleError(error)
       );
     }
+ */
   }
 
   private checkHash(event: any) {
