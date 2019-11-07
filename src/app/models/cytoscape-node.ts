@@ -25,7 +25,7 @@ export class CytoscapeNodeData {
 
   constructor(anchorPathNode: AnchorPathNode, layouter?: Map<string, CytoscapeNodeLayout>) {
     if (anchorPathNode) {
-      this.name = anchorPathNode.label;
+      this.name = anchorPathNode.label + ' (' + anchorPathNode.timestamp + ')';
       this.id = anchorPathNode.hash;
       this.weight = 100;
 

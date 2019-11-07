@@ -3,8 +3,7 @@ export class AnchorPathNode {
   public timestamp: string; // date-time
   public type: string;
   public hash: string;
-  public nextHash: string;
-  public prevHash: string;
+  public nextHash: string[];
   public signature: string;
 
   constructor(jsonNode: any) {
@@ -13,10 +12,15 @@ export class AnchorPathNode {
       this.timestamp = jsonNode.properties.timestamp;
       this.type = jsonNode.properties.type;
       this.hash = jsonNode.properties.hash;
-      this.nextHash = jsonNode.properties.next_hash;
-      this.prevHash = jsonNode.properties.prev_hash;
+      this.nextHash = jsonNode.properties.next_hash ? [ jsonNode.properties.next_hash ] : [];
       this.signature = jsonNode.properties.signature;
     }
     return this;
+  }
+
+  public addNextHash(newNextHash: string) {
+    if (!this.nextHash.includes(newNextHash)) {
+      this.nextHash.push(newNextHash);
+    }
   }
 }

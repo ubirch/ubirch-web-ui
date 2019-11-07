@@ -64,13 +64,24 @@ export class Upp {
 
     this._allNodesMap = new Map<string, AnchorPathNode>();
 
-    this.anchors.upperPath.map(node => this._allNodesMap.set(node.hash, node));
-    this.anchors.upperBlockChains.map(node => this._allNodesMap.set(node.hash, node));
-    this.anchors.lowerPath.map(node => this._allNodesMap.set(node.hash, node));
-    this.anchors.lowerBlockChains.map(node => this._allNodesMap.set(node.hash, node));
+    this.addAnchorNodes(this.anchors.upperPath);
+    this.addAnchorNodes(this.anchors.upperBlockChains);
+    this.addAnchorNodes(this.anchors.lowerPath);
+    this.addAnchorNodes(this.anchors.lowerBlockChains);
 
     const nodesArray = UbirchWebUIUtilsService.mapToArray(this._allNodesMap);
     this._allNodes = nodesArray.map(node => new CytoscapeNode(node));
+  }
+
+  private addAnchorNodes(arr: AnchorPathNode[]) {
+    arr.forEach(node => {
+      const foundNode = this._allNodesMap.get(node.hash);
+      if (foundNode && node.nextHash.length === 1) {
+        foundNode.addNextHash(node.nextHash[0]);
+      } else {
+        this._allNodesMap.set(node.hash, node);
+      }
+    });
   }
 
   private createEdges() {
@@ -79,8 +90,8 @@ export class Upp {
         if (node.data) {
           const fullNode = this._allNodesMap.get(node.data.id);
           if (fullNode) {
-            this.createEdgeIfExists(fullNode.hash, fullNode.nextHash);
-            this.createEdgeIfExists(fullNode.prevHash, fullNode.hash);
+            fullNode.nextHash.forEach(nextHash =>
+            this.createEdgeIfExists(fullNode.hash, nextHash));
           }
           }
       });
