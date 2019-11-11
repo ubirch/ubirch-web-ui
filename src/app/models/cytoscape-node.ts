@@ -22,12 +22,18 @@ export class CytoscapeNodeData {
   public weight: number;
   public colorCode: string;
   public shapeType: string;
+  public type: string;
+  public timestamp: string;
+  public positionInChain: number;
 
   constructor(anchorPathNode: AnchorPathNode, layouter?: Map<string, CytoscapeNodeLayout>) {
     if (anchorPathNode) {
       this.name = anchorPathNode.label; // + ' (' + anchorPathNode.timestamp + ')';
       this.id = anchorPathNode.hash;
+      this.type = anchorPathNode.type;
+      this.timestamp = anchorPathNode.timestamp;
       this.weight = 100;
+      this.positionInChain = anchorPathNode.indexInChain;
 
       const layout = this.getNodeLayout(anchorPathNode.type, layouter);
       this.colorCode = layout.colorCode;

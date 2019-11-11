@@ -5,6 +5,7 @@ export class AnchorPathNode {
   public hash: string;
   public nextHash: string[];
   public signature: string;
+  public indexInChain: number;
 
   constructor(jsonNode: any) {
     if (jsonNode) {

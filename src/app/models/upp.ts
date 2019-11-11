@@ -64,17 +64,21 @@ export class Upp {
 
     this._allNodesMap = new Map<string, AnchorPathNode>();
 
-    this.addAnchorNodes(this.anchors.upperPath);
-    this.addAnchorNodes(this.anchors.upperBlockChains);
-    this.addAnchorNodes(this.anchors.lowerPath);
-    this.addAnchorNodes(this.anchors.lowerBlockChains);
+    let pathEndIndex = this.addAnchorNodes(this.anchors.upperPath, 0);
+    this.addAnchorNodes(this.anchors.upperBlockChains, pathEndIndex);
+    pathEndIndex = this.addAnchorNodes(this.anchors.lowerPath, -1, -1);
+    this.addAnchorNodes(this.anchors.lowerBlockChains, pathEndIndex);
 
     const nodesArray = UbirchWebUIUtilsService.mapToArray(this._allNodesMap);
     this._allNodes = nodesArray.map(node => new CytoscapeNode(node));
   }
 
-  private addAnchorNodes(arr: AnchorPathNode[]) {
-    arr.forEach(node => {
+  private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1): number {
+    let currIndex = startAtIndex;
+    arr.forEach((node, index) => {
+      currIndex = startAtIndex + index * direction;
+      node.indexInChain = currIndex;
+
       const foundNode = this._allNodesMap.get(node.hash);
       if (foundNode && node.nextHash.length === 1) {
         foundNode.addNextHash(node.nextHash[0]);
@@ -82,6 +86,7 @@ export class Upp {
         this._allNodesMap.set(node.hash, node);
       }
     });
+    return currIndex;
   }
 
   private createEdges() {
