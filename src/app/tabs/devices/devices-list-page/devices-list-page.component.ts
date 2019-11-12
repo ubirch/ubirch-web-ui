@@ -116,9 +116,6 @@ export class DevicesListPage {
               startWith(0),
               switchMap(() => {
                 if (this.searchActive()) {
-                  if (!this.loaded) {
-                    this.showLoader();
-                  }
                   return this.deviceService.searchDevices(
                       this.searchStr
                   );
@@ -157,7 +154,7 @@ export class DevicesListPage {
     } else {
       this.searchStr = undefined;
     }
-    this.restartPolling(true);
+    this.restartPolling();
   }
 
   async confirmDeviceDelete(device: DeviceStub) {
