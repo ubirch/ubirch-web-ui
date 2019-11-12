@@ -29,6 +29,7 @@ export class CytoscapeNodeData {
   public id: string;
   public name: string;
   public weight: number;
+  public nodeIcon: string;
   public colorCode: string;
   public shapeType: string;
   public type: string;
@@ -45,6 +46,7 @@ export class CytoscapeNodeData {
       this.positionInChain = anchorPathNode.indexInChain;
 
       const layout = this.getNodeLayout(anchorPathNode.type, layouter);
+      this.nodeIcon = layout.nodeIcon;
       this.colorCode = layout.colorCode;
       this.shapeType = layout.shapeType;
     }

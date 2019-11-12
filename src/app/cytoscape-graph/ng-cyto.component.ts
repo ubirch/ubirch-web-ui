@@ -46,7 +46,8 @@ export class NgCytoComponent implements OnChanges {
         'background-fit': 'cover',
         'border-color': '#000',
         'border-width': 3,
-        'border-opacity': 0.5
+        'border-opacity': 0.5,
+        'background-image': 'data(nodeIcon)'
       })
       .selector(':selected')
       .css({
@@ -61,7 +62,8 @@ export class NgCytoComponent implements OnChanges {
         'target-arrow-shape': 'triangle',
         'line-color': 'data(colorCode)',
         'source-arrow-color': 'data(colorCode)',
-        'target-arrow-color': 'data(colorCode)'
+        'target-arrow-color': 'data(colorCode)',
+
       })
       .selector('edge.questionable')
       .css({
@@ -72,22 +74,6 @@ export class NgCytoComponent implements OnChanges {
       .css({
         'opacity': 0.25,
         'text-opacity': 0
-      })
-      .selector('.UPP')
-      .css({
-        'background-image': 'https://live.staticflickr.com/7272/7633179468_3e19e45a0c_b.jpg'
-      })
-      .selector('.FOUNDATION_TREE')
-      .css({
-        'background-image': 'https://live.staticflickr.com/3063/2751740612_af11fb090b_b.jpg'
-      })
-      .selector('.MASTER_TREE')
-      .css({
-        'background-image': 'https://live.staticflickr.com/5109/5817854163_eaccd688f5_b.jpg'
-      })
-      .selector('.PUBLIC_CHAIN')
-      .css({
-        'background-image': 'https://live.staticflickr.com/2660/3715569167_7e978e8319_b.jpg'
       });
   }
 

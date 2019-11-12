@@ -4,6 +4,7 @@ import {isArray} from 'util';
 import {CytoscapeNode} from './cytoscape-node';
 import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
 import {CytoscapeEdge} from './cytoscape-edge';
+import {CytoscapeNodeLayout} from './cytoscape-node-layout';
 
 export class Upp {
   public upp: string;
@@ -13,6 +14,7 @@ export class Upp {
     lowerPath: AnchorPathNode[],
     lowerBlockChains: BlockChainNode[]
   };
+  private layouter: Map<string, CytoscapeNodeLayout>;
 
   // tslint:disable-next-line:variable-name
   private _allNodesMap: Map<string, AnchorPathNode>;
@@ -40,6 +42,14 @@ export class Upp {
       }
     }
     return this;
+  }
+
+  public set nodeLayouter(layouter: Map<string, CytoscapeNodeLayout>) {
+    this.layouter = layouter;
+  }
+
+  public get nodeLayouter(): Map<string, CytoscapeNodeLayout> {
+    return this.layouter;
   }
 
   public get allNodes(): CytoscapeNode[] {
@@ -70,7 +80,7 @@ export class Upp {
     this.addAnchorNodes(this.anchors.lowerBlockChains, pathEndIndex);
 
     const nodesArray = UbirchWebUIUtilsService.mapToArray(this._allNodesMap);
-    this._allNodes = nodesArray.map(node => new CytoscapeNode(node));
+    this._allNodes = nodesArray.map(node => new CytoscapeNode(node, this.layouter));
   }
 
   private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1): number {

@@ -4,6 +4,7 @@ import {TrustService} from '../../services/trust.service';
 import {catchError, tap} from 'rxjs/operators';
 import {Upp} from '../../models/upp';
 import {HttpResponseBase} from '@angular/common/http';
+import {CytoscapeNodeLayout, LAYOUT_SETTINGS} from '../../models/cytoscape-node-layout';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -26,7 +27,6 @@ export class VerificationPage implements OnInit {
   @ViewChild('HASH_VERIFIED', {static: true}) HASH_VERIFIED: TemplateRef<any>;
   @ViewChild('HASH_VERIFICATION_FAILED', {static: true}) HASH_VERIFICATION_FAILED: TemplateRef<any>;
   @ViewChild('HASH_VERIFICATION_ERROR', {static: true}) HASH_VERIFICATION_ERROR: TemplateRef<any>;
-
 
   public headerRightLabel = 'Verified Hash: ';
   public headerRightValue = '..';
@@ -105,12 +105,21 @@ export class VerificationPage implements OnInit {
   }
 
   private createUppTree(upp: Upp) {
+    if (!upp.nodeLayouter) {
+      upp.nodeLayouter = this.createNodeLayouter();
+    }
     this.graphData = {
       nodes: upp.allNodes,
       edges: upp.allEdges
     };
     this.verifiedUpp = upp;
     this.verificationState = VERIFICATION_STATE.HASH_VERIFIED;
+  }
+
+  private createNodeLayouter(): Map<string, CytoscapeNodeLayout> {
+    const layouter: Map<string, CytoscapeNodeLayout> = new Map<string, CytoscapeNodeLayout>();
+    LAYOUT_SETTINGS.forEach(sett => layouter.set(sett.type, new CytoscapeNodeLayout(sett.nodeIcon)));
+    return layouter;
   }
 
   private handleError(error: HttpResponseBase) {
