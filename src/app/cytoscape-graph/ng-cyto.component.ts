@@ -41,15 +41,12 @@ export class NgCytoComponent implements OnChanges {
 
       .selector('node')
       .css({
-        'shape': 'data(shapeType)',
-        'width': 'mapData(weight, 40, 80, 20, 60)',
-        'content': 'data(name)',
-        'text-valign': 'center',
-        'text-outline-width': 1,
-        'text-outline-color': 'data(colorCode)',
-        'background-color': 'data(colorCode)',
-        'color': '#fff',
-        'font-size': 10
+        'height': 50,
+        'width': 50,
+        'background-fit': 'cover',
+        'border-color': '#000',
+        'border-width': 3,
+        'border-opacity': 0.5
       })
       .selector(':selected')
       .css({
@@ -75,19 +72,35 @@ export class NgCytoComponent implements OnChanges {
       .css({
         'opacity': 0.25,
         'text-opacity': 0
+      })
+      .selector('.UPP')
+      .css({
+        'background-image': 'https://live.staticflickr.com/7272/7633179468_3e19e45a0c_b.jpg'
+      })
+      .selector('.FOUNDATION_TREE')
+      .css({
+        'background-image': 'https://live.staticflickr.com/3063/2751740612_af11fb090b_b.jpg'
+      })
+      .selector('.MASTER_TREE')
+      .css({
+        'background-image': 'https://live.staticflickr.com/5109/5817854163_eaccd688f5_b.jpg'
+      })
+      .selector('.PUBLIC_CHAIN')
+      .css({
+        'background-image': 'https://live.staticflickr.com/2660/3715569167_7e978e8319_b.jpg'
       });
   }
 
-  public ngOnChanges(): any {
+    public ngOnChanges(): any {
     this.render();
     console.log(this.el.nativeElement);
   }
 
   public render() {
-    const cy_contianer = this.renderer.selectRootElement('#cy');
+    const cyContainer = this.renderer.selectRootElement('#cy');
     const localselect = this.select;
     const cy = cytoscape({
-      container : cy_contianer,
+      container : cyContainer,
       layout: this.layout,
       minZoom: this.zoom.min,
       maxZoom: this.zoom.max,
@@ -96,7 +109,7 @@ export class NgCytoComponent implements OnChanges {
     });
 
 
-    cy.on('tap', 'node', function(e) {
+    cy.on('tap', 'node', e => {
       const node = e.target;
       const neighborhood = node.neighborhood().add(node);
 
@@ -105,7 +118,7 @@ export class NgCytoComponent implements OnChanges {
       localselect.emit(node.data('name'));
     });
 
-    cy.on('tap', function(e) {
+    cy.on('tap', e => {
       if (e.target === cy) {
         cy.elements().removeClass('faded');
       }

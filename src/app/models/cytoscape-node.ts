@@ -3,12 +3,21 @@ import {AnchorPathNode} from './anchor-path-node';
 
 export class CytoscapeNode {
   public data: CytoscapeNodeData;
+  public classes: string;
 
   constructor(anchorPathNode: AnchorPathNode, layouter?: Map<string, CytoscapeNodeLayout>) {
     if (anchorPathNode) {
       this.data = new CytoscapeNodeData(anchorPathNode, layouter);
+      this.classes = this.addNodeClasses(this.data);
     }
     return this;
+  }
+
+  private addNodeClasses(data: CytoscapeNodeData): string {
+    if (data && data.type) {
+      return data.type;
+    }
+    return undefined;
   }
 }
 

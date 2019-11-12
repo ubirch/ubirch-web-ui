@@ -44,7 +44,7 @@ export class VerificationPage implements OnInit {
         case 'UPP':
           position.y = 300;
           break;
-        case 'SLAVE_TREE':
+        case 'FOUNDATION_TREE':
           position.y = 200;
           break;
         case 'MASTER_TREE':
