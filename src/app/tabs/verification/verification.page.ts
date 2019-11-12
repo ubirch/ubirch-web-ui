@@ -12,7 +12,8 @@ export const VERIFICATION_STATE = {
   PENDING: 'PENDING',
   HASH_VERIFIED: 'HASH_VERIFIED',
   HASH_VERIFICATION_FAILED: 'HASH_VERIFICATION_FAILED',
-  HASH_VERIFICATION_ERROR: 'HASH_VERIFICATION_ERROR'
+  HASH_VERIFICATION_ERROR: 'HASH_VERIFICATION_ERROR',
+  SERVICE_CURRENTLY_UNAVAILABLE: 'SERVICE_CURRENTLY_UNAVAILABLE'
 };
 
 @Component({
@@ -27,6 +28,7 @@ export class VerificationPage implements OnInit {
   @ViewChild('HASH_VERIFIED', {static: true}) HASH_VERIFIED: TemplateRef<any>;
   @ViewChild('HASH_VERIFICATION_FAILED', {static: true}) HASH_VERIFICATION_FAILED: TemplateRef<any>;
   @ViewChild('HASH_VERIFICATION_ERROR', {static: true}) HASH_VERIFICATION_ERROR: TemplateRef<any>;
+  @ViewChild('SERVICE_CURRENTLY_UNAVAILABLE', {static: true}) SERVICE_CURRENTLY_UNAVAILABLE: TemplateRef<any>;
 
   public headerRightLabel = 'Verified Hash: ';
   public headerRightValue = '..';
@@ -123,13 +125,22 @@ export class VerificationPage implements OnInit {
   }
 
   private handleError(error: HttpResponseBase) {
-    if (error && error.status && error.status === 404) {
-      if (error.statusText && error.statusText === 'OK') {
-        this.verificationState = VERIFICATION_STATE.HASH_VERIFICATION_FAILED;
-        return;
+    if (error && error.status) {
+      switch (error.status) {
+        case 404:
+          if (error.statusText && error.statusText === 'OK') {
+            this.verificationState = VERIFICATION_STATE.HASH_VERIFICATION_FAILED;
+          } else {
+            this.verificationState = VERIFICATION_STATE.HASH_VERIFICATION_ERROR;
+          }
+          break;
+        case 503:
+          this.verificationState = VERIFICATION_STATE.SERVICE_CURRENTLY_UNAVAILABLE;
+          break;
       }
+    } else {
+      this.verificationState = VERIFICATION_STATE.HASH_VERIFICATION_ERROR;
     }
-    this.verificationState = VERIFICATION_STATE.HASH_VERIFICATION_ERROR;
   }
 
   public get VERIFICATION_STATE(): any {
