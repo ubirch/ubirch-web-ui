@@ -41,13 +41,14 @@ export class NgCytoComponent implements OnChanges {
 
       .selector('node')
       .css({
+        'content': 'data(name)',
+        'shape': 'data(shapeType)',
         'height': 50,
         'width': 50,
         'background-fit': 'cover',
-        'border-color': '#000',
-        'border-width': 3,
-        'border-opacity': 0.5,
-        'background-image': 'data(nodeIcon)'
+        'border-width': 0,
+        'background-image': 'data(nodeIcon)',
+        'background-opacity': '0'
       })
       .selector(':selected')
       .css({

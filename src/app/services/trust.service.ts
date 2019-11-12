@@ -14,7 +14,7 @@ export class TrustService {
   public API_URL = environment.trustServiceServerUrl + environment.verifyApiPrefix;
   private getAnchor = 'anchor';
   private getRecord = 'record';
-  private withPathSuffix = new HttpParams().set('response_form', 'anchors_with_path');
+  private withPathSuffix = new HttpParams().set('response_form', 'anchors_with_path').set('blockchain_info', 'ext');
   private withoutPathSuffix = new HttpParams().set('response_form', 'anchors_no_path');
 
   constructor(

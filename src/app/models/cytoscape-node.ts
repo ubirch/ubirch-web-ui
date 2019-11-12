@@ -1,5 +1,6 @@
 import {CytoscapeNodeLayout} from './cytoscape-node-layout';
 import {AnchorPathNode} from './anchor-path-node';
+import {BlockChainNode} from './block-chain-node';
 
 export class CytoscapeNode {
   public data: CytoscapeNodeData;
@@ -33,6 +34,7 @@ export class CytoscapeNodeData {
   public colorCode: string;
   public shapeType: string;
   public type: string;
+  public subType: string;
   public timestamp: string;
   public positionInChain: number;
 
@@ -40,12 +42,16 @@ export class CytoscapeNodeData {
     if (anchorPathNode) {
       this.name = anchorPathNode.label; // + ' (' + anchorPathNode.timestamp + ')';
       this.id = anchorPathNode.hash;
-      this.type = anchorPathNode.type;
       this.timestamp = anchorPathNode.timestamp;
       this.weight = 100;
       this.positionInChain = anchorPathNode.indexInChain;
 
-      const layout = this.getNodeLayout(anchorPathNode.type, layouter);
+      this.type = anchorPathNode.type;
+      if (anchorPathNode instanceof BlockChainNode) {
+        this.subType = anchorPathNode.blockchain;
+      }
+
+      const layout = this.getNodeLayout(this.subType ? this.subType : this.type, layouter);
       this.nodeIcon = layout.nodeIcon;
       this.colorCode = layout.colorCode;
       this.shapeType = layout.shapeType;
