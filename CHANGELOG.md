@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
 
+
+## [0.3.2] - 2019-11-13
+
+### Added
+
+### Changed
+- fixed bug: error is handled and loader is removed if error occurred on load things list
+
+### Removed
+
 ## [0.3.1] - 2019-11-12
 
 ### Added
