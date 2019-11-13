@@ -137,7 +137,13 @@ export class DevicesListPage {
                 this.deviceStubs = wrapper.devices || [];
                 this.loaded = true;
                 this.hideLoader();
-              }
+              },
+            error => {
+              this.hideLoader();
+              this.finished(
+                'err',
+                error.toString());
+            }
           );
   }
 
