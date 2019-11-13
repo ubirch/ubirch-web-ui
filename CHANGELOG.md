@@ -5,12 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- things state:
+  * load state of a thing in things details
+  * add things state to deviceStubs and display state on things list
+  * display state on things list as spark line
 - verification tree: add action
   * open verification window when user clicks on blockchain node
   * check if hash is successfully anchored in blockchain: show different upp icons depending on if anchored or not
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
-
+- always open console with dashboard after user login 
+    
+    -> keycloak remembers last opened page => mostly logout page - äh! :(
 
 ## [0.3.2] - 2019-11-13
 
