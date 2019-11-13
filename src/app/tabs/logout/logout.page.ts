@@ -44,6 +44,10 @@ export class LogoutPage implements OnInit {
   }
 
   doLogout() {
-    this.keycloakService.logout();
+    this.keycloakService
+      .logout()
+      .then(_ =>
+        this.userService.resetAccountInfo()
+      );
   }
 }

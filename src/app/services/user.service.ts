@@ -29,7 +29,7 @@ export class UserService {
       return this.http.get<any>(this.accountUrl).pipe(
           tap(jsonAccount =>
               this.currentAccount = jsonAccount.user ?
-                  {user: new User(jsonAccount.user), numberOfDevices: jsonAccount.numberOfDevices } : undefined ),
+                  new AccountInfo({user: new User(jsonAccount.user), numberOfDevices: jsonAccount.numberOfDevices }) : undefined ),
           map(_ => this.currentAccount ? this.currentAccount.user : undefined));
     }
   }
@@ -58,5 +58,23 @@ export class UserService {
     } else {
       this.getAccountInfo();
     }
+  }
+
+  public hasUserEntered(): boolean {
+    if (this.currentAccount) {
+      return this.currentAccount.hasUserEntered();
+    }
+    return false;
+  }
+
+  public userEntered() {
+    if (this.currentAccount) {
+      this.currentAccount.userEntered();
+    }
+  }
+
+  public resetAccountInfo() {
+    this.currentAccount = undefined;
+    this.behaviorSubItem.next(this.currentAccount);
   }
 }

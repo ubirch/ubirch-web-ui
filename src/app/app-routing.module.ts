@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {EnterOnDashboardGuard} from './auth/enter-on-dashboard.guard';
 
 const routes: Routes = [
   {
@@ -13,20 +14,19 @@ const routes: Routes = [
   },
   {
     path: 'devices',
+    canActivate: [ EnterOnDashboardGuard ],
     loadChildren: () => import('./tabs/devices/devices.module').then(m => m.ListPageModule)
   },
   {
     path: 'verification',
+    canActivate: [ EnterOnDashboardGuard ],
     loadChildren: () => import('./tabs/verification/verification.module').then(m => m.VerificationPageModule)
   },
   {
     path: 'logout',
+    canActivate: [ EnterOnDashboardGuard ],
     loadChildren: () => import('./tabs/logout/logout.module').then(m => m.LogoutPageModule)
-  },
-  { path: 'device-pubkeys',
-    loadChildren: './tabs/devices/device-details/tabs/device-pubkeys/device-pubkeys.module#DevicePubkeysPageModule' },
-  { path: 'tabs', loadChildren: './tabs/devices/device-details/tabs/tabs.module#TabsPageModule' },
-  { path: 'device-state', loadChildren: './tabs/devices/device-details/tabs/device-state/device-state.module#DeviceStatePageModule' }
+  }
 ];
 
 @NgModule({

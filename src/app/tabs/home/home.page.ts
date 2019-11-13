@@ -37,6 +37,7 @@ export class HomePage implements OnInit {
       if (accountInfo) {
         this.username = accountInfo.user.toString();
         this.activeDevices = accountInfo.numberOfDevices;
+        this.userService.userEntered();
       } else {
         this.userService.getAccountInfo().subscribe();
       }
