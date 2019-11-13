@@ -5,11 +5,51 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- verify hash
-- display verification chain in graph
-- add spinner while loading data
+- verification tree: add action
+  * open verification window when user clicks on blockchain node
+  * check if hash is successfully anchored in blockchain: show different upp icons depending on if anchored or not
+  * display timestamp areas around upper and lower blockchain anchors
+  * replace icons with designed ones
 
-(device list with two columns -> wont be done)
+
+## [0.3.2] - 2019-11-13
+
+### Added
+
+### Changed
+- fixed bug: error is handled and loader is removed if error occurred on load things list
+
+### Removed
+
+## [0.3.1] - 2019-11-12
+
+### Added
+
+### Changed
+- verification tree: simple version showing complete verification tree
+- fixed bug: when user searches in things list and search starts during typing (because user types to slow) the spinner
+ popped up, the screen was locked and the search lost its focus
+ -> solved by no longer displaying a spinner when search is active 
+
+### Removed
+
+## [0.3.0] - 2019-11-07
+
+### Added
+- verification tree: first simple version of verification tree
+
+### Changed
+
+### Removed
+
+## [0.2.1] - 2019-11-04
+
+### Added
+
+### Changed
+- fixed bug: spinner was shown on every polling -> problems with focus and nerves
+
+### Removed
 
 ## [0.2] - 2019-10-25
 

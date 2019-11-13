@@ -23,6 +23,11 @@ export class AppComponent {
       icon: 'list.svg'
     },
     {
+      title: 'Verification',
+      url: '/verification',
+      icon: 'checkmark-circle-outline.svg'
+    },
+    {
       title: 'Logout',
       url: '/logout',
       icon: 'logout.svg'
@@ -47,7 +52,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      console.log('version 0.2.0');
+      console.log('version 0.3.2');
     });
   }
 }

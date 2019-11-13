@@ -57,4 +57,10 @@ export class UbirchWebUIUtilsService {
     navigator.clipboard.writeText(val);
   }
 
+  public static mapToArray(input: Map<string, any>): any[] {
+    const keysOfMap = Array.from(input.keys());
+
+    return keysOfMap.map(key => input.get(key));
+  }
+
 }

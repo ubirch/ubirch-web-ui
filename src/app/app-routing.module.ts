@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/devices/devices.module').then(m => m.ListPageModule)
   },
   {
+    path: 'verification',
+    loadChildren: () => import('./tabs/verification/verification.module').then(m => m.VerificationPageModule)
+  },
+  {
     path: 'logout',
     loadChildren: () => import('./tabs/logout/logout.module').then(m => m.LogoutPageModule)
   },
