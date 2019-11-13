@@ -14,9 +14,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * check if hash is successfully anchored in blockchain: show different upp icons depending on if anchored or not
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
+
+## [0.3.3] - 2019-11-13
+
+### Added
 - always open console with dashboard after user login 
     
     -> keycloak remembers last opened page => mostly logout page - äh! :(
+
+### Changed
+
+### Removed
 
 ## [0.3.2] - 2019-11-13
 
