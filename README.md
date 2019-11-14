@@ -61,6 +61,7 @@ For each tenant create a folder with the tenants name in the ./resources/clients
   > 
     > environments
          > environment.ts
+         > environment.local.ts
          > environment.prod.ts
     > assets
          > icon
@@ -75,6 +76,27 @@ For each tenant create a folder with the tenants name in the ./resources/clients
          > client_style.scss
 
 If you name the files differently, you have to add the filenames in the properties in environment.ts and environment.prod.ts.
+
+### Keycloak Secrets
+
+Copy preprocess-replace-secrets-TEMPLATE.sh to preprocess-replace-secrets.sh
+
+In preprocess-replace-secrets.sh create for every tenant/client you have an additional block of this:
+
+
+    if [[ "$client" == "ubirch-default-realm" ]]
+    then
+        local="<ADD-LOCAL-KEYCLOAK-CLIENT-SECRET>"
+        dev="<ADD-ONLINE-DEV-KEYCLOAK-CLIENT-SECRET>"
+    fi
+
+replace in every block manually:
+
+* "<TENANT-NAME>" with the name of the tenant realm in your keycloak installations (local and online)
+* '<ADD-LOCAL-KEYCLOAK-CLIENT-SECRET>' with secret (credentials) of client ubirch-2.0-user-access of your tenant realm in your local keycloak installation
+* '<ADD-ONLINE-DEV-KEYCLOAK-CLIENT-SECRET>' with secret (credentials) of client ubirch-2.0-user-access of your tenant realm in your online dev keycloak installation
+
+!!!!! TAKE CARE TO **NOT** PUSH preprocess-replace-secrets.sh ON GITHUB !!!!!!
 
 ## Device Types
 

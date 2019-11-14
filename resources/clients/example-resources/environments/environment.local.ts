@@ -1,7 +1,12 @@
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+
+// Add here your keycloak setup infos
 import {KeycloakConfig} from 'keycloak-angular';
 
 const keycloakConfig: KeycloakConfig = {
-  url: 'https://<KEYCLOAK_SERVER_URL>/auth',
+  url: 'http://localhost:8080/auth',
   realm: '<KEYCLOAK_REALM_ID>',
   clientId: '<KEYCLOAK_CLIENT_ID>',
   credentials: {
@@ -11,8 +16,8 @@ const keycloakConfig: KeycloakConfig = {
 
 export const environment = {
   production: false,
-  envName: 'dev',
-  serverUrl: '<REST_API_DEV_SERVER_URI>',
+  envName: 'local',
+  serverUrl: 'http://localhost:8081',
   apiPrefix: '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: '<KEYSERVICE_REST_API_SERVER_URI>',
   keyServiceApiPrefix: '/api/keyService/v1/',
