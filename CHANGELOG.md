@@ -6,7 +6,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - things state:
-  * load state of a thing in things details
   * add things state to deviceStubs and display state on things list
   * display state on things list as spark line
 - verification tree: add action
@@ -14,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * check if hash is successfully anchored in blockchain: show different upp icons depending on if anchored or not
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
+
+## [0.3.4] - 2019-11-15
+
+### Added
+- things state:
+  * load state of a thing in things details
+
+### Changed
+
+### Removed
 
 ## [0.3.3] - 2019-11-13
 
