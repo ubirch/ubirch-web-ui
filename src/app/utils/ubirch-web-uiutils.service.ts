@@ -10,7 +10,7 @@ export class UbirchWebUIUtilsService {
 
   static defaultPageSize = 20;
 
-  public static addParamsToURL(url: string, pageNum: number, pageSize: number): string {
+  public static addParamsToThingsListPaginationURL(url: string, pageNum: number, pageSize: number): string {
 
     if (pageNum !== undefined && pageNum >= 0) {
 
@@ -19,8 +19,17 @@ export class UbirchWebUIUtilsService {
         pageSize = this.defaultPageSize;
       }
 
-      url += `/page/${pageNum}/size/${pageSize}`;
+      url = this.addParamsToURL(url, ['page', `${pageNum}`, 'size', `${pageSize}`]);
     }
+    return url;
+
+  }
+
+  public static addParamsToURL(url: string, params: string[]): string {
+
+    params.forEach(
+      param => url += `/${param}`
+    );
     return url;
 
   }

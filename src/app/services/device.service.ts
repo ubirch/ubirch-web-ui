@@ -11,6 +11,7 @@ import {CreateDevicesFormData} from '../tabs/devices/devices-list-page/popups/ne
 import {DevicesListWrapper} from '../models/devices-list-wrapper';
 import {UserService} from './user.service';
 import {isArray} from 'util';
+import {DeviceState} from '../models/device-state';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,9 @@ import {isArray} from 'util';
 export class DeviceService {
     url = environment.serverUrl + environment.apiPrefix;
     devicesUrl = this.url + 'devices';  // URL to web api to access devices
+    deviceStateUrl = this.url + 'devices/state';  // URL to web api to access the states of requested devices
     searchUrl = this.devicesUrl + '/search';  // URL to web api to search devices by hwDeviceId or description (substrings)
+
     private currentDevice: Device;
     private behaviorSubject = new BehaviorSubject<Device>(this.currentDevice);
     public observableCurrentDevice: Observable<Device> = this.behaviorSubject.asObservable();
@@ -37,7 +40,7 @@ export class DeviceService {
      * @param pageSize how many devices are maximal paged
      */
     public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DevicesListWrapper> {
-        const url = UbirchWebUIUtilsService.addParamsToURL(
+        const url = UbirchWebUIUtilsService.addParamsToThingsListPaginationURL(
             this.devicesUrl,
             pageNum,
             pageSize);
@@ -49,6 +52,33 @@ export class DeviceService {
                     this.userService.setNumberOfDevices(listWrapper.numberOfDevices);
                 }
         }));
+    }
+
+    /**
+     * Get states of devices
+     * @param deviceIds array of deviceId for which the states should be requested for
+     * @param from Date Object (optional) if given this is the end of the request range of time, states are request for; default: Date.now()
+     * @param periode Date Object (optional) if given this is range of time, states are request for; default: 1 day
+     */
+    public getDeviceStates(deviceIds: string[], from?: Date, periode?: Date): Observable<DeviceState[]> {
+      if (deviceIds && isArray(deviceIds) && deviceIds.length > 0) {
+        const endDate = new Date();
+        const startDate = new Date(endDate.getTime() - 24 * 60 * 60 * 1000);
+
+        const url = UbirchWebUIUtilsService.addParamsToURL(
+          this.deviceStateUrl,
+          [ startDate.toISOString(),
+            endDate.toISOString()
+          ]
+        );
+
+        return this.http.post<DeviceState[]>(url, deviceIds.join()).pipe(
+          map(jsonStates =>
+            jsonStates.map(
+              jsonState => new DeviceState(jsonState))));
+      } else {
+        throw new Error(`getDeviceStates call without any deviceIds`);
+      }
     }
 
     /**
@@ -165,10 +195,10 @@ export class DeviceService {
 
     }
 
-  storeUnsavedChangesOfDevice(val: any): boolean {
-    // TODO: how will we store changes of device before saving it?
-    return true;
-  }
+    storeUnsavedChangesOfDevice(val: any): boolean {
+      // TODO: how will we store changes of device before saving it?
+      return true;
+    }
 
     private data2Devices(data: CreateDevicesFormData): Device[] {
         const devicesArray: Device[] = [];
