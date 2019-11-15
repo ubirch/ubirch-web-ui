@@ -14,7 +14,6 @@ export class EnterOnDashboardGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    console.log('AuthGuard#canActivate called');
     return this.checkIfUserHasEntered();
   }
 

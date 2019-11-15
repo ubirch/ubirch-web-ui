@@ -10,20 +10,13 @@ export class DeviceState {
     if (!jsonState) {
       throw new Error(`deviceState constructor called without proper state data: ${jsonState}`);
     }
-    // TODO: remove key handling when endpoint respond struct has been changed
-    const keys = Object.keys(jsonState);
-    if (keys && keys.length > 0) {
-      this.hwDeviceId = keys[0];
-      const pureState = jsonState[this.hwDeviceId];
-
-
-      this.numberUPPs = pureState.numberUPPs;
-      if (pureState.from) {
-        this.from = new Date(pureState.from);
-      }
-      if (pureState.to) {
-        this.to = new Date(pureState.to);
-      }
+    this.hwDeviceId = jsonState.deviceId;
+    this.numberUPPs = jsonState.numberUPPs;
+    if (jsonState.from) {
+      this.from = new Date(jsonState.from);
+    }
+    if (jsonState.to) {
+      this.to = new Date(jsonState.to);
     }
     return this;
   }
