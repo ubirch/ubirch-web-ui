@@ -1,9 +1,23 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>device-state</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
+<ion-content padding-horizontal>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-end padding-row">
+    </ion-row>
+  </ion-grid>
+  <ion-card padding>
+    <ion-card-header>Number of UPPs in the last..</ion-card-header>
+    <ion-card-content>
+        <ion-item margin-bottom>
+          <ion-label slot="start">..Minute:</ion-label>
+          <ion-input [value]="uppsLastMinute" placeholder="loading..." readonly color="medium"></ion-input>
+        </ion-item>
+      <ion-item margin-bottom>
+        <ion-label slot="start">..Hour:</ion-label>
+        <ion-input [value]="uppsLastHour" placeholder="loading..."  readonly color="medium"></ion-input>
+      </ion-item>
+      <ion-item margin-bottom>
+        <ion-label slot="start">..Day:</ion-label>
+        <ion-input [value]="uppsLastDay" placeholder="loading..."  readonly color="medium"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

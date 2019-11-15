@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import {Device} from '../models/device';
 import {FormGroup} from '@angular/forms';
@@ -12,6 +12,12 @@ import {DevicesListWrapper} from '../models/devices-list-wrapper';
 import {UserService} from './user.service';
 import {isArray} from 'util';
 import {DeviceState} from '../models/device-state';
+
+export const TIME_RANGES = {
+  DAY: 24 * 60 * 60 * 1000,
+  HOUR: 60 * 60 * 1000,
+  MINUTE: 60 * 1000
+};
 
 @Injectable({
   providedIn: 'root'
@@ -60,10 +66,10 @@ export class DeviceService {
      * @param from Date Object (optional) if given this is the end of the request range of time, states are request for; default: Date.now()
      * @param periode Date Object (optional) if given this is range of time, states are request for; default: 1 day
      */
-    public getDeviceStates(deviceIds: string[], from?: Date, periode?: Date): Observable<DeviceState[]> {
+    public getDeviceStates(deviceIds: string[], from?: Date, to?: Date): Observable<DeviceState[]> {
       if (deviceIds && isArray(deviceIds) && deviceIds.length > 0) {
-        const endDate = new Date();
-        const startDate = new Date(endDate.getTime() - 24 * 60 * 60 * 1000);
+        const endDate = to ? to : new Date();
+        const startDate = from ? from : new Date(endDate.getTime() - TIME_RANGES.DAY);
 
         const url = UbirchWebUIUtilsService.addParamsToURL(
           this.deviceStateUrl,
@@ -215,7 +221,5 @@ export class DeviceService {
             });
         }
         return devicesArray;
-
     }
-
 }
