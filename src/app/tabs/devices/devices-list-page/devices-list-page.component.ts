@@ -242,11 +242,14 @@ export class DevicesListPage {
   }
 
   showLoader() {
-    this.loadingSpinner = this.loadingController.create({
-      message: 'Loading your Things'
-    }).then((res) => {
-      res.present();
-    });
+    // avoid cascading spinners on longer loading processes
+    if (!this.loadingSpinner) {
+      this.loadingSpinner = this.loadingController.create({
+        message: 'Loading your Things'
+      }).then((res) => {
+        res.present();
+      });
+    }
   }
 
   hideLoader() {
