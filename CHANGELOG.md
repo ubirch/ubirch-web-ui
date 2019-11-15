@@ -14,6 +14,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
 
+## [0.3.5] - 2019-11-15
+
+### Added
+
+### Changed
+- fixed bug: try to stop cascading loaders when polling is faster than response
+
+### Removed
+
 ## [0.3.4] - 2019-11-15
 
 ### Added
