@@ -11,13 +11,7 @@ import {CreateDevicesFormData} from '../tabs/devices/devices-list-page/popups/ne
 import {DevicesListWrapper} from '../models/devices-list-wrapper';
 import {UserService} from './user.service';
 import {isArray} from 'util';
-import {DeviceState} from '../models/device-state';
-
-export const TIME_RANGES = {
-  DAY: 24 * 60 * 60 * 1000,
-  HOUR: 60 * 60 * 1000,
-  MINUTE: 60 * 1000
-};
+import {DeviceState, TIME_RANGES} from '../models/device-state';
 
 @Injectable({
   providedIn: 'root'

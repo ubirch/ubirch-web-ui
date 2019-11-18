@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {forkJoin, interval, Observable, of, Subscription} from 'rxjs';
 import {environment} from '../../../../../../environments/environment';
 import {startWith, switchMap} from 'rxjs/operators';
-import {DeviceService, TIME_RANGES} from '../../../../../services/device.service';
+import {DeviceService} from '../../../../../services/device.service';
 import {Device} from '../../../../../models/device';
-import {DeviceState} from '../../../../../models/device-state';
+import {DeviceState, TIME_RANGES} from '../../../../../models/device-state';
 
 @Component({
   selector: 'app-device-state',
