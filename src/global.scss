@@ -62,6 +62,12 @@ ion-icon.md.hydrated {
   margin: 0 10px;
 }
 
+ion-badge {
+  --padding-start: 10px;
+  --padding-end: 10px;
+  border-radius: 8px;
+}
+
 .mat-paginator.invisible {
   display: none;
 }
