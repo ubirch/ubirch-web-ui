@@ -5,7 +5,7 @@ import {FormGroup} from '@angular/forms';
 import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {DeviceTypeService} from './device-type.service';
 import {CreateDevicesFormData} from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
 import {DevicesListWrapper} from '../models/devices-list-wrapper';
@@ -52,12 +52,25 @@ export class DeviceService {
             pageSize);
 
         return this.http.get<DevicesListWrapper[]>(url).pipe(
-            map(listWrapper => new DevicesListWrapper(listWrapper)),
-            tap(listWrapper => {
-                if (listWrapper && listWrapper.numberOfDevices) {
-                    this.userService.setNumberOfDevices(listWrapper.numberOfDevices);
+            switchMap(data => {
+              const listWrapper = new DevicesListWrapper(data);
+              if (listWrapper) {
+                if (listWrapper.numberOfDevices) {
+                  this.userService.setNumberOfDevices(listWrapper.numberOfDevices);
                 }
-        }));
+                if (listWrapper.devices) {
+                  return this.getDeviceStates(listWrapper.devices.map(device => device.hwDeviceId)).pipe(
+                    map(states => {
+                      listWrapper.setDeviceStates(states);
+                      return listWrapper;
+                    }
+                  ));
+                } else {
+                  return of(listWrapper);
+                }
+              }
+            }
+        ));
     }
 
     /**
