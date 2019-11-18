@@ -41,7 +41,7 @@ export class DeviceService {
   ) { }
 
     /**
-     * load a couple of deviceStubs for the list of devices; pagination included
+     * load a couple of deviceStubs for the list of devices; pagination included, states fetched after list has been responded
      * @param pageNum number of the page for pagination
      * @param pageSize how many devices are maximal paged
      */
