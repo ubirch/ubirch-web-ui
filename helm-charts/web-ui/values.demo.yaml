@@ -39,7 +39,7 @@ adminUi:
     apiPrefix: "/ubirch-web-ui/api/v1/"
     keyserviceUrl: "https://key.demo.ubirch.com"
     keyservicePrefix: "/api/keyService/v1/"
-    trustserviceUrl: "https://verify.prod.ubirch.com"
+    trustserviceUrl: "https://verify.demo.ubirch.com"
     verifyPrefix: "/api/verify/"
 
 
