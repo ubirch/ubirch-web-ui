@@ -8,15 +8,15 @@
     <ion-card-content>
         <ion-item margin-bottom>
           <ion-label slot="start">..Minute:</ion-label>
-          <ion-input [value]="uppsLastMinute" placeholder="loading..." readonly color="medium"></ion-input>
+          <ion-input [value]="getNumberOfUPPs(TIME_RANGES.MINUTE)" placeholder="loading..." readonly color="medium"></ion-input>
         </ion-item>
       <ion-item margin-bottom>
         <ion-label slot="start">..Hour:</ion-label>
-        <ion-input [value]="uppsLastHour" placeholder="loading..."  readonly color="medium"></ion-input>
+        <ion-input [value]="getNumberOfUPPs(TIME_RANGES.HOUR)" placeholder="loading..."  readonly color="medium"></ion-input>
       </ion-item>
       <ion-item margin-bottom>
         <ion-label slot="start">..Day:</ion-label>
-        <ion-input [value]="uppsLastDay" placeholder="loading..."  readonly color="medium"></ion-input>
+        <ion-input [value]="getNumberOfUPPs(TIME_RANGES.DAY)" placeholder="loading..."  readonly color="medium"></ion-input>
       </ion-item>
     </ion-card-content>
   </ion-card>

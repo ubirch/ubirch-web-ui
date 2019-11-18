@@ -17,9 +17,7 @@ export class DeviceStatePage implements OnInit {
 
   loadedDevice: Device;
 
-  uppsLastHour: number;
-  uppsLastDay: number;
-  uppsLastMinute: number;
+  deviceStates: Map<number, DeviceState> = new Map<number, DeviceState>();
 
   constructor(
     private deviceService: DeviceService
@@ -82,21 +80,20 @@ export class DeviceStatePage implements OnInit {
             if (stateOfCurrent) {
               stateOfCurrent.forEach(state => {
                 const range = state.to - state.from;
-                switch (range) {
-                  case TIME_RANGES.DAY:
-                    this.uppsLastDay = state.numberUPPs;
-                    break;
-                  case TIME_RANGES.HOUR:
-                    this.uppsLastHour = state.numberUPPs;
-                    break;
-                  case TIME_RANGES.MINUTE:
-                    this.uppsLastMinute = state.numberUPPs;
-                    break;
-                }
+                this.deviceStates.set(range, state);
               });
             }
           })
         );
+  }
+
+  public getNumberOfUPPs(range: number): number {
+    const val = this.deviceStates.get(range);
+    return val ? val.numberUPPs : undefined;
+  }
+
+  public get TIME_RANGES(): any {
+    return TIME_RANGES;
   }
 
   private stopPolling() {
