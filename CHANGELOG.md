@@ -14,6 +14,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
 
+## [0.4] - 2019-11-18
+
+### Added
+- things state:
+  * display colored badges with number of UPPs in the last minute, hour, day in device details > state tab
+
+### Changed
+
+### Removed
+
+
 ## [0.3.6] - 2019-11-18
 
 ### Added
