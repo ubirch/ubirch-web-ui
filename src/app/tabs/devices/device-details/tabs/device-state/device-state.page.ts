@@ -17,6 +17,11 @@ export class DeviceStatePage implements OnInit {
 
   loadedDevice: Device;
 
+  deviceStateNames: Map<number, string> = new Map([
+    [TIME_RANGES.MINUTE, 'Minute'],
+    [TIME_RANGES.HOUR, 'Hour'],
+    [TIME_RANGES.DAY, 'Day']
+  ]);
   deviceStates: Map<number, DeviceState> = new Map<number, DeviceState>();
 
   constructor(

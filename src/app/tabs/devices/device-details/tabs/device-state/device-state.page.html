@@ -6,20 +6,10 @@
   <ion-card padding>
     <ion-card-header>Number of UPPs in the last..</ion-card-header>
     <ion-card-content>
-      <ion-item margin-bottom>
-        <ion-label slot="start">..Minute:</ion-label>
-        <ion-badge slot="end" *ngIf="deviceStates.get(TIME_RANGES.MINUTE); else STATE_NOT_AVAILABLE" [color]="deviceStates.get(TIME_RANGES.MINUTE).getStateColor()"> {{getNumberOfUPPs(TIME_RANGES.MINUTE)}} </ion-badge>
-        <ng-template #STATE_NOT_AVAILABLE><p>state not available</p></ng-template>
-      </ion-item>
-      <ion-item margin-bottom>
-        <ion-label slot="start">..Hour:</ion-label>
-        <ion-badge slot="end" *ngIf="deviceStates.get(TIME_RANGES.HOUR); else STATE_NOT_AVAILABLE" [color]="deviceStates.get(TIME_RANGES.HOUR).getStateColor()"> {{getNumberOfUPPs(TIME_RANGES.HOUR)}} </ion-badge>
-        <ng-template #STATE_NOT_AVAILABLE><p>state not available</p></ng-template>
-      </ion-item>
-      <ion-item margin-bottom>
-        <ion-label slot="start">..Day:</ion-label>
-        <ion-badge slot="end" *ngIf="deviceStates.get(TIME_RANGES.DAY); else STATE_NOT_AVAILABLE" [color]="deviceStates.get(TIME_RANGES.DAY).getStateColor()"> {{getNumberOfUPPs(TIME_RANGES.DAY)}} </ion-badge>
-        <ng-template #STATE_NOT_AVAILABLE><p>state not available</p></ng-template>
+      <ng-template #STATE_NOT_AVAILABLE><p>state not (yet) available</p></ng-template>
+      <ion-item margin-bottom *ngFor="let stateName of deviceStateNames | keyvalue">
+        <ion-label slot="start">..{{stateName.value}}:</ion-label>
+        <ion-badge slot="end" *ngIf="deviceStates.get(stateName.key); else STATE_NOT_AVAILABLE" [color]="deviceStates.get(stateName.key).getStateColor()"> {{getNumberOfUPPs(stateName.key)}} </ion-badge>
       </ion-item>
     </ion-card-content>
   </ion-card>
