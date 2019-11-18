@@ -9,9 +9,9 @@ export const LAYOUT_SETTINGS = [
     nodeIcon: 'https://live.staticflickr.com/2660/3715569167_7e978e8319_b.jpg'},
   { type: 'iota',
     nodeIcon: 'assets/app-icons/IOTA_verify_right.png'},
-  { type: 'etherium',
+  { type: 'ethereum',
     nodeIcon: 'assets/app-icons/Ethereum_verify_right.png'},
-  { type: 'etherium-classic',
+  { type: 'ethereum-classic',
     nodeIcon: 'assets/app-icons/Ethereum-Classic_verify_right.png'}
 ];
 
