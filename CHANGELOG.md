@@ -14,6 +14,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
 
+## [0.3.6] - 2019-11-18
+
+### Added
+- things state:
+  * things states are loaded and displayed into things list
+   (states are loaded separately after current page of things list ist loaded)
+
+### Changed
+- fixed bug: ethereum icon has not been displayed in verification tree
+
+### Removed
+
 ## [0.3.5] - 2019-11-15
 
 ### Added
