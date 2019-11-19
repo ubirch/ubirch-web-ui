@@ -28,7 +28,7 @@ export class CytoscapeNode {
  */
 export class CytoscapeNodeData {
   public id: string;
-  public name: string;
+  public label: string;
   public weight: number;
   public nodeIcon: string;
   public colorCode: string;
@@ -40,15 +40,19 @@ export class CytoscapeNodeData {
 
   constructor(anchorPathNode: AnchorPathNode, layouter?: Map<string, CytoscapeNodeLayout>) {
     if (anchorPathNode) {
-      this.name = anchorPathNode.label; // + ' (' + anchorPathNode.timestamp + ')';
+      this.type = anchorPathNode.type;
+
+      if (this.type === 'UPP') {
+        this.label = anchorPathNode.label; // + ' (' + anchorPathNode.timestamp + ')';
+      }
       this.id = anchorPathNode.hash;
       this.timestamp = anchorPathNode.timestamp;
       this.weight = 100;
       this.positionInChain = anchorPathNode.indexInChain;
 
-      this.type = anchorPathNode.type;
       if (anchorPathNode instanceof BlockChainNode) {
         this.subType = anchorPathNode.blockchain;
+        this.label = anchorPathNode.blockchain;
       }
 
       const layout = this.getNodeLayout(this.subType ? this.subType : this.type, layouter);

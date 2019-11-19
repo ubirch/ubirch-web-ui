@@ -41,7 +41,7 @@ export class NgCytoComponent implements OnChanges {
 
       .selector('node')
       .css({
-        'content': 'data(name)',
+        'content': 'data(label)',
         'shape': 'data(shapeType)',
         'height': 50,
         'width': 50,
@@ -102,7 +102,7 @@ export class NgCytoComponent implements OnChanges {
 
       cy.elements().addClass('faded');
       neighborhood.removeClass('faded');
-      localselect.emit(node.data('name'));
+      localselect.emit(node.data('label'));
     });
 
     cy.on('tap', e => {

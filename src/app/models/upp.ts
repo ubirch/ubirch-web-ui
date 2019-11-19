@@ -85,6 +85,7 @@ export class Upp {
 
   private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1): number {
     let currIndex = startAtIndex;
+    // TODO: position index shouldn't be incremented back if node already exists
     arr.forEach((node, index) => {
       currIndex = startAtIndex + index * direction;
       node.indexInChain = currIndex;
