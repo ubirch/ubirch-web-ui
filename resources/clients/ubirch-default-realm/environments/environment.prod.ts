@@ -26,7 +26,7 @@ export const environment = {
   add_client_name_to_logo: true,
   keycloak: keycloakConfig,
   default_device_type: '@@UBIRCH_TR_DEFAULT_DEVICE_TYPE@@', // ' unknownDeviceType',
-  POLLING_INTERVAL_MILLISECONDS: 2500,
+  POLLING_INTERVAL_MILLISECONDS: 15000,
   LIST_ITEMS_PER_PAGE: 10,
   DATE_TIME_ZONE_FORMAT: 'dd.MM.yyyy, HH:mm:ss (zzz)'
 };
