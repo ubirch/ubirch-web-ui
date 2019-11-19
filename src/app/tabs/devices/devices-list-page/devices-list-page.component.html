@@ -26,7 +26,10 @@
         <ion-label [routerLink]="['/devices','details', item.hwDeviceId]" class="devices-list-item-content">
           <h2>{{item.description}}</h2>
           <h3>{{item.hwDeviceId}}</h3>
-          <p>state not available</p>
+          <p *ngIf="item.deviceState; else STATE_NOT_AVAILABLE">
+            <ion-badge [color]="item.deviceState.getStateColor()">UPPs in the last hour: {{item.deviceState.numberUPPs}}</ion-badge>
+          </p>
+          <ng-template #STATE_NOT_AVAILABLE><p>state not available</p></ng-template>
         </ion-label>
         <div class="item-note" slot="end">
           <ion-button (click)="confirmDeviceDelete(item)" color="danger" class="devices-list-delete-button">

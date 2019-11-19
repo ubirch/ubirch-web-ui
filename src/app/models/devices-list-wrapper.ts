@@ -1,5 +1,6 @@
 import {DeviceStub} from './device-stub';
 import {isArray} from 'util';
+import {DeviceState} from './device-state';
 
 export class DevicesListWrapper {
     public devices: DeviceStub[];
@@ -22,6 +23,16 @@ export class DevicesListWrapper {
             }
         }
         return this;
+    }
+
+    public setDeviceStates(states: DeviceState[]) {
+      states.forEach(state => {
+        const foundDevices = this.devices.filter(nextDevice => nextDevice.hwDeviceId === state.hwDeviceId);
+        if (foundDevices) {
+          const device = foundDevices[0];
+          device.deviceState = state;
+        }
+      });
     }
 
 }

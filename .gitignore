@@ -40,3 +40,4 @@ UserInterfaceState.xcuserstate
 /keycloak/realm-templates/*.json.swp
 /keycloak/realm-templates/*-import.json
 /*-import.json
+/preprocess-replace-secrets.sh

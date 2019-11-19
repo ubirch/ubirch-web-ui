@@ -1,7 +1,5 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {HeaderActionButton} from '../../components/header/header-action-button';
 import {TrustService} from '../../services/trust.service';
-import {catchError, tap} from 'rxjs/operators';
 import {Upp} from '../../models/upp';
 import {HttpResponseBase} from '@angular/common/http';
 import {CytoscapeNodeLayout, LAYOUT_SETTINGS} from '../../models/cytoscape-node-layout';

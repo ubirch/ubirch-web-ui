@@ -6,17 +6,18 @@
 import {KeycloakConfig} from 'keycloak-angular';
 
 const keycloakConfig: KeycloakConfig = {
-  url: 'http://localhost:8080/auth',
+  url: 'https://id.dev.ubirch.com/auth',
   realm: 'test-realm',
   clientId: 'ubirch-2.0-user-access-local',
   credentials: {
-    secret: 'd8caf6bd-df8c-433c-870b-e99ca9743337'
+    secret: 'KEYCLOAK-CLIENT-SECRET'
   }
 };
 
 export const environment = {
   production: false,
-  serverUrl: 'http://localhost:8081',
+  envName: 'dev',
+  serverUrl: 'https://api.console.dev.ubirch.com',
   apiPrefix: '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: 'https://key.dev.ubirch.com',
   keyServiceApiPrefix: '/api/keyService/v1/',

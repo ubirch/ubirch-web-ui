@@ -1,9 +1,16 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>device-state</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
+<ion-content padding-horizontal>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-end padding-row">
+    </ion-row>
+  </ion-grid>
+  <ion-card padding>
+    <ion-card-header>Number of UPPs in the last..</ion-card-header>
+    <ion-card-content>
+      <ng-template #STATE_NOT_AVAILABLE><p>state not (yet) available</p></ng-template>
+      <ion-item margin-bottom *ngFor="let stateName of deviceStateNames | keyvalue">
+        <ion-label slot="start">..{{stateName.value}}:</ion-label>
+        <ion-badge slot="end" *ngIf="deviceStates.get(stateName.key); else STATE_NOT_AVAILABLE" [color]="deviceStates.get(stateName.key).getStateColor()"> {{getNumberOfUPPs(stateName.key)}} </ion-badge>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
