@@ -85,15 +85,16 @@ export class Upp {
 
   private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1): number {
     let currIndex = startAtIndex;
+    let offset = 0;
     // TODO: position index shouldn't be incremented back if node already exists
     arr.forEach((node, index) => {
-      currIndex = startAtIndex + index * direction;
-      node.indexInChain = currIndex;
-
       const foundNode = this._allNodesMap.get(node.hash);
       if (foundNode && node.nextHash.length === 1) {
         foundNode.addNextHash(node.nextHash[0]);
+        offset++;
       } else {
+        currIndex = startAtIndex + ((index - offset) * direction);
+        node.indexInChain = currIndex;
         this._allNodesMap.set(node.hash, node);
       }
     });
