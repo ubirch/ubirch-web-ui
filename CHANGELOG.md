@@ -14,6 +14,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
 
+## [0.4.1] - 2019-11-20
+
+### Added
+
+### Changed
+- fixed bug: Verification Tree edges missing if master tree is anchored in more than one blockchain
+- fixed bug: Verification Tree: Foundation and Master Tree icons missing in Firefox
+- Replaced blockchain and upp icons with smaller files (-> 512x512pixels)
+- removed labels from most nodes in verification tree
+
+### Removed
+
+
 ## [0.4] - 2019-11-18
 
 ### Added
