@@ -14,12 +14,10 @@ const routes: Routes = [
   },
   {
     path: 'devices',
-    canActivate: [ EnterOnDashboardGuard ],
     loadChildren: () => import('./tabs/devices/devices.module').then(m => m.ListPageModule)
   },
   {
     path: 'verification',
-    canActivate: [ EnterOnDashboardGuard ],
     loadChildren: () => import('./tabs/verification/verification.module').then(m => m.VerificationPageModule)
   },
   {
