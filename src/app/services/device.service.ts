@@ -52,16 +52,16 @@ export class DeviceService {
                 if (listWrapper.numberOfDevices) {
                   this.userService.setNumberOfDevices(listWrapper.numberOfDevices);
                 }
-                if (listWrapper.devices) {
-                  return this.getDeviceStates(listWrapper.devices.map(device => device.hwDeviceId)).pipe(
-                    map(states => {
-                      listWrapper.setDeviceStates(states);
-                      return listWrapper;
-                    }
-                  ));
-                } else {
-                  return of(listWrapper);
-                }
+                // if (listWrapper.devices) {
+                //   return this.getDeviceStates(listWrapper.devices.map(device => device.hwDeviceId)).pipe(
+                //     map(states => {
+                //       listWrapper.setDeviceStates(states);
+                //       return listWrapper;
+                //     }
+                //   ));
+                // } else {
+                return of(listWrapper);
+                // }
               }
             }
         ));

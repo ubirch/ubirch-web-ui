@@ -14,6 +14,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
 
+## [0.4.2] - 2019-11-22
+
+### Added
+
+### Changed
+
+### Removed
+- things state:
+  * things states are no longer loaded for things list
+   (states have been loaded separately after current page of things list ist loaded
+    -> doesn't work if states request takes more time than polling interval)
+
 ## [0.4.1] - 2019-11-20
 
 ### Added
