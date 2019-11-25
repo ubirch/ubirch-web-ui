@@ -1,8 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import {DeviceStub} from '../../../models/device-stub';
 import {DeviceService} from '../../../services/device.service';
-import {interval, Subscription} from 'rxjs';
-import {startWith, switchMap, tap} from 'rxjs/operators';
+import {interval, of, Subscription} from 'rxjs';
+import {catchError, map, startWith, switchMap, tap} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {LoadingController, ModalController, ToastController} from '@ionic/angular';
 import {NewDevicePopupComponent} from './popups/new-device-popup/new-device-popup.component';
@@ -10,6 +10,7 @@ import {ConfirmDeleteDevicePopupComponent} from './popups/confirm-delete-device-
 import {CreatedDevicesListPopupComponent} from './popups/created-devices-list-popup/created-devices-list-popup.component';
 import {MatPaginator} from '@angular/material/paginator';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
+import {DevicesListWrapper} from '../../../models/devices-list-wrapper';
 
 @Component({
   selector: 'app-list',
@@ -33,6 +34,7 @@ export class DevicesListPage {
 
   loadingSpinner: Promise<void | HTMLIonLoadingElement>;
   loaded = false;
+  stateLoading = false;
 
   constructor(
       private deviceService: DeviceService,
@@ -137,13 +139,14 @@ export class DevicesListPage {
                 this.deviceStubs = wrapper.devices || [];
                 this.loaded = true;
                 this.hideLoader();
+                this.loadDeviceStates(wrapper);
               },
             error => {
-              this.hideLoader();
-              this.finished(
-                'err',
-                error.toString());
-            }
+                this.hideLoader();
+                this.finished(
+                  'err',
+                  error.toString());
+              }
           );
   }
 
@@ -161,6 +164,28 @@ export class DevicesListPage {
       this.searchStr = undefined;
     }
     this.restartPolling();
+  }
+
+  async loadDeviceStates(listWrapper: DevicesListWrapper) {
+
+    if (listWrapper && listWrapper.devices) {
+      this.stateLoading = true;
+      this.deviceService.getDeviceStates(listWrapper.devices.map(device => device.hwDeviceId)).subscribe(
+        states => {
+          this.stateLoading = false;
+          listWrapper.setDeviceStates(states);
+          this.deviceStubs = listWrapper.devices || [];
+        },
+        _ => {
+          this.stateLoading = false;
+          this.deviceStubs = this.deviceStubs.map(
+            stub => {
+              stub.deviceState = undefined;
+              return stub;
+            });
+        }
+      );
+    }
   }
 
   async confirmDeviceDelete(device: DeviceStub) {

@@ -40,31 +40,18 @@ export class DeviceService {
      * @param pageSize how many devices are maximal paged
      */
     public reloadDeviceStubs(pageNum?: number, pageSize?: number): Observable<DevicesListWrapper> {
-        const url = UbirchWebUIUtilsService.addParamsToThingsListPaginationURL(
-            this.devicesUrl,
-            pageNum,
-            pageSize);
+      const url = UbirchWebUIUtilsService.addParamsToThingsListPaginationURL(
+        this.devicesUrl,
+        pageNum,
+        pageSize);
 
-        return this.http.get<DevicesListWrapper[]>(url).pipe(
-            switchMap(data => {
-              const listWrapper = new DevicesListWrapper(data);
-              if (listWrapper) {
-                if (listWrapper.numberOfDevices) {
-                  this.userService.setNumberOfDevices(listWrapper.numberOfDevices);
-                }
-                if (listWrapper.devices) {
-                  return this.getDeviceStates(listWrapper.devices.map(device => device.hwDeviceId)).pipe(
-                    map(states => {
-                      listWrapper.setDeviceStates(states);
-                      return listWrapper;
-                    }
-                  ));
-                } else {
-                  return of(listWrapper);
-                }
-              }
-            }
-        ));
+      return this.http.get<DevicesListWrapper[]>(url).pipe(
+        map(listWrapper => new DevicesListWrapper(listWrapper)),
+        tap(listWrapper => {
+          if (listWrapper && listWrapper.numberOfDevices) {
+            this.userService.setNumberOfDevices(listWrapper.numberOfDevices);
+          }
+        }));
     }
 
     /**
@@ -86,9 +73,12 @@ export class DeviceService {
         );
 
         return this.http.post<DeviceState[]>(url, deviceIds.join()).pipe(
-          map(jsonStates =>
+          map(
+            jsonStates =>
             jsonStates.map(
-              jsonState => new DeviceState(jsonState))));
+              jsonState => new DeviceState(jsonState))
+          )
+        );
       } else {
         throw new Error(`getDeviceStates call without any deviceIds`);
       }

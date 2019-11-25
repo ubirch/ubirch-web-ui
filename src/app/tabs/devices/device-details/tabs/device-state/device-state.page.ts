@@ -16,6 +16,7 @@ export class DeviceStatePage implements OnInit {
   polling = new Subscription();
 
   loadedDevice: Device;
+  errorMessage: string;
 
   deviceStateNames: Map<number, string> = new Map([
     [TIME_RANGES.MINUTE, 'Minute'],
@@ -23,6 +24,7 @@ export class DeviceStatePage implements OnInit {
     [TIME_RANGES.DAY, 'Day']
   ]);
   deviceStates: Map<number, DeviceState> = new Map<number, DeviceState>();
+  stateLoading = false;
 
   constructor(
     private deviceService: DeviceService
@@ -71,25 +73,33 @@ export class DeviceStatePage implements OnInit {
             );
 
             // load states
+            this.stateLoading = true;
             return forkJoin(observableList);
           } else {
             return of(null);
           }
         })
       )
-      .subscribe( deviceStatesLists =>
+      .subscribe(
+        deviceStatesLists => {
+          this.stateLoading = false;
           // list of lists of deviceStates
-        deviceStatesLists.map(
-          deviceStates => {
-            const stateOfCurrent = deviceStates.filter(state => state.hwDeviceId === this.loadedDevice.hwDeviceId);
-            if (stateOfCurrent) {
-              stateOfCurrent.forEach(state => {
-                const range = state.to - state.from;
-                this.deviceStates.set(range, state);
-              });
-            }
-          })
-        );
+          deviceStatesLists.map(
+            deviceStates => {
+              const stateOfCurrent = deviceStates.filter(state => state.hwDeviceId === this.loadedDevice.hwDeviceId);
+              if (stateOfCurrent) {
+                stateOfCurrent.forEach(state => {
+                  const range = state.to - state.from;
+                  this.deviceStates.set(range, state);
+                });
+              }
+            });
+        },
+          error => {
+            this.stateLoading = false;
+            this.errorMessage = 'State of thing unavailable';
+          }
+      );
   }
 
   public getNumberOfUPPs(range: number): number {
