@@ -8,8 +8,11 @@
     <ion-card-content>
 
       <ng-template #STATE_NOT_AVAILABLE>
-        <p *ngIf="errorMessage">{{errorMessage}}</p>
-        <p *ngIf="!errorMessage">loading state...</p>
+        <p *ngIf="stateLoading">loading state...</p>
+        <ng-container *ngIf="!stateLoading">
+          <p *ngIf="errorMessage">{{errorMessage}}</p>
+          <p *ngIf="!errorMessage">state not available</p>
+        </ng-container>
       </ng-template>
 
       <ion-item margin-bottom *ngFor="let stateName of deviceStateNames | keyvalue">

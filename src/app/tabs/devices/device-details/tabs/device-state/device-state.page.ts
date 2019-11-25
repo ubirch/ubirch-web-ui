@@ -24,6 +24,7 @@ export class DeviceStatePage implements OnInit {
     [TIME_RANGES.DAY, 'Day']
   ]);
   deviceStates: Map<number, DeviceState> = new Map<number, DeviceState>();
+  stateLoading = false;
 
   constructor(
     private deviceService: DeviceService
@@ -72,6 +73,7 @@ export class DeviceStatePage implements OnInit {
             );
 
             // load states
+            this.stateLoading = true;
             return forkJoin(observableList);
           } else {
             return of(null);
@@ -79,7 +81,8 @@ export class DeviceStatePage implements OnInit {
         })
       )
       .subscribe(
-        deviceStatesLists =>
+        deviceStatesLists => {
+          this.stateLoading = false;
           // list of lists of deviceStates
           deviceStatesLists.map(
             deviceStates => {
@@ -90,9 +93,13 @@ export class DeviceStatePage implements OnInit {
                   this.deviceStates.set(range, state);
                 });
               }
-            }),
-          error => this.errorMessage = 'State of thing unavailable'
-          );
+            });
+        },
+          error => {
+            this.stateLoading = false;
+            this.errorMessage = 'State of thing unavailable';
+          }
+      );
   }
 
   public getNumberOfUPPs(range: number): number {

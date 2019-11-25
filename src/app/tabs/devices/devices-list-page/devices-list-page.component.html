@@ -29,7 +29,12 @@
           <p *ngIf="item.deviceState; else STATE_NOT_AVAILABLE">
             <ion-badge [color]="item.deviceState.getStateColor()">UPPs in the last hour: {{item.deviceState.numberUPPs}}</ion-badge>
           </p>
-          <ng-template #STATE_NOT_AVAILABLE><p>state not available</p></ng-template>
+
+          <ng-template #STATE_NOT_AVAILABLE>
+            <p *ngIf="stateLoading">loading state...</p>
+            <p *ngIf="!stateLoading">state not available</p>
+          </ng-template>
+
         </ion-label>
         <div class="item-note" slot="end">
           <ion-button (click)="confirmDeviceDelete(item)" color="danger" class="devices-list-delete-button">
