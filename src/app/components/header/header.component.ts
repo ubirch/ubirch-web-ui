@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HeaderActionButton} from './header-action-button';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'ubirch-web-ui-header',
@@ -15,9 +16,21 @@ export class HeaderComponent implements OnInit {
   @Output() buttonClicked = new EventEmitter<string>();
   @Output() startSearch = new EventEmitter<string>();
 
-  constructor() { }
+  username: string;
 
-  ngOnInit() {}
+  constructor(
+    private userService: UserService
+  ) { }
+
+  ngOnInit() {
+    this.userService.observableAccountInfo.subscribe(accountInfo => {
+      if (accountInfo) {
+        this.username = accountInfo.user.toString();
+      } else {
+        this.userService.getAccountInfo().subscribe();
+      }
+    });
+  }
 
   _buttonClicked(action: string) {
     this.buttonClicked.emit(action);

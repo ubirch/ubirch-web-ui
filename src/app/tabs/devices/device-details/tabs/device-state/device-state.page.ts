@@ -82,18 +82,20 @@ export class DeviceStatePage implements OnInit {
       )
       .subscribe(
         deviceStatesLists => {
-          this.stateLoading = false;
-          // list of lists of deviceStates
-          deviceStatesLists.map(
-            deviceStates => {
-              const stateOfCurrent = deviceStates.filter(state => state.hwDeviceId === this.loadedDevice.hwDeviceId);
-              if (stateOfCurrent) {
-                stateOfCurrent.forEach(state => {
-                  const range = state.to - state.from;
-                  this.deviceStates.set(range, state);
-                });
-              }
-            });
+          if (deviceStatesLists) {
+            this.stateLoading = false;
+            // list of lists of deviceStates
+            deviceStatesLists.map(
+              deviceStates => {
+                const stateOfCurrent = deviceStates.filter(state => state.hwDeviceId === this.loadedDevice.hwDeviceId);
+                if (stateOfCurrent) {
+                  stateOfCurrent.forEach(state => {
+                    const range = state.to - state.from;
+                    this.deviceStates.set(range, state);
+                  });
+                }
+              });
+          }
         },
           error => {
             this.stateLoading = false;

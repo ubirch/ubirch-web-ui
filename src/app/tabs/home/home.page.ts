@@ -22,7 +22,6 @@ export class HomePage implements OnInit {
 //    })
   ];
   activeDevices = 0;
-  username = '';
 
   handleButtonClick(action: string) {
     switch (action) {
@@ -35,9 +34,7 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     this.userService.observableAccountInfo.subscribe(accountInfo => {
       if (accountInfo) {
-        this.username = accountInfo.user.toString();
         this.activeDevices = accountInfo.numberOfDevices;
-        this.userService.userEntered();
       } else {
         this.userService.getAccountInfo().subscribe();
       }

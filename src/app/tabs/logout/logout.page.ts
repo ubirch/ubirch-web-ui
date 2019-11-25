@@ -23,17 +23,8 @@ export class LogoutPage implements OnInit {
     iconPath: 'assets/app-icons/back-button.svg',
     action: 'historyBack'
   })];
-  username = '';
 
-  ngOnInit() {
-    this.userService.observableAccountInfo.subscribe(accountInfo => {
-      if (accountInfo) {
-        this.username = accountInfo.user.toString();
-      } else {
-        this.userService.getAccountInfo().subscribe();
-      }
-    });
-  }
+  ngOnInit() {}
 
   handleButtonClick(action: string) {
     switch (action) {

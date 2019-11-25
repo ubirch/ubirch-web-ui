@@ -46,6 +46,8 @@ export class UserService {
                   numberOfDevices: jsonAccount.numberOfDevices
                 }) : undefined;
             this.behaviorSubItem.next(this.currentAccount);
+            this.userEntered();
+
           }),
           map(_ => this.currentAccount));
     }

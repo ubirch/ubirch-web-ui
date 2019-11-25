@@ -8,9 +8,17 @@
           </div>
         </ion-col>
         <ion-col size="6">
-          <div class="ion-text-right" *ngIf="headerRightValue">
+          <div class="ion-text-right">
             <ion-grid>
               <ion-row class="ion-justify-content-end">
+                <ion-col size="8" class="ion-align-items-center">
+                  <ion-label  class="header-right-label">
+                    Logged in as:
+                  </ion-label>
+                  <span>{{username}}</span>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-justify-content-end"  *ngIf="headerRightValue">
                 <ion-col size="8" class="ion-align-items-center">
                   <ion-label  class="header-right-label">
                     {{headerRightLabel}}
