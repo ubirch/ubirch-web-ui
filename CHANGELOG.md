@@ -14,6 +14,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
 
+## [0.4.3] - 2019-11-25
+
+### Added
+- things state:
+  * things states again displayed in things list and things details on state tab
+    
+    -> states are now loaded separately after current page of things list ist loaded *AND displayed* 
+  * errors handles:
+    
+    - if states request responds with an error "state not available" is displayed (in list and details)
+    - same behavior if states are responded in a wrong format
+  * "loading states" is displayed while states request is pending
+
+### Changed
+
+### Removed
+
 ## [0.4.2] - 2019-11-22
 
 ### Added
