@@ -14,6 +14,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
 
+
+## [0.4.4] - 2019-11-25
+
+### Added
+
+### Changed
+Fixed Bug: when user logs in after logout the logout page isn't displayed first any more but the dashboard instead;
+all other pages are displayed on reload
+
+### Removed
+
 ## [0.4.3] - 2019-11-25
 
 ### Added
