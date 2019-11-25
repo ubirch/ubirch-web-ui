@@ -16,6 +16,7 @@ export class DeviceStatePage implements OnInit {
   polling = new Subscription();
 
   loadedDevice: Device;
+  errorMessage: string;
 
   deviceStateNames: Map<number, string> = new Map([
     [TIME_RANGES.MINUTE, 'Minute'],
@@ -77,19 +78,21 @@ export class DeviceStatePage implements OnInit {
           }
         })
       )
-      .subscribe( deviceStatesLists =>
+      .subscribe(
+        deviceStatesLists =>
           // list of lists of deviceStates
-        deviceStatesLists.map(
-          deviceStates => {
-            const stateOfCurrent = deviceStates.filter(state => state.hwDeviceId === this.loadedDevice.hwDeviceId);
-            if (stateOfCurrent) {
-              stateOfCurrent.forEach(state => {
-                const range = state.to - state.from;
-                this.deviceStates.set(range, state);
-              });
-            }
-          })
-        );
+          deviceStatesLists.map(
+            deviceStates => {
+              const stateOfCurrent = deviceStates.filter(state => state.hwDeviceId === this.loadedDevice.hwDeviceId);
+              if (stateOfCurrent) {
+                stateOfCurrent.forEach(state => {
+                  const range = state.to - state.from;
+                  this.deviceStates.set(range, state);
+                });
+              }
+            }),
+          error => this.errorMessage = 'State of thing unavailable'
+          );
   }
 
   public getNumberOfUPPs(range: number): number {

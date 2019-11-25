@@ -6,7 +6,12 @@
   <ion-card padding>
     <ion-card-header>Number of UPPs in the last..</ion-card-header>
     <ion-card-content>
-      <ng-template #STATE_NOT_AVAILABLE><p>state not (yet) available</p></ng-template>
+
+      <ng-template #STATE_NOT_AVAILABLE>
+        <p *ngIf="errorMessage">{{errorMessage}}</p>
+        <p *ngIf="!errorMessage">loading state...</p>
+      </ng-template>
+
       <ion-item margin-bottom *ngFor="let stateName of deviceStateNames | keyvalue">
         <ion-label slot="start">..{{stateName.value}}:</ion-label>
         <ion-badge slot="end" *ngIf="deviceStates.get(stateName.key); else STATE_NOT_AVAILABLE" [color]="deviceStates.get(stateName.key).getStateColor()"> {{getNumberOfUPPs(stateName.key)}} </ion-badge>
