@@ -12,7 +12,13 @@ import {CytoscapeGraphModule} from '../../cytoscape-graph/cytoscape-graph.module
 const routes: Routes = [
   {
     path: '',
-    component: VerificationPage
+    component: VerificationPage,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./tabs/verification-tabs.module').then(m => m.VerificationTabsPageModule)
+      }
+    ]
   }
 ];
 
