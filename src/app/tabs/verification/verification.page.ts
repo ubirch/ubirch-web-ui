@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {TrustService} from '../../services/trust.service';
+import {VERIFICATION_STATE} from './tabs/verification-graph/verification-graph.page';
 
 @Component({
   selector: 'app-verification',
@@ -11,48 +13,40 @@ export class VerificationPage implements OnInit {
   public headerRightValue = '..';
 
   public hash2Verify: string;
+  public verificationState: string;
 
   constructor(
-//    private truster: TrustService
+    private truster: TrustService
   ) { }
 
   ngOnInit() {
-    /*
-  // TODO: remove the following lines (just for testing correct hash)
-  if (this.checkHashVerifyView(
-    // oPV/aJsximYq2DbduTEarm8Jhae4uy61xOB6JIAACnFBCDJjJjBvz1sQNlqEfEAeCq1q5Kl1bv6KGz1y2wKQRw==
-    // NotExistingHash = 'LFTeTv/CkXn4Y2DFWunC5i7VhUbfQvVXoJ7iNt4D5ad9udm4aXJBmhR6+UAODtXXqtzcu0tyRjTF4Sx/JJN2mg==';
-    'oPV/aJsximYq2DbduTEarm8Jhae4uy61xOB6JIAACnFBCDJjJjBvz1sQNlqEfEAeCq1q5Kl1bv6KGz1y2wKQRw==')) {
-    this.verificationState = VERIFICATION_STATE.PENDING;
-    this.truster.verifyByHash(this.hash2Verify).subscribe(
-      upp => this.createUppTree(upp),
-      error => this.handleError(error)
-    );
-  }
-     */
+    // TODO: remove the following lines (just for testing correct hash)
+      // oPV/aJsximYq2DbduTEarm8Jhae4uy61xOB6JIAACnFBCDJjJjBvz1sQNlqEfEAeCq1q5Kl1bv6KGz1y2wKQRw==
+      // NotExistingHash = 'LFTeTv/CkXn4Y2DFWunC5i7VhUbfQvVXoJ7iNt4D5ad9udm4aXJBmhR6+UAODtXXqtzcu0tyRjTF4Sx/JJN2mg==';
+      const hash = 'oPV/aJsximYq2DbduTEarm8Jhae4uy61xOB6JIAACnFBCDJjJjBvz1sQNlqEfEAeCq1q5Kl1bv6KGz1y2wKQRw==';
+      const event = {target: {value: hash}};
+      this.checkHash(event);
   }
 
   private checkHash(event: any) {
-      if (this.checkHashVerifyView(event.target.value)) {
+    const hash = event.target.value;
+    if (hash && hash.trim() !== '') {
+      this.hash2Verify = hash.trim();
+      this.verificationState = VERIFICATION_STATE.HASH_INSERTED_UNVERIFIED;
+      this.truster.verifyByHash(this.hash2Verify).subscribe(
+        res => this.verificationState = VERIFICATION_STATE.HASH_VERIFIED,
+        err => this.verificationState = VERIFICATION_STATE.HASH_VERIFICATION_ERROR
+      );
+       } else {
+         this.verificationState = VERIFICATION_STATE.NO_HASH;
+    }
+
 //        this.verificationState = VERIFICATION_STATE.PENDING;
 //         this.truster.verifyByHash(this.hash2Verify).subscribe(
 //           upp => this.createUppTree(upp),
 //           error => this.handleError(error)
 //
 //       );
-//       } else {
-//         this.verificationState = VERIFICATION_STATE.NO_HASH;
-       }
-  }
-
-  private checkHashVerifyView(hash): boolean {
-    if (hash && hash.trim() !== '') {
-//      this.verificationState = VERIFICATION_STATE.HASH_INSERTED_UNVERIFIED;
-      this.hash2Verify = hash.trim();
-      return true;
-    } else {
-      return false;
-    }
   }
 
   // private createUppTree(upp: Upp) {

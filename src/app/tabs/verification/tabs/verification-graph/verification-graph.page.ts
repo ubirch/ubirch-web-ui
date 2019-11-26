@@ -69,19 +69,6 @@ export class VerificationGraphPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    /*
-  // TODO: remove the following lines (just for testing correct hash)
-  if (this.checkHashVerifyView(
-    // oPV/aJsximYq2DbduTEarm8Jhae4uy61xOB6JIAACnFBCDJjJjBvz1sQNlqEfEAeCq1q5Kl1bv6KGz1y2wKQRw==
-    // NotExistingHash = 'LFTeTv/CkXn4Y2DFWunC5i7VhUbfQvVXoJ7iNt4D5ad9udm4aXJBmhR6+UAODtXXqtzcu0tyRjTF4Sx/JJN2mg==';
-    'oPV/aJsximYq2DbduTEarm8Jhae4uy61xOB6JIAACnFBCDJjJjBvz1sQNlqEfEAeCq1q5Kl1bv6KGz1y2wKQRw==')) {
-    this.verificationState = VERIFICATION_STATE.PENDING;
-    this.truster.verifyByHash(this.hash2Verify).subscribe(
-      upp => this.createUppTree(upp),
-      error => this.handleError(error)
-    );
-  }
-     */
   }
 
   private checkHash(event: any) {
