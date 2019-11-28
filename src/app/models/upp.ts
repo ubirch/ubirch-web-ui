@@ -7,6 +7,7 @@ import {CytoscapeEdge} from './cytoscape-edge';
 import {CytoscapeNodeLayout} from './cytoscape-node-layout';
 
 export class Upp {
+  private jsonString: string;
   public upp: string;
   public anchors: {
     upperPath: AnchorPathNode[],
@@ -26,6 +27,7 @@ export class Upp {
 
   constructor(jsonUpp: any) {
     if (jsonUpp) {
+      this.jsonString = jsonUpp;
       this.upp = jsonUpp.upp;
       this.anchors = {
         upperPath: [],
@@ -50,6 +52,14 @@ export class Upp {
 
   public get nodeLayouter(): Map<string, CytoscapeNodeLayout> {
     return this.layouter;
+  }
+
+  public set JSONString(json: string) {
+    this.jsonString = json;
+  }
+
+  public get JSONString(): string {
+    return this.jsonString;
   }
 
   public get allNodes(): CytoscapeNode[] {

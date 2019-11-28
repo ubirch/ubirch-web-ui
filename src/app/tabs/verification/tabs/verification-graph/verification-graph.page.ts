@@ -18,12 +18,9 @@ export class VerificationGraphPage implements OnInit {
   @ViewChild('HASH_VERIFICATION_ERROR', {static: true}) HASH_VERIFICATION_ERROR: TemplateRef<any>;
   @ViewChild('SERVICE_CURRENTLY_UNAVAILABLE', {static: true}) SERVICE_CURRENTLY_UNAVAILABLE: TemplateRef<any>;
 
-  public headerRightLabel = 'Verified Hash: ';
-  public headerRightValue = '..';
-
-  public hash2Verify: string;
   public verifiedUpp: Upp;
   public verificationState = VERIFICATION_STATE.NO_HASH;
+  public hash2Verify: string;
 
   layout = {
     name: 'concentric',
@@ -58,6 +55,9 @@ export class VerificationGraphPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.truster.observableHash.subscribe(
+      hash => this.hash2Verify = hash
+    );
     this.truster.observableVerificationState.subscribe(
       state => this.verificationState = state
     );
@@ -79,7 +79,6 @@ export class VerificationGraphPage implements OnInit {
       edges: upp.allEdges
     };
     this.verifiedUpp = upp;
-    this.verificationState = VERIFICATION_STATE.HASH_VERIFIED;
   }
 
   private createNodeLayouter(): Map<string, CytoscapeNodeLayout> {

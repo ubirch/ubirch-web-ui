@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TrustService, VERIFICATION_STATE} from '../../services/trust.service';
+import {TrustService} from '../../services/trust.service';
 
 @Component({
   selector: 'app-verification',
@@ -34,8 +34,4 @@ export class VerificationPage implements OnInit {
     }
     this.truster.verifyByHash(this.hash2Verify).subscribe();
  }
-
-  // public get VERIFICATION_STATE(): any {
-  //   return VERIFICATION_STATE;
-  // }
 }

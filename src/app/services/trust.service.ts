@@ -59,6 +59,7 @@ export class TrustService {
       return this.http.post<any>(url, vHash, { params: this.withPathSuffix }).pipe(
         map(jsonHashVerification => {
             const upp = new Upp(jsonHashVerification);
+            upp.JSONString = JSON.stringify(jsonHashVerification);
             if (upp) {
               return this.handleState(VERIFICATION_STATE.HASH_VERIFIED, vHash, upp);
             } else {
