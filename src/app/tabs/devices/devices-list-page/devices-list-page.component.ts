@@ -142,6 +142,7 @@ export class DevicesListPage {
                 this.loadDeviceStates(wrapper);
               },
             error => {
+                this.loaded = true;
                 this.hideLoader();
                 this.finished(
                   'err',
