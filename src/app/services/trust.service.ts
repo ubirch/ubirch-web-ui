@@ -4,7 +4,6 @@ import {HttpClient, HttpParams, HttpResponseBase} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Upp} from '../models/upp';
-import {AnchorPathNode} from '../models/anchor-path-node';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -22,10 +21,10 @@ export const VERIFICATION_STATE = {
 export class TrustService {
 
   public API_URL = environment.trustServiceServerUrl + environment.verifyApiPrefix;
-  private getAnchor = 'anchor';
   private getRecord = 'record';
   private withPathSuffix = new HttpParams().set('response_form', 'anchors_with_path').set('blockchain_info', 'ext');
-  private withoutPathSuffix = new HttpParams().set('response_form', 'anchors_no_path');
+//  private getAnchor = 'anchor';
+//  private withoutPathSuffix = new HttpParams().set('response_form', 'anchors_no_path');
 
   /**
    * Observable of current hash
@@ -53,7 +52,7 @@ export class TrustService {
   ) { }
 
   public verifyByHash(vHash: string): Observable<boolean> {
-    if (vHash) {
+    if (vHash && vHash.length > 0) {
       const url = this.API_URL + this.getRecord;
       this.handleState(VERIFICATION_STATE.PENDING, vHash);
       return this.http.post<any>(url, vHash, { params: this.withPathSuffix }).pipe(
