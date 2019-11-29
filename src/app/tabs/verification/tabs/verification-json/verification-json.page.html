@@ -3,8 +3,7 @@
     <ion-card padding>
       <ion-card-content>
         <ion-item>
-          <ion-textarea margin-vertical ngClass="config-area" class="config-input" readonly
-                        [value]="verifiedUpp.JSONString" placeholder="NO UPP"></ion-textarea>
+          <pre>{{verifiedUpp.pureJSON | json:4 }}</pre>
         </ion-item>
       </ion-card-content>
     </ion-card>

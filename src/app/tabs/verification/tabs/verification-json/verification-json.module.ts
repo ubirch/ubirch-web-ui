@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { VerificationJsonPage } from './verification-json.page';
+import {PrettyJsonModule} from 'angular2-prettyjson';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    PrettyJsonModule,
     RouterModule.forChild(routes)
   ],
   declarations: [VerificationJsonPage]
