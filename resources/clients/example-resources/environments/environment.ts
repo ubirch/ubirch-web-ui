@@ -1,4 +1,5 @@
 import {KeycloakConfig} from 'keycloak-angular';
+import * as npm from '../../package.json';
 
 const keycloakConfig: KeycloakConfig = {
   url: 'https://<KEYCLOAK_SERVER_URL>/auth',
@@ -12,6 +13,7 @@ const keycloakConfig: KeycloakConfig = {
 export const environment = {
   production: false,
   envName: 'dev',
+  version: npm.version,
   serverUrl: '<REST_API_DEV_SERVER_URI>',
   apiPrefix: '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: '<KEYSERVICE_REST_API_SERVER_URI>',

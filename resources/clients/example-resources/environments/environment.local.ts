@@ -4,6 +4,7 @@
 
 // Add here your keycloak setup infos
 import {KeycloakConfig} from 'keycloak-angular';
+import * as npm from '../../package.json';
 
 const keycloakConfig: KeycloakConfig = {
   url: 'http://localhost:8080/auth',
@@ -17,6 +18,7 @@ const keycloakConfig: KeycloakConfig = {
 export const environment = {
   production: false,
   envName: 'local',
+  version: npm.version,
   serverUrl: 'http://localhost:8081',
   apiPrefix: '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: '<KEYSERVICE_REST_API_SERVER_URI>',

@@ -1,4 +1,5 @@
 import {KeycloakConfig} from 'keycloak-angular';
+import * as npm from '../../package.json';
 
 const keycloakConfig: KeycloakConfig = {
   url: '@@UBIRCH_KC_URL@@', // 'https://id.dev.ubirch.com/auth/realms/ubirch-2.0/account/',
@@ -12,6 +13,7 @@ const keycloakConfig: KeycloakConfig = {
 export const environment = {
   production: true,
   envName: 'prod',
+  version: npm.version,
   serverUrl: '@@UBIRCH_TR_ENV_SERVURL@@', // 'http://localhost:8081',
   apiPrefix: '@@UBIRCH_TR_API_PREF@@', // '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: '@@UBIRCH_TR_ENV_KEYSERVICE_SERVURL@@', // 'https://key.dev.ubirch.com',

@@ -15,6 +15,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * replace icons with designed ones
 
 
+## [0.4.5] - 2019-11-29
+
+### Added
+- Verification
+    * added a text view which displays the respond in JSON format
+    * remember the inserted and verified hash -> after user switched between tabs (e.g. Verification <-> Home)
+     the inserted hash and loaded data is still there
+- get version number which is posted on console by app.component from package.json
+
+### Changed
+
+### Removed
+
+
 ## [0.4.4] - 2019-11-25
 
 ### Added
