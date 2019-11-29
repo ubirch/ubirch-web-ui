@@ -1,8 +1,8 @@
 {
   "name": "ubirch-web-ui",
   "version": "0.4.5",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "ubirch GmbH - Beate Fiss",
+  "homepage": "https://github.com/ubirch/ubirch-web-ui",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
