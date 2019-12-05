@@ -14,6 +14,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
 
+## [0.4.6] - 2019-12-05
+
+### Added
+
+### Changed
+- Verification
+    * cytoscape graph is now always rendered without fit and center
+    * BUT on changing between areas (home <-> verfication <-> things) zoom factor and pan position will be restored
+
+### Removed
 
 ## [0.4.5] - 2019-11-29
 
