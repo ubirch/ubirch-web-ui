@@ -1,4 +1,5 @@
-import {Component, OnChanges, Renderer, ElementRef, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnChanges, Renderer2, ElementRef, Input, Output, EventEmitter} from '@angular/core';
+import {CytoscapeGraphService} from '../services/cytoscape-graph.service';
 
 declare var cytoscape: any;
 
@@ -6,12 +7,12 @@ declare var cytoscape: any;
   selector: 'ng2-cytoscape',
   template: '<div id="cy"></div>',
   styles: [`#cy {
-        height: 100%;
-        width: 100%;
-        position: relative;
-        left: 0;
-        top: 0;
-    }`]
+      height: 100%;
+      width: 100%;
+      position: relative;
+      left: 0;
+      top: 0;
+  }`]
 })
 
 
@@ -24,7 +25,11 @@ export class NgCytoComponent implements OnChanges {
 
   @Output() select: EventEmitter<any> = new EventEmitter<any>();
 
-  public constructor(private renderer: Renderer, private el: ElementRef) {
+  public constructor(
+    private renderer: Renderer2,
+    private cytoService: CytoscapeGraphService,
+    private el: ElementRef
+  ) {
 
     this.layout = this.layout || {
       name: 'grid',
@@ -78,7 +83,7 @@ export class NgCytoComponent implements OnChanges {
       });
   }
 
-    public ngOnChanges(): any {
+  public ngOnChanges(): any {
     this.render();
     console.log(this.el.nativeElement);
   }
@@ -87,14 +92,33 @@ export class NgCytoComponent implements OnChanges {
     const cyContainer = this.renderer.selectRootElement('#cy');
     const localselect = this.select;
     const cy = cytoscape({
-      container : cyContainer,
+      container: cyContainer,
       layout: this.layout,
       minZoom: this.zoom.min,
       maxZoom: this.zoom.max,
       style: this.style,
       elements: this.elements,
     });
+    if (this.cytoService.currentZoomFactor) {
+      cy.zoom(this.cytoService.currentZoomFactor);
+    }
+    // else {
+    //   cy.fit();
+    // }
+    if (this.cytoService.currentPan) {
+      cy.pan(this.cytoService.currentPan);
+    }
+    // else {
+    //   cy.center();
+    // }
 
+    cy.on('zoom', zoomFactor => {
+      this.cytoService.currentZoomFactor = zoomFactor.target._private.zoom;
+    });
+
+    cy.on('pan', panPos => {
+      this.cytoService.currentPan = panPos.target._private.pan;
+    });
 
     cy.on('tap', 'node', e => {
       const node = e.target;

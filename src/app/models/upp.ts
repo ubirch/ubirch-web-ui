@@ -89,14 +89,14 @@ export class Upp {
     pathEndIndex = this.addAnchorNodes(this.anchors.lowerPath, -1, -1);
     this.addAnchorNodes(this.anchors.lowerBlockChains, pathEndIndex);
 
-    const nodesArray = UbirchWebUIUtilsService.mapToArray(this._allNodesMap);
+    const nodesArray = this.shiftNodeIndexInChains(
+      UbirchWebUIUtilsService.mapToArray(this._allNodesMap));
     this._allNodes = nodesArray.map(node => new CytoscapeNode(node, this.layouter));
   }
 
   private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1): number {
     let currIndex = startAtIndex;
     let offset = 0;
-    // TODO: position index shouldn't be incremented back if node already exists
     arr.forEach((node, index) => {
       const foundNode = this._allNodesMap.get(node.hash);
       if (foundNode && node.nextHash.length === 1) {
@@ -109,6 +109,22 @@ export class Upp {
       }
     });
     return currIndex;
+  }
+
+  /**
+   * shifts the IndexInChains of every node to avoid negative indecees
+   * @param arr the Array of AnchorPathNodes to check
+   */
+  private shiftNodeIndexInChains(arr: AnchorPathNode[]): AnchorPathNode[] {
+    // find out the minimum index
+    const minIndex = arr.map(node => node.indexInChain).reduce((a, b) => Math.min(a, b));
+    if (minIndex < 0) {
+      return arr.map(node => {
+        node.indexInChain -= minIndex;
+        return node;
+      });
+    }
+    return arr;
   }
 
   private createEdges() {

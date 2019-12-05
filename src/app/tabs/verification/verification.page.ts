@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TrustService, VERIFICATION_STATE} from '../../services/trust.service';
+import {CytoscapeGraphService} from '../../services/cytoscape-graph.service';
 
 @Component({
   selector: 'app-verification',
@@ -12,7 +13,8 @@ export class VerificationPage implements OnInit {
   public hashVerificationState: string;
 
   constructor(
-    private truster: TrustService
+    private truster: TrustService,
+    private cytoService: CytoscapeGraphService
   ) { }
 
   ngOnInit() {
@@ -25,6 +27,7 @@ export class VerificationPage implements OnInit {
     const hash = event.target.value;
     this.hash2Verify = hash ? hash.trim() : undefined;
     this.truster.verifyByHash(this.hash2Verify).subscribe();
+    this.cytoService.resetAll();
  }
 
  public get headerRightLabel(): string {

@@ -2,6 +2,7 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Upp} from '../../../../models/upp';
 import {TrustService, VERIFICATION_STATE} from '../../../../services/trust.service';
 import {CytoscapeNodeLayout, LAYOUT_SETTINGS} from '../../../../models/cytoscape-node-layout';
+import {CytoscapeGraphService} from '../../../../services/cytoscape-graph.service';
 
 @Component({
   selector: 'app-verification-graph',
@@ -22,27 +23,33 @@ export class VerificationGraphPage implements OnInit {
   public verificationState = VERIFICATION_STATE.NO_HASH;
   public hash2Verify: string;
 
+  layoutOffset = 50;
   layout = {
-    name: 'concentric',
+    name: 'preset',
     directed: true,
+    fit: true,
     padding: 50,
+    zoom: {
+      min: 1,
+      max: 1.5
+    },
     transform: (node, position) => {
       switch (node._private.data.type) {
         case 'UPP':
-          position.y = 300;
+          position.y = 300 + this.layoutOffset;
           break;
         case 'FOUNDATION_TREE':
-          position.y = 200;
+          position.y = 200 + this.layoutOffset;
           break;
         case 'MASTER_TREE':
-          position.y = 100;
+          position.y = 100 + this.layoutOffset;
           break;
         case 'PUBLIC_CHAIN':
-          position.y = 0;
+          position.y = 0 + this.layoutOffset;
           break;
       }
       if (node._private.data.positionInChain !== undefined) {
-        position.x = node._private.data.positionInChain * 100;
+        position.x = node._private.data.positionInChain * 100 + this.layoutOffset;
       }
       return position;
     }

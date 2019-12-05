@@ -44,17 +44,17 @@ export class CytoscapeNodeData {
 
       if (this.type === 'UPP') {
         this.label = anchorPathNode.label; // + ' (' + anchorPathNode.timestamp + ')';
+      } else if (anchorPathNode instanceof BlockChainNode) {
+        this.subType = anchorPathNode.blockchain;
+        this.label = anchorPathNode.blockchain;
+      } else {
+        this.label = '';
       }
+
       this.id = anchorPathNode.hash;
       this.timestamp = anchorPathNode.timestamp;
       this.weight = 100;
       this.positionInChain = anchorPathNode.indexInChain;
-
-      if (anchorPathNode instanceof BlockChainNode) {
-        this.subType = anchorPathNode.blockchain;
-        this.label = anchorPathNode.blockchain;
-      }
-
       const layout = this.getNodeLayout(this.subType ? this.subType : this.type, layouter);
       this.nodeIcon = layout.nodeIcon;
       this.colorCode = layout.colorCode;

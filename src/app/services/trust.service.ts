@@ -51,23 +51,23 @@ export class TrustService {
       private http: HttpClient
   ) { }
 
-  public verifyByHash(vHash: string): Observable<boolean> {
+  public verifyByHash(vHash: string, update = true): Observable<boolean> {
     if (vHash && vHash.length > 0) {
       const url = this.API_URL + this.getRecord;
-      this.handleState(VERIFICATION_STATE.PENDING, vHash);
+      this.handleState(VERIFICATION_STATE.PENDING, update ? vHash : undefined);
       return this.http.post<any>(url, vHash, { params: this.withPathSuffix }).pipe(
         map(jsonHashVerification => {
             const upp = new Upp(jsonHashVerification);
             upp.pureJSON = jsonHashVerification;
             if (upp) {
-              return this.handleState(VERIFICATION_STATE.HASH_VERIFIED, vHash, upp);
+              return this.handleState(VERIFICATION_STATE.HASH_VERIFIED, update ? vHash : undefined, upp);
             } else {
-              return this.handleState(VERIFICATION_STATE.HASH_VERIFICATION_FAILED, vHash);
+              return this.handleState(VERIFICATION_STATE.HASH_VERIFICATION_FAILED, update ? vHash : undefined);
             }
           }
         ),
         catchError(error => {
-          return of(this.handleError(error, vHash));
+          return of(this.handleError(error, update ? vHash : undefined));
         })
       );
     } else {
@@ -80,12 +80,16 @@ export class TrustService {
     if (hash) {
       this.bsHash.next(hash);
     } else {
-      this.bsHash.next(null);
+      if (this.bsHash.getValue() != null) {
+        this.bsHash.next(null);
+      }
     }
     if (upp) {
       this.bsUPP.next(upp);
     } else {
-      this.bsUPP.next(null);
+      if (this.bsUPP.getValue() != null) {
+        this.bsUPP.next(null);
+      }
     }
     switch (hash) {
       case VERIFICATION_STATE.HASH_VERIFIED:
