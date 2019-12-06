@@ -52,13 +52,9 @@ export class CytoscapeNodeData {
     if (anchorPathNode) {
       this.type = anchorPathNode.type;
 
-      if (this.type === 'UPP') {
-        this.label = anchorPathNode.label; // + ' (' + anchorPathNode.timestamp + ')';
-      } else if (anchorPathNode instanceof BlockChainNode) {
+      this.label = anchorPathNode.label; // + ' (' + anchorPathNode.timestamp + ')';
+      if (anchorPathNode instanceof BlockChainNode) {
         this.subType = anchorPathNode.blockchain;
-        this.label = anchorPathNode.blockchain;
-      } else {
-        this.label = '';
       }
 
       this.id = anchorPathNode.hash;

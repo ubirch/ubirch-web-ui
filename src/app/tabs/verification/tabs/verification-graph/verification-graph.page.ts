@@ -34,6 +34,9 @@ export class VerificationGraphPage implements OnInit {
     },
     transform: (node, position) => {
       switch (node._private.data.type) {
+        case 'TIMESTAMP':
+          position.y = 330 + this.layoutOffset;
+          break;
         case 'UPP':
           position.y = 300 + this.layoutOffset;
           break;

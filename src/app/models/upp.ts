@@ -5,6 +5,7 @@ import {CytoscapeNode} from './cytoscape-node';
 import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
 import {CytoscapeEdge} from './cytoscape-edge';
 import {CytoscapeNodeLayout} from './cytoscape-node-layout';
+import {TimestampNode} from './timestamp-node';
 
 export class Upp {
   private jsonInput: any;
@@ -76,6 +77,27 @@ export class Upp {
     return this._allEdges;
   }
 
+  /**
+   * takes all arrays of the upp:
+   *    - upperPath
+   *    - lowerPath
+   *    - upperBlockChains
+   *    - lowerBlockChains
+   * and creates all required nodes from that data and put them into the _allNodesMap:
+   *    - if a hash doesn't exist, the node is put into a new bucket of the map
+   *    - if a hash already exists, the new nextHash value is added to the nextHashes of the corresponding node
+   * Every node has an indexInChain, which defines the position on the x axis of the node.
+   * In a first step the positions are positive and negative:
+   *    - the UPP has position 0
+   *    - the upper path has positions > 0
+   *    - the lower path has positions < 0
+   * (the position is calculated by index in array, an offset is needed and used to handle nodes that already exists in map)
+   * When all nodes are created, the minimum value of the positions is determined and all postions are shifted to be positive
+   * Blockchain nodes are treated special:
+   *     - an additional timestamp node is created, that displays the blockchain timestamp at the bottom line
+   *     - two parent nodes/areas are created for the list upper and lower blockchain anchors
+   *     - the parent nodes contain all blockchain nodes of that path and their corresponding timestamp nodes
+   */
   private createNodes() {
     if (!this.upp || !this.anchors) {
       this._allNodes = [];
@@ -103,20 +125,32 @@ export class Upp {
         this._allNodesMap.set(groupId, parentNode);
       }
     }
-    arr.forEach((node, index) => {
-      if (groupId !== undefined) {
-        node.parent = groupId;
-      }
-      const foundNode = this._allNodesMap.get(node.hash);
-      if (foundNode && node.nextHash.length === 1) {
-        foundNode.addNextHash(node.nextHash[0]);
-        offset++;
-      } else {
-        currIndex = startAtIndex + ((index - offset) * direction);
-        node.indexInChain = currIndex;
-        this._allNodesMap.set(node.hash, node);
-      }
+    arr.filter(node => node.type !== 'TIMESTAMP')
+      .forEach((node, index) => {
+        if (groupId !== undefined) {
+          node.parent = groupId;
+        }
+        const foundNode = this._allNodesMap.get(node.hash);
+        if (foundNode && node.nextHash.length === 1) {
+          foundNode.addNextHash(node.nextHash[0]);
+          offset++;
+        } else {
+          currIndex = startAtIndex + ((index - offset) * direction);
+          node.indexInChain = currIndex;
+          this._allNodesMap.set(node.hash, node);
+        }
     });
+    arr.filter(node => node.type === 'TIMESTAMP')
+      .forEach((node: TimestampNode) => {
+        if (groupId !== undefined) {
+          node.parent = groupId;
+        }
+        const foundNode = this._allNodesMap.get(node.refHash);
+        if (foundNode) {
+          node.indexInChain = foundNode.indexInChain;
+          this._allNodesMap.set(node.hash, node);
+        }
+      });
     return currIndex;
   }
 
@@ -169,7 +203,10 @@ export class Upp {
           data.forEach(path => target.push(new AnchorPathNode(path)));
           break;
         case('BlockChainNode'):
-          data.forEach(path => target.push(new BlockChainNode(path)));
+          data.forEach(path => {
+            target.push(new BlockChainNode(path));
+            target.push(new TimestampNode(path));
+          });
           break;
       }
     }

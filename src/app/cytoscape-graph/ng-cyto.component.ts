@@ -46,7 +46,6 @@ export class NgCytoComponent implements OnChanges {
 
       .selector('node')
       .css({
-        'content': 'data(label)',
         'shape': 'data(shapeType)',
         'height': 50,
         'width': 50,
@@ -67,13 +66,27 @@ export class NgCytoComponent implements OnChanges {
       })
       .selector(':parent')
       .css({
-        'background-color': 'red',
-        'background-opacity': 0.8
+        'background-color': '#10dc60',
+        'background-opacity': 0.2
       })
       .selector('edge.questionable')
       .css({
         'line-style': 'dotted',
         'target-arrow-shape': 'diamond'
+      })
+      .selector('node.UPP')
+      .css({
+        'content': 'data(label)',
+      })
+      .selector('node.PUBLIC_CHAIN')
+      .css({
+        'content': 'data(subType)',
+      })
+      .selector('node.TIMESTAMP')
+      .css({
+        'content': 'data(label)',
+        'height': 15,
+        'width': 15
       });
   }
 
