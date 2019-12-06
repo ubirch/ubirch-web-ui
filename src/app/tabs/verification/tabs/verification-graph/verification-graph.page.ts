@@ -2,7 +2,6 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Upp} from '../../../../models/upp';
 import {TrustService, VERIFICATION_STATE} from '../../../../services/trust.service';
 import {CytoscapeNodeLayout, LAYOUT_SETTINGS} from '../../../../models/cytoscape-node-layout';
-import {CytoscapeGraphService} from '../../../../services/cytoscape-graph.service';
 
 @Component({
   selector: 'app-verification-graph',

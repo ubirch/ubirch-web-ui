@@ -85,19 +85,28 @@ export class Upp {
     this._allNodesMap = new Map<string, AnchorPathNode>();
 
     let pathEndIndex = this.addAnchorNodes(this.anchors.upperPath, 0);
-    this.addAnchorNodes(this.anchors.upperBlockChains, pathEndIndex);
+    this.addAnchorNodes(this.anchors.upperBlockChains, pathEndIndex, 1, 'upperBC');
     pathEndIndex = this.addAnchorNodes(this.anchors.lowerPath, -1, -1);
-    this.addAnchorNodes(this.anchors.lowerBlockChains, pathEndIndex);
+    this.addAnchorNodes(this.anchors.lowerBlockChains, pathEndIndex, 1, 'lowerBC');
 
     const nodesArray = this.shiftNodeIndexInChains(
       UbirchWebUIUtilsService.mapToArray(this._allNodesMap));
     this._allNodes = nodesArray.map(node => new CytoscapeNode(node, this.layouter));
   }
 
-  private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1): number {
+  private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1, groupId?: string): number {
     let currIndex = startAtIndex;
     let offset = 0;
+    if (groupId !== undefined) {
+      if (!this._allNodesMap.get(groupId)) {
+        const parentNode = new AnchorPathNode({properties: {hash: groupId}});
+        this._allNodesMap.set(groupId, parentNode);
+      }
+    }
     arr.forEach((node, index) => {
+      if (groupId !== undefined) {
+        node.parent = groupId;
+      }
       const foundNode = this._allNodesMap.get(node.hash);
       if (foundNode && node.nextHash.length === 1) {
         foundNode.addNextHash(node.nextHash[0]);

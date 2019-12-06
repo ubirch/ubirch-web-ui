@@ -5,11 +5,13 @@ import {BlockChainNode} from './block-chain-node';
 export class CytoscapeNode {
   public data: CytoscapeNodeData;
   public classes: string;
+  public parent: string;  /** reference to parent node */
 
   constructor(anchorPathNode: AnchorPathNode, layouter?: Map<string, CytoscapeNodeLayout>) {
     if (anchorPathNode) {
       this.data = new CytoscapeNodeData(anchorPathNode, layouter);
       this.classes = this.addNodeClasses(this.data);
+      this.parent = this.addParent(this.data);
     }
     return this;
   }
@@ -17,6 +19,13 @@ export class CytoscapeNode {
   private addNodeClasses(data: CytoscapeNodeData): string {
     if (data && data.type) {
       return data.type;
+    }
+    return undefined;
+  }
+
+  private addParent(data: CytoscapeNodeData): string {
+    if (data && data.parent) {
+      return data.parent;
     }
     return undefined;
   }
@@ -28,6 +37,7 @@ export class CytoscapeNode {
  */
 export class CytoscapeNodeData {
   public id: string;
+  public parent: string;
   public label: string;
   public weight: number;
   public nodeIcon: string;
@@ -52,6 +62,7 @@ export class CytoscapeNodeData {
       }
 
       this.id = anchorPathNode.hash;
+      this.parent = anchorPathNode.parent;
       this.timestamp = anchorPathNode.timestamp;
       this.weight = 100;
       this.positionInChain = anchorPathNode.indexInChain;

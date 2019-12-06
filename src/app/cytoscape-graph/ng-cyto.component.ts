@@ -55,11 +55,6 @@ export class NgCytoComponent implements OnChanges {
         'background-image': 'data(nodeIcon)',
         'background-opacity': '0'
       })
-      .selector(':selected')
-      .css({
-        'border-width': 1,
-        'border-color': 'black'
-      })
       .selector('edge')
       .css({
         'curve-style': 'bezier',
@@ -69,17 +64,16 @@ export class NgCytoComponent implements OnChanges {
         'line-color': 'data(colorCode)',
         'source-arrow-color': 'data(colorCode)',
         'target-arrow-color': 'data(colorCode)',
-
+      })
+      .selector(':parent')
+      .css({
+        'background-color': 'red',
+        'background-opacity': 0.8
       })
       .selector('edge.questionable')
       .css({
         'line-style': 'dotted',
         'target-arrow-shape': 'diamond'
-      })
-      .selector('.faded')
-      .css({
-        'opacity': 0.25,
-        'text-opacity': 0
       });
   }
 
@@ -91,6 +85,7 @@ export class NgCytoComponent implements OnChanges {
   public render() {
     const cyContainer = this.renderer.selectRootElement('#cy');
     const localselect = this.select;
+    console.log(JSON.stringify(this.elements));
     const cy = cytoscape({
       container: cyContainer,
       layout: this.layout,
@@ -122,16 +117,15 @@ export class NgCytoComponent implements OnChanges {
 
     cy.on('tap', 'node', e => {
       const node = e.target;
-      const neighborhood = node.neighborhood().add(node);
-
-      cy.elements().addClass('faded');
-      neighborhood.removeClass('faded');
-      localselect.emit(node.data('label'));
+      if (node.data('type') === 'PUBLIC_CHAIN') {
+        console.log('Blockchain node clicked!');
+      }
+//      localselect.emit(node.data('label'));
     });
 
     cy.on('tap', e => {
       if (e.target === cy) {
-        cy.elements().removeClass('faded');
+ //       cy.elements().removeClass('faded');
       }
     });
   }

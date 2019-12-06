@@ -4,6 +4,7 @@ import {HttpClient, HttpParams, HttpResponseBase} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Upp} from '../models/upp';
+import {VERIFY_RESULT} from '../../../testdata/verify-result';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -48,23 +49,23 @@ export class TrustService {
   public observableUPP: Observable<Upp> = this.bsUPP.asObservable();
 
   constructor(
-      private http: HttpClient
-  ) { }
+    private http: HttpClient
+  ) {
+  }
 
   public verifyByHash(vHash: string, update = true): Observable<boolean> {
+    // for debug purpose manually add following line in the environment settings:
+    //   debug: true,
+    if (environment.debug) {
+      return of(this.handleUppCreation(VERIFY_RESULT, vHash, update));
+    }
+
     if (vHash && vHash.length > 0) {
       const url = this.API_URL + this.getRecord;
       this.handleState(VERIFICATION_STATE.PENDING, update ? vHash : undefined);
-      return this.http.post<any>(url, vHash, { params: this.withPathSuffix }).pipe(
-        map(jsonHashVerification => {
-            const upp = new Upp(jsonHashVerification);
-            upp.pureJSON = jsonHashVerification;
-            if (upp) {
-              return this.handleState(VERIFICATION_STATE.HASH_VERIFIED, update ? vHash : undefined, upp);
-            } else {
-              return this.handleState(VERIFICATION_STATE.HASH_VERIFICATION_FAILED, update ? vHash : undefined);
-            }
-          }
+      return this.http.post<any>(url, vHash, {params: this.withPathSuffix}).pipe(
+        map(jsonHashVerification =>
+          this.handleUppCreation(jsonHashVerification, vHash, update)
         ),
         catchError(error => {
           return of(this.handleError(error, update ? vHash : undefined));
@@ -72,6 +73,16 @@ export class TrustService {
       );
     } else {
       return of(this.handleState(VERIFICATION_STATE.NO_HASH));
+    }
+  }
+
+  private handleUppCreation(jsonHashVerification: any, vHash: string, update: boolean): boolean {
+    const upp = new Upp(jsonHashVerification);
+    upp.pureJSON = jsonHashVerification;
+    if (upp) {
+      return this.handleState(VERIFICATION_STATE.HASH_VERIFIED, update ? vHash : undefined, upp);
+    } else {
+      return this.handleState(VERIFICATION_STATE.HASH_VERIFICATION_FAILED, update ? vHash : undefined);
     }
   }
 
