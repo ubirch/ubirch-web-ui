@@ -67,7 +67,7 @@ export class NgCytoComponent implements OnChanges {
       .selector(':parent')
       .css({
         'background-color': '#10dc60',
-        'background-opacity': 0.2
+        'background-opacity': 0.1
       })
       .selector('edge.questionable')
       .css({
@@ -86,7 +86,8 @@ export class NgCytoComponent implements OnChanges {
       .css({
         'content': 'data(label)',
         'height': 15,
-        'width': 15
+        'width': 15,
+        "text-wrap": "wrap"
       });
   }
 
@@ -98,7 +99,6 @@ export class NgCytoComponent implements OnChanges {
   public render() {
     const cyContainer = this.renderer.selectRootElement('#cy');
     const localselect = this.select;
-    console.log(JSON.stringify(this.elements));
     const cy = cytoscape({
       container: cyContainer,
       layout: this.layout,
