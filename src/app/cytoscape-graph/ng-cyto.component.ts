@@ -49,6 +49,8 @@ export class NgCytoComponent implements OnChanges {
         'shape': 'data(shapeType)',
         'height': 50,
         'width': 50,
+        "text-valign": "bottom",
+        "text-halign": "center",
         'background-fit': 'cover',
         'border-width': 0,
         'background-image': 'data(nodeIcon)',

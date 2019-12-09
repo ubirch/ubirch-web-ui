@@ -1,6 +1,4 @@
 #!/bin/bash
 
-ionic cordova platform add android
-ionic cordova platform add ios
-
-ionic serve --devapp
+cd ~/Applications/keycloak-6.0.1/bin/
+./standalone.sh

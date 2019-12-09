@@ -18,6 +18,7 @@ const keycloakConfig: KeycloakConfig = {
 export const environment = {
   production: false,
   envName: 'dev',
+  debug: false,
   version: npm.version,
   serverUrl: 'https://api.console.dev.ubirch.com',
   apiPrefix: '/ubirch-web-ui/api/v1/',
