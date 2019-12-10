@@ -1,7 +1,7 @@
 <ion-content>
   <ng-container *ngIf="verificationState === VERIFICATION_STATE.HASH_VERIFIED; else ERROR_HANDLING">
     <div style="height: 100%; width: 100%; overflow: auto; overflow-y: hidden">
-      <ng2-cytoscape [elements]="graphData" [layout]="layout" zoom="1"></ng2-cytoscape>
+      <ng2-cytoscape [elements]="graphData" [layout]="layout" zoom="1" (select)="openBlockchainExplorer($event)"></ng2-cytoscape>
     </div>
   </ng-container>
 </ion-content>

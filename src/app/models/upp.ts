@@ -70,6 +70,13 @@ export class Upp {
     return this._allNodes;
   }
 
+  public getNode(id: string): AnchorPathNode | BlockChainNode {
+    if (this._allNodesMap) {
+      return this._allNodesMap.get(id);
+    }
+    return undefined;
+  }
+
   public get allEdges(): CytoscapeEdge[] {
     if (!this._allEdges) {
       this.createEdges();

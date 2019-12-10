@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpParams, HttpResponseBase} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import {Upp} from '../models/upp';
 import {VERIFY_RESULT} from '../../../testdata/verify-result';
+import {BlockChainNode} from '../models/block-chain-node';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -74,6 +75,29 @@ export class TrustService {
     } else {
       return of(this.handleState(VERIFICATION_STATE.NO_HASH));
     }
+  }
+
+  public getBlockchainExplorerUrl(bcNode: BlockChainNode): string {
+    let bcExplorerURLWithTxid: string;
+    if (bcNode) {
+      if (bcNode instanceof BlockChainNode) {
+        try {
+          const envVar = environment.blockchain_transid_check_url;
+          const bcSettings = envVar[bcNode.blockchain];
+          const bcSettingOfNetworkType = bcSettings[bcNode.networkType];
+          const bcExplUrl = bcSettingOfNetworkType.url;
+          bcExplorerURLWithTxid = bcExplUrl + bcNode.txid;
+          console.log('bcExplorerURL:' + bcExplorerURLWithTxid);
+        } catch (e) {
+          console.log('error!');
+        }
+      } else {
+        console.log('cannot open BlockchainExplorer: node for id is not instance of type BlockChainNode (no txid)');
+      }
+    } else {
+      console.log('cannot open BlockchainExplorer: node for id missing');
+    }
+    return bcExplorerURLWithTxid;
   }
 
   private handleUppCreation(jsonHashVerification: any, vHash: string, update: boolean): boolean {

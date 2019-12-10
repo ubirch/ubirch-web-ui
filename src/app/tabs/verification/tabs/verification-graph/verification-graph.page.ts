@@ -2,6 +2,8 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Upp} from '../../../../models/upp';
 import {TrustService, VERIFICATION_STATE} from '../../../../services/trust.service';
 import {CytoscapeNodeLayout, LAYOUT_SETTINGS} from '../../../../models/cytoscape-node-layout';
+import {BlockChainNode} from '../../../../models/block-chain-node';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-verification-graph',
@@ -61,7 +63,8 @@ export class VerificationGraphPage implements OnInit {
 
   constructor(
     private truster: TrustService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.truster.observableHash.subscribe(
@@ -77,6 +80,21 @@ export class VerificationGraphPage implements OnInit {
         }
       }
     );
+  }
+
+  public openBlockchainExplorer(id: string) {
+    if (this.verifiedUpp) {
+      const bcNode = this.verifiedUpp.getNode(id);
+      if (bcNode && bcNode instanceof BlockChainNode) {
+        const explorerUrl = this.truster.getBlockchainExplorerUrl(bcNode);
+        if (explorerUrl) {
+          window.open(explorerUrl, '_bcexplorer');
+        } else {
+          // TODO: display error in toastr
+          console.log('cannot contruct explorerUrl for blockChainExplorer call from node: ' + bcNode);
+        }
+      }
+    }
   }
 
   private createUppTree(upp: Upp) {

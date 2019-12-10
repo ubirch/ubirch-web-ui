@@ -31,7 +31,19 @@ export const environment = {
   default_device_type: 'default_type',
   POLLING_INTERVAL_MILLISECONDS: 60000,
   LIST_ITEMS_PER_PAGE: 10,
-  DATE_TIME_ZONE_FORMAT: 'dd.MM.yyyy, HH:mm:ss (zzz)'
+  DATE_TIME_ZONE_FORMAT: 'dd.MM.yyyy, HH:mm:ss (zzz)',
+  blockchain_transid_check_url: {
+    '<BLOCKCHAIN_ID>': {
+      testnet: {
+        url: '<BLOCKCHAIN_EXPLORER_URL_TESTNET>',
+        icon_url: '<BLOCKCHAIN_SUCCESS_ICON>'
+      },
+      mainnet: {
+        url: '<BLOCKCHAIN_EXPLORER_URL_MAINNET>',
+        icon_url: '<BLOCKCHAIN_SUCCESS_ICON>'
+      }
+    }
+  }
 };
 
 /*

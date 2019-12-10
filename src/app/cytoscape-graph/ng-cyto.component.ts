@@ -133,9 +133,8 @@ export class NgCytoComponent implements OnChanges {
     cy.on('tap', 'node', e => {
       const node = e.target;
       if (node.data('type') === 'PUBLIC_CHAIN') {
-        console.log('Blockchain node clicked!');
+        localselect.emit(node.data('id'));
       }
-//      localselect.emit(node.data('label'));
     });
 
     cy.on('tap', e => {
