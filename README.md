@@ -45,14 +45,46 @@ It will create two files:
 TODO:
 
 1. in your keycloak instance create a new realm from file <REALM_NAME>-import.json
-2. in your ubirch-2.0 realm create a new client from file <REALM_NAME>-connector-import.json 
-to connect your ubirch-2.0 realm with your new realm in your keycloak instance for single sign on
-3. regenerate a new secret for the connector client in ubrich-2.0 realm
-4. add this secret to OpenId Connect Config of the IdentityProvider in your new tenant realm
+1. in your ubirch-2.0 realm create a new client from file <REALM_NAME>-connector-import.json 
 
-You also have to regenerate a new secret for the ubirch-2.0-user-access client in the new tenant realm:
+1. To connect your ubirch-2.0 realm with your new realm in your keycloak instance for single sign on
+    1. regenerate a new secret for the connector client in ubrich-2.0 realm
+    1. add this secret to OpenId Connect Config of the IdentityProvider in your new tenant realm
+
+1. You also have to regenerate a new secret for the ubirch-2.0-user-access client in the new tenant realm:
 Add this secret to the environment settings of the app (see next section)
 
+#### JWT activation
+Check JWT set - Call:
+
+
+    https://<SERVER_URL>/auth/realms/ubirch-default-realm/protocol/openid-connect/certs
+    
+   Check if this contains part like this (important: starts with "kid": and contains "ES256"):
+    
+
+    {"kid":"Dwk8zeyJ9NN5eHsJNYXLVx5BT6Vm_CHFPeHMZfzWzTE","kty":"EC","alg":"ES256","use":"sig","crv":"P-256","x":"w2uHSuiDtRleMDWLSakPBuA_sgd_a8KVoWK7Pl2BN40","y":"UY61aOUXYJ_tIsMaXE72vGqA_zds1lTBO09wDi8p07E"}
+
+   If not you need to create JWT manually (see documentation)
+  
+#### Settings for Device Authentication
+For changing the settings for the device authentication edit 
+ * in the tenant realm
+ * in the group "<TENANT_REALM_NAME>_API_CONFIG_default"
+ * in the Attributes tab
+ * in the "apiConfig" Attribute
+    * the "password" (create e.g. a new UUID)
+    * the url to the "keyService"
+    * the url to "niomon"
+    * the url to send "data" to
+    
+ Example:
+ 
+    {  "password": "00c13ace-9b6a-4735-8688-1a34728bfe4f",  
+       "keyService": "https://key.prod.ubirch.com/api/keyService/v1/pubkey/mpack",
+       "niomon": "https://niomon.prod.ubirch.com/",
+       "data": "https://data.prod.ubirch.com/v1/msgPack"  }
+    
 
 ### Tenant Resources
 

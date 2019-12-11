@@ -4,6 +4,7 @@ import {TrustService, VERIFICATION_STATE} from '../../../../services/trust.servi
 import {CytoscapeNodeLayout, LAYOUT_SETTINGS} from '../../../../models/cytoscape-node-layout';
 import {BlockChainNode} from '../../../../models/block-chain-node';
 import {environment} from '../../../../../environments/environment';
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-verification-graph',
@@ -61,8 +62,17 @@ export class VerificationGraphPage implements OnInit {
 
   graphData: any;
 
+  toastrContent: Map<string, any> = new Map([
+    ['err', {
+      message: 'Error occurred',
+      duration: 4000,
+      color: 'danger'
+    }]
+  ]);
+
   constructor(
-    private truster: TrustService
+    private truster: TrustService,
+    private toastCtrl: ToastController
   ) {
   }
 
@@ -82,6 +92,15 @@ export class VerificationGraphPage implements OnInit {
     );
   }
 
+  async finished(param: string, details?: string) {
+    const content = this.toastrContent.get(param);
+    if (details && content && content.message) {
+      content.message = content.message + ': ' + details;
+    }
+    const toast = await this.toastCtrl.create(content);
+    toast.present();
+  }
+
   public openBlockchainExplorer(id: string) {
     if (this.verifiedUpp) {
       const bcNode = this.verifiedUpp.getNode(id);
@@ -89,12 +108,14 @@ export class VerificationGraphPage implements OnInit {
         const explorerUrl = this.truster.getBlockchainExplorerUrl(bcNode);
         if (explorerUrl) {
           window.open(explorerUrl, '_bcexplorer');
-        } else {
-          // TODO: display error in toastr
-          console.log('cannot contruct explorerUrl for blockChainExplorer call from node: ' + bcNode);
+          return;
         }
       }
     }
+    // display error in toastr
+    const msg = 'cannot contruct explorerUrl for blockChainExplorer call from node with ID: ' + id;
+    this.finished('err', msg);
+    console.log(msg);
   }
 
   private createUppTree(upp: Upp) {
