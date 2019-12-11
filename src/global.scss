@@ -40,6 +40,11 @@ ion-header ion-toolbar:first-child {
   padding-top: 50px;
 }
 
+.max-content-height {
+  max-height: 100px;
+  overflow: auto;
+}
+
 .config-area textarea.native-textarea.sc-ion-textarea-md {
   min-height: 150px;
   border: solid 1px lightgrey;

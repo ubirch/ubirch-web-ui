@@ -2,7 +2,9 @@
   title="Verification"
   [headerRightLabel]="headerRightLabel"
   [headerRightValue]="hash2Verify"
-  addSearchBarWithPlaceholder="Insert hash for verification"
+  addSearchBarWithPlaceholder="Insert hash for verification and press enter"
+  [searchOnEnter]="true"
+  [showSearchCancelButton]="true"
   (startSearch)="checkHash($event)"
 ></ubirch-web-ui-header>
 

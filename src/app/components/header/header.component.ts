@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
   @Input() headerRightLabel = '';
   @Input() headerRightValue: string;
   @Input() addSearchBarWithPlaceholder: string;
+  @Input() searchOnEnter = false;
+  @Input() showSearchCancelButton = false;
   @Output() buttonClicked = new EventEmitter<string>();
   @Output() startSearch = new EventEmitter<string>();
 

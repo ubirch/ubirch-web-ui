@@ -18,7 +18,7 @@
                   <span>{{username}}</span>
                 </ion-col>
               </ion-row>
-              <ion-row class="ion-justify-content-end"  *ngIf="headerRightValue">
+              <ion-row class="ion-justify-content-end max-content-height"  *ngIf="headerRightValue">
                 <ion-col size="8" class="ion-align-items-center">
                   <ion-label  class="header-right-label">
                     {{headerRightLabel}}
@@ -27,8 +27,6 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-
-
           </div>
         </ion-col>
       </ion-row>
@@ -53,9 +51,21 @@
         <ion-col size="6">
           <div class="ion-justify-content-end">
             <ng-container *ngIf="addSearchBarWithPlaceholder">
-              <ion-searchbar color="light" debounce="500"
-                             [placeholder]="addSearchBarWithPlaceholder" (ionChange)="_startSearch($event)">
-              </ion-searchbar>
+              <ng-container *ngIf="searchOnEnter; else SEARCH_ON_DEBOUNCE">
+                <ion-searchbar color="light"
+                               [showCancelButton]="showSearchCancelButton"
+                               [placeholder]="addSearchBarWithPlaceholder"
+                               (keyup.enter)="_startSearch($event)">
+                </ion-searchbar>
+              </ng-container>
+              <ng-template #SEARCH_ON_DEBOUNCE>
+                <ion-searchbar color="light"
+                               [showCancelButton]="showSearchCancelButton"
+                               [placeholder]="addSearchBarWithPlaceholder"
+                               debounce="500"
+                               (ionChange)="_startSearch($event)">
+                </ion-searchbar>
+              </ng-template>
             </ng-container>
           </div>
         </ion-col>
