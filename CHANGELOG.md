@@ -9,10 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * add things state to deviceStubs and display state on things list
   * display state on things list as spark line
 - verification tree: add action
-  * open verification window when user clicks on blockchain node
   * check if hash is successfully anchored in blockchain: show different upp icons depending on if anchored or not
-  * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
+
+
+## [0.4.7] - 2019-12-12
+
+### Added
+
+### Changed
+- Verification
+  * open blockchain explorer in separate tab when user clicks on blockchain node
+  * add timestamps to blockchain nodes (displayed at the bottom under the blockchain nodes)
+  * display coloed areas around upper and lower blockchain anchors
+- adapted documentation about realm creation for new tenant
+
+### Removed
 
 ## [0.4.6] - 2019-12-05
 
