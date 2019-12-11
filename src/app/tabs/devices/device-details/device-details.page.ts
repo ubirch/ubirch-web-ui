@@ -53,6 +53,9 @@ export class DeviceDetailsPage implements OnInit {
     }
     const toast = await this.toastCtrl.create(content);
     toast.present();
+    console.log(content.message);
+    this.router.navigate(['devices']);
+
   }
 
 
@@ -67,7 +70,6 @@ export class DeviceDetailsPage implements OnInit {
     } else {
       // handle url missmatch!!!!
       this.finished('err', 'things details url called without ID');
-      this.router.navigate(['devices']);
     }
   }
 
@@ -79,7 +81,10 @@ export class DeviceDetailsPage implements OnInit {
               if (this.loadedDevice) {
                 this.deviceHasUnsavedChanges = false;
               }
-            }
+            },
+          error1 => {
+              this.finished('err', 'loading thing\'s details failed - something is wrong with that device!!!');
+          }
         );
   }
 

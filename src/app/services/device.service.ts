@@ -105,6 +105,12 @@ export class DeviceService {
      * @param id hwDeviceId of the device that should be loaded
      */
     public loadDevice(id: string): Observable<Device> {
+        // reset currentLoaded device if it is a different one
+        const current = this.behaviorSubject.getValue();
+        if (current && current.hwDeviceId !== id) {
+          this.behaviorSubject.next(null);
+        }
+
         const url = `${this.devicesUrl}/${id}`;
         return this.http.get<Device>(url).pipe(
             map(jsonDevice => {
