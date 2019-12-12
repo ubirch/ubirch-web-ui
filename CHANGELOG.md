@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * check if hash is successfully anchored in blockchain: show different upp icons depending on if anchored or not
   * replace icons with designed ones
 
+
+## [0.4.9] - 2019-12-12
+
+### Added
+
+### Changed
+removed deprecated IONIC attributes
+
+### Removed
+
 ## [0.4.8] - 2019-12-12
 
 ### Added
