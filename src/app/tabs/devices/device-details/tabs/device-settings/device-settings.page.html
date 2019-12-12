@@ -1,4 +1,4 @@
-<ion-content padding-horizontal>
+<ion-content class="ion-padding-horizontal">
   <ion-grid>
     <ion-row class="ion-align-items-center ion-justify-content-end padding-row">
       <ion-button  color="danger" (click)="confirmDeviceDelete()">
@@ -7,14 +7,14 @@
       </ion-button>
     </ion-row>
   </ion-grid>
-  <ion-card padding>
+  <ion-card class="ion-padding">
     <ion-card-content>
       <form [formGroup]="deviceDetailsForm">
-        <ion-item margin-bottom>
+        <ion-item class="ion-margin-bottom">
           <ion-label slot="start">ID:</ion-label>
           <ion-input formControlName="hwDeviceId" readonly color="medium"></ion-input>
         </ion-item>
-        <ion-item margin-bottom>
+        <ion-item class="ion-margin-bottom">
           <ion-label slot="start">description:</ion-label>
           <ion-input formControlName="description"></ion-input>
         </ion-item>

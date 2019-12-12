@@ -2,38 +2,38 @@
   <ng-container *ngIf="pubKeyList; else NO_LIST">
     <ion-list>
       <!-- TODO: lowlight pubKeys that are not yet/no longer valid -->
-      <ion-item *ngFor="let pubkey of pubKeyList" color="light" class="device-list-item" lines="none" margin-bottom>
+      <ion-item *ngFor="let pubkey of pubKeyList" color="light" class="device-list-item ion-margin-bottom" lines="none">
         <ion-label class="devices-list-item-content">
-          <ion-row justify-content-center>
+          <ion-row class="ion-justify-content-center">
             <ion-col size="10">
-              <ion-row margin-bottom>
-                <h1 text-wrap>PubKey: {{pubkey.pubKey}}</h1>
-                <ion-button color="success" (click)="copyToClipboard(pubkey.pubKey)" float-end margin-horizontal>
+              <ion-row class="ion-margin-bottom">
+                <h1 class="ion-text-wrap">PubKey: {{pubkey.pubKey}}</h1>
+                <ion-button color="success" (click)="copyToClipboard(pubkey.pubKey)" class="ion-float-end ion-margin-horizontal">
                   <ion-icon name="copy"></ion-icon>
                 </ion-button>
               </ion-row>
               <ion-row>
                 <ion-col size="7">
-                  <h2 text-wrap>PubKeyId: {{pubkey.pubKeyId}}</h2>
+                  <h2 class="ion-text-wrap">PubKeyId: {{pubkey.pubKeyId}}</h2>
                   <h2>Algorithm: {{pubkey.algorithm}}</h2>
                 </ion-col>
                 <ion-col size="5">
                   <ion-row>
-                    <ion-col size="5" text-wrap>created:</ion-col>
-                    <ion-col size="7" text-wrap>{{pubkey.created | date: DATE_TIME_ZONE_FORMAT}}</ion-col>
+                    <ion-col size="5" class="ion-text-wrap">created:</ion-col>
+                    <ion-col size="7" class="ion-text-wrap">{{pubkey.created | date: DATE_TIME_ZONE_FORMAT}}</ion-col>
                   </ion-row>
                   <ion-row>
-                    <ion-col size="5" text-wrap>not valid before:</ion-col>
-                    <ion-col size="7" text-wrap>{{pubkey.validNotBefore | date: DATE_TIME_ZONE_FORMAT}}</ion-col>
+                    <ion-col size="5" class="ion-text-wrap">not valid before:</ion-col>
+                    <ion-col size="7" class="ion-text-wrap">{{pubkey.validNotBefore | date: DATE_TIME_ZONE_FORMAT}}</ion-col>
                   </ion-row>
                   <ion-row>
-                    <ion-col size="5" text-wrap>not valid after:</ion-col>
-                    <ion-col size="7" text-wrap>{{pubkey.validNotAfter | date: DATE_TIME_ZONE_FORMAT}}</ion-col>
+                    <ion-col size="5" class="ion-text-wrap">not valid after:</ion-col>
+                    <ion-col size="7" class="ion-text-wrap">{{pubkey.validNotAfter | date: DATE_TIME_ZONE_FORMAT}}</ion-col>
                   </ion-row>
                 </ion-col>
               </ion-row>
             </ion-col>
-            <ion-col size="2" justify-content-center align-items-center>
+            <ion-col size="2" class="ion-align-items-center ion-justify-content-center">
               <img *ngIf="pubkey.signed" src="assets/app-icons/ubirch_verify_right.png">
               <img *ngIf="!pubkey.signed" src="assets/app-icons/ubirch_verify_wrong.png">
             </ion-col>
@@ -43,7 +43,7 @@
     </ion-list>
   </ng-container>
   <ng-template #NO_LIST>
-    <ion-row *ngIf="loaded" align-items-center justify-content-center padding>
+    <ion-row *ngIf="loaded" class="ion-padding ion-align-items-center ion-justify-content-center">
       <ion-col size="6">
         <div class="ion-text-center">
           <h1>There seems to be no public keys available for this thing...</h1>

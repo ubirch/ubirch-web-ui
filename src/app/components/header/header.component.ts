@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   @Input() addSearchBarWithPlaceholder: string;
   @Input() searchInput: string;
   @Input() searchOnEnter = false;
-  @Input() showSearchCancelButton = false;
+  @Input() showSearchCancelButton = 'never';
   @Input() fullWidthSearch = false;
   @Output() buttonClicked = new EventEmitter<string>();
   @Output() startSearch = new EventEmitter<string>();

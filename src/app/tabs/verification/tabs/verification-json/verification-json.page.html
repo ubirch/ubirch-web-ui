@@ -1,6 +1,6 @@
 <ion-content>
   <ng-container *ngIf="verificationState === VERIFICATION_STATE.HASH_VERIFIED; else ERROR_HANDLING">
-    <ion-card padding>
+    <ion-card class="ion-padding">
       <ion-card-content>
         <ion-item>
           <pre>{{verifiedUpp.pureJSON | json:4 }}</pre>
@@ -11,7 +11,7 @@
 </ion-content>
 
 <ng-template #ERROR_HANDLING>
-  <ion-row align-items-center justify-content-center padding>
+  <ion-row class="ion-padding ion-align-items-center ion-justify-content-center">
     <ion-col size="6">
       <div class="ion-text-center">
         <ng-container [ngTemplateOutlet]="this[verificationState]"

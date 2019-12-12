@@ -8,7 +8,7 @@
         (startSearch)="search($event)"
 ></ubirch-web-ui-header>
 
-<ion-content padding-horizontal>
+<ion-content class="ion-padding-horizontal">
   <ng-container *ngIf="deviceStubs; else NO_LIST">
     <ion-grid>
       <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
@@ -22,7 +22,7 @@
       </ion-row>
     </ion-grid>
     <ion-list>
-      <ion-item *ngFor="let item of deviceStubs" color="light" class="device-list-item" lines="none" margin-bottom>
+      <ion-item *ngFor="let item of deviceStubs" color="light" class="device-list-item ion-margin-bottom" lines="none">
         <ion-label [routerLink]="['/devices','details', item.hwDeviceId]" class="devices-list-item-content">
           <h2>{{item.description}}</h2>
           <h3>{{item.hwDeviceId}}</h3>
@@ -38,7 +38,7 @@
         </ion-label>
         <div class="item-note" slot="end">
           <ion-button (click)="confirmDeviceDelete(item)" color="danger" class="devices-list-delete-button">
-            <div align-items-center>
+            <div class="ion-align-items-center">
               <ion-icon src="assets/app-icons/delete.svg" class="devices-list-delete-icon"></ion-icon>
               delete
             </div>
@@ -48,7 +48,7 @@
     </ion-list>
   </ng-container>
   <ng-template #NO_LIST>
-    <ion-row *ngIf="loaded" align-items-center justify-content-center padding>
+    <ion-row *ngIf="loaded" class="ion-padding ion-align-items-center ion-justify-content-center">
       <ion-col size="6">
         <div class="ion-text-center">
           <h1>You seem to have no things already.</h1>
