@@ -3,7 +3,6 @@ import {Upp} from '../../../../models/upp';
 import {TrustService, VERIFICATION_STATE} from '../../../../services/trust.service';
 import {CytoscapeNodeLayout, LAYOUT_SETTINGS} from '../../../../models/cytoscape-node-layout';
 import {BlockChainNode} from '../../../../models/block-chain-node';
-import {environment} from '../../../../../environments/environment';
 import {ToastController} from '@ionic/angular';
 
 @Component({
@@ -65,7 +64,7 @@ export class VerificationGraphPage implements OnInit {
   toastrContent: Map<string, any> = new Map([
     ['err', {
       message: 'Error occurred',
-      duration: 4000,
+      duration: 10000,
       color: 'danger'
     }]
   ]);

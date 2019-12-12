@@ -49,27 +49,49 @@
           </div>
         </ion-col>
         <ion-col size="6">
-          <div class="ion-justify-content-end">
-            <ng-container *ngIf="addSearchBarWithPlaceholder">
-              <ng-container *ngIf="searchOnEnter; else SEARCH_ON_DEBOUNCE">
-                <ion-searchbar color="light"
-                               [showCancelButton]="showSearchCancelButton"
-                               [placeholder]="addSearchBarWithPlaceholder"
-                               (keyup.enter)="_startSearch($event)">
-                </ion-searchbar>
-              </ng-container>
-              <ng-template #SEARCH_ON_DEBOUNCE>
-                <ion-searchbar color="light"
-                               [showCancelButton]="showSearchCancelButton"
-                               [placeholder]="addSearchBarWithPlaceholder"
-                               debounce="500"
-                               (ionChange)="_startSearch($event)">
-                </ion-searchbar>
-              </ng-template>
-            </ng-container>
-          </div>
+          <ng-container [ngTemplateOutlet]="SEARCH" *ngIf="!fullWidthSearch"></ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-end max-content-height"  *ngIf="headerFullWidthValue">
+        <ion-col size="12" class="ion-align-items-center">
+          <ion-label  class="header-right-label">
+            {{headerFullWidthLabel}}
+          </ion-label>
+          <span>{{headerFullWidthValue}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="fullWidthSearch">
+        <ion-col size="12">
+          <ng-container [ngTemplateOutlet]="SEARCH"></ng-container>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
 </ion-header>
+
+<ng-template #SEARCH>
+  <div class="ion-justify-content-end">
+    <ng-container *ngIf="addSearchBarWithPlaceholder">
+      <ng-container *ngIf="searchOnEnter; else SEARCH_ON_DEBOUNCE">
+        <ion-searchbar #SEARCHBAR
+                       color="light"
+                       [showCancelButton]="showSearchCancelButton"
+                       [placeholder]="addSearchBarWithPlaceholder"
+                       [value]="searchInput"
+                       (keyup.enter)="_startSearch($event)">
+        </ion-searchbar>
+      </ng-container>
+      <ng-template #SEARCH_ON_DEBOUNCE>
+        <ion-searchbar #SEARCHBAR
+                       color="light"
+                       [showCancelButton]="showSearchCancelButton"
+                       [placeholder]="addSearchBarWithPlaceholder"
+                       [value]="searchInput"
+                       debounce="500"
+                       (ionChange)="_startSearch($event)">
+        </ion-searchbar>
+      </ng-template>
+    </ng-container>
+  </div>
+</ng-template>
+

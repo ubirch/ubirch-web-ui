@@ -61,7 +61,7 @@ export class DevicesListPage {
     }],
     ['err', {
       message: 'Error occurred',
-      duration: 4000,
+      duration: 10000,
       color: 'danger'
     }]
   ]);

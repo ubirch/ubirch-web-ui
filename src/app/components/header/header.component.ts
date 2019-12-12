@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {HeaderActionButton} from './header-action-button';
 import {UserService} from '../../services/user.service';
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'ubirch-web-ui-header',
@@ -12,16 +13,21 @@ export class HeaderComponent implements OnInit {
   @Input() actionButtons: HeaderActionButton[] = [];
   @Input() headerRightLabel = '';
   @Input() headerRightValue: string;
+  @Input() headerFullWidthLabel = '';
+  @Input() headerFullWidthValue: string;
   @Input() addSearchBarWithPlaceholder: string;
+  @Input() searchInput: string;
   @Input() searchOnEnter = false;
   @Input() showSearchCancelButton = false;
+  @Input() fullWidthSearch = false;
   @Output() buttonClicked = new EventEmitter<string>();
   @Output() startSearch = new EventEmitter<string>();
 
   username: string;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
@@ -29,7 +35,10 @@ export class HeaderComponent implements OnInit {
       if (accountInfo) {
         this.username = accountInfo.user.toString();
       } else {
-        this.userService.getAccountInfo().subscribe();
+        this.userService.getAccountInfo().subscribe(
+          _ => {},
+          error => this.handleError(error)
+        );
       }
     });
   }
@@ -42,4 +51,12 @@ export class HeaderComponent implements OnInit {
     this.startSearch.emit(searchStr);
   }
 
+  handleError(error: Error) {
+    const errorContent = {
+      message: 'Error occurred',
+      duration: 10000,
+      color: 'danger'
+    };
+    this.toastCtrl.create(errorContent).then(toast => toast.present());
+  }
 }

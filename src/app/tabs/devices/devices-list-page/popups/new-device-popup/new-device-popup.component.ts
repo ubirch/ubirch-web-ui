@@ -21,7 +21,7 @@ export class NewDevicePopupComponent implements OnInit {
   toastrContent: Map<string, any> = new Map([
     ['err', {
       message: 'Error occurred',
-      duration: 4000,
+      duration: 10000,
       color: 'danger'
     }]
   ]);
