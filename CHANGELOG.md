@@ -12,17 +12,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * check if hash is successfully anchored in blockchain: show different upp icons depending on if anchored or not
   * replace icons with designed ones
 
-
-## [0.4.7] - 2019-12-12
+## [0.4.8] - 2019-12-12
 
 ### Added
+- keycloak
+    * added test setup to test prod keycloak on localhost
 
 ### Changed
+- UX
+    * Searchbar in Header on full width
+    * Fixed problem with too long inputs into verification search bar (maximum height for verified hash set)
+    * start verify request when user presses Enter
+    * verified hash and search hash are still visible after tab change
+- Device Details:
+    * Fixed Bug: if device cannot be loaded, the device details from last loaded device has been displayed (is reset now)
+    * Handle error when device cannot be loaded -> user is routed back to things list and gets an error displayed
+
+### Removed
+
+## [0.4.7] - 2019-12-11
+
+### Added
 - Verification
   * open blockchain explorer in separate tab when user clicks on blockchain node
   * add timestamps to blockchain nodes (displayed at the bottom under the blockchain nodes)
   * display coloed areas around upper and lower blockchain anchors
 - adapted documentation about realm creation for new tenant
+
+### Changed
 
 ### Removed
 
