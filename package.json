@@ -7,6 +7,7 @@
     "ng": "ng",
     "start": "ng serve",
     "prod": "ng serve --host 0.0.0.0 --port 80 --disableHostCheck",
+    "prodtest": "ng serve --host 0.0.0.0 --port 80 --disableHostCheck",
     "local": "ng serve --configuration=local",
     "build": "ng build",
     "test": "ng test",
