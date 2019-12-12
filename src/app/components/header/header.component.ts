@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
   @Input() fullWidthSearch = false;
   @Output() buttonClicked = new EventEmitter<string>();
   @Output() startSearch = new EventEmitter<string>();
+  @Output() searchString = new EventEmitter<string>();
 
   username: string;
 
@@ -49,6 +50,10 @@ export class HeaderComponent implements OnInit {
 
   _startSearch(searchStr: any) {
     this.startSearch.emit(searchStr);
+  }
+
+  _saveSearchString(searchStr: any) {
+    this.searchString.emit(searchStr);
   }
 
   handleError(error: Error) {

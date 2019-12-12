@@ -1,13 +1,14 @@
 <ubirch-web-ui-header
   title="Verification"
   [headerFullWidthLabel]="headerRightLabel"
-  [headerFullWidthValue]="hash2Verify"
+  [headerFullWidthValue]="verifiedHash"
   [searchInput]="hash2Verify"
   addSearchBarWithPlaceholder="Insert hash for verification and press enter"
   [searchOnEnter]="true"
   [showSearchCancelButton]="true"
   [fullWidthSearch]="true"
   (startSearch)="checkHash($event)"
+  (searchString)="saveHash($event)"
 ></ubirch-web-ui-header>
 
 <ion-router-outlet></ion-router-outlet>

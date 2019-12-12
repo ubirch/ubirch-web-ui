@@ -36,6 +36,13 @@ export class TrustService {
   public observableHash: Observable<string> = this.bsHash.asObservable();
 
   /**
+   * Observable of current verified hash
+   */
+  private currVerifiedHash: string;
+  private bsvHash = new BehaviorSubject<string>(this.currVerifiedHash);
+  public observableVerifiedHash: Observable<string> = this.bsvHash.asObservable();
+
+  /**
    * Observable state of verification of current hash
    */
   private currHashVerficiationState = VERIFICATION_STATE.NO_HASH;
@@ -52,6 +59,14 @@ export class TrustService {
   constructor(
     private http: HttpClient
   ) {
+  }
+
+  public saveHash(vHash: string) {
+    if (vHash) {
+      this.bsHash.next(vHash);
+    } else {
+      this.bsHash.next(null);
+    }
   }
 
   public verifyByHash(vHash: string, update = true): Observable<boolean> {
@@ -113,10 +128,10 @@ export class TrustService {
   private handleState(state: string, hash?: string, upp?: Upp): boolean {
     this.bsHashVerifyState.next(state);
     if (hash) {
-      this.bsHash.next(hash);
+      this.bsvHash.next(hash);
     } else {
-      if (this.bsHash.getValue() != null) {
-        this.bsHash.next(null);
+      if (this.bsvHash.getValue() != null) {
+        this.bsvHash.next(null);
       }
     }
     if (upp) {

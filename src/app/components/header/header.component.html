@@ -78,7 +78,9 @@
                        [showCancelButton]="showSearchCancelButton"
                        [placeholder]="addSearchBarWithPlaceholder"
                        [value]="searchInput"
-                       (keyup.enter)="_startSearch($event)">
+                       (keyup.enter)="_startSearch($event)"
+                       debounce="500"
+                       (ionChange)="_saveSearchString($event)">
         </ion-searchbar>
       </ng-container>
       <ng-template #SEARCH_ON_DEBOUNCE>

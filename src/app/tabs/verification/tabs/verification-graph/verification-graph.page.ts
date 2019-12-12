@@ -76,7 +76,7 @@ export class VerificationGraphPage implements OnInit {
   }
 
   ngOnInit() {
-    this.truster.observableHash.subscribe(
+    this.truster.observableVerifiedHash.subscribe(
       hash => this.hash2Verify = hash
     );
     this.truster.observableVerificationState.subscribe(

@@ -10,6 +10,7 @@ import {CytoscapeGraphService} from '../../services/cytoscape-graph.service';
 export class VerificationPage implements OnInit {
 
   public hash2Verify: string;
+  public verifiedHash: string;
   public hashVerificationState: string;
 
   constructor(
@@ -19,16 +20,22 @@ export class VerificationPage implements OnInit {
 
   ngOnInit() {
     this.truster.observableHash.subscribe(hash => this.hash2Verify = hash );
+    this.truster.observableVerifiedHash.subscribe(hash => this.verifiedHash = hash );
     this.truster.observableVerificationState.subscribe( state => this.hashVerificationState = state);
     // H3nM/5NZda/UEQmJckQJvMBpDYjQfdPbPV6ufKQ6wjStJY/yArQ8wTf3/+wRmHBZsrxV+yTfCUhVsrT2xsMiyQ==
   }
 
   private checkHash(event: any) {
     const hash = event.target.value;
-    this.hash2Verify = hash ? hash.trim() : undefined;
-    this.truster.verifyByHash(this.hash2Verify).subscribe();
+    this.verifiedHash = hash ? hash.trim() : undefined;
+    this.truster.verifyByHash(this.verifiedHash).subscribe();
     this.cytoService.resetAll();
  }
+
+  private saveHash(event: any) {
+    const hash = event.target.value;
+    this.truster.saveHash(hash ? hash.trim() : undefined);
+  }
 
  public get headerRightLabel(): string {
     switch (this.hashVerificationState) {
