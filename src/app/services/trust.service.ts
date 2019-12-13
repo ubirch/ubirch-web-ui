@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpParams, HttpResponseBase} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
-import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Upp} from '../models/upp';
 import {VERIFY_RESULT} from '../../../testdata/verify-result';
 import {BlockChainNode} from '../models/block-chain-node';
+import {VERIFY_RESULT_2BCS} from '../../../testdata/verify-result-2bc-nodes';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -73,7 +74,7 @@ export class TrustService {
     // for debug purpose manually add following line in the environment settings:
     //   debug: true,
     if (environment.debug) {
-      return of(this.handleUppCreation(VERIFY_RESULT, vHash, update));
+      return of(this.handleUppCreation(VERIFY_RESULT_2BCS, vHash, update));
     }
 
     if (vHash && vHash.length > 0) {

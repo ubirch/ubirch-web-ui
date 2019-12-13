@@ -114,16 +114,17 @@ export class Upp {
     this._allNodesMap = new Map<string, AnchorPathNode>();
 
     let pathEndIndex = this.addAnchorNodes(this.anchors.upperPath, 0);
-    this.addAnchorNodes(this.anchors.upperBlockChains, pathEndIndex, 1, 'upperBC');
-    pathEndIndex = this.addAnchorNodes(this.anchors.lowerPath, -1, -1);
-    this.addAnchorNodes(this.anchors.lowerBlockChains, pathEndIndex, 1, 'lowerBC');
+    this.addAnchorNodes(this.anchors.upperBlockChains, pathEndIndex, 1, 0, 'upperBC');
+    pathEndIndex = this.addAnchorNodes(this.anchors.lowerPath, -1, -1,
+      this.anchors.lowerBlockChains ? this.anchors.lowerBlockChains.filter(node => node instanceof BlockChainNode).length - 1 : 0);
+    this.addAnchorNodes(this.anchors.lowerBlockChains, pathEndIndex, 1, 0, 'lowerBC');
 
     const nodesArray = this.shiftNodeIndexInChains(
       UbirchWebUIUtilsService.mapToArray(this._allNodesMap));
     this._allNodes = nodesArray.map(node => new CytoscapeNode(node, this.layouter));
   }
 
-  private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1, groupId?: string): number {
+  private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1, endIndexOffset = 0, groupId?: string): number {
     let currIndex = startAtIndex;
     let offset = 0;
     if (groupId !== undefined) {
@@ -143,6 +144,9 @@ export class Upp {
           offset++;
         } else {
           currIndex = startAtIndex + ((index - offset) * direction);
+          if (index === arr.length - 1) { // last element
+            currIndex += endIndexOffset * direction;
+          }
           node.indexInChain = currIndex;
           this._allNodesMap.set(node.hash, node);
         }
