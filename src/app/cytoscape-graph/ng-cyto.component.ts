@@ -1,7 +1,7 @@
-import {Component, OnChanges, Renderer2, ElementRef, Input, Output, EventEmitter} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer2} from '@angular/core';
 import {CytoscapeGraphService} from '../services/cytoscape-graph.service';
-
-declare var cytoscape: any;
+import * as cytoscape from 'cytoscape';
+import * as automove from 'cytoscape-automove';
 
 @Component({
   selector: 'ng2-cytoscape',
@@ -30,6 +30,8 @@ export class NgCytoComponent implements OnChanges {
     private cytoService: CytoscapeGraphService,
     private el: ElementRef
   ) {
+
+    cytoscape.use(automove);
 
     this.layout = this.layout || {
       name: 'grid',
@@ -109,6 +111,25 @@ export class NgCytoComponent implements OnChanges {
       style: this.style,
       elements: this.elements,
     });
+
+    let bcNodes: any[] = [];
+    let tsNodes: any[] = [];
+
+    if (this.elements && this.elements.nodes) {
+      bcNodes = this.elements.nodes.filter(node => node.classes === 'PUBLIC_CHAIN');
+      tsNodes = this.elements.nodes.filter(node => node.classes === 'TIMESTAMP');
+    }
+
+    bcNodes.forEach(bcNode => {
+      const nodeId = bcNode.data.id;
+      const tsId = 'timestamp_' + nodeId;
+      cy.automove({
+        nodesMatching: cy.getElementById(tsId),
+        reposition: 'drag',
+        dragWith: cy.getElementById(nodeId)
+      });
+    });
+
     if (this.cytoService.currentZoomFactor) {
       cy.zoom(this.cytoService.currentZoomFactor);
     }
@@ -137,11 +158,7 @@ export class NgCytoComponent implements OnChanges {
       }
     });
 
-    cy.on('tap', e => {
-      if (e.target === cy) {
- //       cy.elements().removeClass('faded');
-      }
-    });
+
   }
 
 }
