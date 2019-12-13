@@ -13,6 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * replace icons with designed ones
 
 
+## [0.5] - 2019-12-13
+
+### Added
+
+### Changed
+Verification Tree:
+    * Lower Blockchain Nodes doesn't Overlap Other Nodes any more (shifted lowest master tree node to the left)
+    * Timestamps are moved together with Blockchain Nodes
+
+### Removed
+
 ## [0.4.9] - 2019-12-12
 
 ### Added
