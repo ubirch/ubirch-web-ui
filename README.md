@@ -1,5 +1,7 @@
 # UBIRCH WEB UI
 
+Web frontend for managing your ubirch devices
+
 ## Used Versions
 
 * [Angular: 7.2.2](https://angular.io/)
