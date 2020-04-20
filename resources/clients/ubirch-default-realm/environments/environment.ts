@@ -71,7 +71,7 @@ export const environment = {
     regioit: {
       bdr: {
         url: 'https://rinkeby.etherscan.io/tx/0x',
-        icon_url: '/fileadmin/Bilder/Zertifikate/Ethereum_verify_right.png'
+        icon_url: '/fileadmin/Bilder/Zertifikate/govlogo_small.png'
       }
     }
   }
