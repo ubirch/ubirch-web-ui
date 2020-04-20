@@ -60,12 +60,18 @@ export const environment = {
     },
     iota: {
       testnet: {
-        url: 'https://devnet.thetangle.org/transaction/',
+        url: 'https://comnet.thetangle.org/transaction/',
         icon_url: '/wp-content/uploads/workshop_images/IOTA_verify_right.png'
       },
       mainnet: {
         url: 'https://thetangle.org/transaction/',
         icon_url: '/wp-content/uploads/workshop_images/IOTA_verify_right.png'
+      }
+    },
+    regioit: {
+      bdr: {
+        url: 'https://rinkeby.etherscan.io/tx/0x',
+        icon_url: '/fileadmin/Bilder/Zertifikate/Ethereum_verify_right.png'
       }
     }
   }
