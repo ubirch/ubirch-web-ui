@@ -40,21 +40,21 @@ export const environment = {
   blockchain_transid_check_url: {
     'ethereum-classic': {
       testnet: {
-        url: 'https://kottiexplorer.ethernode.io/search?q=0x',
+        url: 'https://kottiexplorer.ethernode.io/search?q=',
         icon_url: '/wp-content/uploads/2019/08/Ethereum-Classic_verify_right.png'
       },
       mainnet: {
-        url: 'https://gastracker.io/search?q=0x',
+        url: 'https://gastracker.io/search?q=',
         icon_url: '/wp-content/uploads/2019/08/Ethereum-Classic_verify_right.png'
       }
     },
     ethereum: {
       testnet: {
-        url: 'https://rinkeby.etherscan.io/tx/0x',
+        url: 'https://rinkeby.etherscan.io/tx/',
         icon_url: '/wp-content/uploads/workshop_images/Ethereum_verify_right.png'
       },
       mainnet: {
-        url: 'https://etherscan.io/tx/0x',
+        url: 'https://etherscan.io/tx/',
         icon_url: '/wp-content/uploads/workshop_images/Ethereum_verify_right.png'
       }
     },
@@ -70,7 +70,7 @@ export const environment = {
     },
     regioit: {
       bdr: {
-        url: 'https://rinkeby.etherscan.io/tx/0x',
+        url: 'https://rinkeby.etherscan.io/tx/',
         icon_url: '/fileadmin/Bilder/Zertifikate/govlogo_small.png'
       }
     }
