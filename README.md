@@ -176,6 +176,36 @@ from resources folder to src folder (as a preparation to serve, build or deploy 
 ```
     ./preprocess4client.sh <CLIENT_NAME>
 ```
+## Adding additional Blockchains
+
+1. Add icon to
+
+        src/assets/app-icons
+    
+2. Add icon path to const LAYOUT_SETTINGS in cytoscape-node-layout.ts:
+
+
+        export const LAYOUT_SETTINGS = [
+        ...
+          { type: 'ethereum-classic',
+            nodeIcon: 'assets/app-icons/Ethereum-Classic_verify_right.png'},
+          { type: 'regioit',
+            nodeIcon: 'assets/app-icons/GovDigital_Icon_verify_right.png'},
+          ];
+          
+3. Add blockchain explorer test link to environments files that belong to your tenant's realm resource settings:
+
+          blockchain_transid_check_url: {
+            ...
+            regioit: {
+              bdr: {
+                url: 'https://rinkeby.etherscan.io/tx/',
+              }
+            }
+          }
+
+4. Don't forget to start app with right realm settings
+
 
 ## Run App locally
 

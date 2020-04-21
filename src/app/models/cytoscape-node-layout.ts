@@ -14,8 +14,10 @@ export const LAYOUT_SETTINGS = [
   { type: 'ethereum',
     nodeIcon: 'assets/app-icons/Ethereum_verify_right.png'},
   { type: 'ethereum-classic',
-    nodeIcon: 'assets/app-icons/Ethereum-Classic_verify_right.png'}
-];
+    nodeIcon: 'assets/app-icons/Ethereum-Classic_verify_right.png'},
+  { type: 'regioit',
+    nodeIcon: 'assets/app-icons/GovDigital_Icon_verify_right.png'},
+  ];
 
 export class CytoscapeNodeLayout {
   public colorCode: string;
