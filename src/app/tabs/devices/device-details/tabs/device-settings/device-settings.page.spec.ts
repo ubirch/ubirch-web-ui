@@ -1,6 +1,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 
 import { DeviceSettingsPage } from './device-settings.page';
 
@@ -15,6 +18,9 @@ describe('DeviceSettingsPage', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
+        HttpClientTestingModule,
+        RouterModule.forRoot([]),
+        IonicModule,
       ],
     })
     .compileComponents();

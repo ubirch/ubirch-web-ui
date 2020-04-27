@@ -1,5 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { IonicModule } from '@ionic/angular';
 
 import { DevicesListPage } from './devices-list-page.component';
 
@@ -12,6 +14,7 @@ describe('ListPage', () => {
     TestBed.configureTestingModule({
       declarations: [ DevicesListPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [HttpClientTestingModule, IonicModule],
     })
       .compileComponents();
   }));
