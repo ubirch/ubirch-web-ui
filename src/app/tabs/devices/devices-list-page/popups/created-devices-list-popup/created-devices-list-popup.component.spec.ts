@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
 import { CreatedDevicesListPopupComponent } from './created-devices-list-popup.component';
 
@@ -11,6 +12,7 @@ describe('CreatedDevicesListPopupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CreatedDevicesListPopupComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [IonicModule],
     })
     .compileComponents();
   }));
