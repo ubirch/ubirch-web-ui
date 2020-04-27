@@ -213,8 +213,7 @@ from resources folder to src folder (as a preparation to serve, build or deploy 
 
 Enter the root directory and call the run-local script:
 
-without parameter the app is started with the test-realm tenant configuration
-(requires the keycloak running on localhost:8080 with realm "test-realm" existing)
+without parameter the app is started with access to the keycloak on id.dev.ubirch.com with the ubirch-default-realm tenant configuration
 
 ```
     ./run-local.sh
@@ -225,7 +224,14 @@ If you want to start another tenant configuration append the name of the tenant 
 Example:
 
 ```
-    ./run-local.sh ubirch-default-realm
+    ./run-local.sh tenant-xy-realm
+```
+
+If you want to use a local keycloak, you can add the "local" as second parameter for staging
+(requires the keycloak running on localhost:8080 with realm "ubirch-default-realm" existing)
+
+```
+    ./run-local.sh ubirch-default-realm local
 ```
 
 
