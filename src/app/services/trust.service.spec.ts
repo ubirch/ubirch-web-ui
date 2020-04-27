@@ -34,8 +34,7 @@ describe('Service: TrustService', () => {
 
   it('should verify an existing hash successfully', () => {
     service.verifyByHash(this.existingHash).subscribe(verification => {
-      expect(verification.length).toBeGreaterThan(0);
-      expect(verification.seal).toBeDefined();
+      expect(verification).toBeTruthy();
     });
 
     const req = httpMock.expectOne(`${service.API_URL}`);
