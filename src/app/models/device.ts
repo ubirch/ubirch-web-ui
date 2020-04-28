@@ -5,6 +5,7 @@ import {environment} from '../../environments/environment';
 
 export class Device {
     public hwDeviceId: string;
+    public secondaryIndex: string;
     public created: string; // timestamp
     public description: string;
     public deviceType: string;
