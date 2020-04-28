@@ -141,7 +141,6 @@ export class DeviceService {
     public createDevices(reqType: ReqType, tags: string, prefix: string, devices: Device[]): Observable<Map<string, string>> {
         const url = `${this.devicesCreateUrl}`;
         const payload = new CreateDevicePayload({ reqType, tags, prefix, devices });
-
         return this.http.post<any[]>(url, payload).pipe(
             map(jsonDevices =>
                 this.extractDevicesCreationStates(jsonDevices)),
@@ -214,9 +213,12 @@ export class DeviceService {
 
     private data2Devices(data: CreateDevicesFormData): Device[] {
         const devicesArray: Device[] = [];
-        if (data && data.hwDeviceId) {
-            const hwDeviceIds = data.hwDeviceId.split(',');
-            hwDeviceIds.forEach(id => {
+
+        const ids = data.secondaryIndex || data.hwDeviceId;
+
+        if (ids) {
+            const idsArray = ids.split(',');
+            idsArray.forEach(id => {
                 data.hwDeviceId = id.trim();
                 if (data.hwDeviceId && data.hwDeviceId.length > 0) {
                     const device = new Device(data);
@@ -226,6 +228,7 @@ export class DeviceService {
                 }
             });
         }
+
         return devicesArray;
     }
 }

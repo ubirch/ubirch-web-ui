@@ -23,7 +23,12 @@ export class Device {
             throw new Error(`device constructor called, ownerNeeded but no owner given: ${jsonDevice}`);
         }
 
-        this.hwDeviceId = jsonDevice.hwDeviceId;
+        if (jsonDevice.secondaryIndex) {
+            this.secondaryIndex = jsonDevice.secondaryIndex;
+            this.hwDeviceId = '';
+        } else {
+            this.hwDeviceId = jsonDevice.hwDeviceId;
+        }
         this.created = jsonDevice.created;
         this.description = jsonDevice.description || '';
         this.deviceType = jsonDevice.deviceType || environment.default_device_type;
