@@ -7,7 +7,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {DeviceTypeService} from './device-type.service';
-import {CreateDevicesFormData} from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
+import {CreateDevicesFormData, ReqType} from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
 import {DevicesListWrapper} from '../models/devices-list-wrapper';
 import {UserService} from './user.service';
 import {isArray} from 'util';
@@ -20,6 +20,7 @@ export class DeviceService {
     url = environment.serverUrl + environment.apiPrefix;
     devicesUrl = this.url + 'devices';  // URL to web api to access devices
     deviceStateUrl = this.url + 'devices/state';  // URL to web api to access the states of requested devices
+    devicesCreateUrl = this.url + 'devices/elephants'; // URL to web api to create devices
     searchUrl = this.devicesUrl + '/search';  // URL to web api to search devices by hwDeviceId or description (substrings)
 
     private currentDevice: Device;
@@ -129,7 +130,7 @@ export class DeviceService {
      */
     public createDevicesFromData(data: CreateDevicesFormData): Observable<Map<string, string>> {
       const devicesArray: Device[] = this.data2Devices(data);
-      return this.createDevices(devicesArray);
+      return this.createDevices(data.reqType, data.tags, data.prefix, devicesArray);
     }
 
     /**
@@ -137,9 +138,11 @@ export class DeviceService {
      * @param list of devices to be registered in backend
      * Returns a Map, containing the hwDeviceIds and the state of creation: "OK" if successfully created
      */
-    public createDevices(devices: Device[]): Observable<Map<string, string>> {
-        const url = `${this.devicesUrl}`;
-        return this.http.post<any[]>(url, devices).pipe(
+    public createDevices(reqType: ReqType, tags: string, prefix: string, devices: Device[]): Observable<Map<string, string>> {
+        const url = `${this.devicesCreateUrl}`;
+        const payload = new CreateDevicePayload({ reqType, tags, prefix, devices });
+
+        return this.http.post<any[]>(url, payload).pipe(
             map(jsonDevices =>
                 this.extractDevicesCreationStates(jsonDevices)),
             catchError(error => {
@@ -225,4 +228,24 @@ export class DeviceService {
         }
         return devicesArray;
     }
+}
+
+class CreateDevicePayload {
+  reqType: ReqType;
+  tags?: string;
+  prefix?: string;
+  devices: Device[];
+  
+  constructor(props) {
+    // remove empty strings, nulls or undefineds
+    if (!props.tags) {
+      delete props.tags;
+    }
+    if (!props.prefix) {
+      delete props.prefix;
+    }
+
+    Object.assign(this, props);
+    return this;
+  }
 }

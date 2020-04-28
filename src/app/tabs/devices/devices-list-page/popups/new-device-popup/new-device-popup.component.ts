@@ -105,8 +105,10 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
 
     if (currentIdType === EIDType.UUID) {
       delete details.secondaryIndex;
+      details.reqType = 'creation' as ReqType;
     } else {
       details.hwDeviceId = '';
+      details.reqType = 'claim' as ReqType;
     }
 
     if (details) {
@@ -156,7 +158,10 @@ enum EIDType {
   IMSI = 'IMSI',
 };
 
+export type ReqType = 'creation' | 'claim';
+
 export class CreateDevicesFormData {
+  reqType: ReqType;
   hwDeviceId: string;
   secondaryIndex?: string;
   description: string;
