@@ -142,7 +142,7 @@ export class TrustService {
         this.bsUPP.next(null);
       }
     }
-    switch (hash) {
+    switch (state) {
       case VERIFICATION_STATE.HASH_VERIFIED:
         return true;
       default:

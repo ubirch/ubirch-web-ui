@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
 import { ConfirmDeleteDevicePopupComponent } from './confirm-delete-device-popup.component';
 
@@ -11,6 +12,7 @@ describe('ConfirmDeleteDevicePopupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ConfirmDeleteDevicePopupComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [IonicModule],
     })
     .compileComponents();
   }));

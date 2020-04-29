@@ -1,5 +1,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { KeycloakAngularModule } from 'keycloak-angular';
+import { RouterModule } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { LogoutPage } from './logout.page';
 
@@ -11,6 +14,11 @@ describe('LogoutPage', () => {
     TestBed.configureTestingModule({
       declarations: [ LogoutPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        KeycloakAngularModule,
+        RouterModule.forRoot([]),
+        HttpClientTestingModule,
+      ]
     })
     .compileComponents();
   }));
