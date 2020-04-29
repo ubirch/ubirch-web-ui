@@ -155,14 +155,31 @@ export class DeviceService {
     }
 
     private extractDevicesCreationStates(jsonDevices: any[], errorOcc?: boolean): Map<string, string> {
-
         const deviceStates: Map<string, string> = new Map();
+        jsonDevices.forEach((deviceState: { [key: string]: IDeviceErrorState}) => {
+          const key = Object.keys(deviceState)[0];
+          const item = deviceState[key];
 
-        jsonDevices.forEach(deviceState =>
-            deviceStates.set(
-                Object.keys(deviceState)[0],
-                deviceState[Object.keys(deviceState)[0]].state === 'ok' ?  'ok' : deviceState[Object.keys(deviceState)[0]].error));
+          deviceStates.set(
+            key,
+            item.state === 'ok' ?  'ok' : this.customErrorTextHandler(key, item),
+          );
+        });
         return deviceStates;
+    }
+
+    /**
+     * override error message with custom one
+     * @param key device key
+     * @param error error instance
+     */
+    private customErrorTextHandler(key: string, error: IDeviceErrorState) {
+      if (error.state === 'notok' && error.errorCode === 3) {
+        return `IMSI ${key} is unknown`;
+      }
+
+      // return default message
+      return error.error;
     }
 
     /**
@@ -251,4 +268,12 @@ class CreateDevicePayload {
     Object.assign(this, props);
     return this;
   }
+}
+
+type DeviceStateValue = 'ok' | 'notok';
+
+interface IDeviceErrorState {
+  error: string;
+  errorCode: number;
+  state: DeviceStateValue;
 }
