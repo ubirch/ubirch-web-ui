@@ -35,6 +35,10 @@ export class ImportFormComponent implements OnInit {
    * prepare value to submit
    */
   public submitImportForm() {
+    if (this.importForm.invalid) {
+      return;
+    }
+
     const formValue = new ImportDeviceFormData(this.importForm.getRawValue());
 
     this.submitForm.emit(formValue);

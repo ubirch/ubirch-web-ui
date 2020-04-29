@@ -15,6 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class FileInputComponent implements ControlValueAccessor {
   @Input() public readonly multiple: boolean = false;
+  @Input() public readonly disabled: boolean = false;
   @ViewChild('fileInput', { static: true }) private fileInput: ElementRef;
   private _value: File[] = [];
   propagateChange = (_: any) => {};
@@ -50,6 +51,10 @@ export class FileInputComponent implements ControlValueAccessor {
   }
 
   openFileSelect() {
+    if (this.disabled) {
+      return;
+    }
+ 
     (this.fileInput.nativeElement as HTMLElement).click();
   }
 }

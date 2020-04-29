@@ -2,6 +2,7 @@
   size="default"
   expand="full"
   text-wrap
+  [disabled]="disabled"
   (click)="openFileSelect()"
 >
   <ng-container *ngIf="value?.length; else noFile">
