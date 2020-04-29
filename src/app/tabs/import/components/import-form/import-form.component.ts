@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ValidatorsService } from 'src/app/validators/validators.service';
 
 @Component({
   selector: 'app-import-form',
@@ -8,10 +9,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ImportFormComponent implements OnInit {
   @Input() public readonly loading: boolean;
+  @Input() private readonly fileSizeLimit: number;
   @Output() private submitForm: EventEmitter<ImportDeviceFormData> = new EventEmitter();
   public importForm: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private validators: ValidatorsService,
+  ) { }
 
   ngOnInit() {
     this.importForm = this.initImportForm();
@@ -22,7 +27,7 @@ export class ImportFormComponent implements OnInit {
    */
   private initImportForm(): FormGroup {
     return this.fb.group({
-      file: [null, Validators.required],
+      file: [null, [Validators.required, ValidatorsService.fileSizeValidator(null, this.fileSizeLimit)]],
       skip_header: [false, Validators.required],
       batch_type: [EImportDeviceBatchType.SIM_IMPORT, Validators.required],
       batch_provider: ['', Validators.required],

@@ -7,8 +7,9 @@
     <ion-row>
       <ion-col size="12">
         <app-import-form
-          (submitForm)="formSubmit($event)"
           [loading]="loading$ | async"
+          [fileSizeLimit]="fileSizeLimit"
+          (submitForm)="formSubmit($event)"
         ></app-import-form>
         <div class="spinner ion-padding-vertical" *ngIf="loading$ | async">
           <ion-spinner></ion-spinner>

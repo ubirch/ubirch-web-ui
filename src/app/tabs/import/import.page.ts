@@ -10,8 +10,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ImportPage implements OnInit {
   public loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
   public error$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public fileSizeLimit = 164000000;
 
   constructor(private deviceImportService: DeviceImportService) { }
 

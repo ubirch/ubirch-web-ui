@@ -7,7 +7,6 @@
     <ion-select
       formControlName="batch_type"
       interface="popover"
-      [disabled]="loading"
     >
       <ion-select-option value="sim_import">uSIM</ion-select-option>
     </ion-select>
@@ -22,7 +21,6 @@
       class="file-input"
       slot="end"
       formControlName="file"
-      [disabled]="loading"
     ></app-file-input>
   </ion-item>
 
@@ -34,7 +32,6 @@
     <ion-checkbox
       slot="end"
       formControlName="skip_header"
-      [disabled]="loading"
     ></ion-checkbox>
   </ion-item>
 
@@ -43,10 +40,7 @@
     <ion-label slot="start">
       Provider<ion-text color="danger">*</ion-text>:
     </ion-label>
-    <ion-input
-      formControlName="batch_provider"
-      [disabled]="loading"
-    ></ion-input>
+    <ion-input formControlName="batch_provider"></ion-input>
   </ion-item>
 
   <!-- description -->
@@ -54,10 +48,7 @@
     <ion-label slot="start">
       Description<ion-text color="danger">*</ion-text>:
     </ion-label>
-    <ion-input
-      formControlName="batch_description"
-      [disabled]="loading"
-    ></ion-input>
+    <ion-input formControlName="batch_description"></ion-input>
   </ion-item>
 
   <!-- tags -->
@@ -65,10 +56,7 @@
     <ion-label slot="start">
       Tags<ion-text color="danger">*</ion-text>:
     </ion-label>
-    <ion-input
-      formControlName="batch_tags"
-      [disabled]="loading"
-    ></ion-input>
+    <ion-input formControlName="batch_tags"></ion-input>
   </ion-item>
 
   <!-- submit -->
@@ -81,4 +69,3 @@
     Upload
   </ion-button>
 </form>
-
