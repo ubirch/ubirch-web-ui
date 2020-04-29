@@ -7,7 +7,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {DeviceTypeService} from './device-type.service';
-import {CreateDevicesFormData} from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
+import {CreateDevicesFormData, ReqType} from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
 import {DevicesListWrapper} from '../models/devices-list-wrapper';
 import {UserService} from './user.service';
 import {isArray} from 'util';
@@ -20,6 +20,7 @@ export class DeviceService {
     url = environment.serverUrl + environment.apiPrefix;
     devicesUrl = this.url + 'devices';  // URL to web api to access devices
     deviceStateUrl = this.url + 'devices/state';  // URL to web api to access the states of requested devices
+    devicesCreateUrl = this.url + 'devices/elephants'; // URL to web api to create devices
     searchUrl = this.devicesUrl + '/search';  // URL to web api to search devices by hwDeviceId or description (substrings)
 
     private currentDevice: Device;
@@ -129,7 +130,7 @@ export class DeviceService {
      */
     public createDevicesFromData(data: CreateDevicesFormData): Observable<Map<string, string>> {
       const devicesArray: Device[] = this.data2Devices(data);
-      return this.createDevices(devicesArray);
+      return this.createDevices(data.reqType, data.tags, data.prefix, devicesArray);
     }
 
     /**
@@ -137,9 +138,10 @@ export class DeviceService {
      * @param list of devices to be registered in backend
      * Returns a Map, containing the hwDeviceIds and the state of creation: "OK" if successfully created
      */
-    public createDevices(devices: Device[]): Observable<Map<string, string>> {
-        const url = `${this.devicesUrl}`;
-        return this.http.post<any[]>(url, devices).pipe(
+    public createDevices(reqType: ReqType, tags: string, prefix: string, devices: Device[]): Observable<Map<string, string>> {
+        const url = `${this.devicesCreateUrl}`;
+        const payload = new CreateDevicePayload({ reqType, tags, prefix, devices });
+        return this.http.post<any[]>(url, payload).pipe(
             map(jsonDevices =>
                 this.extractDevicesCreationStates(jsonDevices)),
             catchError(error => {
@@ -153,14 +155,31 @@ export class DeviceService {
     }
 
     private extractDevicesCreationStates(jsonDevices: any[], errorOcc?: boolean): Map<string, string> {
-
         const deviceStates: Map<string, string> = new Map();
+        jsonDevices.forEach((deviceState: { [key: string]: IDeviceErrorState}) => {
+          const key = Object.keys(deviceState)[0];
+          const item = deviceState[key];
 
-        jsonDevices.forEach(deviceState =>
-            deviceStates.set(
-                Object.keys(deviceState)[0],
-                deviceState[Object.keys(deviceState)[0]].state === 'ok' ?  'ok' : deviceState[Object.keys(deviceState)[0]].error));
+          deviceStates.set(
+            key,
+            item.state === 'ok' ?  'ok' : this.customErrorTextHandler(key, item),
+          );
+        });
         return deviceStates;
+    }
+
+    /**
+     * override error message with custom one
+     * @param key device key
+     * @param error error instance
+     */
+    private customErrorTextHandler(key: string, error: IDeviceErrorState) {
+      if (error.state === 'notok' && error.errorCode === 3) {
+        return `IMSI ${key} is unknown`;
+      }
+
+      // return default message
+      return error.error;
     }
 
     /**
@@ -211,9 +230,12 @@ export class DeviceService {
 
     private data2Devices(data: CreateDevicesFormData): Device[] {
         const devicesArray: Device[] = [];
-        if (data && data.hwDeviceId) {
-            const hwDeviceIds = data.hwDeviceId.split(',');
-            hwDeviceIds.forEach(id => {
+
+        const ids = data.secondaryIndex || data.hwDeviceId;
+
+        if (ids) {
+            const idsArray = ids.split(',');
+            idsArray.forEach(id => {
                 data.hwDeviceId = id.trim();
                 if (data.hwDeviceId && data.hwDeviceId.length > 0) {
                     const device = new Device(data);
@@ -223,6 +245,35 @@ export class DeviceService {
                 }
             });
         }
+
         return devicesArray;
     }
+}
+
+class CreateDevicePayload {
+  reqType: ReqType;
+  tags?: string;
+  prefix?: string;
+  devices: Device[];
+  
+  constructor(props) {
+    // remove empty strings, nulls or undefineds
+    if (!props.tags) {
+      delete props.tags;
+    }
+    if (!props.prefix) {
+      delete props.prefix;
+    }
+
+    Object.assign(this, props);
+    return this;
+  }
+}
+
+type DeviceStateValue = 'ok' | 'notok';
+
+interface IDeviceErrorState {
+  error: string;
+  errorCode: number;
+  state: DeviceStateValue;
 }

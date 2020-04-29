@@ -15,13 +15,59 @@
         <ion-card class="ion-padding">
           <ion-card-content>
             <form [formGroup]="deviceDetailsForm">
+              <ion-item>
+                <ion-content>
+                  <ion-row class="ion-align-items-center">
+                    <ion-col class="ion-no-padding">
+                      ID type:
+                    </ion-col>
+                    <ion-col class="ion-no-padding">
+                      <ion-button
+                        [color]="(isUuidActive$ | async) ? 'primary' : 'light'"
+                        size="default"
+                        expand="full"
+                        (click)="switchToUuid()"
+                      >
+                        UUID
+                      </ion-button>
+                    </ion-col>
+                    <ion-col class="ion-no-padding">
+                      <ion-button
+                        [color]="(isImsiActive$ | async) ? 'primary' : 'light'"
+                        size="default"
+                        expand="full"
+                        (click)="switchToImsi()"
+                      >
+                        IMSI
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-content>
+              </ion-item>
               <ion-item class="ion-margin-bottom">
                 <ion-label slot="start">ID:<ion-text color="danger">*</ion-text>:</ion-label>
-                <ion-textarea rows="3" formControlName="hwDeviceId"></ion-textarea>
+                <ion-textarea
+                  rows="3"
+                  formControlName="hwDeviceId"
+                  *ngIf="isUuidActive$ | async"
+                ></ion-textarea>
+                <ion-textarea
+                  rows="3"
+                  formControlName="secondaryIndex"
+                  *ngIf="isImsiActive$ | async"
+                ></ion-textarea>
               </ion-item>
               <ion-item>
                 <ion-label slot="start">Description:</ion-label>
                 <ion-input formControlName="description"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label slot="start">Tags:</ion-label>
+                <ion-input formControlName="tags"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label slot="start">Prerfix:</ion-label>
+                <ion-input formControlName="prefix"></ion-input>
               </ion-item>
             </form>
           </ion-card-content>
