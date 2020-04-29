@@ -16,21 +16,33 @@
           <ion-card-content>
             <form [formGroup]="deviceDetailsForm">
               <ion-item>
-                <ion-label slot="start">ID type:</ion-label>
-                <ion-button
-                  [color]="(isUuidActive$ | async) ? 'primary' : 'light'"
-                  size="default"
-                  (click)="switchToUuid()"
-                >
-                  UUID
-                </ion-button>
-                <ion-button
-                  [color]="(isImsiActive$ | async) ? 'primary' : 'light'"
-                  size="default"
-                  (click)="switchToImsi()"
-                >
-                  IMSI
-                </ion-button>
+                <ion-content>
+                  <ion-row class="ion-align-items-center">
+                    <ion-col class="ion-no-padding">
+                      ID type:
+                    </ion-col>
+                    <ion-col class="ion-no-padding">
+                      <ion-button
+                        [color]="(isUuidActive$ | async) ? 'primary' : 'light'"
+                        size="default"
+                        expand="full"
+                        (click)="switchToUuid()"
+                      >
+                        UUID
+                      </ion-button>
+                    </ion-col>
+                    <ion-col class="ion-no-padding">
+                      <ion-button
+                        [color]="(isImsiActive$ | async) ? 'primary' : 'light'"
+                        size="default"
+                        expand="full"
+                        (click)="switchToImsi()"
+                      >
+                        IMSI
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-content>
               </ion-item>
               <ion-item class="ion-margin-bottom">
                 <ion-label slot="start">ID:<ion-text color="danger">*</ion-text>:</ion-label>
