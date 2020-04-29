@@ -21,10 +21,14 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/verification/verification.module').then(m => m.VerificationPageModule)
   },
   {
+    path: 'import',
+    loadChildren: './tabs/import/import.module#ImportPageModule',
+  },
+  {
     path: 'logout',
     canActivate: [ EnterOnDashboardGuard ],
     loadChildren: () => import('./tabs/logout/logout.module').then(m => m.LogoutPageModule)
-  }
+  },
 ];
 
 @NgModule({

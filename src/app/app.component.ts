@@ -27,6 +27,12 @@ export class AppComponent {
       url: '/verification',
       icon: 'checkmark-circle-outline.svg'
     },
+    // @todo: implement role checking to show/hide import tab item
+    {
+      title: 'Import',
+      url: '/import',
+      icon: 'list.svg'
+    },
     {
       title: 'Logout',
       url: '/logout',

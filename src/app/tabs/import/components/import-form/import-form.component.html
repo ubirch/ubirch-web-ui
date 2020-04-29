@@ -1,0 +1,57 @@
+<form [formGroup]="importForm" (ngSubmit)="submitImportForm()">
+  <!-- type -->
+  <ion-item class="ion-margin-bottom">
+    <ion-label slot="start">
+      Type<ion-text color="danger">*</ion-text>:
+    </ion-label>
+    <ion-select formControlName="batch_type" interface="popover">
+      <ion-select-option value="sim_import">uSIM</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- file -->
+  <ion-item class="ion-margin-bottom">
+    <ion-label slot="start">
+      File<ion-text color="danger">*</ion-text>:
+    </ion-label>
+    <!-- @TODO: add file input -->
+  </ion-item>
+
+  <!-- skip header -->
+  <ion-item class="ion-margin-bottom">
+    <ion-label slot="start">
+      Skip header:
+    </ion-label>
+    <ion-checkbox slot="end" formControlName="skip_header"></ion-checkbox>
+  </ion-item>
+
+  <!-- provider -->
+  <ion-item class="ion-margin-bottom">
+    <ion-label slot="start">
+      Provider<ion-text color="danger">*</ion-text>:
+    </ion-label>
+    <ion-input formControlName="batch_provider"></ion-input>
+  </ion-item>
+
+  <!-- description -->
+  <ion-item class="ion-margin-bottom">
+    <ion-label slot="start">
+      Description<ion-text color="danger">*</ion-text>:
+    </ion-label>
+    <ion-input formControlName="batch_description"></ion-input>
+  </ion-item>
+
+  <!-- tags -->
+  <ion-item class="ion-margin-bottom">
+    <ion-label slot="start">
+      Tags<ion-text color="danger">*</ion-text>:
+    </ion-label>
+    <ion-input formControlName="batch_tags"></ion-input>
+  </ion-item>
+
+  <!-- submit -->
+  <ion-button type="submit" color="success" expand="full">
+    Upload
+  </ion-button>
+</form>
+
