@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ImportDeviceFormData } from './components/import-form/import-form.component';
 import { DeviceImportService } from 'src/app/services/device-import.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-import',
@@ -9,9 +10,23 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./import.page.scss'],
 })
 export class ImportPage implements OnInit {
-  public loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  public error$: BehaviorSubject<any> = new BehaviorSubject(null);
   public fileSizeLimit = 164000000;
+  public loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private error$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  public errorMessages$: Observable<string[]> = this.error$.pipe(
+    map((error) => {
+      if (!error) {
+        return [];
+      }
+
+      if (error.error && error.error.error) {
+        return [error.error.error.message];
+      }
+
+      return [(error as Error).message]
+    }),
+  );
 
   constructor(private deviceImportService: DeviceImportService) { }
 
@@ -26,8 +41,9 @@ export class ImportPage implements OnInit {
       () => {
         this.loading$.next(false);
       },
-      (err) => {
+      (error: Error) => {
         this.loading$.next(false);
+        this.error$.next(error);
       }
     );
   }

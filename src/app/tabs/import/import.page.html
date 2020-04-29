@@ -14,6 +14,9 @@
         <div class="spinner ion-padding-vertical" *ngIf="loading$ | async">
           <ion-spinner></ion-spinner>
         </div>
+        <ng-container *ngFor="let error of (errorMessages$ | async)">
+          {{ error }}
+        </ng-container>
       </ion-col>
     </ion-row>
   </ion-grid>
