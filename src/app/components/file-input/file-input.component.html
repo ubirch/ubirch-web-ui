@@ -1,12 +1,16 @@
 <ion-button
   size="default"
-  expand="block"
+  expand="full"
+  text-wrap
   (click)="openFileSelect()"
 >
   <ng-container *ngIf="value?.length; else noFile">
-    <ng-container *ngFor="let file of value">
-      {{ file.name }}
+    <ng-container *ngIf="value.length === 1; else filesCounter">
+      {{ value[0].name }}
     </ng-container>
+    <ng-template #filesCounter>
+      {{ value.length }} files
+    </ng-template>
   </ng-container>
   <ng-template #noFile>
     No file chosen
