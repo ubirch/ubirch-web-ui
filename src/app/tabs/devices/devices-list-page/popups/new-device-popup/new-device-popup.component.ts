@@ -153,7 +153,7 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
   }
 }
 
-enum EIDType {
+export enum EIDType {
   UUID = 'UUID',
   IMSI = 'IMSI',
 };
