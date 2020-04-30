@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
 import { ImportDeviceFormData } from './components/import-form/import-form.component';
 import { DeviceImportService } from 'src/app/services/device-import.service';
 import { DeviceImportResult } from 'src/app/models/device-import-result';
@@ -15,17 +16,17 @@ export class ImportPage implements OnInit {
   /**
    * maxiumum rows in the file count
    */
-  public rowsCountLimit = 100000;
+  public rowsCountLimit = environment.deviceImport.default.maximumRowsCount;
 
   /**
    * file row size in bytes
    */
-  public rowSize = 1640;
+  public rowSize = environment.deviceImport.default.rowSizeBytes;
 
   /**
    * file header row size in bytes
    */
-  public headerRowSize = 17;
+  public headerRowSize = environment.deviceImport.default.headerRowSizeBytes;
 
   /**
    * loading state
