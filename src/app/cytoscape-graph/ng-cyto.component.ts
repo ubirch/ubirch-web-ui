@@ -17,6 +17,7 @@ import * as automove from 'cytoscape-automove';
 
 
 export class NgCytoComponent implements OnChanges {
+  private static pluginInitialized = false;
 
   @Input() public elements: any;
   @Input() public style: any;
@@ -30,8 +31,13 @@ export class NgCytoComponent implements OnChanges {
     private cytoService: CytoscapeGraphService,
     private el: ElementRef
   ) {
+    if (!NgCytoComponent.pluginInitialized) {
+      // extension should be registered one time only
+      // multiple registering will cause an error
+      cytoscape.use(automove);
 
-    cytoscape.use(automove);
+      NgCytoComponent.pluginInitialized = true;
+    }
 
     this.layout = this.layout || {
       name: 'grid',
