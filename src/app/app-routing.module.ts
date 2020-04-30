@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {EnterOnDashboardGuard} from './auth/enter-on-dashboard.guard';
+import { AdminOnlyGuard } from './auth/admin-only.guard';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
   {
     path: 'import',
     loadChildren: './tabs/import/import.module#ImportPageModule',
+    canActivate: [ AdminOnlyGuard ],
   },
   {
     path: 'logout',
