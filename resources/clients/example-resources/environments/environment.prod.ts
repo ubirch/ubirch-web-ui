@@ -43,5 +43,12 @@ export const environment = {
         icon_url: '<BLOCKCHAIN_SUCCESS_ICON>'
       }
     }
+  },
+  deviceImport: {
+    default: {
+      rowSizeBytes: 1640,
+      headerRowSizeBytes: 17,
+      maximumRowsCount: 100000,
+    }
   }
 };

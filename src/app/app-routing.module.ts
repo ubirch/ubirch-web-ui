@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {EnterOnDashboardGuard} from './auth/enter-on-dashboard.guard';
+import { AdminOnlyGuard } from './auth/admin-only.guard';
 
 const routes: Routes = [
   {
@@ -21,10 +22,15 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/verification/verification.module').then(m => m.VerificationPageModule)
   },
   {
+    path: 'import',
+    loadChildren: './tabs/import/import.module#ImportPageModule',
+    canActivate: [ AdminOnlyGuard ],
+  },
+  {
     path: 'logout',
     canActivate: [ EnterOnDashboardGuard ],
     loadChildren: () => import('./tabs/logout/logout.module').then(m => m.LogoutPageModule)
-  }
+  },
 ];
 
 @NgModule({

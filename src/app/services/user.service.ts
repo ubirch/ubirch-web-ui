@@ -29,7 +29,7 @@ export class UserService {
       return this.http.get<any>(this.accountUrl).pipe(
           tap(jsonAccount =>
               this.currentAccount = jsonAccount.user ?
-                  new AccountInfo({user: new User(jsonAccount.user), numberOfDevices: jsonAccount.numberOfDevices }) : undefined ),
+                  new AccountInfo({user: new User(jsonAccount.user), numberOfDevices: jsonAccount.numberOfDevices, isAdmin: jsonAccount.isAdmin}) : undefined ),
           map(_ => this.currentAccount ? this.currentAccount.user : undefined));
     }
   }
@@ -43,11 +43,11 @@ export class UserService {
             this.currentAccount = jsonAccount.user ?
                 new AccountInfo({
                   user: new User(jsonAccount.user),
-                  numberOfDevices: jsonAccount.numberOfDevices
+                  numberOfDevices: jsonAccount.numberOfDevices,
+                  isAdmin: jsonAccount.isAdmin,
                 }) : undefined;
             this.behaviorSubItem.next(this.currentAccount);
             this.userEntered();
-
           }),
           map(_ => this.currentAccount));
     }

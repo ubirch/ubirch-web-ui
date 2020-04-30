@@ -1,0 +1,27 @@
+<ion-button
+  size="default"
+  expand="full"
+  text-wrap
+  [disabled]="disabled"
+  (blur)="onTouch()"
+  (click)="openFileSelect()"
+>
+  <ng-container *ngIf="value?.length; else noFile">
+    <ng-container *ngIf="value.length === 1; else filesCounter">
+      {{ value[0].name }}
+    </ng-container>
+    <ng-template #filesCounter>
+      {{ value.length }} files
+    </ng-template>
+  </ng-container>
+  <ng-template #noFile>
+    No file chosen
+  </ng-template>
+</ion-button>
+<input
+  #fileInput
+  [multiple]="multiple"
+  type="file"
+  class="ion-hide"
+  (change)="inputChange($event)"
+/>

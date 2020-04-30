@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import {HeaderComponent} from './header/header.component';
 import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
+import { FileInputComponent } from './file-input/file-input.component';
 
 
 
 @NgModule({
   declarations: [
-      HeaderComponent
+      HeaderComponent,
+      FileInputComponent,
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import {IonicModule} from '@ionic/angular';
     IonicModule
   ],
   exports: [
-      HeaderComponent
+      HeaderComponent,
+      FileInputComponent
   ]
 })
 export class ComponentsModule { }

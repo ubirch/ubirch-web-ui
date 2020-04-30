@@ -69,5 +69,12 @@ export const environment = {
         icon_url: '/fileadmin/Bilder/Zertifikate/govlogo_small.png'
       }
     }
+  },
+  deviceImport: {
+    default: {
+      rowSizeBytes: 1640,
+      headerRowSizeBytes: 17,
+      maximumRowsCount: 100000,
+    }
   }
 };

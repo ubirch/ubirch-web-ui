@@ -21,7 +21,7 @@
       </ion-header>
       <ion-content>
           <ion-list>
-              <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+              <ion-menu-toggle auto-hide="false" *ngFor="let p of (appPages$ | async)">
                   <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" routerLinkActive="active-menu-item" lines="none">
                       <ion-grid>
                           <ion-row class="ion-justify-content-center">
