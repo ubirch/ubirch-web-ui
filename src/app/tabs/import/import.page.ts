@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { ImportDeviceFormData } from './components/import-form/import-form.component';
 import { DeviceImportService } from 'src/app/services/device-import.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { DeviceImportResult } from 'src/app/models/device-import-result';
 
 @Component({
@@ -11,13 +12,44 @@ import { DeviceImportResult } from 'src/app/models/device-import-result';
   styleUrls: ['./import.page.scss'],
 })
 export class ImportPage implements OnInit {
+  /**
+   * maxiumum rows in the file count
+   */
   public rowsCountLimit = 100000;
+
+  /**
+   * file row size in bytes
+   */
   public rowSize = 1640;
+
+  /**
+   * file header row size in bytes
+   */
   public headerRowSize = 17;
+
+  /**
+   * loading state
+   */
   public loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  /**
+   * error data
+   */
   private error$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  /**
+   * import result
+   */
   public result$: BehaviorSubject<DeviceImportResult> = new BehaviorSubject(null);
 
+  /**
+   * reset form event
+   */
+  public resetForm$: Subject<void> = new Subject();
+
+  /**
+   * transform error for the output
+   */
   public errorMessages$: Observable<string[]> = this.error$.pipe(
     map((error) => {
       if (!error) {
@@ -38,22 +70,47 @@ export class ImportPage implements OnInit {
   }
 
   formSubmit(value: ImportDeviceFormData): void {
+    // transform value to FormData
     const formData = this.valueToFormData(value);
+
+    // turn on spinner
     this.loading$.next(true);
+
+    // clear errors
     this.error$.next(null);
+
+    // clear results
     this.result$.next(null);
+
+    // send import request with FormData
     this.deviceImportService.importDevice(formData).subscribe(
       (result: DeviceImportResult) => {
+        // turn off spinner
         this.loading$.next(false);
+
+        // show results
         this.result$.next(result);
+
+        // clear form, if all the data is correct
+        // otherwise, user should be able to, e.g., upload another
+        // file without re-entering other form fields
+        if (result.failures.length === 0) {
+          this.resetForm$.next();
+        }
       },
       (error: Error) => {
+        // turn off spinner
         this.loading$.next(false);
+        // show errors
         this.error$.next(error);
       }
     );
   }
 
+  /**
+   * transform import form value to FormData
+   * @param value import form value
+   */
   private valueToFormData(value: ImportDeviceFormData): FormData {
     const formData = new FormData();
     Object.keys(value).forEach(key => {

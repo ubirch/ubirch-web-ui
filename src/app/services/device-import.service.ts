@@ -16,6 +16,10 @@ export class DeviceImportService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * send import device form
+   * @param formData form value
+   */
   public importDevice(formData: FormData): Observable<DeviceImportResult> {
     return this.http.post(this.importUrl, formData).pipe(
       map((res: IImportResponse) => new DeviceImportResult(res)),

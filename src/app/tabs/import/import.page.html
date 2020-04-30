@@ -12,6 +12,7 @@
             [rowSize]="rowSize"
             [rowsCountLimit]="rowsCountLimit"
             [headerRowSize]="headerRowSize"
+            [resetForm]="resetForm$"
             (submitForm)="formSubmit($event)"
           ></app-import-form>
           <div class="spinner ion-padding-vertical" *ngIf="loading$ | async">

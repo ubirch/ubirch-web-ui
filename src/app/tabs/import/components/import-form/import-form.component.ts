@@ -1,16 +1,52 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  OnChanges,
+  OnDestroy,
+} from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  Subscription,
+} from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
 import { ValidatorsService } from 'src/app/validators/validators.service';
+
+enum EImportDeviceBatchType {
+  SIM_IMPORT = 'sim_import',
+};
+
+const INITIAL_FORM_VALUE = {
+  file: null,
+  skip_header: false,
+  batch_type: EImportDeviceBatchType.SIM_IMPORT,
+  batch_provider: '',
+  batch_description: '',
+  batch_tags: '',
+}
 
 @Component({
   selector: 'app-import-form',
   templateUrl: './import-form.component.html',
   styleUrls: ['./import-form.component.scss'],
 })
-export class ImportFormComponent implements OnInit {
+export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
+  /**
+   * observable to reset form from parent component
+   */
+  @Input('resetForm') resetForm$: Observable<void>;
+ 
   @Input() public readonly loading: boolean;
 
   /**
@@ -52,7 +88,7 @@ export class ImportFormComponent implements OnInit {
    * defines should the header row size be
    * included into file size calculation or no
    */
-  private includeHeaderRowSize$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private skipHeader$: BehaviorSubject<boolean> = new BehaviorSubject(INITIAL_FORM_VALUE.skip_header);
 
   /**
    * computed maximum file size
@@ -61,15 +97,15 @@ export class ImportFormComponent implements OnInit {
     this.rowsCountLimit$,
     this.rowSize$,
     this.headerRowSize$,
-    this.includeHeaderRowSize$,
+    this.skipHeader$,
   ).pipe(
-    map(([rowsCount, rowSize, headerRowSize, includeHeaderRowSize]: [number, number, number, boolean]) => {
+    map(([rowsCount, rowSize, headerRowSize, skipHeader]: [number, number, number, boolean]) => {
       // add rowsCount as rows are separated by `\n`
       const size = rowsCount * rowSize + rowsCount;
 
       // if header row would not be ignored, header row size also should be added to the limit
-      if (includeHeaderRowSize) {
-        // 1 is added as one more `\n` will be added with header
+      if (!skipHeader) {
+        // 1 is added as one more `\n` will be added with header row
         return size + headerRowSize + 1;
       }
 
@@ -97,6 +133,11 @@ export class ImportFormComponent implements OnInit {
    */
   private watchHeaderRowSizeSubscription: Subscription;
 
+  /**
+   * subscription for reset form observable
+   */
+  private resetFormSubscription: Subscription;
+
   public importForm: FormGroup;
 
   constructor(
@@ -122,6 +163,10 @@ export class ImportFormComponent implements OnInit {
     if (changes.headerRowSize) {
       this.headerRowSize$.next(changes.headerRowSize.currentValue);
     }
+
+    if (changes.resetForm$ && changes.resetForm$.currentValue) {
+      this.setResetEventSubscription();
+    }
   }
 
   ngOnDestroy() {
@@ -132,6 +177,10 @@ export class ImportFormComponent implements OnInit {
     if (this.watchHeaderRowSizeSubscription) {
       this.watchHeaderRowSizeSubscription.unsubscribe();
     }
+
+    if (this.resetFormSubscription) {
+      this.resetFormSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -139,17 +188,25 @@ export class ImportFormComponent implements OnInit {
    */
   private initImportForm(): FormGroup {
     return this.fb.group({
-      file: [null],
-      skip_header: [this.includeHeaderRowSize$.value, Validators.required],
-      batch_type: [EImportDeviceBatchType.SIM_IMPORT, Validators.required],
-      batch_provider: ['', Validators.required],
-      batch_description: ['', Validators.required],
-      batch_tags: ['', Validators.required],
+      file: [INITIAL_FORM_VALUE.file],
+      skip_header: [INITIAL_FORM_VALUE.skip_header, Validators.required],
+      batch_type: [INITIAL_FORM_VALUE.batch_type, Validators.required],
+      batch_provider: [INITIAL_FORM_VALUE.batch_provider, Validators.required],
+      batch_description: [INITIAL_FORM_VALUE.batch_description, Validators.required],
+      batch_tags: [INITIAL_FORM_VALUE.batch_tags, Validators.required],
     });
   }
 
   /**
-   * prepare value to submit
+   * reset form and set initial values
+   */
+  private resetImportForm() {
+    this.importForm.reset();
+    this.importForm.setValue(INITIAL_FORM_VALUE);
+  }
+
+  /**
+   * prepare value to submit and emit submit event
    */
   public submitImportForm() {
     if (this.importForm.invalid) {
@@ -188,7 +245,24 @@ export class ImportFormComponent implements OnInit {
   private initHeaderRowCalculationSubscription() {
     this.watchHeaderRowSizeSubscription = this.importForm.get('skip_header').valueChanges.subscribe(
       (value: boolean) => {
-        this.includeHeaderRowSize$.next(value);
+        this.skipHeader$.next(value);
+      },
+    );
+  }
+
+  /**
+   * subscribe to reset form event
+   * if another observable has been passed earlier, remove
+   * it's subscription
+   */
+  private setResetEventSubscription() {
+    if (this.resetFormSubscription) {
+      this.resetFormSubscription.unsubscribe();
+    }
+
+    this.resetFormSubscription = this.resetForm$.subscribe(
+      () => {
+        this.resetImportForm();
       },
     );
   }
@@ -206,7 +280,3 @@ export class ImportDeviceFormData {
     Object.assign(this, props);
   }
 }
-
-enum EImportDeviceBatchType {
-  SIM_IMPORT = 'sim_import',
-};
