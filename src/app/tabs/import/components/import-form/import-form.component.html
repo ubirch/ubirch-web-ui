@@ -13,7 +13,15 @@
   </ion-item>
 
   <!-- file -->
-  <ion-item class="ion-margin-bottom">
+  <ion-item
+    class="ion-margin-bottom custom-validation-markup"
+    lines="full"
+    [ngClass]="{
+      'ng-invalid': importForm.controls.file.invalid,
+      'ng-touched': importForm.controls.file.touched,
+      'ng-dirty': importForm.controls.file.dirty
+    }"
+  >
     <ion-label slot="start">
       File<ion-text color="danger">*</ion-text>:
     </ion-label>
@@ -25,14 +33,14 @@
   </ion-item>
 
   <!-- skip header -->
-  <ion-item class="ion-margin-bottom">
+  <ion-item class="ion-margin-bottom" lines="full">
     <ion-label slot="start">
       Skip header:
     </ion-label>
-    <ion-checkbox
+    <ion-toggle
       slot="end"
       formControlName="skip_header"
-    ></ion-checkbox>
+    ></ion-toggle>
   </ion-item>
 
   <!-- provider -->
@@ -68,4 +76,10 @@
   >
     Upload
   </ion-button>
+  <ion-text color="danger">
+    <p *ngIf="importForm?.controls.file.errors?.fileMaxSize">
+      Maximum file size is {{ fileSizePrettified$ | async }}kb
+    </p>
+  </ion-text>
 </form>
+

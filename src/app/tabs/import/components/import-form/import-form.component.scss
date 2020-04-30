@@ -1,3 +1,11 @@
 .file-input {
   width: 100%;
 }
+
+.custom-validation-markup {
+  &.ng-touched.ng-invalid {
+    --highlight-background: #f04141;
+    --full-highlight-height: calc(var(--highlight-height) * var(--show-full-highlight));
+    --inset-highlight-height: calc(var(--highlight-height) * var(--show-inset-highlight));
+  }
+}

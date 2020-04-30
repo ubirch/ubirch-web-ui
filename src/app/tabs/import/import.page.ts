@@ -10,7 +10,9 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./import.page.scss'],
 })
 export class ImportPage implements OnInit {
-  public fileSizeLimit = 164000000;
+  public rowsCountLimit = 100000;
+  public rowSize = 1640;
+  public headerRowSize = 17;
   public loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private error$: BehaviorSubject<any> = new BehaviorSubject(null);
 

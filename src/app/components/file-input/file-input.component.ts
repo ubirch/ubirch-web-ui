@@ -19,6 +19,7 @@ export class FileInputComponent implements ControlValueAccessor {
   @ViewChild('fileInput', { static: true }) private fileInput: ElementRef;
   private _value: File[] = [];
   propagateChange = (_: any) => {};
+  onTouch: () => void;
 
   get value() {
     return this._value;
@@ -35,8 +36,8 @@ export class FileInputComponent implements ControlValueAccessor {
     this.value = value || [];
   }
 
-  registerOnTouched() {
-
+  registerOnTouched(fn) {
+    this.onTouch = fn;
   }
 
   registerOnChange(fn) {
