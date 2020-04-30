@@ -17,11 +17,77 @@
           <div class="spinner ion-padding-vertical" *ngIf="loading$ | async">
             <ion-spinner></ion-spinner>
           </div>
-          <ion-text color="danger">
-            <p *ngFor="let error of (errorMessages$ | async)">
-              {{ error }}
-            </p>
-          </ion-text>
+
+          <!-- errors output -->
+          <ion-card *ngIf="(errorMessages$ | async)?.length">
+            <ion-card-header>
+              <ion-card-title>
+                Error
+              </ion-card-title>
+              <ion-card-subtitle>
+                Import failed
+              </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-list>
+                <ion-item *ngFor="let error of (errorMessages$ | async)">
+                  <ion-text color="danger">
+                    {{ error }}
+                  </ion-text>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+
+          <!-- successful result output -->
+          <ion-card *ngIf="result$ | async">
+            <ion-card-header>
+              <ion-card-title>
+                Result
+              </ion-card-title>
+              <ion-card-subtitle>
+                The data is received for import
+              </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-list>
+                <ion-item>
+                  <ion-text color="dark">
+                    Accepted: 
+                    <strong>
+                      {{ (result$ | async).accepted }}
+                    </strong>
+                  </ion-text>
+                </ion-item>
+                <ion-item>
+                  <ion-text color="danger">
+                    Failure: 
+                    <strong>
+                      {{ (result$ | async).failure }}
+                    </strong>
+                  </ion-text>
+                </ion-item>
+                <ion-item>
+                  <ion-text color="success">
+                    Success: 
+                    <strong>
+                      {{ (result$ | async).success }}
+                    </strong>
+                  </ion-text>
+                </ion-item>
+                <ng-container *ngIf="(result$ | async).failures?.length">
+                  <ion-item>
+                    Failures:
+                  </ion-item>
+                  <ion-item *ngFor="let failure of (result$ | async).failures">
+                      <ion-text color="danger">
+                        {{ failure }}
+                      </ion-text>
+                  </ion-item>
+                </ng-container>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
         </div>
       </ion-col>
     </ion-row>

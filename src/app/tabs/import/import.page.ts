@@ -3,6 +3,7 @@ import { ImportDeviceFormData } from './components/import-form/import-form.compo
 import { DeviceImportService } from 'src/app/services/device-import.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DeviceImportResult } from 'src/app/models/device-import-result';
 
 @Component({
   selector: 'app-import',
@@ -15,6 +16,7 @@ export class ImportPage implements OnInit {
   public headerRowSize = 17;
   public loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private error$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public result$: BehaviorSubject<DeviceImportResult> = new BehaviorSubject(null);
 
   public errorMessages$: Observable<string[]> = this.error$.pipe(
     map((error) => {
@@ -39,9 +41,11 @@ export class ImportPage implements OnInit {
     const formData = this.valueToFormData(value);
     this.loading$.next(true);
     this.error$.next(null);
+    this.result$.next(null);
     this.deviceImportService.importDevice(formData).subscribe(
-      () => {
+      (result: DeviceImportResult) => {
         this.loading$.next(false);
+        this.result$.next(result);
       },
       (error: Error) => {
         this.loading$.next(false);
