@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { ImportPage } from './import.page';
 
@@ -11,6 +12,7 @@ describe('ImportPage', () => {
     TestBed.configureTestingModule({
       declarations: [ ImportPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [HttpClientTestingModule],
     })
     .compileComponents();
   }));
