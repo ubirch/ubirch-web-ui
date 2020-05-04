@@ -36,7 +36,7 @@ export class ImportPage implements OnInit {
   /**
    * error data
    */
-  private error$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public error$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   /**
    * import result
