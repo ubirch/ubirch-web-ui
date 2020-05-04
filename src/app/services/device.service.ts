@@ -250,7 +250,7 @@ export class DeviceService {
     }
 }
 
-class CreateDevicePayload {
+export class CreateDevicePayload {
   reqType: ReqType;
   tags?: string;
   prefix?: string;
