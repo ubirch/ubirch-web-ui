@@ -18,6 +18,10 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
+        path: 'data',
+        loadChildren: () => import('./device-data/device-data.module').then(m => m.DeviceDataPageModule)
+      },
+      {
         path: 'settings',
         loadChildren: () => import('./device-settings/device-settings.module').then(m => m.DeviceSettingsPageModule)
       },
