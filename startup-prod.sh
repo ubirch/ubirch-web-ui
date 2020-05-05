@@ -43,12 +43,12 @@ echo "Replacing variables UBIRCH_TR_API_VERIFY_PREF in src/environments/environm
 sed -i.bak "s%@@UBIRCH_TR_API_VERIFY_PREF@@%${UBIRCH_TR_API_VERIFY_PREF}%" src/environments/environment.ts
 
 echo "Replacing variables UBIRCH_TR_GRAFANA_URL in src/environments/environment.ts"
-sed -i.bak "s%@@UBIRCH_TR_GRAFANA_URL@@%${UBIRCH_TR_API_VERIFY_PREF}%" src/environments/environment.ts
+sed -i.bak "s%@@UBIRCH_TR_GRAFANA_URL@@%${UBIRCH_TR_GRAFANA_URL}%" src/environments/environment.ts
 
 echo "Replacing variables UBIRCH_TR_GRAFANA_ORG_ID in src/environments/environment.ts"
-sed -i.bak "s%@@UBIRCH_TR_GRAFANA_ORG_ID@@%${UBIRCH_TR_API_VERIFY_PREF}%" src/environments/environment.ts
+sed -i.bak "s%@@UBIRCH_TR_GRAFANA_ORG_ID@@%${UBIRCH_TR_GRAFANA_ORG_ID}%" src/environments/environment.ts
 
 echo "Replacing variables UBIRCH_TR_GRAFANA_PANEL_ID in src/environments/environment.ts"
-sed -i.bak "s%@@UBIRCH_TR_GRAFANA_PANEL_ID@@%${UBIRCH_TR_API_VERIFY_PREF}%" src/environments/environment.ts
+sed -i.bak "s%@@UBIRCH_TR_GRAFANA_PANEL_ID@@%${UBIRCH_TR_GRAFANA_PANEL_ID}%" src/environments/environment.ts
 
 npm run-script prod
