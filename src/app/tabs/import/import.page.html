@@ -15,12 +15,12 @@
             [resetForm]="resetForm$"
             (submitForm)="formSubmit($event)"
           ></app-import-form>
-          <div class="spinner ion-padding-vertical" *ngIf="loading$ | async">
+          <div id="import-spinner" class="spinner ion-padding-vertical" *ngIf="loading$ | async">
             <ion-spinner></ion-spinner>
           </div>
 
           <!-- errors output -->
-          <ion-card *ngIf="(errorMessages$ | async)?.length">
+          <ion-card id="import-error-output" *ngIf="(errorMessages$ | async)?.length">
             <ion-card-header>
               <ion-card-title>
                 Error
@@ -30,9 +30,9 @@
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-              <ion-list>
+              <ion-list id="import-errors">
                 <ion-item *ngFor="let error of (errorMessages$ | async)">
-                  <ion-text color="danger">
+                  <ion-text color="danger" data-test-import-error-output>
                     {{ error }}
                   </ion-text>
                 </ion-item>
@@ -41,7 +41,7 @@
           </ion-card>
 
           <!-- successful result output -->
-          <ion-card *ngIf="result$ | async">
+          <ion-card id="import-result-output" *ngIf="result$ | async">
             <ion-card-header>
               <ion-card-title>
                 Result
@@ -52,26 +52,26 @@
             </ion-card-header>
             <ion-card-content>
               <ion-list>
-                <ion-item>
+                <ion-item id="import-accepted">
                   <ion-text color="dark">
                     Accepted: 
-                    <strong>
+                    <strong id="import-accepted-output">
                       {{ (result$ | async).accepted }}
                     </strong>
                   </ion-text>
                 </ion-item>
-                <ion-item>
+                <ion-item id="import-failure">
                   <ion-text color="danger">
                     Failure: 
-                    <strong>
+                    <strong id="import-failure-output">
                       {{ (result$ | async).failure }}
                     </strong>
                   </ion-text>
                 </ion-item>
-                <ion-item>
+                <ion-item id="import-success">
                   <ion-text color="success">
                     Success: 
-                    <strong>
+                    <strong id="import-success-output">
                       {{ (result$ | async).success }}
                     </strong>
                   </ion-text>
@@ -81,9 +81,9 @@
                     Failures:
                   </ion-item>
                   <ion-item *ngFor="let failure of (result$ | async).failures">
-                      <ion-text color="danger">
-                        {{ failure }}
-                      </ion-text>
+                    <ion-text color="danger" data-test-import-failure-output>
+                      {{ failure }}
+                    </ion-text>
                   </ion-item>
                 </ng-container>
               </ion-list>
