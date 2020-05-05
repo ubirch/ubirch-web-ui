@@ -32,8 +32,8 @@ export class FileInputComponent implements ControlValueAccessor {
 
   constructor() { }
 
-  writeValue(value: File[]) {
-    this.value = value || [];
+  writeValue(value: File | File[]) {
+    this.value = value ? (this.multiple ? value as File[] : [value as File]) : [];
   }
 
   registerOnTouched(fn) {

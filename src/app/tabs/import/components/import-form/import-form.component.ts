@@ -52,37 +52,37 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * maximum rows per file
    */
-  @Input() public readonly rowsCountLimit: number;
+  @Input() public readonly rowsCountLimit: number = 0;
 
   /**
    * row size in bytes
    */
-  @Input() public readonly rowSize: number;
+  @Input() public readonly rowSize: number = 0;
 
   /**
    * header row size in bytes
    */
-  @Input() public readonly headerRowSize: number;
+  @Input() public readonly headerRowSize: number = 0;
 
   /**
    * submit event
    */
-  @Output() private submitForm: EventEmitter<ImportDeviceFormData> = new EventEmitter();
+  @Output() public submitForm: EventEmitter<ImportDeviceFormData> = new EventEmitter();
 
   /**
    * maximum rows per file subject
    */
-  private rowsCountLimit$: BehaviorSubject<number> = new BehaviorSubject(0);
+  private rowsCountLimit$: BehaviorSubject<number> = new BehaviorSubject(this.rowsCountLimit);
 
   /**
    * row size in bytes subject
    */
-  private rowSize$: BehaviorSubject<number> = new BehaviorSubject(0);
+  private rowSize$: BehaviorSubject<number> = new BehaviorSubject(this.rowSize);
 
   /**
    * header row size in bytes subject
    */
-  private headerRowSize$: BehaviorSubject<number> = new BehaviorSubject(0);
+  private headerRowSize$: BehaviorSubject<number> = new BehaviorSubject(this.headerRowSize);
 
   /**
    * defines should the header row size be
@@ -93,7 +93,7 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * computed maximum file size
    */
-  private fileSizeBytes$: Observable<number> = combineLatest(
+  public fileSizeBytes$: Observable<number> = combineLatest(
     this.rowsCountLimit$,
     this.rowSize$,
     this.headerRowSize$,
@@ -166,6 +166,14 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
 
     if (changes.resetForm$ && changes.resetForm$.currentValue) {
       this.setResetEventSubscription();
+    }
+
+    if (changes.loading) {
+      if (changes.loading.currentValue) {
+        this.importForm.disable();
+      } else {
+        this.importForm.enable();
+      }
     }
   }
 
