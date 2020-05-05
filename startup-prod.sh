@@ -42,4 +42,13 @@ sed -i.bak "s%@@UBIRCH_TR_ENV_TRUSTSERVICE_SERVURL@@%${UBIRCH_TR_ENV_TRUSTSERVIC
 echo "Replacing variables UBIRCH_TR_API_VERIFY_PREF in src/environments/environment.ts"
 sed -i.bak "s%@@UBIRCH_TR_API_VERIFY_PREF@@%${UBIRCH_TR_API_VERIFY_PREF}%" src/environments/environment.ts
 
+echo "Replacing variables UBIRCH_TR_GRAFANA_URL in src/environments/environment.ts"
+sed -i.bak "s%@@UBIRCH_TR_GRAFANA_URL@@%${UBIRCH_TR_API_VERIFY_PREF}%" src/environments/environment.ts
+
+echo "Replacing variables UBIRCH_TR_GRAFANA_ORG_ID in src/environments/environment.ts"
+sed -i.bak "s%@@UBIRCH_TR_GRAFANA_ORG_ID@@%${UBIRCH_TR_API_VERIFY_PREF}%" src/environments/environment.ts
+
+echo "Replacing variables UBIRCH_TR_GRAFANA_PANEL_ID in src/environments/environment.ts"
+sed -i.bak "s%@@UBIRCH_TR_GRAFANA_PANEL_ID@@%${UBIRCH_TR_API_VERIFY_PREF}%" src/environments/environment.ts
+
 npm run-script prod
