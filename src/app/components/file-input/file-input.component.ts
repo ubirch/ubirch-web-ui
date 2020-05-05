@@ -16,7 +16,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class FileInputComponent implements ControlValueAccessor {
   @Input() public readonly multiple: boolean = false;
   @Input() public readonly disabled: boolean = false;
-  @ViewChild('fileInput', { static: true }) private fileInput: ElementRef;
+  @ViewChild('fileInput', { static: true }) public fileInput: ElementRef;
   private _value: File[] = [];
   propagateChange = (_: any) => {};
   onTouch: () => void;
