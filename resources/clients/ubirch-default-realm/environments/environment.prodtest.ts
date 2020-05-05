@@ -81,6 +81,13 @@ export const environment = {
       headerRowSizeBytes: 17,
       maximumRowsCount: 100000,
     }
+  },
+  deviceData: {
+    url: 'https://dashboard.dev.ubirch.com/d-solo/qfa7xZhWz/simple-data-service',
+    orgId: 1,
+    from: 'now-3h',
+    to: 'now',
+    panelId: 2
   }
 };
 

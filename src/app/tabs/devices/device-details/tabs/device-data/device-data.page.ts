@@ -2,17 +2,19 @@ import { Component, OnInit, SecurityContext } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
+import { environment } from '../../../../../../environments/environment';
+
 @Component({
   selector: 'app-device-data',
   templateUrl: './device-data.page.html',
   styleUrls: ['./device-data.page.scss'],
 })
 export class DeviceDataPage implements OnInit {
-  private readonly url = 'https://dashboard.dev.ubirch.com/d-solo/qfa7xZhWz/simple-data-service';
-  private readonly orgId = 1;
-  private readonly from = 'now-1h';
-  private readonly to = 'now';
-  private readonly panelId = 2;
+  private readonly url = environment.deviceData.url;
+  private readonly orgId = environment.deviceData.orgId;
+  private readonly from = environment.deviceData.from;
+  private readonly to = environment.deviceData.to;
+  private readonly panelId = environment.deviceData.panelId;
 
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) {}
 
