@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DeviceService } from 'src/app/services/device.service';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
+
 import { environment } from '../../../../../environments/environment';
 
 @Component({

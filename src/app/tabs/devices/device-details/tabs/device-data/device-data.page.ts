@@ -3,9 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { DeviceService } from 'src/app/services/device.service';
-import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
+
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-device-data',

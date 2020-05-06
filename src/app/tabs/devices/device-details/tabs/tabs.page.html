@@ -1,6 +1,11 @@
 <ion-tabs class="tabs-under-header">
   <ion-tab-bar slot="top">
-    <ion-tab-button tab="data" layout="icon-start" *ngIf="showDataTab$ | async">
+    <ion-tab-button
+      id="tabs-data-tab-button"
+      tab="data"
+      layout="icon-start"
+      *ngIf="showDataTab$ | async"
+    >
       <ion-icon name="stats"></ion-icon>
       <ion-label>Data</ion-label>
     </ion-tab-button>
