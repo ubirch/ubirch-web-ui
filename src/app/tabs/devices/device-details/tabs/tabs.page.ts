@@ -15,7 +15,7 @@ export class TabsPage implements OnInit {
 
   currentDevice$ = this.deviceService.observableCurrentDevice;
 
-  shodDataTab$: Observable<boolean> = this.currentDevice$.pipe(
+  showDataTab$: Observable<boolean> = this.currentDevice$.pipe(
     filter(device => !!device),
     map(device => {
       const allowedTag = device.claimingTags.find(tag => {
