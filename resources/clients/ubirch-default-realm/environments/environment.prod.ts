@@ -82,6 +82,9 @@ export const environment = {
     orgId: '@@UBIRCH_TR_GRAFANA_ORG_ID@@',
     from: 'now-3h',
     to: 'now',
-    panelId: '@@UBIRCH_TR_GRAFANA_PANEL_ID@@'
+    panelMap: {
+      pysense: 1,
+      pytrack: 2,
+    }
   }
 };

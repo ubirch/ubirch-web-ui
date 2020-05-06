@@ -14,12 +14,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'settings',
+        redirectTo: 'data',
         pathMatch: 'full',
       },
       {
         path: 'data',
-        loadChildren: () => import('./device-data/device-data.module').then(m => m.DeviceDataPageModule)
+        loadChildren: () => import('./device-data/device-data.module').then(m => m.DeviceDataPageModule),
       },
       {
         path: 'settings',

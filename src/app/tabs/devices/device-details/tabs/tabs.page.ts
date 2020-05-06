@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DeviceService } from 'src/app/services/device.service';
+import { Observable } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-tabs',
@@ -7,7 +11,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabsPage implements OnInit {
 
-  constructor() { }
+  constructor(private deviceService: DeviceService) { }
+
+  currentDevice$ = this.deviceService.observableCurrentDevice;
+
+  shodDataTab$: Observable<boolean> = this.currentDevice$.pipe(
+    filter(device => !!device),
+    map(device => {
+      const allowedTag = device.claimingTags.find(tag => {
+        return environment.deviceData.panelMap[tag];
+      });
+
+      return !!allowedTag;
+    }),
+  );
 
   ngOnInit() {
   }

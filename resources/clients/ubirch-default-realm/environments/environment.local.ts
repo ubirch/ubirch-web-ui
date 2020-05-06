@@ -87,7 +87,10 @@ export const environment = {
     orgId: 1,
     from: 'now-3h',
     to: 'now',
-    panelId: 2
+    panelMap: {
+      pysense: 1,
+      pytrack: 2,
+    }
   }
 };
 

@@ -14,6 +14,7 @@ export class Device {
     public groups: Group[];
     public apiConfig: string;
     public deviceConfig: string;
+    public claimingTags: string[];
 
     constructor(jsonDevice: any, ownerNeeded?: boolean) {
         if (!jsonDevice || !jsonDevice.hwDeviceId) {
@@ -34,12 +35,20 @@ export class Device {
         this.deviceType = jsonDevice.deviceType || environment.default_device_type;
         this.apiConfig = '';
         this.deviceConfig = '';
+        this.claimingTags = [];
         if (jsonDevice.attributes) {
             if (jsonDevice.attributes.apiConfig && jsonDevice.attributes.apiConfig.length > 0) {
                 this.apiConfig = jsonDevice.attributes.apiConfig[0];
             }
             if (jsonDevice.attributes.deviceConfig && jsonDevice.attributes.deviceConfig.length > 0) {
                 this.deviceConfig = jsonDevice.attributes.deviceConfig[0];
+            }
+            try {
+                if (jsonDevice.attributes.claiming_tags) {
+                    this.claimingTags = jsonDevice.attributes.claiming_tags[0].split(', ');
+                }
+            } catch (err) {
+                console.log('***', err);
             }
         }
 

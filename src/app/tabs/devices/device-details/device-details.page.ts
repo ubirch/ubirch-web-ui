@@ -10,7 +10,7 @@ import {HeaderActionButton} from '../../../components/header/header-action-butto
   templateUrl: './device-details.page.html',
   styleUrls: ['./device-details.page.scss'],
 })
-export class DeviceDetailsPage implements OnInit {
+export class DeviceDetailsPage {
 
    id: string;
    private deviceHasUnsavedChanges = false;
@@ -63,7 +63,7 @@ export class DeviceDetailsPage implements OnInit {
     this.router.navigate(['devices']);
   }
 
-  ngOnInit() {
+  ionViewDidEnter() {
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
       this.reloadDevice(this.id);
