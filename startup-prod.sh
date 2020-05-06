@@ -48,7 +48,7 @@ sed -i.bak "s%@@UBIRCH_TR_GRAFANA_URL@@%${UBIRCH_TR_GRAFANA_URL}%" src/environme
 echo "Replacing variables UBIRCH_TR_GRAFANA_ORG_ID in src/environments/environment.ts"
 sed -i.bak "s%@@UBIRCH_TR_GRAFANA_ORG_ID@@%${UBIRCH_TR_GRAFANA_ORG_ID}%" src/environments/environment.ts
 
-echo "Replacing variables UBIRCH_TR_GRAFANA_PANEL_ID in src/environments/environment.ts"
-sed -i.bak "s%@@UBIRCH_TR_GRAFANA_PANEL_ID@@%${UBIRCH_TR_GRAFANA_PANEL_ID}%" src/environments/environment.ts
+echo "Replacing variables UBIRCH_TR_GRAFANA_PANEL_MAP in src/environments/environment.ts"
+sed -i.bak "s%@@UBIRCH_TR_GRAFANA_PANEL_MAP@@%${UBIRCH_TR_GRAFANA_PANEL_MAP}%" src/environments/environment.ts
 
 npm run-script prod
