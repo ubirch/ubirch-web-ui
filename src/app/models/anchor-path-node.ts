@@ -14,7 +14,7 @@ export class AnchorPathNode {
       this.parent = jsonNode.parent;
       if (jsonNode.properties) {
         this.timestamp = jsonNode.properties.timestamp;
-        this.type = jsonNode.properties.type;
+        this.type = jsonNode.properties.label;
         this.hash = jsonNode.properties.hash;
         this.nextHash = jsonNode.properties.next_hash ? jsonNode.properties.next_hash.split(',') : [];
         this.signature = jsonNode.properties.signature;
