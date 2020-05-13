@@ -24,7 +24,13 @@ module.exports = function(env) {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                chunks: ['verification']
+                filename: 'index.html',
+                template: './index.html'
+            }),
+            new HtmlWebpackPlugin({
+                chunks: ['verification'],
+                filename: 'verification.html',
+                template: './verification/index.html'
             }),
             new webpack.NormalModuleReplacementPlugin(/(.*)environment.dev(\.*)/, function(resource) {
                 resource.request = resource.request.replace(/environment.dev/, `environment.${STAGE}`);
