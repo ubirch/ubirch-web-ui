@@ -1,4 +1,5 @@
-import * as sha512 from 'js-sha512';
+import { sha256 } from 'js-sha256';
+import { sha512 } from 'js-sha512';
 import {
     UbirchHashAlgorithm,
     IUbirchVerificationConfig,
@@ -24,13 +25,18 @@ const INFO_TEXTS = {
     }
 };
 
+const DEFAULT_CONFIG: IUbirchVerificationConfig = {
+    algorithm: 'sha512',
+    elementSelector: null
+};
+
 class UbirchVerification {
     private responseHandler: ResponseHandler = new ResponseHandler();
     private view: View;
     private algorithm: UbirchHashAlgorithm;
     private elementSelector: string;
 
-    constructor(config: IUbirchVerificationConfig) {
+    constructor(config: IUbirchVerificationConfig = DEFAULT_CONFIG) {
         if (!config.elementSelector) {
             throw new Error('Please, provide the `elementSelector` to UbirchVerification config');
         }
@@ -42,7 +48,18 @@ class UbirchVerification {
     }
 
     private createHash(json: string): string {
-        let transIdAB: ArrayBuffer = sha512.sha512.arrayBuffer(json);
+        let transIdAB: ArrayBuffer;
+
+        switch (this.algorithm) {
+            case 'sha256': {
+                transIdAB = sha256.arrayBuffer(json);
+                break;
+            }
+            case 'sha512': {
+                transIdAB = sha512.arrayBuffer(json);
+                break;
+            }
+        }
 
         let transId: string = btoa(new Uint8Array(transIdAB).reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
@@ -365,6 +382,3 @@ function logError(errorStr: string) {
 }
 
 window['UbirchVerification'] = UbirchVerification;
-
-const w = new UbirchVerification({ algorithm: 'sha256', elementSelector: 'body'});
-w.verifyHash(`1lmJ7Feg1U5EJWvwE4njwRbRsqs8eLMThJq3x7N8SjNwVpEgI3WcfPJq/MRw+jpd11SU1G45D68dQcLOg4RRzA==`)
