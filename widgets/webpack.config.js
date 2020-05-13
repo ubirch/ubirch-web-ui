@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = function(env) {
-    const { STAGE } = env;
+    const STAGE = env.STAGE || 'dev';
 
     return {
         entry: {
