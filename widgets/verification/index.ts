@@ -9,7 +9,8 @@ import {
     IUbirchVerificationAnchorProperties,
     IUbirchBlockchainNet
 } from './models';
-import environment from './environment';
+import environment from './environment.dev';
+import './style.scss';
 
 const INFO_TEXTS = {
     PENDING: {
@@ -77,7 +78,7 @@ class UbirchVerification {
         this.sendVerificationRequest(hash);
     }
 
-    private handleInfo(info: EInfo) {
+    private handleInfo(info: EInfo): void {
         this.view.cleanupIcons();
 
         switch (info) {
@@ -195,17 +196,6 @@ class UbirchVerification {
 }
 
 class ResponseHandler {
-    handleInfo(info): string {
-        switch (info) {
-            case EInfo.PROCESSING_VERIFICATION_CALL: {
-                return '...processing....';
-            }
-            case EInfo.VERIFICATION_SUCCESSFUL: {
-                return '';
-            }
-        }
-    }
-
     handleError(error: EError): string {
         switch (error) {
             case EError.CERTIFICATE_DATA_MISSING:
@@ -270,14 +260,14 @@ class View {
         }
     }
 
-    public cleanupIcons() {
+    public cleanupIcons(): void {
         // remove seal and transaction_check icons IF exist
         this.cleanAllChilds(this.resultOutput);
         this.cleanAllChilds(this.sealOutput);
         this.cleanAllChilds(this.sealInfoText);
     }
     
-    private cleanAllChilds(element: HTMLElement) {
+    private cleanAllChilds(element: HTMLElement): void {
         if (element) {
             while (element.firstChild) {
                 element.removeChild(element.firstChild);
@@ -343,7 +333,7 @@ class View {
         this.resultOutput.appendChild(linkTag);
     }
 
-    public addHeadlineAndInfotext(successful: true | false | undefined) {
+    public addHeadlineAndInfotext(successful: true | false | undefined): void {
         if (successful === undefined) {
             this.resultOutput.appendChild(this.createTxtTag(INFO_TEXTS.PENDING.info, 'ubirch-verification-info'));
         } else {
@@ -377,7 +367,7 @@ class View {
     }
 }
 
-function logError(errorStr: string) {
+function logError(errorStr: string): void {
     console.log(errorStr);
 }
 
