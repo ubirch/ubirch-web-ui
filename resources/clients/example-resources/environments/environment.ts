@@ -50,6 +50,13 @@ export const environment = {
       headerRowSizeBytes: 17,
       maximumRowsCount: 100000,
     }
+  },
+  deviceData: {
+    url: '@@UBIRCH_TR_GRAFANA_URL@@',
+    orgId: '@@UBIRCH_TR_GRAFANA_ORG_ID@@',
+    from: 'now-3h',
+    to: 'now',
+    panelMap: JSON.parse('@@UBIRCH_TR_GRAFANA_PANEL_MAP@@')
   }
 };
 

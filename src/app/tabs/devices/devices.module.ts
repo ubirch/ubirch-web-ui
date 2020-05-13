@@ -11,6 +11,7 @@ import {MarkdownModule} from 'ngx-markdown';
 import {NewDevicePopupComponent} from './devices-list-page/popups/new-device-popup/new-device-popup.component';
 import {ConfirmDeleteDevicePopupComponent} from './devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {CreatedDevicesListPopupComponent} from './devices-list-page/popups/created-devices-list-popup/created-devices-list-popup.component';
+import { DeviceDetailsResolverService } from 'src/app/resolvers/device-details-resolver.service';
 
 @NgModule({
   imports: [
@@ -36,7 +37,10 @@ import {CreatedDevicesListPopupComponent} from './devices-list-page/popups/creat
         children: [
           {
             path: ':id',
-            loadChildren: () => import('./device-details/device-details.module').then(m => m.DeviceDetailsPageModule)
+            loadChildren: () => import('./device-details/device-details.module').then(m => m.DeviceDetailsPageModule),
+            resolve: {
+              device: DeviceDetailsResolverService
+            }
           }
         ]
       }

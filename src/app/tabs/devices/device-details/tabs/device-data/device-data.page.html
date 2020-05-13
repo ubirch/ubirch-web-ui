@@ -1,0 +1,5 @@
+<ion-content>
+  <div class="iframe-wrapper" *ngIf="iframeUrl$ | async">
+    <iframe width="100%" height="100%" [src]="iframeUrl$ | async" frameborder="0"></iframe>
+  </div>
+</ion-content>
