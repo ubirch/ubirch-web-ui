@@ -168,7 +168,7 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
       this.setResetEventSubscription();
     }
 
-    if (changes.loading) {
+    if (changes.loading && this.importForm) {
       if (changes.loading.currentValue) {
         this.importForm.disable();
       } else {
