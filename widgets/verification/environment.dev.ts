@@ -42,4 +42,5 @@ export default {
     },
     seal_icon_url: '/fileadmin/Bilder/Zertifikate/ubirch_verify_right.png',
     no_seal_icon_url: '/fileadmin/Bilder/Zertifikate/ubirch_verify_wrong.png',
+    console_verify_url: 'http://localhost:9101/verification'
 } as IUbirchVerificationEnvConfig;

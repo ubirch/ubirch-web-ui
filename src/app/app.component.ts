@@ -4,9 +4,11 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {environment} from '../environments/environment';
+import { combineLatest, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserService } from './services/user.service';
 import { AccountInfo } from './models/account-info';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-root',
@@ -14,17 +16,22 @@ import { AccountInfo } from './models/account-info';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  public appPages$ = this.userService.observableAccountInfo.pipe(map((account: AccountInfo) => {
+  public appPages$ = combineLatest(
+    from(this.keycloackService.isLoggedIn()),
+    this.userService.observableAccountInfo,
+  ).pipe(map(([isLogged, account]: [boolean, AccountInfo]) => {
     const items = [
       {
         title: 'Home',
         url: '/home',
-        icon: 'home.svg'
+        icon: 'home.svg',
+        authOnly: true
       },
       {
         title: 'Things',
         url: '/devices',
-        icon: 'list.svg'
+        icon: 'list.svg',
+        authOnly: true
       },
       {
         title: 'Verification',
@@ -32,25 +39,31 @@ export class AppComponent {
         icon: 'checkmark-circle-outline.svg'
       },
       {
+        title: 'Import',
+        url: '/import',
+        icon: 'push.svg',
+        authOnly: true,
+        adminOnly: true
+      },
+      {
         title: 'Logout',
         url: '/logout',
-        icon: 'logout.svg'
+        icon: 'logout.svg',
+        authOnly: true
       }
     ];
 
-    if (account && account.isAdmin) {
-      items.splice(
-        3,
-        0,
-        {
-          title: 'Import',
-          url: '/import',
-          icon: 'push.svg'
-        },
-      );
-    }
+    return items.filter(link => {
+      if (!isLogged && link.authOnly) {
+        return false;
+      }
 
-    return items;
+      if ((!account || !account.isAdmin) && link.adminOnly) {
+        return false;
+      }
+
+      return true;
+    });
   }));
 
   clientName = environment.client_name || 'Mandant';
@@ -64,6 +77,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private userService: UserService,
+    private keycloackService: KeycloakService,
   ) {
     this.initializeApp();
   }

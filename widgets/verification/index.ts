@@ -78,7 +78,7 @@ class UbirchVerification {
         this.sendVerificationRequest(hash);
     }
 
-    private handleInfo(info: EInfo): void {
+    private handleInfo(info: EInfo, hash?: string): void {
         this.view.cleanupIcons();
 
         switch (info) {
@@ -86,13 +86,13 @@ class UbirchVerification {
                 this.view.addHeadlineAndInfotext(undefined);
                 break;
             case EInfo.VERIFICATION_SUCCESSFUL:
-                this.view.showSeal(true);
+                this.view.showSeal(true, hash);
                 this.view.addHeadlineAndInfotext(true);
                 break;
         }
     }
 
-    private handleError(error: EError): void {
+    private handleError(error: EError, hash: string): void {
         let showNonSeal = true;
 
         if (error === EError.NO_ERROR) {
@@ -101,7 +101,7 @@ class UbirchVerification {
 
         if (showNonSeal) {
             this.view.cleanupIcons();
-            this.view.showSeal(false);
+            this.view.showSeal(false, hash);
             this.view.addHeadlineAndInfotext(false);
         }
 
@@ -118,15 +118,15 @@ class UbirchVerification {
             } else {
                 switch (this.status) {
                     case 200: {
-                        self.checkResponse(this.responseText);
+                        self.checkResponse(this.responseText, hash);
                         break;
                     }
                     case 404: {
-                        self.handleError(EError.CERTIFICATE_ID_CANNOT_BE_FOUND);
+                        self.handleError(EError.CERTIFICATE_ID_CANNOT_BE_FOUND, hash);
                         break;
                     }
                     default: {
-                        self.handleError(EError.UNKNOWN_ERROR);
+                        self.handleError(EError.UNKNOWN_ERROR, hash);
                         break;
                     }
                 }
@@ -138,7 +138,7 @@ class UbirchVerification {
         xhttp.send(hash);
     }
 
-    private checkResponse(result: string): void {
+    private checkResponse(result: string, hash: string): void {
         this.view.cleanupIcons();
         // Success IF
         // 1. HTTP Status 200 -> if this fkt is called and result isn't empty
@@ -163,7 +163,7 @@ class UbirchVerification {
             return;
         }
 
-        this.handleInfo(EInfo.VERIFICATION_SUCCESSFUL);
+        this.handleInfo(EInfo.VERIFICATION_SUCCESSFUL, hash);
 
         let blockchainTX = resultObj.anchors;
 
@@ -246,20 +246,6 @@ class View {
         this.resultOutput.innerHTML = error;
     }
 
-    public showInfo(info: EInfo): void {
-        this.cleanupIcons();
-
-        switch (info) {
-            case EInfo.PROCESSING_VERIFICATION_CALL:
-                this.addHeadlineAndInfotext(undefined);
-                break;
-            case EInfo.VERIFICATION_SUCCESSFUL:
-                this.showSeal(true);
-                this.addHeadlineAndInfotext(true);
-                break;
-        }
-    }
-
     public cleanupIcons(): void {
         // remove seal and transaction_check icons IF exist
         this.cleanAllChilds(this.resultOutput);
@@ -275,12 +261,23 @@ class View {
         }
     }
 
-    public showSeal(successful: boolean): void {
+    public showSeal(successful: boolean, hash: string): void {
+        const link: HTMLElement = document.createElement('a');
+        let icon: HTMLElement;
+
+        const encodedHash: string = encodeURIComponent(hash);
+
+        link.setAttribute('href', `${environment.console_verify_url}?hash=${encodedHash}`);
+        link.setAttribute('target', '_blank');
+
         if (successful) {
-            this.sealOutput.appendChild(this.createIconTag(environment.seal_icon_url, 'ubirch-verification-seal-img'));
+            icon = this.createIconTag(environment.seal_icon_url, 'ubirch-verification-seal-img');
         } else {
-            this.sealOutput.appendChild(this.createIconTag(environment.no_seal_icon_url, 'ubirch-verification-no-seal-img'));
+            icon = this.createIconTag(environment.no_seal_icon_url, 'ubirch-verification-no-seal-img');
         }
+
+        link.appendChild(icon);
+        this.sealOutput.appendChild(link);
     }
 
     public showSuccess(): void {
