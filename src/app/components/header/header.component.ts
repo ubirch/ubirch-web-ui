@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HeaderActionButton} from './header-action-button';
 import {UserService} from '../../services/user.service';
 import {ToastController} from '@ionic/angular';
+import {KeycloakService} from 'keycloak-angular';
 
 @Component({
   selector: 'ubirch-web-ui-header',
@@ -26,12 +27,26 @@ export class HeaderComponent implements OnInit {
 
   username: string;
 
+  isLoggedIn: boolean = false;
+
   constructor(
     private userService: UserService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private keycloakService: KeycloakService,
   ) { }
 
   ngOnInit() {
+    this.getUserData();
+  }
+  
+  private async getUserData() {
+    if (!await this.keycloakService.isLoggedIn()) {
+      this.isLoggedIn = false;
+      return;
+    }
+
+    this.isLoggedIn = true;
+
     this.userService.observableAccountInfo.subscribe(accountInfo => {
       if (accountInfo) {
         this.username = accountInfo.user.toString();
