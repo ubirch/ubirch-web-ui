@@ -1,6 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {take, switchMap} from 'rxjs/operators';
+import {take, switchMap, tap} from 'rxjs/operators';
 import {TrustService, VERIFICATION_STATE} from '../../services/trust.service';
 import {CytoscapeGraphService} from '../../services/cytoscape-graph.service';
 import { of } from 'rxjs';
@@ -32,6 +32,7 @@ export class VerificationPage implements OnInit, OnDestroy {
 
         this.truster.saveHash(hash);
         this.cytoService.resetAll();
+
         return this.truster.verifyByHash(hash);
       })
     ).subscribe();

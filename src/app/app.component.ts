@@ -19,7 +19,7 @@ export class AppComponent {
   public appPages$ = combineLatest(
     from(this.keycloackService.isLoggedIn()),
     this.userService.observableAccountInfo,
-  ).pipe(map(([isLogged, account]: [boolean, AccountInfo]) => {
+  ).pipe(map(([isLoggedIn, account]: [boolean, AccountInfo]) => {
     const items = [
       {
         title: 'Home',
@@ -54,7 +54,7 @@ export class AppComponent {
     ];
 
     return items.filter(link => {
-      if (!isLogged && link.authOnly) {
+      if (!isLoggedIn && link.authOnly) {
         return false;
       }
 

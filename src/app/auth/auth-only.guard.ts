@@ -15,7 +15,7 @@ export class AuthOnlyGuard extends KeycloakAuthGuard implements CanActivate {
     return new Promise(async (resolve, reject) => {
       if (!this.authenticated) {
         this.keycloakAngular.login();
-        return;
+        return reject(false);
       }
 
       return resolve(true);

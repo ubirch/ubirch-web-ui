@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
     private keycloakService: KeycloakService,
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.getUserData();
   }
   
