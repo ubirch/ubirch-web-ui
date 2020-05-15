@@ -66,6 +66,13 @@ Project is building into the `./dist` folder. The folder contains:
 
 Each widget demo page contains an instructions and example of using the widget.
 
+## Assets
+
+As widget will be used as external script, all the URLs it will add to the document will be handled relatively to the document.
+To avoid wrong image (and other possible assets) URLs, we need to specify an absolute path.
+
+For **Verification widget**, `assets_url_prefix` field and `@@UBIRCH_WIDGET_ASSETS_PREFIX@@` placeholder are responsible for it.
+
 ## Envirionments and configurations
 
 - widget could be configured through `environment.{{stage}}.ts` file, e.g. `./verification/environment.demo.ts`.
