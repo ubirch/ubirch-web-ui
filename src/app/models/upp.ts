@@ -5,6 +5,7 @@ import {CytoscapeNode} from './cytoscape-node';
 import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
 import {CytoscapeEdge} from './cytoscape-edge';
 import {CytoscapeNodeLayout} from './cytoscape-node-layout';
+import {TimestampNode} from './timestamp-node';
 
 export class Upp {
   private jsonInput: any;
@@ -69,6 +70,13 @@ export class Upp {
     return this._allNodes;
   }
 
+  public getNode(id: string): AnchorPathNode | BlockChainNode {
+    if (this._allNodesMap) {
+      return this._allNodesMap.get(id);
+    }
+    return undefined;
+  }
+
   public get allEdges(): CytoscapeEdge[] {
     if (!this._allEdges) {
       this.createEdges();
@@ -76,6 +84,27 @@ export class Upp {
     return this._allEdges;
   }
 
+  /**
+   * takes all arrays of the upp:
+   *    - upperPath
+   *    - lowerPath
+   *    - upperBlockChains
+   *    - lowerBlockChains
+   * and creates all required nodes from that data and put them into the _allNodesMap:
+   *    - if a hash doesn't exist, the node is put into a new bucket of the map
+   *    - if a hash already exists, the new nextHash value is added to the nextHashes of the corresponding node
+   * Every node has an indexInChain, which defines the position on the x axis of the node.
+   * In a first step the positions are positive and negative:
+   *    - the UPP has position 0
+   *    - the upper path has positions > 0
+   *    - the lower path has positions < 0
+   * (the position is calculated by index in array, an offset is needed and used to handle nodes that already exists in map)
+   * When all nodes are created, the minimum value of the positions is determined and all postions are shifted to be positive
+   * Blockchain nodes are treated special:
+   *     - an additional timestamp node is created, that displays the blockchain timestamp at the bottom line
+   *     - two parent nodes/areas are created for the list upper and lower blockchain anchors
+   *     - the parent nodes contain all blockchain nodes of that path and their corresponding timestamp nodes
+   */
   private createNodes() {
     if (!this.upp || !this.anchors) {
       this._allNodes = [];
@@ -85,30 +114,71 @@ export class Upp {
     this._allNodesMap = new Map<string, AnchorPathNode>();
 
     let pathEndIndex = this.addAnchorNodes(this.anchors.upperPath, 0);
-    this.addAnchorNodes(this.anchors.upperBlockChains, pathEndIndex);
-    pathEndIndex = this.addAnchorNodes(this.anchors.lowerPath, -1, -1);
-    this.addAnchorNodes(this.anchors.lowerBlockChains, pathEndIndex);
+    this.addAnchorNodes(this.anchors.upperBlockChains, pathEndIndex, 1, 0, 'upperBC');
+    pathEndIndex = this.addAnchorNodes(this.anchors.lowerPath, -1, -1,
+      this.anchors.lowerBlockChains ? this.anchors.lowerBlockChains.filter(node => node instanceof BlockChainNode).length - 1 : 0);
+    this.addAnchorNodes(this.anchors.lowerBlockChains, pathEndIndex, 1, 0, 'lowerBC');
 
-    const nodesArray = UbirchWebUIUtilsService.mapToArray(this._allNodesMap);
+    const nodesArray = this.shiftNodeIndexInChains(
+      UbirchWebUIUtilsService.mapToArray(this._allNodesMap));
     this._allNodes = nodesArray.map(node => new CytoscapeNode(node, this.layouter));
   }
 
-  private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1): number {
+  private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1, endIndexOffset = 0, groupId?: string): number {
     let currIndex = startAtIndex;
     let offset = 0;
-    // TODO: position index shouldn't be incremented back if node already exists
-    arr.forEach((node, index) => {
-      const foundNode = this._allNodesMap.get(node.hash);
-      if (foundNode && node.nextHash.length === 1) {
-        foundNode.addNextHash(node.nextHash[0]);
-        offset++;
-      } else {
-        currIndex = startAtIndex + ((index - offset) * direction);
-        node.indexInChain = currIndex;
-        this._allNodesMap.set(node.hash, node);
+    if (groupId !== undefined) {
+      if (!this._allNodesMap.get(groupId)) {
+        const parentNode = new AnchorPathNode({properties: {hash: groupId}});
+        this._allNodesMap.set(groupId, parentNode);
       }
+    }
+    arr.filter(node => node.type !== 'TIMESTAMP')
+      .forEach((node, index) => {
+        if (groupId !== undefined) {
+          node.parent = groupId;
+        }
+        const foundNode = this._allNodesMap.get(node.hash);
+        if (foundNode && node.nextHash.length === 1) {
+          foundNode.addNextHash(node.nextHash[0]);
+          offset++;
+        } else {
+          currIndex = startAtIndex + ((index - offset) * direction);
+          if (index === arr.length - 1) { // last element
+            currIndex += endIndexOffset * direction;
+          }
+          node.indexInChain = currIndex;
+          this._allNodesMap.set(node.hash, node);
+        }
     });
+    arr.filter(node => node.type === 'TIMESTAMP')
+      .forEach((node: TimestampNode) => {
+        if (groupId !== undefined) {
+          node.parent = groupId;
+        }
+        const foundNode = this._allNodesMap.get(node.refHash);
+        if (foundNode) {
+          node.indexInChain = foundNode.indexInChain;
+          this._allNodesMap.set(node.hash, node);
+        }
+      });
     return currIndex;
+  }
+
+  /**
+   * shifts the IndexInChains of every node to avoid negative indecees
+   * @param arr the Array of AnchorPathNodes to check
+   */
+  private shiftNodeIndexInChains(arr: AnchorPathNode[]): AnchorPathNode[] {
+    // find out the minimum index
+    const minIndex = arr.map(node => node.indexInChain).reduce((a, b) => Math.min(a, b));
+    if (minIndex < 0) {
+      return arr.map(node => {
+        node.indexInChain -= minIndex;
+        return node;
+      });
+    }
+    return arr;
   }
 
   private createEdges() {
@@ -144,7 +214,10 @@ export class Upp {
           data.forEach(path => target.push(new AnchorPathNode(path)));
           break;
         case('BlockChainNode'):
-          data.forEach(path => target.push(new BlockChainNode(path)));
+          data.forEach(path => {
+            target.push(new BlockChainNode(path));
+            target.push(new TimestampNode(path));
+          });
           break;
       }
     }

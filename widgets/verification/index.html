@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Example File</title>
+    <style>
+        .example {
+            padding: 10px;
+            border: 1px solid black;
+            margin-bottom: 10px;
+        }
+
+        #verification-widget {
+            padding: 10px;
+            border: 1px solid black;
+            margin-bottom: 10px;
+        }
+
+        .help {
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        .help li {
+            margin-bottom: 10px;
+        }
+
+        code {
+            background: lightgrey;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ubirch Verification Widget Example</h1>
+    <div class="example">
+        <button id="json-test">
+            Test JSON Verification
+        </button>
+        <button id="hash-test">
+            Test hash verification
+        </button>
+    </div>
+    <div id="verification-widget">
+
+    </div>
+    <div class="help">
+        <ol>
+            <li>
+                Add <code>verification.js</code> script to your page:
+                <div>
+                    <code>
+                        &lt;script src=&quot;{{Ubirch URL}}/verification.js&quot;&gt;&lt;/script&gt;
+                    </code>
+                </div>
+            </li>
+            <li>
+                Create an <code>UbirchVerification</code> instance:
+                <div>
+                    <pre><code>const ubirchVerification = new UbirchVerification({
+    algorithm: 'sha512',
+    elementSelector: '#verification-widget'
+});
+</code></pre>
+                </div>
+                Where:
+                <ul>
+                    <li>
+                        <code>algorithm</code> is hashing algorithm you need (possible values: <code>sha256</code>, <code>sha512</code> )
+                    </li>
+                    <li>
+                        <code>elementSelector</code> is widget's host element selector, e.g. <code>#verification-widget</code>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Call methods:
+                <ul>
+                    <li>
+                        <code>verifyJSON</code> if you need to verify JSON:
+                        <div>
+                            <pre><code>ubirchVerification.verifyJSON({{ your JSON }});</code></pre>
+                        </div>
+                    </li>
+                    <li>
+                        <code>verifyHash</code> if you need to verify JSON:
+                        <div>
+                            <pre><code>ubirchVerification.verifyHash({{ your hash }});</code></pre>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // create UbirchVerification instance
+            const ubirchVerification = new UbirchVerification({
+                algorithm: 'sha512',
+                elementSelector: '#verification-widget'
+            });
+
+            // test json
+            const json = `{
+                "AccPitch": -26.31168,
+                "AccRoll": 4.077355,
+                "AccX": -0.06433105,
+                "AccY": 0.4473877,
+                "AccZ": 0.9024658,
+                "H": 30.00693,
+                "L_blue": 13,
+                "L_red": 15,
+                "P": 80.5,
+                "T": 28.75,
+                "V": 4.71681
+            }`;
+
+            // test hash
+            const hash = '+LH0qsyoUWnob/7D0bF4yXa02N9Pu8t7l3lBjITQxRo3xhbXTLKzkJPg/RXtttVVkg9iHtngJXOHeTOX1ghN8w==';
+
+            // test JSON button click listener
+            document.getElementById('json-test').addEventListener('click', function() {
+                ubirchVerification.verifyJSON(json);
+            });
+            
+            // test hash button click listener
+            document.getElementById('hash-test').addEventListener('click', function() {
+                ubirchVerification.verifyHash(hash);
+            });
+        });
+    </script>
+</body>
+</html>

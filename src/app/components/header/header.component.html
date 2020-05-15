@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar padding-horizontal padding-top>
+  <ion-toolbar class="ion-padding-horizontal ion-padding-top">
     <ion-grid>
       <ion-row>
         <ion-col size="6">
@@ -10,7 +10,11 @@
         <ion-col size="6">
           <div class="ion-text-right">
             <ion-grid>
-              <ion-row class="ion-justify-content-end">
+              <ion-row
+                id="header-user-data-row"
+                class="ion-justify-content-end"
+                *ngIf="isLoggedIn"
+              >
                 <ion-col size="8" class="ion-align-items-center">
                   <ion-label  class="header-right-label">
                     Logged in as:
@@ -18,7 +22,7 @@
                   <span>{{username}}</span>
                 </ion-col>
               </ion-row>
-              <ion-row class="ion-justify-content-end"  *ngIf="headerRightValue">
+              <ion-row class="ion-justify-content-end max-content-height"  *ngIf="headerRightValue">
                 <ion-col size="8" class="ion-align-items-center">
                   <ion-label  class="header-right-label">
                     {{headerRightLabel}}
@@ -27,8 +31,6 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-
-
           </div>
         </ion-col>
       </ion-row>
@@ -51,15 +53,51 @@
           </div>
         </ion-col>
         <ion-col size="6">
-          <div class="ion-justify-content-end">
-            <ng-container *ngIf="addSearchBarWithPlaceholder">
-              <ion-searchbar color="light" debounce="500"
-                             [placeholder]="addSearchBarWithPlaceholder" (ionChange)="_startSearch($event)">
-              </ion-searchbar>
-            </ng-container>
-          </div>
+          <ng-container [ngTemplateOutlet]="SEARCH" *ngIf="!fullWidthSearch"></ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-end max-content-height"  *ngIf="headerFullWidthValue">
+        <ion-col size="12" class="ion-align-items-center">
+          <ion-label  class="header-right-label">
+            {{headerFullWidthLabel}}
+          </ion-label>
+          <span>{{headerFullWidthValue}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="fullWidthSearch">
+        <ion-col size="12">
+          <ng-container [ngTemplateOutlet]="SEARCH"></ng-container>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
 </ion-header>
+
+<ng-template #SEARCH>
+  <div class="ion-justify-content-end">
+    <ng-container *ngIf="addSearchBarWithPlaceholder">
+      <ng-container *ngIf="searchOnEnter; else SEARCH_ON_DEBOUNCE">
+        <ion-searchbar #SEARCHBAR
+                       color="light"
+                       [showCancelButton]="showSearchCancelButton"
+                       [placeholder]="addSearchBarWithPlaceholder"
+                       [value]="searchInput"
+                       (keyup.enter)="_startSearch($event)"
+                       debounce="500"
+                       (ionChange)="_saveSearchString($event)">
+        </ion-searchbar>
+      </ng-container>
+      <ng-template #SEARCH_ON_DEBOUNCE>
+        <ion-searchbar #SEARCHBAR
+                       color="light"
+                       [showCancelButton]="showSearchCancelButton"
+                       [placeholder]="addSearchBarWithPlaceholder"
+                       [value]="searchInput"
+                       debounce="500"
+                       (ionChange)="_startSearch($event)">
+        </ion-searchbar>
+      </ng-template>
+    </ng-container>
+  </div>
+</ng-template>
+

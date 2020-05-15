@@ -7,13 +7,17 @@ export const LAYOUT_SETTINGS = [
     nodeIcon: 'assets/app-icons/master-tree.png'},
   { type: 'PUBLIC_CHAIN',
     nodeIcon: 'https://live.staticflickr.com/2660/3715569167_7e978e8319_b.jpg'},
+  { type: 'TIMESTAMP',
+    nodeIcon: 'assets/app-icons/time_tick.png'},
   { type: 'iota',
     nodeIcon: 'assets/app-icons/IOTA_verify_right.png'},
   { type: 'ethereum',
     nodeIcon: 'assets/app-icons/Ethereum_verify_right.png'},
   { type: 'ethereum-classic',
-    nodeIcon: 'assets/app-icons/Ethereum-Classic_verify_right.png'}
-];
+    nodeIcon: 'assets/app-icons/Ethereum-Classic_verify_right.png'},
+  { type: 'regioit',
+    nodeIcon: 'assets/app-icons/GovDigital_Icon_verify_right.png'},
+  ];
 
 export class CytoscapeNodeLayout {
   public colorCode: string;

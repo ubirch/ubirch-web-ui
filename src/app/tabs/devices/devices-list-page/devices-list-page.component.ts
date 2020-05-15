@@ -1,8 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import {DeviceStub} from '../../../models/device-stub';
 import {DeviceService} from '../../../services/device.service';
-import {interval, of, Subscription} from 'rxjs';
-import {catchError, map, startWith, switchMap, tap} from 'rxjs/operators';
+import {interval, Subscription} from 'rxjs';
+import {startWith, switchMap, tap} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {LoadingController, ModalController, ToastController} from '@ionic/angular';
 import {NewDevicePopupComponent} from './popups/new-device-popup/new-device-popup.component';
@@ -61,7 +61,7 @@ export class DevicesListPage {
     }],
     ['err', {
       message: 'Error occurred',
-      duration: 4000,
+      duration: 10000,
       color: 'danger'
     }]
   ]);

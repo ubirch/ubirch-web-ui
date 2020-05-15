@@ -1,21 +1,23 @@
-import {Component, OnChanges, Renderer, ElementRef, Input, Output, EventEmitter} from '@angular/core';
-
-declare var cytoscape: any;
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer2} from '@angular/core';
+import {CytoscapeGraphService} from '../services/cytoscape-graph.service';
+import * as cytoscape from 'cytoscape';
+import * as automove from 'cytoscape-automove';
 
 @Component({
   selector: 'ng2-cytoscape',
   template: '<div id="cy"></div>',
   styles: [`#cy {
-        height: 100%;
-        width: 100%;
-        position: relative;
-        left: 0;
-        top: 0;
-    }`]
+      height: 100%;
+      width: 100%;
+      position: relative;
+      left: 0;
+      top: 0;
+  }`]
 })
 
 
 export class NgCytoComponent implements OnChanges {
+  private static pluginInitialized = false;
 
   @Input() public elements: any;
   @Input() public style: any;
@@ -24,7 +26,18 @@ export class NgCytoComponent implements OnChanges {
 
   @Output() select: EventEmitter<any> = new EventEmitter<any>();
 
-  public constructor(private renderer: Renderer, private el: ElementRef) {
+  public constructor(
+    private renderer: Renderer2,
+    private cytoService: CytoscapeGraphService,
+    private el: ElementRef
+  ) {
+    if (!NgCytoComponent.pluginInitialized) {
+      // extension should be registered one time only
+      // multiple registering will cause an error
+      cytoscape.use(automove);
+
+      NgCytoComponent.pluginInitialized = true;
+    }
 
     this.layout = this.layout || {
       name: 'grid',
@@ -41,19 +54,15 @@ export class NgCytoComponent implements OnChanges {
 
       .selector('node')
       .css({
-        'content': 'data(label)',
         'shape': 'data(shapeType)',
         'height': 50,
         'width': 50,
+        "text-valign": "bottom",
+        "text-halign": "center",
         'background-fit': 'cover',
         'border-width': 0,
         'background-image': 'data(nodeIcon)',
         'background-opacity': '0'
-      })
-      .selector(':selected')
-      .css({
-        'border-width': 1,
-        'border-color': 'black'
       })
       .selector('edge')
       .css({
@@ -64,21 +73,35 @@ export class NgCytoComponent implements OnChanges {
         'line-color': 'data(colorCode)',
         'source-arrow-color': 'data(colorCode)',
         'target-arrow-color': 'data(colorCode)',
-
+      })
+      .selector(':parent')
+      .css({
+        'background-color': '#10dc60',
+        'background-opacity': 0.1
       })
       .selector('edge.questionable')
       .css({
         'line-style': 'dotted',
         'target-arrow-shape': 'diamond'
       })
-      .selector('.faded')
+      .selector('node.UPP')
       .css({
-        'opacity': 0.25,
-        'text-opacity': 0
+        'content': 'data(label)',
+      })
+      .selector('node.PUBLIC_CHAIN')
+      .css({
+        'content': 'data(subType)',
+      })
+      .selector('node.TIMESTAMP')
+      .css({
+        'content': 'data(label)',
+        'height': 15,
+        'width': 15,
+        "text-wrap": "wrap"
       });
   }
 
-    public ngOnChanges(): any {
+  public ngOnChanges(): any {
     this.render();
     console.log(this.el.nativeElement);
   }
@@ -87,7 +110,7 @@ export class NgCytoComponent implements OnChanges {
     const cyContainer = this.renderer.selectRootElement('#cy');
     const localselect = this.select;
     const cy = cytoscape({
-      container : cyContainer,
+      container: cyContainer,
       layout: this.layout,
       minZoom: this.zoom.min,
       maxZoom: this.zoom.max,
@@ -95,21 +118,53 @@ export class NgCytoComponent implements OnChanges {
       elements: this.elements,
     });
 
+    let bcNodes: any[] = [];
+    let tsNodes: any[] = [];
+
+    if (this.elements && this.elements.nodes) {
+      bcNodes = this.elements.nodes.filter(node => node.classes === 'PUBLIC_CHAIN');
+      tsNodes = this.elements.nodes.filter(node => node.classes === 'TIMESTAMP');
+    }
+
+    bcNodes.forEach(bcNode => {
+      const nodeId = bcNode.data.id;
+      const tsId = 'timestamp_' + nodeId;
+      cy.automove({
+        nodesMatching: cy.getElementById(tsId),
+        reposition: 'drag',
+        dragWith: cy.getElementById(nodeId)
+      });
+    });
+
+    if (this.cytoService.currentZoomFactor) {
+      cy.zoom(this.cytoService.currentZoomFactor);
+    }
+    // else {
+    //   cy.fit();
+    // }
+    if (this.cytoService.currentPan) {
+      cy.pan(this.cytoService.currentPan);
+    }
+    // else {
+    //   cy.center();
+    // }
+
+    cy.on('zoom', zoomFactor => {
+      this.cytoService.currentZoomFactor = zoomFactor.target._private.zoom;
+    });
+
+    cy.on('pan', panPos => {
+      this.cytoService.currentPan = panPos.target._private.pan;
+    });
 
     cy.on('tap', 'node', e => {
       const node = e.target;
-      const neighborhood = node.neighborhood().add(node);
-
-      cy.elements().addClass('faded');
-      neighborhood.removeClass('faded');
-      localselect.emit(node.data('label'));
-    });
-
-    cy.on('tap', e => {
-      if (e.target === cy) {
-        cy.elements().removeClass('faded');
+      if (node.data('type') === 'PUBLIC_CHAIN') {
+        localselect.emit(node.data('id'));
       }
     });
+
+
   }
 
 }

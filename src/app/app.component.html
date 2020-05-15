@@ -1,6 +1,6 @@
 <ion-app>
-  <ion-split-pane>
-    <ion-menu type="overlay">
+  <ion-split-pane contentId="main-content">
+    <ion-menu type="overlay" contentId="main-content">
       <ion-header no-border>
           <ion-grid>
             <ion-row class="ion-justify-content-center ion-margin-top">
@@ -21,12 +21,12 @@
       </ion-header>
       <ion-content>
           <ion-list>
-              <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+              <ion-menu-toggle auto-hide="false" *ngFor="let p of (appPages$ | async)">
                   <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" routerLinkActive="active-menu-item" lines="none">
                       <ion-grid>
                           <ion-row class="ion-justify-content-center">
                               <ion-col size="8" class="ion-align-items-center">
-                                  <ion-icon src="{{'assets/app-icons/'+p.icon}}" float-start></ion-icon>
+                                  <ion-icon src="{{'assets/app-icons/'+p.icon}}" class="ion-float-start"></ion-icon>
                                   <ion-label class="ion-float-left">
                                       {{p.title}}
                                   </ion-label>
@@ -53,6 +53,6 @@
         </ion-item>
       </ion-footer>
     </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>

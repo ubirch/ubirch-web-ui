@@ -9,11 +9,84 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * add things state to deviceStubs and display state on things list
   * display state on things list as spark line
 - verification tree: add action
-  * open verification window when user clicks on blockchain node
   * check if hash is successfully anchored in blockchain: show different upp icons depending on if anchored or not
-  * display timestamp areas around upper and lower blockchain anchors
   * replace icons with designed ones
 
+
+## [0.5] - 2019-12-13
+
+### Added
+
+### Changed
+Verification Tree:
+    * Lower Blockchain Nodes doesn't Overlap Other Nodes any more (shifted lowest master tree node to the left)
+    * Timestamps are moved together with Blockchain Nodes
+
+### Removed
+
+## [0.4.9] - 2019-12-12
+
+### Added
+
+### Changed
+removed deprecated IONIC attributes
+
+### Removed
+
+## [0.4.8] - 2019-12-12
+
+### Added
+- keycloak
+    * added test setup to test prod keycloak on localhost
+
+### Changed
+- UX
+    * Searchbar in Header on full width
+    * Fixed problem with too long inputs into verification search bar (maximum height for verified hash set)
+    * start verify request when user presses Enter
+    * verified hash and search hash are still visible after tab change
+- Device Details:
+    * Fixed Bug: if device cannot be loaded, the device details from last loaded device has been displayed (is reset now)
+    * Handle error when device cannot be loaded -> user is routed back to things list and gets an error displayed
+
+### Removed
+
+## [0.4.7] - 2019-12-11
+
+### Added
+- Verification
+  * open blockchain explorer in separate tab when user clicks on blockchain node
+  * add timestamps to blockchain nodes (displayed at the bottom under the blockchain nodes)
+  * display coloed areas around upper and lower blockchain anchors
+- adapted documentation about realm creation for new tenant
+
+### Changed
+
+### Removed
+
+## [0.4.6] - 2019-12-05
+
+### Added
+
+### Changed
+- Verification
+    * cytoscape graph is now always rendered without fit and center
+    * BUT on changing between areas (home <-> verfication <-> things) zoom factor and pan position will be restored
+
+### Removed
+
+## [0.4.5] - 2019-11-29
+
+### Added
+- Verification
+    * added a text view which displays the respond in JSON format
+    * remember the inserted and verified hash -> after user switched between tabs (e.g. Verification <-> Home)
+     the inserted hash and loaded data is still there
+- get version number which is posted on console by app.component from package.json
+
+### Changed
+
+### Removed
 
 ## [0.4.4] - 2019-11-25
 

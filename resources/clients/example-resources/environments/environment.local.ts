@@ -4,6 +4,7 @@
 
 // Add here your keycloak setup infos
 import {KeycloakConfig} from 'keycloak-angular';
+import * as npm from '../../package.json';
 
 const keycloakConfig: KeycloakConfig = {
   url: 'http://localhost:8080/auth',
@@ -17,6 +18,8 @@ const keycloakConfig: KeycloakConfig = {
 export const environment = {
   production: false,
   envName: 'local',
+  debug: true,
+  version: npm.version,
   serverUrl: 'http://localhost:8081',
   apiPrefix: '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: '<KEYSERVICE_REST_API_SERVER_URI>',
@@ -33,7 +36,33 @@ export const environment = {
   default_device_type: 'default_type',
   POLLING_INTERVAL_MILLISECONDS: 60000,
   LIST_ITEMS_PER_PAGE: 10,
-  DATE_TIME_ZONE_FORMAT: 'dd.MM.yyyy, HH:mm:ss (zzz)'
+  DATE_TIME_ZONE_FORMAT: 'dd.MM.yyyy, HH:mm:ss (zzz)',
+  blockchain_transid_check_url: {
+    '<BLOCKCHAIN_ID>': {
+      testnet: {
+        url: '<BLOCKCHAIN_EXPLORER_URL_TESTNET>',
+        icon_url: '<BLOCKCHAIN_SUCCESS_ICON>'
+      },
+      mainnet: {
+        url: '<BLOCKCHAIN_EXPLORER_URL_MAINNET>',
+        icon_url: '<BLOCKCHAIN_SUCCESS_ICON>'
+      }
+    }
+  },
+  deviceImport: {
+    default: {
+      rowSizeBytes: 1640,
+      headerRowSizeBytes: 17,
+      maximumRowsCount: 100000,
+    }
+  },
+  deviceData: {
+    url: '@@UBIRCH_TR_GRAFANA_URL@@',
+    orgId: '@@UBIRCH_TR_GRAFANA_ORG_ID@@',
+    from: 'now-3h',
+    to: 'now',
+    panelMap: JSON.parse('@@UBIRCH_TR_GRAFANA_PANEL_MAP@@')
+  }
 };
 
 /*

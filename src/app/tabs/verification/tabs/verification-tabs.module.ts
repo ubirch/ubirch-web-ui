@@ -14,7 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'json',
+        redirectTo: 'graph',
         pathMatch: 'full',
       },
       {
@@ -29,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'tabs/json',
+    redirectTo: 'tabs/graph',
     pathMatch: 'full'
   }
 ];

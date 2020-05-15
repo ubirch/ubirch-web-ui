@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { VerificationGraphPage } from './verification-graph.page';
 
@@ -11,6 +12,7 @@ describe('VerificationGraphPage', () => {
     TestBed.configureTestingModule({
       declarations: [ VerificationGraphPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [HttpClientTestingModule],
     })
     .compileComponents();
   }));

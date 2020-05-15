@@ -33,14 +33,13 @@ describe('Service: TrustService', () => {
   });
 
   it('should verify an existing hash successfully', () => {
-    service.verifyByHash(this.existingHash).subscribe(verification => {
-      expect(verification.length).toBeGreaterThan(0);
-      expect(verification.seal).toBeDefined();
+    service.verifyByHash(existingHash).subscribe(verification => {
+      expect(verification).toBeTruthy();
     });
 
-    const req = httpMock.expectOne(`${service.API_URL}`);
+    const req = httpMock.expectOne(`${service.API_URL}record?response_form=anchors_with_path&blockchain_info=ext`);
     expect(req.request.method).toBe('POST');
-    req.flush(this.verificationSuccessful);
+    req.flush(verificationSuccessful);
   });
 
 });

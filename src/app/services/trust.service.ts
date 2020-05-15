@@ -4,6 +4,9 @@ import {HttpClient, HttpParams, HttpResponseBase} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Upp} from '../models/upp';
+import {VERIFY_RESULT} from '../../../testdata/verify-result';
+import {BlockChainNode} from '../models/block-chain-node';
+import {VERIFY_RESULT_2BCS} from '../../../testdata/verify-result-2bc-nodes';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -34,6 +37,13 @@ export class TrustService {
   public observableHash: Observable<string> = this.bsHash.asObservable();
 
   /**
+   * Observable of current verified hash
+   */
+  private currVerifiedHash: string;
+  private bsvHash = new BehaviorSubject<string>(this.currVerifiedHash);
+  public observableVerifiedHash: Observable<string> = this.bsvHash.asObservable();
+
+  /**
    * Observable state of verification of current hash
    */
   private currHashVerficiationState = VERIFICATION_STATE.NO_HASH;
@@ -48,26 +58,34 @@ export class TrustService {
   public observableUPP: Observable<Upp> = this.bsUPP.asObservable();
 
   constructor(
-      private http: HttpClient
-  ) { }
+    private http: HttpClient
+  ) {
+  }
 
-  public verifyByHash(vHash: string): Observable<boolean> {
+  public saveHash(vHash: string) {
+    if (vHash) {
+      this.bsHash.next(vHash);
+    } else {
+      this.bsHash.next(null);
+    }
+  }
+
+  public verifyByHash(vHash: string, update = true): Observable<boolean> {
+    // for debug purpose manually add following line in the environment settings:
+    //   debug: true,
+    if (environment.debug) {
+      return of(this.handleUppCreation(VERIFY_RESULT_2BCS, vHash, update));
+    }
+
     if (vHash && vHash.length > 0) {
       const url = this.API_URL + this.getRecord;
-      this.handleState(VERIFICATION_STATE.PENDING, vHash);
-      return this.http.post<any>(url, vHash, { params: this.withPathSuffix }).pipe(
-        map(jsonHashVerification => {
-            const upp = new Upp(jsonHashVerification);
-            upp.pureJSON = jsonHashVerification;
-            if (upp) {
-              return this.handleState(VERIFICATION_STATE.HASH_VERIFIED, vHash, upp);
-            } else {
-              return this.handleState(VERIFICATION_STATE.HASH_VERIFICATION_FAILED, vHash);
-            }
-          }
+      this.handleState(VERIFICATION_STATE.PENDING, update ? vHash : undefined);
+      return this.http.post<any>(url, vHash, {params: this.withPathSuffix}).pipe(
+        map(jsonHashVerification =>
+          this.handleUppCreation(jsonHashVerification, vHash, update)
         ),
         catchError(error => {
-          return of(this.handleError(error, vHash));
+          return of(this.handleError(error, update ? vHash : undefined));
         })
       );
     } else {
@@ -75,19 +93,56 @@ export class TrustService {
     }
   }
 
+  public getBlockchainExplorerUrl(bcNode: BlockChainNode): string {
+    let bcExplorerURLWithTxid: string;
+    if (bcNode) {
+      if (bcNode instanceof BlockChainNode) {
+        try {
+          const envVar = environment.blockchain_transid_check_url;
+          const bcSettings = envVar[bcNode.blockchain];
+          const bcSettingOfNetworkType = bcSettings[bcNode.networkType];
+          const bcExplUrl = bcSettingOfNetworkType.url;
+          bcExplorerURLWithTxid = bcExplUrl + bcNode.txid;
+          console.log('bcExplorerURL:' + bcExplorerURLWithTxid);
+        } catch (e) {
+          console.log('error!');
+        }
+      } else {
+        console.log('cannot open BlockchainExplorer: node for id is not instance of type BlockChainNode (no txid)');
+      }
+    } else {
+      console.log('cannot open BlockchainExplorer: node for id missing');
+    }
+    return bcExplorerURLWithTxid;
+  }
+
+  private handleUppCreation(jsonHashVerification: any, vHash: string, update: boolean): boolean {
+    const upp = new Upp(jsonHashVerification);
+    upp.pureJSON = jsonHashVerification;
+    if (upp) {
+      return this.handleState(VERIFICATION_STATE.HASH_VERIFIED, update ? vHash : undefined, upp);
+    } else {
+      return this.handleState(VERIFICATION_STATE.HASH_VERIFICATION_FAILED, update ? vHash : undefined);
+    }
+  }
+
   private handleState(state: string, hash?: string, upp?: Upp): boolean {
     this.bsHashVerifyState.next(state);
     if (hash) {
-      this.bsHash.next(hash);
+      this.bsvHash.next(hash);
     } else {
-      this.bsHash.next(null);
+      if (this.bsvHash.getValue() != null) {
+        this.bsvHash.next(null);
+      }
     }
     if (upp) {
       this.bsUPP.next(upp);
     } else {
-      this.bsUPP.next(null);
+      if (this.bsUPP.getValue() != null) {
+        this.bsUPP.next(null);
+      }
     }
-    switch (hash) {
+    switch (state) {
       case VERIFICATION_STATE.HASH_VERIFIED:
         return true;
       default:

@@ -42,9 +42,7 @@
             ],
             "scripts": [
               "node_modules/marked/lib/marked.js",
-              "node_modules/cytoscape/dist/cytoscape.min.js",
-              "node_modules/dagre/dist/dagre.min.js",
-              "node_modules/cytoscape-dagre/cytoscape-dagre.js"
+              "node_modules/cytoscape/dist/cytoscape.min.js"
             ]
           },
           "configurations": {
@@ -80,6 +78,14 @@
                 }
               ]
             },
+            "prodtest": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prodtest.ts"
+                }
+              ]
+            },
             "ci": {
               "progress": false
             }
@@ -96,6 +102,9 @@
             },
             "local": {
               "browserTarget": "app:build:local"
+            },
+            "prodtest": {
+              "browserTarget": "app:build:prodtest"
             },
             "ci": {
               "progress": false

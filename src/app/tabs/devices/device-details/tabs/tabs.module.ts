@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { TabsPage } from './tabs.page';
+import { DeviceDataResolverService } from 'src/app/resolvers/device-data-resolver.service';
 
 const routes: Routes = [
   {
@@ -14,8 +15,15 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'settings',
+        redirectTo: 'data',
         pathMatch: 'full',
+      },
+      {
+        path: 'data',
+        loadChildren: () => import('./device-data/device-data.module').then(m => m.DeviceDataPageModule),
+        resolve: {
+          device: DeviceDataResolverService
+        }
       },
       {
         path: 'settings',

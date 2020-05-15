@@ -1,9 +1,9 @@
-<ion-content padding-horizontal>
+<ion-content class="ion-padding-horizontal">
   <ion-grid>
     <ion-row class="ion-align-items-center ion-justify-content-end padding-row">
     </ion-row>
   </ion-grid>
-  <ion-card padding>
+  <ion-card class="ion-padding">
     <ion-card-header>Number of UPPs in the last..</ion-card-header>
     <ion-card-content>
 
@@ -15,7 +15,7 @@
         </ng-container>
       </ng-template>
 
-      <ion-item margin-bottom *ngFor="let stateName of deviceStateNames | keyvalue">
+      <ion-item class="ion-margin-bottom" *ngFor="let stateName of deviceStateNames | keyvalue">
         <ion-label slot="start">..{{stateName.value}}:</ion-label>
         <ion-badge slot="end" [color]="deviceStates.get(stateName.key).getStateColor()"
            *ngIf="deviceStates.get(stateName.key); else STATE_NOT_AVAILABLE">
