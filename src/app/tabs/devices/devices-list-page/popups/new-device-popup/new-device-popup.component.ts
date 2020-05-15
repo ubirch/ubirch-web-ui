@@ -5,6 +5,9 @@ import {ModalController, ToastController} from '@ionic/angular';
 import {environment} from '../../../../../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, skip } from 'rxjs/operators';
+import { ValidatorsService } from 'src/app/validators/validators.service';
+
+const ID_VALIDATORS = [Validators.required, Validators.pattern(/^ *\S{1,} *$/)];
 
 @Component({
   selector: 'app-new-device-popup',
@@ -38,7 +41,7 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
           inactiveControl = form.get('hwDeviceId');
         }
 
-        activeControl.setValidators([Validators.required]);
+        activeControl.setValidators(ID_VALIDATORS);
         inactiveControl.clearValidators();
 
         activeControl.updateValueAndValidity();
@@ -49,7 +52,8 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
   constructor(
       public modalCtrl: ModalController,
       private fb: FormBuilder,
-      public toastCtrl: ToastController
+      public toastCtrl: ToastController,
+      private validatorsService: ValidatorsService,
   ) { }
 
   toastrContent: Map<string, any> = new Map([
@@ -73,8 +77,8 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
     const currentIdType = this.currentIdType$.value;
 
     this.deviceDetailsForm = this.fb.group({
-      hwDeviceId: ['', currentIdType === EIDType.UUID ? Validators.required : null],
-      secondaryIndex: ['', currentIdType === EIDType.IMSI ? Validators.required : null],
+      hwDeviceId: ['', currentIdType === EIDType.UUID ? ID_VALIDATORS : null],
+      secondaryIndex: ['', currentIdType === EIDType.IMSI ? ID_VALIDATORS : null],
       description: [''],
       deviceType: [''],
       tags: [''],
@@ -170,6 +174,14 @@ export class CreateDevicesFormData {
   prefix?: string;
 
   constructor(props) {
+    if (props.hwDeviceId) {
+      props.hwDeviceId = (props.hwDeviceId as string).trim();
+    }
+
+    if (props.secondaryIndex) {
+      props.secondaryIndex = (props.secondaryIndex as string).trim();
+    }
+
     Object.assign(this, props);
     return this;
   }
