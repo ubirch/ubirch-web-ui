@@ -257,14 +257,6 @@ export class CreateDevicePayload {
   devices: Device[];
   
   constructor(props) {
-    // remove empty strings, nulls or undefineds
-    if (!props.tags) {
-      delete props.tags;
-    }
-    if (!props.prefix) {
-      delete props.prefix;
-    }
-
     Object.assign(this, props);
     return this;
   }
