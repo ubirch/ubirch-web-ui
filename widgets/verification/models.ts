@@ -51,6 +51,7 @@ export interface IUbirchVerificationEnvConfig {
     seal_icon_url: string;
     no_seal_icon_url: string;
     console_verify_url: string;
+    assets_url_prefix: string;
 }
 
 export interface IUbirchBlockhainTransidCheckUrlMap {

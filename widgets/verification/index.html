@@ -93,9 +93,10 @@
         </ol>
     </div>
     <script>
+        let ubirchVerification;
         document.addEventListener("DOMContentLoaded", function() {
             // create UbirchVerification instance
-            const ubirchVerification = new UbirchVerification({
+            ubirchVerification = new UbirchVerification({
                 algorithm: 'sha512',
                 elementSelector: '#verification-widget'
             });
