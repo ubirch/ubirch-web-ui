@@ -12,6 +12,11 @@
 
 ## NPM scripts
 
+Move to widgets directory and call npm install.
+Then execute one of the following calls from that directory.
+
+(see chapter "Toubleshooting" if you have any problems)
+
 ### Using with Webpack Dev Server
 
 Run
@@ -111,3 +116,10 @@ To remove a widget, you need:
 
 - remove widget folder
 - remove widget entry point and HTML file from `webpack.config.js`
+
+## Troubleshooting
+
+If you have any problems compiling or executing this widget, try to solve any problems in the main project first by:
+
+- calling npm install in the root directory
+- preparing the environment settings by calling ./run-local.sh (in bash/terminal)
