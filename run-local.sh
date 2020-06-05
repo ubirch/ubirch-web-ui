@@ -16,9 +16,19 @@ fi
 
 if [[ -z "$staging" ]]
 then
+    echo "create verification widget on default stage (dev)"
+    cd widgets || exit
+    npm run build:dev
+    cd ..
+
     echo "run app on default stage (dev)"
     ionic serve --port=9101
 else
+    echo "create verification widget on stage '$staging'"
+    cd widgets || exit
+    npm run build:$staging
+    cd ..
+
     echo "run app on stage '$staging'"
     ionic serve --port=9101 --configuration=$staging
 fi
