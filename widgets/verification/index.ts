@@ -10,7 +10,15 @@ import {
     IUbirchBlockchainNet
 } from './models';
 import environment from './environment.dev';
+
+// assets
 import './style.scss';
+import '../../src/assets/app-icons/Ethereum_verify_right.png';
+import '../../src/assets/app-icons/Ethereum-Classic_verify_right.png';
+import '../../src/assets/app-icons/IOTA_verify_right.png';
+import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
+import '../../src/assets/app-icons/ubirch_verify_right.png';
+import '../../src/assets/app-icons/ubirch_verify_wrong.png';
 
 const INFO_TEXTS = {
     PENDING: {
@@ -107,7 +115,7 @@ class UbirchVerification {
 
         logError(this.responseHandler.handleError(error));
     }
-    
+
     private sendVerificationRequest(hash: string): void {
         const xhttp: XMLHttpRequest = new XMLHttpRequest();
         const self = this;
@@ -252,7 +260,7 @@ class View {
         this.cleanAllChilds(this.sealOutput);
         this.cleanAllChilds(this.sealInfoText);
     }
-    
+
     private cleanAllChilds(element: HTMLElement): void {
         if (element) {
             while (element.firstChild) {
@@ -271,9 +279,9 @@ class View {
         link.setAttribute('target', '_blank');
 
         if (successful) {
-            icon = this.createIconTag(environment.seal_icon_url, 'ubirch-verification-seal-img');
+            icon = this.createIconTag(environment.assets_url_prefix + environment.seal_icon_url, 'ubirch-verification-seal-img');
         } else {
-            icon = this.createIconTag(environment.no_seal_icon_url, 'ubirch-verification-no-seal-img');
+            icon = this.createIconTag(environment.assets_url_prefix + environment.no_seal_icon_url, 'ubirch-verification-no-seal-img');
         }
 
         link.appendChild(icon);
@@ -318,11 +326,11 @@ class View {
 
         linkTag.setAttribute('title', titleStr);
         linkTag.setAttribute('target', '_blanc');
-    
+
         // if icon url is given add img, otherwise add text
         if (bloxTXData.icon_url) {
             let iconId = `blockchain_transid_check${index === undefined ? '' : '_' + index}`;
-            linkTag.appendChild(this.createIconTag(bloxTXData.icon_url, iconId));
+            linkTag.appendChild(this.createIconTag(environment.assets_url_prefix + bloxTXData.icon_url, iconId));
         } else {
             linkTag.innerHTML = titleStr;
         }

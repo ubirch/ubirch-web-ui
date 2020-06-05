@@ -12,6 +12,11 @@
 
 ## NPM scripts
 
+Move to widgets directory and call npm install.
+Then execute one of the following calls from that directory.
+
+(see chapter "Toubleshooting" if you have any problems)
+
 ### Using with Webpack Dev Server
 
 Run
@@ -66,6 +71,13 @@ Project is building into the `./dist` folder. The folder contains:
 
 Each widget demo page contains an instructions and example of using the widget.
 
+## Assets
+
+As widget will be used as external script, all the URLs it will add to the document will be handled relatively to the document.
+To avoid wrong image (and other possible assets) URLs, we need to specify an absolute path.
+
+For **Verification widget**, `assets_url_prefix` field and `@@UBIRCH_WIDGET_ASSETS_PREFIX@@` placeholder are responsible for it.
+
 ## Envirionments and configurations
 
 - widget could be configured through `environment.{{stage}}.ts` file, e.g. `./verification/environment.demo.ts`.
@@ -104,3 +116,10 @@ To remove a widget, you need:
 
 - remove widget folder
 - remove widget entry point and HTML file from `webpack.config.js`
+
+## Troubleshooting
+
+If you have any problems compiling or executing this widget, try to solve any problems in the main project first by:
+
+- calling npm install in the root directory
+- preparing the environment settings by calling ./run-local.sh (in bash/terminal)
