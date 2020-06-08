@@ -22,6 +22,12 @@ Then execute one of the following calls from that directory.
 Run
 
 ```
+npm run serve:local
+```
+
+or
+
+```
 npm run serve:dev
 ```
 
