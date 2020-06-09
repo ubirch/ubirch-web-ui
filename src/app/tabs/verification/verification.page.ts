@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {take, switchMap, tap} from 'rxjs/operators';
 import {TrustService, VERIFICATION_STATE} from '../../services/trust.service';
 import {CytoscapeGraphService} from '../../services/cytoscape-graph.service';
-import { of } from 'rxjs';
+import {of, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-verification',
@@ -15,6 +15,10 @@ export class VerificationPage implements OnInit, OnDestroy {
   public hash2Verify: string;
   public verifiedHash: string;
   public hashVerificationState: string;
+  private hashSubscr: Subscription;
+  private verifHashSubscr: Subscription;
+  private stateSubscr: Subscription;
+  private uppSubscr: Subscription;
 
   constructor(
     private truster: TrustService,
@@ -38,20 +42,29 @@ export class VerificationPage implements OnInit, OnDestroy {
     ).subscribe();
 
   ngOnInit() {
-    this.truster.observableHash.subscribe(hash => this.hash2Verify = hash );
-    this.truster.observableVerifiedHash.subscribe(hash => this.verifiedHash = hash );
-    this.truster.observableVerificationState.subscribe( state => this.hashVerificationState = state);
+    this.hashSubscr = this.truster.observableHash.subscribe(hash => this.hash2Verify = hash );
+    this.verifHashSubscr = this.truster.observableVerifiedHash.subscribe(hash => this.verifiedHash = hash );
+    this.stateSubscr = this.truster.observableVerificationState.subscribe(state => this.hashVerificationState = state );
     // H3nM/5NZda/UEQmJckQJvMBpDYjQfdPbPV6ufKQ6wjStJY/yArQ8wTf3/+wRmHBZsrxV+yTfCUhVsrT2xsMiyQ==
   }
 
   ngOnDestroy() {
     this.routeQueryParamsSubscription.unsubscribe();
+    if (this.hashSubscr) {
+      this.hashSubscr.unsubscribe();
+    }
+    if (this.verifHashSubscr) {
+      this.verifHashSubscr.unsubscribe();
+    }
+    if (this.stateSubscr) {
+      this.stateSubscr.unsubscribe();
+    }
   }
 
   private checkHash(event: any) {
     const hash = event.target.value;
     this.verifiedHash = hash ? hash.trim() : undefined;
-    this.truster.verifyByHash(this.verifiedHash).subscribe();
+    this.truster.verifyByHash(this.verifiedHash).subscribe().unsubscribe();
     this.cytoService.resetAll();
  }
 
