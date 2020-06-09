@@ -8,6 +8,7 @@
     "serve:dev": "webpack-dev-server --env.STAGE dev",
     "serve:demo": "webpack-dev-server --env.STAGE demo",
     "serve:prod": "webpack-dev-server --env.STAGE prod",
+    "build:local": "webpack --env.STAGE local",
     "build:dev": "webpack --env.STAGE dev",
     "build:demo": "webpack --env.STAGE demo",
     "build:prod": "webpack --env.STAGE prod"

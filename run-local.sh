@@ -16,9 +16,9 @@ fi
 
 if [[ -z "$staging" ]]
 then
-    echo "create verification widget on default stage (dev)"
+    echo "create verification widget on default stage (local)"
     cd widgets || exit
-    npm run build:dev
+    npm run build:local
     cd ..
 
     echo "run app on default stage (dev)"
