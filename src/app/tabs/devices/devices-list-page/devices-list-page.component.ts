@@ -18,7 +18,7 @@ import {DevicesListWrapper} from '../../../models/devices-list-wrapper';
   styleUrls: ['devices-list-page.component.scss']
 })
 export class DevicesListPage {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public deviceStubs: Array<DeviceStub> = [];
 
   polling = new Subscription();
