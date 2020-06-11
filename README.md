@@ -4,9 +4,9 @@ Web frontend for managing your ubirch devices
 
 ## Used Versions
 
-* [Angular: 7.2.2](https://angular.io/)
-* [Angular CLI: 7.3.8](https://cli.angular.io/)
-* [ionic/angular-toolkit: 1.5.1](https://ionicframework.com)
+* [Angular: 8.1.3](https://angular.io/)
+* [Angular CLI: 8.1.3](https://cli.angular.io/)
+* [ionic/angular-toolkit: 6.2.2](https://ionicframework.com)
 
 ## How to use it?
 
