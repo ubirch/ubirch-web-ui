@@ -24,18 +24,22 @@ RUN \
 # -----------------------------------------------------------------------------
 RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
 RUN apt-get install -qqy nodejs
-RUN npm install -g cordova && \
-  npm install -g ionic
+RUN npm install -g cordova ionic typescript
 
 # Copy files
-WORKDIR /usr/share/service
 COPY ${PROJECT_FILES} /usr/share/service
-RUN pwd && ls
 
-# Install node modules
+# build widgets project
+WORKDIR /usr/share/service/widgets
+RUN npm install
+RUN npm run build:dev
+RUN echo WIDGET IS BUILT, PROCEEDING TO MAIN PROJECT
+
+WORKDIR /usr/share/service
+RUN pwd && ls
 RUN npm install
 
-# make sure that the script can be executed
-RUN chmod +x /usr/share/service/run-local-docker.sh
+# Install node modules
+WORKDIR /usr/share/service
 
 CMD bash startup-prod.sh
