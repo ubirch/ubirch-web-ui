@@ -35,11 +35,11 @@ RUN npm install
 RUN npm run build:dev
 RUN echo WIDGET IS BUILT, PROCEEDING TO MAIN PROJECT
 
-WORKDIR /usr/share/service
-RUN pwd && ls
-RUN npm install
-
-# Install node modules
-WORKDIR /usr/share/service
-
-CMD bash startup-prod.sh
+#WORKDIR /usr/share/service
+#RUN pwd && ls
+#RUN npm install
+#
+## Install node modules
+#WORKDIR /usr/share/service
+#
+#CMD bash startup-prod.sh
