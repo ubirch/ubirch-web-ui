@@ -30,6 +30,7 @@ RUN npm install -g cordova ionic typescript
 WORKDIR /usr/share/service
 COPY ${PROJECT_FILES} /usr/share/service
 RUN pwd && ls
+RUN npm install
 
 # build widgets project
 WORKDIR /usr/share/service/widgets
@@ -39,9 +40,5 @@ RUN cp /usr/share/service/widgets/dist /usr/share/service/src/assets/widgets
 
 # Install node modules
 WORKDIR /usr/share/service
-RUN npm install
-
-# make sure that the script can be executed
-RUN chmod +x /usr/share/service/run-local-docker.sh
 
 CMD bash startup-prod.sh
