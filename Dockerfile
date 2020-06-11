@@ -28,13 +28,13 @@ RUN npm install -g cordova ionic typescript
 
 # Copy files
 COPY ${PROJECT_FILES} /usr/share/service
+WORKDIR /usr/share/service
 
 # prepare files
 RUN bash preprocess4client.sh "ubirch-default-realm"
 RUN mv src/environments/environment.prod.ts src/environments/environment.ts
 
 # Install main project first
-WORKDIR /usr/share/service
 RUN pwd && ls
 RUN npm install
 
