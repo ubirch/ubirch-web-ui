@@ -39,6 +39,7 @@ RUN npm run build:dev
 RUN cp /usr/share/service/widgets/dist /usr/share/service/src/assets/widgets
 
 # Install node modules
+WORKDIR /usr/share/service
 RUN npm install
 
 # make sure that the script can be executed
