@@ -32,6 +32,12 @@ WORKDIR /usr/share/service
 COPY ${PROJECT_FILES} /usr/share/service
 RUN pwd && ls
 
+# build widgets project
+WORKDIR /usr/share/service/widgets
+RUN npm install
+RUN npm run build:dev
+RUN cp /usr/share/service/widgets/dist /usr/share/service/src/assets/widgets
+
 # Install node modules
 RUN npm install
 
