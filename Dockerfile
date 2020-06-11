@@ -36,7 +36,7 @@ RUN npm install
 WORKDIR /usr/share/service/widgets
 RUN npm install
 RUN npm run build:dev
-RUN cp /usr/share/service/widgets/dist /usr/share/service/src/assets/widgets
+RUN cp -r /usr/share/service/widgets/dist /usr/share/service/src/assets/widgets
 
 # Install node modules
 WORKDIR /usr/share/service
