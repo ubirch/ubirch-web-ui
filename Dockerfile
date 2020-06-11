@@ -27,16 +27,17 @@ RUN apt-get install -qqy nodejs
 RUN npm install -g cordova ionic typescript
 
 # Copy files
-WORKDIR /usr/share/service
 COPY ${PROJECT_FILES} /usr/share/service
-RUN pwd && ls
-RUN npm install
 
 # build widgets project
 WORKDIR /usr/share/service/widgets
 RUN npm install
 RUN npm run build:dev
-RUN cp -r /usr/share/service/widgets/dist /usr/share/service/src/assets/widgets
+RUN echo WIDGET IS BUILT, PROCEEDING TO MAIN PROJECT
+
+WORKDIR /usr/share/service
+RUN pwd && ls
+RUN npm install
 
 # Install node modules
 WORKDIR /usr/share/service
