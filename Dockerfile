@@ -30,20 +30,8 @@ RUN npm install -g cordova ionic typescript
 COPY ${PROJECT_FILES} /usr/share/service
 WORKDIR /usr/share/service
 
-# prepare files
-RUN bash preprocess4client.sh "ubirch-default-realm"
-RUN mv src/environments/environment.prod.ts src/environments/environment.ts
-
 # Install main project first
 RUN pwd && ls
 RUN npm install
-
-# build widgets project
-WORKDIR /usr/share/service/widgets
-RUN npm install
-RUN npm run build:dev
-RUN echo WIDGET IS BUILT, PROCEEDING TO MAIN PROJECT
-
-WORKDIR /usr/share/service
 
 CMD bash startup-prod.sh
