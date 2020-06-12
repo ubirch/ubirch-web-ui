@@ -19,7 +19,7 @@ import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_wrong.png';
 
-const INFO_TEXTS = {
+const MESSAGE_STRINGS = {
   PENDING: {
     info: '...Verifikation wird durchgeführt....'
   },
@@ -30,6 +30,24 @@ const INFO_TEXTS = {
   FAIL: {
     headline: 'Verifikation fehlgeschlagen!',
     info: 'Zu den eingegebenen Daten gibt es keine Blockchain-Verankerung'
+  },
+  CERTIFICATE_DATA_MISSING: {
+    info: 'Zertifikatsdaten fehlen - bitte füllen Sie das Formular aus oder scannen Sie Ihren QR-Code!!!'
+  },
+  VERIFICATION_FAILED: {
+    info: 'Verifikation fehlgeschlagen!'
+  },
+  CERTIFICATE_ID_CANNOT_BE_FOUND: {
+    info: 'Zertifikat konnte nicht gefunden werden!!!!!'
+  },
+  VERIFICATION_FAILED_EMPTY_RESPONSE: {
+    info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel'
+  },
+  VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE: {
+    info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel'
+  },
+  UNKNOWN_ERROR: {
+    info: 'Problem!!! Ein unerwarteter Fehler ist aufgetreten....!'
   }
 };
 
@@ -53,6 +71,17 @@ class UbirchVerification {
     this.elementSelector = config.elementSelector;
 
     this.view = new View(this.elementSelector);
+  }
+
+  public setMessageString(key, info, headline?) {
+    if (!MESSAGE_STRINGS[key]) {
+      console.warn('Tried to set non existing message string with key ' + key);
+    } else {
+      MESSAGE_STRINGS[key].info = info;
+      if (headline) {
+        MESSAGE_STRINGS[key].headline = headline;
+      }
+    }
   }
 
   public createCertificate(labels, documentRef) {
@@ -242,17 +271,18 @@ class ResponseHandler {
   handleError(error: EError): string {
     switch (error) {
       case EError.CERTIFICATE_DATA_MISSING:
-        return 'Zertifikatsdaten fehlen - bitte füllen Sie das Formular aus oder scannen Sie Ihren QR-Code!!!';
+        return MESSAGE_STRINGS.CERTIFICATE_DATA_MISSING.info;
       case EError.VERIFICATION_FAILED:
-        return 'Verifikation fehlgeschlagen!';
+        return MESSAGE_STRINGS.VERIFICATION_FAILED.info;
       case EError.CERTIFICATE_ID_CANNOT_BE_FOUND:
-        return 'Zertifikat konnte nicht gefunden werden!!!!!';
+        return MESSAGE_STRINGS.CERTIFICATE_ID_CANNOT_BE_FOUND.info;
       case EError.VERIFICATION_FAILED_EMPTY_RESPONSE:
+        return MESSAGE_STRINGS.VERIFICATION_FAILED_EMPTY_RESPONSE.info;
       case EError.VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE:
-        return 'Verifikation fehlgeschlagen!! Zertifikat ist leer ider enthält kein Siegel';
+        return MESSAGE_STRINGS.VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE.info;
       case EError.UNKNOWN_ERROR:
       default:
-        return 'Problem!!! Ein unerwarteter Fehler ist aufgetreten....!';
+        return MESSAGE_STRINGS.UNKNOWN_ERROR.info;
     }
   }
 }
@@ -320,7 +350,7 @@ class View {
     this.errorOutput.innerHTML = '';
 
     this.resultOutput.appendChild(document.createElement('br'));
-    this.resultOutput.appendChild(this.createTxtTag(INFO_TEXTS.SUCCESS.info, 'ubirch-verification-success'));
+    this.resultOutput.appendChild(this.createTxtTag(MESSAGE_STRINGS.SUCCESS.info, 'ubirch-verification-success'));
     this.resultOutput.appendChild(document.createElement('br'));
   }
 
@@ -368,15 +398,15 @@ class View {
 
   public addHeadlineAndInfotext(successful: true | false | undefined): void {
     if (successful === undefined) {
-      this.resultOutput.appendChild(this.createTxtTag(INFO_TEXTS.PENDING.info, 'ubirch-verification-info'));
+      this.resultOutput.appendChild(this.createTxtTag(MESSAGE_STRINGS.PENDING.info, 'ubirch-verification-info'));
     } else {
       if (successful) {
-        this.sealInfoText.appendChild(this.createTxtTag(INFO_TEXTS.SUCCESS.headline,
+        this.sealInfoText.appendChild(this.createTxtTag(MESSAGE_STRINGS.SUCCESS.headline,
           'ubirch-verification-success ubirch-verification-headline'));
       } else {
-        this.sealInfoText.appendChild(this.createTxtTag(INFO_TEXTS.FAIL.headline,
+        this.sealInfoText.appendChild(this.createTxtTag(MESSAGE_STRINGS.FAIL.headline,
           'ubirch-verification-fail ubirch-verification-headline'));
-        this.resultOutput.appendChild(this.createTxtTag(INFO_TEXTS.FAIL.info,
+        this.resultOutput.appendChild(this.createTxtTag(MESSAGE_STRINGS.FAIL.info,
           'ubirch-verification-fail'));
       }
     }
