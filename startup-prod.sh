@@ -50,25 +50,9 @@ sed -i.bak "s%@@UBIRCH_TR_GRAFANA_ORG_ID@@%${UBIRCH_TR_GRAFANA_ORG_ID}%" src/env
 echo "Replacing variables UBIRCH_TR_GRAFANA_PANEL_MAP in src/environments/environment.ts"
 sed -i.bak "s%@@UBIRCH_TR_GRAFANA_PANEL_MAP@@%${UBIRCH_TR_GRAFANA_PANEL_MAP}%" src/environments/environment.ts
 
-# extract the stage from the SERVER_URL
-BUILD_STAGE=""
-# check which stage the server URL contains, e.g.
-# https://id.demo.ubirch.com/ will result in "demo".
-case "${UBIRCH_TR_ENV_SERVURL}" in
-	*dev*)
-		BUILD_STAGE="dev"
-		;;
-	*demo*)
-		BUILD_STAGE="demo"
-		;;
-	*prod*)
-		BUILD_STAGE="prod"
-		;;
-	*)
-		echo "Cannot detect stage [dev/demo/prod] in server URL for widget build process; aborting."
-		exit 1
-		;;
-esac
+# copy back the file, so it can be used by the widgets subproject
+cp src/environments/environment.ts src/environments/environment.prod.ts
+
 
 (
 	# build widgets subproject.
@@ -81,7 +65,7 @@ esac
 	# see, short of rewriting the entire thing.
 	cd widgets
 	npm install
-	npm run "build:${BUILD_STAGE}"
+	npm run "build:prod"
 )
 
 # Run the dev server in production, this will need to be
