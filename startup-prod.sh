@@ -51,7 +51,7 @@ echo "Replacing variables UBIRCH_TR_GRAFANA_PANEL_MAP in src/environments/enviro
 sed -i.bak "s%@@UBIRCH_TR_GRAFANA_PANEL_MAP@@%${UBIRCH_TR_GRAFANA_PANEL_MAP}%" src/environments/environment.ts
 
 # copy back the file, so it can be used by the widgets subproject
-cp src/environments/environment.ts src/environments/environment.prod.ts
+cp src/environments/environment.ts src/environments/environment.dev.ts
 
 
 (
@@ -65,7 +65,7 @@ cp src/environments/environment.ts src/environments/environment.prod.ts
 	# see, short of rewriting the entire thing.
 	cd widgets
 	npm install
-	npm run "build:prod"
+	npm run "build:dev"
 )
 
 # Run the dev server in production, this will need to be
