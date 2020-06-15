@@ -103,17 +103,7 @@
 
             // test json
             const json = `{
-                "AccPitch": -26.31168,
-                "AccRoll": 4.077355,
-                "AccX": -0.06433105,
-                "AccY": 0.4473877,
-                "AccZ": 0.9024658,
-                "H": 30.00693,
-                "L_blue": 13,
-                "L_red": 15,
-                "P": 80.5,
-                "T": 28.75,
-                "V": 4.71681
+                "pid":"9ceb5551-d006-4648-8cf7-c7b1a1ddccb1", "tid":"FGXC-CL11-KDKC-P9XC-74MM", "td":"2020-06-12", "tt":"11:00:00", "tr":"negativ"
             }`;
 
             // test hash
@@ -123,7 +113,7 @@
             document.getElementById('json-test').addEventListener('click', function() {
                 ubirchVerification.verifyJSON(json);
             });
-            
+
             // test hash button click listener
             document.getElementById('hash-test').addEventListener('click', function() {
                 ubirchVerification.verifyHash(hash);
