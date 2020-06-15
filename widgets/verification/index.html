@@ -17,6 +17,10 @@
             margin-bottom: 10px;
         }
 
+        #hash-input {
+          width: 800px;
+        }
+
         .help {
             padding: 10px;
             border: 1px solid black;
@@ -34,12 +38,28 @@
 <body>
     <h1>Ubirch Verification Widget Example</h1>
     <div class="example">
-        <button id="json-test">
-            Test JSON Verification
-        </button>
-        <button id="hash-test">
-            Test hash verification
-        </button>
+      <div class="input-field">
+        <label for="json-input">JSON:</label>
+        <textarea rows="10" cols="80" placeholder="" type="text" id="json-input">
+      </div>
+      <button id="insert-test-json">
+        Insert Test JSON
+      </button>
+      <button id="json-test">
+        Test JSON Verification
+      </button>
+    </div>
+    <div class="example">
+      <div class="input-field">
+        <label for="hash-input">JSON:</label>
+        <input placeholder="" type="text" id="hash-input">
+      </div>
+      <button id="insert-test-hash">
+        Insert Test hash
+      </button>
+      <button id="hash-test">
+          Test hash verification
+      </button>
     </div>
     <div id="verification-widget">
 
@@ -105,16 +125,26 @@
             const json = `{"pid":"9ceb5551-d006-4648-8cf7-c7b1a1ddccb1", "tid":"FGXC-CL11-KDKC-P9XC-74MM", "td":"2020-06-12", "tt":"11:00:00", "tr":"negativ"}`;
 
             // test hash
-            const hash = '+LH0qsyoUWnob/7D0bF4yXa02N9Pu8t7l3lBjITQxRo3xhbXTLKzkJPg/RXtttVVkg9iHtngJXOHeTOX1ghN8w==';
+            const hash = '06VMh9w0zBrfPMUmDpx2HSHYCi1EKYMRa3i5MdmaakOa9MQfgJiWMOvL2pwxWuHf4g685Nq9ymVag51craQ4fQ==';
 
-            // test JSON button click listener
-            document.getElementById('json-test').addEventListener('click', function() {
-                ubirchVerification.verifyJSON(json);
-            });
+          // insert JSON test data button click listener
+          document.getElementById('insert-test-json').addEventListener('click', function() {
+            document.getElementById('json-input').value = json;
+          });
 
-            // test hash button click listener
+          // test JSON button click listener
+          document.getElementById('json-test').addEventListener('click', function() {
+            ubirchVerification.verifyJSON(document.getElementById('json-input').value);
+          });
+
+          // insert hash test data button click listener
+          document.getElementById('insert-test-hash').addEventListener('click', function() {
+            document.getElementById('hash-input').value = hash;
+          });
+
+          // test hash button click listener
             document.getElementById('hash-test').addEventListener('click', function() {
-                ubirchVerification.verifyHash(hash);
+              ubirchVerification.verifyHash(document.getElementById('hash-input').value);
             });
         });
     </script>
