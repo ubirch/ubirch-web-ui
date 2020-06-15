@@ -3,7 +3,6 @@
 env
 
 bash preprocess4client.sh "${UBIRCH_TR_KC_REALM}"
-rm src/environments/environment.ts
 mv src/environments/environment.prod.ts src/environments/environment.ts
 
 echo "Replacing variables UBIRCH_KC_URL in src/environments/environment.ts"
@@ -51,4 +50,28 @@ sed -i.bak "s%@@UBIRCH_TR_GRAFANA_ORG_ID@@%${UBIRCH_TR_GRAFANA_ORG_ID}%" src/env
 echo "Replacing variables UBIRCH_TR_GRAFANA_PANEL_MAP in src/environments/environment.ts"
 sed -i.bak "s%@@UBIRCH_TR_GRAFANA_PANEL_MAP@@%${UBIRCH_TR_GRAFANA_PANEL_MAP}%" src/environments/environment.ts
 
+# copy back the file, so it can be used by the widgets subproject
+cp src/environments/environment.ts src/environments/environment.dev.ts
+
+
+(
+	# build widgets subproject.
+	# This needs to be done at runtime, since it depends on some
+	# variables only available at runtime. Additionally it depends
+	# on the main project being already configured, which happens
+	# at run time.
+	#
+	# This is a horrible design, but it is the only way I could
+	# see, short of rewriting the entire thing.
+	cd widgets
+	npm install
+	npm run "build:dev"
+)
+
+# Run the dev server in production, this will need to be
+# moved into a build step in the future, but for now the
+# build process depends on variables only available at
+# runtime, and thus must happen during runtime.
+# Since we are already building everytime the container is
+# restarted, we might also simply use the dev server.
 npm run-script prod
