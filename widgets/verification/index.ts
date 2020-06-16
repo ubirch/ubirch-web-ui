@@ -84,7 +84,7 @@ class UbirchVerification {
     }
   }
 
-  public createCertificate(labels, documentRef) {
+  public createJsonFromInputs(labels, documentRef) {
     let allParamsSet = true;
     labels.forEach(label => {
       if (!documentRef.getElementById(label) || !documentRef.getElementById(label).value) {
