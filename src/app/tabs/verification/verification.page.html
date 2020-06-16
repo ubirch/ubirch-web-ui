@@ -7,8 +7,7 @@
   [searchOnEnter]="true"
   showSearchCancelButton="focus"
   [fullWidthSearch]="true"
-  (startSearch)="checkHash($event)"
-  (searchString)="saveHash($event)"
+  (startSearch)="checkHashButtonClicked($event)"
 ></ubirch-web-ui-header>
 
 <ion-router-outlet></ion-router-outlet>

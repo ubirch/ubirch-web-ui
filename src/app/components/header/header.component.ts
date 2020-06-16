@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.getUserData();
   }
-  
+
   private async getUserData() {
     if (!await this.keycloakService.isLoggedIn()) {
       this.isLoggedIn = false;
