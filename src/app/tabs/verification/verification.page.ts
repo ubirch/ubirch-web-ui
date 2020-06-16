@@ -17,6 +17,7 @@ export class VerificationPage implements OnInit, OnDestroy {
   public hashVerificationState: string;
   private hashSubscr: Subscription;
   private verifHashSubscr: Subscription;
+  private checkHashSubscr: Subscription;
   private stateSubscr: Subscription;
   private uppSubscr: Subscription;
 
@@ -34,10 +35,7 @@ export class VerificationPage implements OnInit, OnDestroy {
           return of(null);
         }
 
-        this.truster.saveHash(hash);
-        this.cytoService.resetAll();
-
-        return this.truster.verifyByHash(hash);
+        return this.checkHash(hash);
       })
     ).subscribe();
 
@@ -59,19 +57,25 @@ export class VerificationPage implements OnInit, OnDestroy {
     if (this.stateSubscr) {
       this.stateSubscr.unsubscribe();
     }
+    if (this.checkHashSubscr) {
+      this.checkHashSubscr.unsubscribe();
+    }
+  }
+  public checkHashButtonClicked(event: any): void {
+    const hash = event.target.value;
+    if (this.checkHashSubscr) {
+      this.checkHashSubscr.unsubscribe();
+    }
+    this.checkHashSubscr = this.checkHash(hash).subscribe();
   }
 
-  private checkHash(event: any) {
-    const hash = event.target.value;
+  private checkHash(hash: string) {
     this.verifiedHash = hash ? hash.trim() : undefined;
-    this.truster.verifyByHash(this.verifiedHash).subscribe().unsubscribe();
-    this.cytoService.resetAll();
- }
 
-  private saveHash(event: any) {
-    const hash = event.target.value;
-    this.truster.saveHash(hash ? hash.trim() : undefined);
-  }
+    this.truster.saveHash(this.verifiedHash);
+    this.cytoService.resetAll();
+    return this.truster.verifyByHash(this.verifiedHash);
+ }
 
  public get headerRightLabel(): string {
     switch (this.hashVerificationState) {
