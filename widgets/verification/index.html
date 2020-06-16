@@ -45,13 +45,16 @@
       <button id="insert-test-json">
         Insert Test JSON
       </button>
+      <button id="hash-from-json">
+        get hash from JSON
+      </button>
       <button id="json-test">
         Test JSON Verification
       </button>
     </div>
     <div class="example">
       <div class="input-field">
-        <label for="hash-input">JSON:</label>
+        <label for="hash-input">hash:</label>
         <input placeholder="" type="text" id="hash-input">
       </div>
       <button id="insert-test-hash">
@@ -110,6 +113,18 @@
                     </li>
                 </ul>
             </li>
+          <li>
+            Helper methods:
+            <ul>
+              <li>
+                <code>createCertificate</code> to create the JSON from a couple of input fields
+                (id of input field has to be the name of the param in the JSON):
+                <div>
+                  <pre><code>ubirchVerification.createCertificate({{ array of input ids }}, {{ documentRef }});</code></pre>
+                </div>
+              </li>
+            </ul>
+          </li>
         </ol>
     </div>
     <script>
@@ -130,6 +145,12 @@
           // insert JSON test data button click listener
           document.getElementById('insert-test-json').addEventListener('click', function() {
             document.getElementById('json-input').value = json;
+          });
+
+          // get hash from JSON button click listener
+          document.getElementById('hash-from-json').addEventListener('click', function() {
+            const genHash = ubirchVerification.createHash(document.getElementById('json-input').value);
+            document.getElementById('hash-input').value = genHash;
           });
 
           // test JSON button click listener

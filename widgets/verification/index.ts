@@ -118,20 +118,7 @@ class UbirchVerification {
     this.sendVerificationRequest(hash);
   }
 
-  private getInputStr(inputId, documentRef) {
-    if (documentRef.getElementById(inputId) +
-      documentRef.getElementById(inputId).value) {
-      const doc = new
-      DOMParser().parseFromString(documentRef.getElementById(inputId).value,
-        'text/html');
-      return doc.documentElement.textContent;
-    } else {
-      console.warn('Missing documentElement with id ' + inputId);
-      return '';
-    }
-  }
-
-  private createHash(json: string): string {
+  public createHash(json: string): string {
     let transIdAB: ArrayBuffer;
 
     switch (this.algorithm) {
@@ -148,6 +135,19 @@ class UbirchVerification {
     const transId: string = btoa(new Uint8Array(transIdAB).reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
     return transId;
+  }
+
+  private getInputStr(inputId, documentRef) {
+    if (documentRef.getElementById(inputId) +
+      documentRef.getElementById(inputId).value) {
+      const doc = new
+      DOMParser().parseFromString(documentRef.getElementById(inputId).value,
+        'text/html');
+      return doc.documentElement.textContent;
+    } else {
+      console.warn('Missing documentElement with id ' + inputId);
+      return '';
+    }
   }
 
   private handleInfo(info: EInfo, hash?: string): void {
