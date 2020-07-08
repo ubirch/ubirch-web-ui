@@ -3,7 +3,7 @@ export type UbirchHashAlgorithm = 'sha256' | 'sha512';
 export enum EInfo {
     PROCESSING_VERIFICATION_CALL = 1,
     VERIFICATION_SUCCESSFUL = 2
-};
+}
 
 export enum EError {
     NO_ERROR = 0,
@@ -16,8 +16,13 @@ export enum EError {
 }
 
 export interface IUbirchVerificationConfig {
-    algorithm: UbirchHashAlgorithm;
-    elementSelector: string;
+  algorithm: UbirchHashAlgorithm;
+  elementSelector: string;
+}
+
+export interface IUbirchFormVerificationConfig extends IUbirchVerificationConfig {
+  formIds: string[];
+  missingFieldErrorMessages: string[];
 }
 
 export interface IUbirchVerificationResponse {
@@ -27,8 +32,8 @@ export interface IUbirchVerificationResponse {
 }
 
 export interface IUbirchVerificationAnchor {
-    label: string;
-    properties: any;
+  label: string;
+  properties: any;
 }
 
 export interface IUbirchVerificationAnchorProperties {

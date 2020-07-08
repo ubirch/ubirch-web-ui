@@ -3,7 +3,7 @@ import {sha512} from 'js-sha512';
 import {
   EError,
   EInfo,
-  IUbirchBlockchainNet,
+  IUbirchBlockchainNet, IUbirchFormVerificationConfig,
   IUbirchVerificationAnchorProperties,
   IUbirchVerificationConfig,
   IUbirchVerificationResponse,
@@ -18,6 +18,7 @@ import '../../src/assets/app-icons/IOTA_verify_right.png';
 import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_wrong.png';
+import {runTest} from 'tslint/lib/test';
 
 const MESSAGE_STRINGS = {
   PENDING: {
@@ -54,6 +55,12 @@ const MESSAGE_STRINGS = {
 const DEFAULT_CONFIG: IUbirchVerificationConfig = {
   algorithm: 'sha512',
   elementSelector: null
+};
+const DEFAULT_FORM_CONFIG: IUbirchFormVerificationConfig = {
+  algorithm: 'sha512',
+  elementSelector: null,
+  formIds: ['created', 'name', 'workshop'],
+  missingFieldErrorMessages: ['Please insert creation date', 'Please insert name', 'Please insert workshop']
 };
 
 class UbirchVerification {
@@ -267,6 +274,94 @@ class UbirchVerification {
   }
 }
 
+/**
+ * special class for widget which is filled by a form
+ */
+class UbirchFormVerification extends UbirchVerification {
+  private formIds: string[];
+  private missingFieldErrorMessages: string[];
+
+  constructor(config: IUbirchFormVerificationConfig = DEFAULT_FORM_CONFIG) {
+    super(config);
+    if (!config.formIds) {
+      throw new Error('Please, provide a string array with param ids');
+    }
+    this.formIds = config.formIds;
+    if (!config.missingFieldErrorMessages || config.missingFieldErrorMessages.length < config.formIds.length) {
+      throw new Error('Please, provide an error message for each formId ' +
+        '- will be displayed if form is not filled completely when user tries to verify');
+    }
+    this.missingFieldErrorMessages = config.missingFieldErrorMessages;
+  }
+
+  /**
+   * get params of form fields as string from fragment OR - if no fragment set - from query of url
+   * @param windowRef Reference to window
+   */
+  public getFormParamsFromUrl(windowRef): string {
+    const hash = windowRef.location.hash;
+    if (hash) {
+      return hash.slice(1);
+    }
+    const query = window.location.search;
+    if (query.length > 0) {
+      return query.substr(1);
+    }
+
+    return undefined;
+  }
+
+  /**
+   * put params into form fields
+   * @param dataP string that contains field params in a form like:
+   *    pid=9ceb5551-d006-4648-8cf7-c7b1a1ddccb1&tid=FGXC-CL11-KDKC-P9XC-74MM&td=2020-06-12&tt=11:00:00&tr=negativ
+   * @param documentRef Reference to document
+   */
+  public setDataIntoForm(dataP, documentRef) {
+    const allParams = dataP.split('&').map( (value: string) => {
+      const data = value.split('=');
+      return {
+        key : data[0],
+        value : decodeURIComponent(data[1])
+      };
+    });
+    allParams.forEach(param => {
+      if (param.key && documentRef.getElementById(param.key) && documentRef.getElementById(param.key) !== null) {
+        documentRef.getElementById(param.key).value = param.value;
+      }
+    });
+  }
+
+  /**
+   * Creates JSON certificate from form fields if form is filled completely
+   * @param documentRef Reference to document
+   */
+  public getJsonFromInputs(documentRef): string {
+    let formFilled = true;
+
+    this.formIds.forEach((formId, index) =>
+      formFilled = formFilled && this.check(formId, this.missingFieldErrorMessages[index], documentRef)
+    );
+    if (formFilled) {
+      // helper to generate correct JSON from input fields
+      // attention: ids of input fields have to be same as field names in anchored JSON
+      const genJson = this.createJsonFromInputs( this.formIds, documentRef);
+      return genJson;
+    }
+  }
+
+  // helper to check that ubirchVerification instance is initialized and required input field are set
+  private check(elemId, errorMessage, documentRef) {
+    if (documentRef.getElementById(elemId).value !== undefined &&
+      documentRef.getElementById(elemId).value !== '') {
+      return true;
+    } else {
+      alert(errorMessage);
+    }
+  }
+
+}
+
 class ResponseHandler {
   handleError(error: EError): string {
     switch (error) {
@@ -446,3 +541,4 @@ function logError(errorStr: string): void {
 }
 
 window['UbirchVerification'] = UbirchVerification;
+window['UbirchFormVerification'] = UbirchFormVerification;
