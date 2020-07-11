@@ -70,7 +70,8 @@ export class DeviceSettingsPage implements OnInit {
     this.deviceDetailsForm = this.fb.group({
       hwDeviceId: [''],
       description: [''],
-      apiConfig: ['']
+      apiConfig: [''],
+      claimingTags: ['']
     });
     this.patchForm();
 
@@ -92,7 +93,8 @@ export class DeviceSettingsPage implements OnInit {
       hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
       description: device && device.description ? device.description : '',
       apiConfig: device && device.apiConfig && device.apiConfig.length > 0 ?
-          this.getPrettyJSON(device.apiConfig) : undefined
+          this.getPrettyJSON(device.apiConfig) : undefined,
+      deviceTags: device && device.claimingTags ? device.claimingTags : ''
     };
     return val;
   }
