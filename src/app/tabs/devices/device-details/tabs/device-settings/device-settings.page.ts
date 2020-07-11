@@ -94,7 +94,7 @@ export class DeviceSettingsPage implements OnInit {
       description: device && device.description ? device.description : '',
       apiConfig: device && device.apiConfig && device.apiConfig.length > 0 ?
           this.getPrettyJSON(device.apiConfig) : undefined,
-      deviceTags: device && device.claimingTags ? device.claimingTags : ''
+      claimingTags: device && device.claimingTags ? device.claimingTags : ''
     };
     return val;
   }
