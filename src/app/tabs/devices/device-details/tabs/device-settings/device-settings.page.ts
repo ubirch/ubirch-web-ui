@@ -80,6 +80,7 @@ export class DeviceSettingsPage implements OnInit {
               loadedDevice =>  {
                 this.loadedDevice = loadedDevice;
                 if (this.loadedDevice) {
+                  console.log('this.deviceDetailsForm: ' + this.deviceDetailsForm);
                   this.deviceDetailsForm.patchValue(this.patchForm(this.loadedDevice));
                   this.deviceHasUnsavedChanges = false;
                   this.watchFormControls();
@@ -94,7 +95,7 @@ export class DeviceSettingsPage implements OnInit {
       description: device && device.description ? device.description : '',
       apiConfig: device && device.apiConfig && device.apiConfig.length > 0 ?
           this.getPrettyJSON(device.apiConfig) : undefined,
-      deviceTags: device && device.claimingTags ? device.claimingTags : ''
+      claimingTags: device && device.claimingTags ? device.claimingTags.join(', ') : ''
     };
     return val;
   }
