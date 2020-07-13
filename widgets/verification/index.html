@@ -40,7 +40,7 @@
     <div class="example">
       <div class="input-field">
         <label for="json-input">JSON:</label>
-        <textarea rows="10" cols="80" placeholder="" type="text" id="json-input">
+        <textarea rows="10" cols="80" placeholder="" type="text" id="json-input"></textarea>
       </div>
       <button id="insert-test-json">
         Insert Test JSON
@@ -63,6 +63,11 @@
       <button id="hash-test">
           Test hash verification
       </button>
+      Hash Algorythm:
+      <input type="radio" id="sha256" name="hashalgo" value="sha256" onchange="changeHashAlgo(this);">
+      <label for="sha256">sha265</label>
+      <input type="radio" id="sha512" name="hashalgo" value="sha512" onchange="changeHashAlgo(this);" checked>
+      <label for="sha512">sha512</label>
     </div>
     <div id="verification-widget">
 
@@ -129,10 +134,15 @@
     </div>
     <script>
         let ubirchVerification;
+        const hashAlgo = {
+          sha256: 'sha256',
+          sha512: 'sha512'
+        };
+        let selectedHashAlgo = hashAlgo.sha512;
         document.addEventListener("DOMContentLoaded", function() {
             // create UbirchVerification instance
             ubirchVerification = new UbirchVerification({
-                algorithm: 'sha512',
+                algorithm: selectedHashAlgo,
                 elementSelector: '#verification-widget'
             });
 
@@ -168,6 +178,11 @@
               ubirchVerification.verifyHash(document.getElementById('hash-input').value);
             });
         });
+      function changeHashAlgo(elem) {
+        console.log(elem.value);
+        selectedHashAlgo = hashAlgo[elem.value];
+        ubirchVerification.algorithm = selectedHashAlgo;
+      }
     </script>
 </body>
 </html>
