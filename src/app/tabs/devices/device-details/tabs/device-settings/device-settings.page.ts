@@ -70,7 +70,8 @@ export class DeviceSettingsPage implements OnInit {
     this.deviceDetailsForm = this.fb.group({
       hwDeviceId: [''],
       description: [''],
-      apiConfig: ['']
+      apiConfig: [''],
+      claimingTags: ['']
     });
     this.patchForm();
 
@@ -79,6 +80,7 @@ export class DeviceSettingsPage implements OnInit {
               loadedDevice =>  {
                 this.loadedDevice = loadedDevice;
                 if (this.loadedDevice) {
+                  console.log('this.deviceDetailsForm: ' + this.deviceDetailsForm);
                   this.deviceDetailsForm.patchValue(this.patchForm(this.loadedDevice));
                   this.deviceHasUnsavedChanges = false;
                   this.watchFormControls();
@@ -92,7 +94,8 @@ export class DeviceSettingsPage implements OnInit {
       hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
       description: device && device.description ? device.description : '',
       apiConfig: device && device.apiConfig && device.apiConfig.length > 0 ?
-          this.getPrettyJSON(device.apiConfig) : undefined
+          this.getPrettyJSON(device.apiConfig) : undefined,
+      claimingTags: device && device.claimingTags ? device.claimingTags.join(', ') : ''
     };
     return val;
   }
