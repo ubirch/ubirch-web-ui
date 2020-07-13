@@ -22,7 +22,6 @@ export interface IUbirchVerificationConfig {
 
 export interface IUbirchFormVerificationConfig extends IUbirchVerificationConfig {
   formIds: string[];
-  missingFieldErrorMessages: string[];
 }
 
 export interface IUbirchVerificationResponse {
@@ -72,4 +71,9 @@ export interface IUbirchBlockhainTransidCheckUrl {
 export interface IUbirchBlockchainNet {
     url: string;
     icon_url: string;
+}
+
+export interface IUbirchFormError {
+  msg: string;
+  missingIds: string[];
 }

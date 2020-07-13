@@ -3,7 +3,9 @@ import {sha512} from 'js-sha512';
 import {
   EError,
   EInfo,
-  IUbirchBlockchainNet, IUbirchFormVerificationConfig,
+  IUbirchBlockchainNet,
+  IUbirchFormVerificationConfig,
+  IUbirchFormError,
   IUbirchVerificationAnchorProperties,
   IUbirchVerificationConfig,
   IUbirchVerificationResponse,
@@ -60,7 +62,6 @@ const DEFAULT_FORM_CONFIG: IUbirchFormVerificationConfig = {
   algorithm: 'sha512',
   elementSelector: null,
   formIds: ['created', 'name', 'workshop'],
-  missingFieldErrorMessages: ['Please insert creation date', 'Please insert name', 'Please insert workshop']
 };
 
 class UbirchVerification {
@@ -91,29 +92,6 @@ class UbirchVerification {
     }
   }
 
-  public createJsonFromInputs(labels, documentRef) {
-    let allParamsSet = true;
-    labels.forEach(label => {
-      if (!documentRef.getElementById(label) || !documentRef.getElementById(label).value) {
-        allParamsSet = false;
-      }
-    });
-    if (!allParamsSet) {
-      return undefined;
-    }
-
-    let certJson = '{';
-    labels.forEach((label, index) => {
-      certJson += index > 0 ? ',' : '';
-      certJson += '"' + label + '":"' + this.getInputStr(label, documentRef) + '"';
-    });
-    certJson += '}';
-
-    console.log('certificate: ' + certJson);
-
-    return certJson;
-  }
-
   public verifyJSON(json: string): void {
     const formattedJSON = this.formatJSON(json);
     const hash = this.createHash(formattedJSON);
@@ -142,19 +120,6 @@ class UbirchVerification {
     const transId: string = btoa(new Uint8Array(transIdAB).reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
     return transId;
-  }
-
-  private getInputStr(inputId, documentRef) {
-    if (documentRef.getElementById(inputId) +
-      documentRef.getElementById(inputId).value) {
-      const doc = new
-      DOMParser().parseFromString(documentRef.getElementById(inputId).value,
-        'text/html');
-      return doc.documentElement.textContent;
-    } else {
-      console.warn('Missing documentElement with id ' + inputId);
-      return '';
-    }
   }
 
   private handleInfo(info: EInfo, hash?: string): void {
@@ -279,7 +244,6 @@ class UbirchVerification {
  */
 class UbirchFormVerification extends UbirchVerification {
   private formIds: string[];
-  private missingFieldErrorMessages: string[];
 
   constructor(config: IUbirchFormVerificationConfig = DEFAULT_FORM_CONFIG) {
     super(config);
@@ -287,11 +251,6 @@ class UbirchFormVerification extends UbirchVerification {
       throw new Error('Please, provide a string array with param ids');
     }
     this.formIds = config.formIds;
-    if (!config.missingFieldErrorMessages || config.missingFieldErrorMessages.length < config.formIds.length) {
-      throw new Error('Please, provide an error message for each formId ' +
-        '- will be displayed if form is not filled completely when user tries to verify');
-    }
-    this.missingFieldErrorMessages = config.missingFieldErrorMessages;
   }
 
   /**
@@ -337,12 +296,20 @@ class UbirchFormVerification extends UbirchVerification {
    * @param documentRef Reference to document
    */
   public getJsonFromInputs(documentRef): string {
-    let formFilled = true;
+    const formFilled = [];
 
-    this.formIds.forEach((formId, index) =>
-      formFilled = formFilled && this.check(formId, this.missingFieldErrorMessages[index], documentRef)
-    );
-    if (formFilled) {
+    this.formIds.forEach((formId, index) => {
+      if (!this.check(index, documentRef)) {
+        formFilled.push(formId);
+      }
+    });
+    if (formFilled.length > 0) {
+      const err: IUbirchFormError = {
+        msg: 'form fields not set',
+        missingIds: formFilled
+      };
+      throw err;
+    } else {
       // helper to generate correct JSON from input fields
       // attention: ids of input fields have to be same as field names in anchored JSON
       const genJson = this.createJsonFromInputs( this.formIds, documentRef);
@@ -350,14 +317,52 @@ class UbirchFormVerification extends UbirchVerification {
     }
   }
 
-  // helper to check that ubirchVerification instance is initialized and required input field are set
-  private check(elemId, errorMessage, documentRef) {
-    if (documentRef.getElementById(elemId).value !== undefined &&
-      documentRef.getElementById(elemId).value !== '') {
-      return true;
-    } else {
-      alert(errorMessage);
+  public createJsonFromInputs(labels, documentRef) {
+    let allParamsSet = true;
+    labels.forEach(label => {
+      if (!documentRef.getElementById(label) || !documentRef.getElementById(label).value) {
+        allParamsSet = false;
+      }
+    });
+    if (!allParamsSet) {
+      return undefined;
     }
+
+    let certJson = '{';
+    labels.forEach((label, index) => {
+      certJson += index > 0 ? ',' : '';
+      certJson += '"' + label + '":"' + this.getInputStr(label, documentRef) + '"';
+    });
+    certJson += '}';
+
+    console.log('certificate: ' + certJson);
+
+    return certJson;
+  }
+
+  private getInputStr(inputId, documentRef) {
+    if (documentRef.getElementById(inputId) +
+      documentRef.getElementById(inputId).value) {
+      const doc = new
+      DOMParser().parseFromString(documentRef.getElementById(inputId).value,
+        'text/html');
+      return doc.documentElement.textContent;
+    } else {
+      console.warn('Missing documentElement with id ' + inputId);
+      return '';
+    }
+  }
+
+  // helper to check that ubirchVerification instance is initialized and required input field are set
+  private check(index, documentRef) {
+    if (this.formIds && this.formIds.length > index) {
+      const elemId = this.formIds[index];
+      if (documentRef.getElementById(elemId).value !== undefined &&
+        documentRef.getElementById(elemId).value !== '') {
+        return true;
+      }
+    }
+    return false;
   }
 
 }
