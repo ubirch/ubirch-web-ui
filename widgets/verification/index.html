@@ -48,6 +48,11 @@
       <button id="hash-from-json">
         get hash from JSON
       </button>
+      Hash Algorythm:
+      <input type="radio" id="sha256" name="hashalgo" value="sha256" onchange="changeHashAlgo(this);">
+      <label for="sha256">sha256</label>
+      <input type="radio" id="sha512" name="hashalgo" value="sha512" onchange="changeHashAlgo(this);" checked>
+      <label for="sha512">sha512</label>
       <button id="json-test">
         Test JSON Verification
       </button>
@@ -63,11 +68,6 @@
       <button id="hash-test">
           Test hash verification
       </button>
-      Hash Algorythm:
-      <input type="radio" id="sha256" name="hashalgo" value="sha256" onchange="changeHashAlgo(this);">
-      <label for="sha256">sha256</label>
-      <input type="radio" id="sha512" name="hashalgo" value="sha512" onchange="changeHashAlgo(this);" checked>
-      <label for="sha512">sha512</label>
     </div>
     <div id="verification-widget">
 
