@@ -6,6 +6,7 @@ import {environment} from '../../../../../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, skip } from 'rxjs/operators';
 import { ValidatorsService } from 'src/app/validators/validators.service';
+import {DeviceService} from '../../../../../services/device.service';
 
 const ID_VALIDATORS = [Validators.required, Validators.pattern(/^ *\S{1,} *$/)];
 
@@ -93,6 +94,7 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
 
   async createDevice() {
     const details = this.deviceDetailsForm.getRawValue();
+
     const currentIdType = this.currentIdType$.value;
 
     if (currentIdType === EIDType.UUID) {
@@ -170,7 +172,7 @@ export class CreateDevicesFormData {
   secondaryIndex?: string;
   description: string;
   deviceType: string;
-  tags?: string;
+  tags?: string[];
   prefix?: string;
 
   constructor(props) {
@@ -181,6 +183,9 @@ export class CreateDevicesFormData {
     if (props.secondaryIndex) {
       props.secondaryIndex = (props.secondaryIndex as string).trim();
     }
+
+    const tagList = props.tags ? DeviceService.nxgChipObjToStringArray(props.tags) : [];
+    props.tags = tagList;
 
     Object.assign(this, props);
     return this;
