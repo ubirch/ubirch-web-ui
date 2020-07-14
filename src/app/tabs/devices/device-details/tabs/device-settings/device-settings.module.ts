@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { TagInputModule } from 'ngx-chips';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -20,6 +21,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    TagInputModule,
     RouterModule.forChild(routes)
   ],
   declarations: [DeviceSettingsPage]

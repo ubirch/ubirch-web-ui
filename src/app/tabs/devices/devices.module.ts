@@ -12,41 +12,43 @@ import {NewDevicePopupComponent} from './devices-list-page/popups/new-device-pop
 import {ConfirmDeleteDevicePopupComponent} from './devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {CreatedDevicesListPopupComponent} from './devices-list-page/popups/created-devices-list-popup/created-devices-list-popup.component';
 import { DeviceDetailsResolverService } from 'src/app/resolvers/device-details-resolver.service';
+import {TagInputModule} from 'ngx-chips';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonicModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    MarkdownModule.forChild(),
-    RouterModule.forChild([
-      {
-        path: '',
-        redirectTo: 'list',
-        pathMatch: 'full'
-      },
-      {
-        path: 'list',
-        component: DevicesListPage
-      },
-      {
-        path: 'details',
-        children: [
-          {
-            path: ':id',
-            loadChildren: () => import('./device-details/device-details.module').then(m => m.DeviceDetailsPageModule),
-            resolve: {
-              device: DeviceDetailsResolverService
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        IonicModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        MarkdownModule.forChild(),
+        RouterModule.forChild([
+            {
+                path: '',
+                redirectTo: 'list',
+                pathMatch: 'full'
+            },
+            {
+                path: 'list',
+                component: DevicesListPage
+            },
+            {
+                path: 'details',
+                children: [
+                    {
+                        path: ':id',
+                        loadChildren: () => import('./device-details/device-details.module').then(m => m.DeviceDetailsPageModule),
+                        resolve: {
+                            device: DeviceDetailsResolverService
+                        }
+                    }
+                ]
             }
-          }
-        ]
-      }
-    ]),
-    ComponentsModule
-  ],
+        ]),
+        ComponentsModule,
+        TagInputModule
+    ],
   declarations: [
     DevicesListPage,
     NewDevicePopupComponent,

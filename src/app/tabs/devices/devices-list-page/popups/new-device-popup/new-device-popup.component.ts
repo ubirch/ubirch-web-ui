@@ -91,18 +91,6 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
     this.currentIdSubscription.unsubscribe();
   }
 
-  private patchFormValue(device?: Device): any {
-    const val = {
-      hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
-      secondaryIndex: device && device.secondaryIndex ? device.secondaryIndex : '',
-      description: device && device.description ? device.description : '',
-      deviceType: environment.default_device_type,
-      tags: '',
-      prefix: '',
-    };
-    return val;
-  }
-
   async createDevice() {
     const details = this.deviceDetailsForm.getRawValue();
     const currentIdType = this.currentIdType$.value;
@@ -117,7 +105,7 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
 
     if (details) {
       this.modalCtrl.dismiss(
-          new CreateDevicesFormData(details)
+        new CreateDevicesFormData(details)
       );
     } else {
       this.finished('err', 'No device data entered');
@@ -135,14 +123,6 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Select current ID type
-   * @param type 
-   */
-  private switchType(type: EIDType) {
-    this.currentIdType$.next(type);
-  }
-
-  /**
    * Set current ID type as UUID (hardware device identifier)
    */
   switchToUuid() {
@@ -155,12 +135,32 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
   switchToImsi() {
     this.switchType(EIDType.IMSI);
   }
+
+  /**
+   * Select current ID type
+   * @param type new selected type
+   */
+  private switchType(type: EIDType) {
+    this.currentIdType$.next(type);
+  }
+
+  private patchFormValue(device?: Device): any {
+    const val = {
+      hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
+      secondaryIndex: device && device.secondaryIndex ? device.secondaryIndex : '',
+      description: device && device.description ? device.description : '',
+      deviceType: environment.default_device_type,
+      tags: '',
+      prefix: '',
+    };
+    return val;
+  }
 }
 
 export enum EIDType {
   UUID = 'UUID',
   IMSI = 'IMSI',
-};
+}
 
 export type ReqType = 'creation' | 'claim';
 

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Device} from '../../../../../models/device';
 import {Router} from '@angular/router';
 import {DeviceService} from '../../../../../services/device.service';
 import {ModalController, ToastController} from '@ionic/angular';
+// tslint:disable-next-line:max-line-length
 import {ConfirmDeleteDevicePopupComponent} from '../../../devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 
 @Component({
@@ -14,7 +15,6 @@ import {ConfirmDeleteDevicePopupComponent} from '../../../devices-list-page/popu
 export class DeviceSettingsPage implements OnInit {
 
   deviceDetailsForm: FormGroup;
-  private deviceHasUnsavedChanges = false;
   loadedDevice: Device;
 
   toastrContent: Map<string, any> = new Map([
@@ -44,14 +44,16 @@ export class DeviceSettingsPage implements OnInit {
       color: 'danger'
     }]
   ]);
+  private deviceHasUnsavedChanges = false;
 
   constructor(
-      private fb: FormBuilder,
-      private deviceService: DeviceService,
-      public toastCtrl: ToastController,
-      public router: Router,
-      private modalCtrl: ModalController
-  ) { }
+    private fb: FormBuilder,
+    private deviceService: DeviceService,
+    public toastCtrl: ToastController,
+    public router: Router,
+    private modalCtrl: ModalController
+  ) {
+  }
 
   async finished(param: string, details?: string) {
     const content = this.toastrContent.get(param);
@@ -70,34 +72,22 @@ export class DeviceSettingsPage implements OnInit {
     this.deviceDetailsForm = this.fb.group({
       hwDeviceId: [''],
       description: [''],
-      apiConfig: [''],
-      claimingTags: ['']
+      claimingTags: [[]],
+      apiConfig: ['']
     });
     this.patchForm();
 
     this.deviceService.observableCurrentDevice
-          .subscribe(
-              loadedDevice =>  {
-                this.loadedDevice = loadedDevice;
-                if (this.loadedDevice) {
-                  console.log('this.deviceDetailsForm: ' + this.deviceDetailsForm);
-                  this.deviceDetailsForm.patchValue(this.patchForm(this.loadedDevice));
-                  this.deviceHasUnsavedChanges = false;
-                  this.watchFormControls();
-                }
-              }
-          );
-  }
-
-  private patchForm(device?: Device): any {
-    const val = {
-      hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
-      description: device && device.description ? device.description : '',
-      apiConfig: device && device.apiConfig && device.apiConfig.length > 0 ?
-          this.getPrettyJSON(device.apiConfig) : undefined,
-      claimingTags: device && device.claimingTags ? device.claimingTags.join(', ') : ''
-    };
-    return val;
+      .subscribe(
+        loadedDevice => {
+          this.loadedDevice = loadedDevice;
+          if (this.loadedDevice) {
+            this.deviceDetailsForm.patchValue(this.patchForm(this.loadedDevice));
+            this.deviceHasUnsavedChanges = false;
+            this.watchFormControls();
+          }
+        }
+      );
   }
 
   watchFormControls(): void {
@@ -108,12 +98,12 @@ export class DeviceSettingsPage implements OnInit {
 
   saveDevice() {
     this.deviceService.updateDevice(this.loadedDevice.patchDevice(this.deviceDetailsForm.value)).subscribe(
-        updatedDevice => {
-          this.loadedDevice = new Device(updatedDevice);
-          this.patchForm(this.loadedDevice);
-          this.finished('save');
-          this.deviceHasUnsavedChanges = false;
-        }
+      updatedDevice => {
+        this.loadedDevice = new Device(updatedDevice);
+        this.patchForm(this.loadedDevice);
+        this.finished('save');
+        this.deviceHasUnsavedChanges = false;
+      }
     );
   }
 
@@ -127,15 +117,15 @@ export class DeviceSettingsPage implements OnInit {
     modal.onDidDismiss().then((detail: any) => {
       if (detail !== null && detail.data && detail.data.confirmed) {
         this.deviceService.deleteDevice(
-            this.loadedDevice.hwDeviceId)
-            .subscribe(
-                _ => {
-                  this.navigate2DevicesList();
-                  this.finished('del');
-                },
-                err => this.finished(
-                    'err',
-                    err.toString()));
+          this.loadedDevice.hwDeviceId)
+          .subscribe(
+            _ => {
+              this.navigate2DevicesList();
+              this.finished('del');
+            },
+            err => this.finished(
+              'err',
+              err.toString()));
       } else {
         this.finished('cancl_del');
       }
@@ -146,6 +136,17 @@ export class DeviceSettingsPage implements OnInit {
   discardChanges() {
     this.finished('cancl_save');
     this.patchForm(this.loadedDevice);
+  }
+
+  private patchForm(device?: Device): any {
+    const val = {
+      hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
+      description: device && device.description ? device.description : '',
+      claimingTags: device && device.claimingTags ? device.claimingTags : [],
+      apiConfig: device && device.apiConfig && device.apiConfig.length > 0 ?
+        this.getPrettyJSON(device.apiConfig) : undefined
+    };
+    return val;
   }
 
   private getPrettyJSON(json: string): string {

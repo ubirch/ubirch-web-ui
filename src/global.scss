@@ -133,3 +133,53 @@ ion-tab-button.tab-selected {
   --background: var(--ion-color-dark) !important;
   --color-selected: var(--ion-color-light);
 }
+
+.overlay-hidden.sc-ion-modal-md-h {
+  display: none
+}
+
+@media only screen and (min-width: 768px) and (min-height: 600px) {
+  .sc-ion-modal-md-h {
+    --width: 600px;
+    --height: 500px;
+    --ion-safe-area-top: 0px;
+    --ion-safe-area-bottom: 0px;
+    --ion-safe-area-right: 0px;
+    --ion-safe-area-left: 0px
+  }
+}
+
+@media only screen and (min-width: 1024px) and (min-height: 1024px) {
+  .sc-ion-modal-md-h {
+    --width: 800px;
+    --height: 800px
+  }
+}
+
+@media only screen and (min-width: 768px) and (min-height: 768px) {
+  .sc-ion-modal-md-h {
+    --width: 600px;
+    --height: 600px
+  }
+}
+
+@media only screen and (min-width: 768px) and (min-height: 768px) {
+  .sc-ion-modal-md-h {
+    --width: 600px;
+    --height: 600px
+  }
+}
+
+@media only screen and (min-width: 768px) and (min-height: 600px) {
+  .sc-ion-modal-md-h {
+    --border-radius: 2px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4)
+  }
+}
+
+.modal-wrapper.sc-ion-modal-md {
+  -webkit-transform: translate3d(0, 40px, 0);
+  transform: translate3d(0, 40px, 0);
+  opacity: .01;
+  height: 700px;
+}
