@@ -19,11 +19,11 @@ describe('DeviceService', () => {
   const hwDeviceId = deviceIds.join(', ');
   const description = 'Lorem ipsum dolor sit amet';
   const deviceType = environment.default_device_type;
-  const tags = 'Lorem, ipsum, dolor, sit, amet';
+  const tags = ['Lorem', 'ipsum', 'dolor', 'sit', 'amet'];
   const prefix = 'prefix';
 
   const formData = new CreateDevicesFormData({ reqType, hwDeviceId, description, deviceType, tags, prefix });
-  const devicesArray = deviceIds.map(hwDeviceId => new Device({ ...formData, hwDeviceId }));
+  const devicesArray = deviceIds.map(hwDId => new Device({ ...formData, hwDId }));
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -99,6 +99,7 @@ describe('DeviceService', () => {
       .subscribe(result => {
         expect(result)
           .toEqual(
+            // tslint:disable-next-line:max-line-length
             `Error Code: ${httpError.status}\nMessage: Http failure response for ${service.devicesCreateUrl}: ${httpError.status} ${httpError.statusText}`
           );
       });
