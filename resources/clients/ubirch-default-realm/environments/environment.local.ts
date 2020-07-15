@@ -90,6 +90,7 @@ export const environment = {
     panelMap: {
       pysense: 1,
       pytrack: 2,
+      testkit: 3,
     }
   }
 };
