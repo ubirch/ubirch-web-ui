@@ -276,7 +276,7 @@ class UbirchFormVerification extends UbirchVerification {
    *    pid=9ceb5551-d006-4648-8cf7-c7b1a1ddccb1&tid=FGXC-CL11-KDKC-P9XC-74MM&td=2020-06-12&tt=11:00:00&tr=negativ
    * @param documentRef Reference to document
    * @param separatorP optional param to define paramString separator e.g. when params are read from fragment;
-   * the whole string is search in the paramStr, so you can e.g. define "%SEP%" as the separator between params;
+   * the whole string is searched in the paramStr, so you can e.g. define "%SEP%" as the separator between params;
    * default is "&" which is the normal separator for query params
    */
   public setDataIntoForm(dataP, documentRef, separatorP?) {
