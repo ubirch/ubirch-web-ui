@@ -17,8 +17,9 @@ export class Device {
   public claimingTags: string[];
 
   constructor(jsonDevice: any, ownerNeeded?: boolean) {
-    if (!jsonDevice || !jsonDevice.hwDeviceId) {
-      throw new Error(`device constructor call without proper device data: ${jsonDevice}`);
+    if (!jsonDevice || (!jsonDevice.hwDeviceId && !jsonDevice.secondaryIndex)) {
+      throw new Error(
+        `device constructor call without proper device data: must have set one of hwDeviceId and secondaryIndex: ${jsonDevice}`);
     }
     if (ownerNeeded !== undefined && (jsonDevice.owner === undefined && jsonDevice.ownerId === undefined)) {
       throw new Error(`device constructor called, ownerNeeded but no owner given: ${jsonDevice}`);
