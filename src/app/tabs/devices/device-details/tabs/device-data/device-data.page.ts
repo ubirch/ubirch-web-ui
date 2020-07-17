@@ -34,8 +34,8 @@ export class DeviceDataPage implements OnInit {
       return device && (device.hwDeviceId === this.uuid || device.secondaryIndex === this.uuid);
     }),
     map(device => {
-      const tag = this.deviceService.getAllowedCaimingTagsOfDevice(device);
-      const panelId = this.panelMap[ tag && tag.length > 0 ? tag[0] : ''];
+      const tag = this.deviceService.getAllowedCaimingTagsOfDevice(device) || '';
+      const panelId = this.panelMap[ tag ];
 
       const url = this.url +
         `?orgId=${this.orgId}` +

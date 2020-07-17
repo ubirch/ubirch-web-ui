@@ -228,12 +228,12 @@ export class DeviceService {
    * returns a list of all allowed tags of that device, set by environment param deviceData.panelMap
    * @param device to be checked
    */
-  public getAllowedCaimingTagsOfDevice(device: BEDevice): string[] {
+  public getAllowedCaimingTagsOfDevice(device: BEDevice): string {
     let allowedTags;
     if (device.attributes && device.attributes.claiming_tags) {
-      allowedTags = device.attributes.claiming_tags.find(tag => {
-        return environment.deviceData.panelMap[tag];
-      });
+      allowedTags = device.attributes.claiming_tags.find(tag =>
+        environment.deviceData.panelMap[tag] !== undefined
+      );
     }
     return allowedTags;
   }
