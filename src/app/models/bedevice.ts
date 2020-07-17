@@ -1,5 +1,6 @@
 import {User} from './user';
 import {Group} from './group';
+import {DeviceService} from '../services/device.service';
 
 export class BEDevice {
   public id: string;
@@ -35,6 +36,10 @@ export class BEDevice {
         this.hwDeviceId = '';
       }
     }
+    if (this.attributes && this.attributes.claiming_tags) {
+      this.attributes.claiming_tags = DeviceService.createClaimingTagsFromFormData(this.attributes.claiming_tags);
+    }
+
     return this;
   }
 }

@@ -199,14 +199,13 @@ export class DeviceService {
    * @param data form data, containing several device properties
    */
   public updateDeviceFromData(data: FormGroup): Observable<BEDevice> {
-    if (data && data.value) {
-      const device = new BEDevice(data.value);
+    if (data) {
+      const device = new BEDevice(data);
       if (device && (device.hwDeviceId || device.secondaryIndex)) {
         return this.updateDevice(device);
-      } else {
-        return of(null);
       }
     }
+    throwError(new Error('tried to update device without data'));
   }
 
   public updateDevice(device: BEDevice): Observable<BEDevice> {
@@ -218,8 +217,11 @@ export class DeviceService {
         this.behaviorSubject.next(respDevice);
         return respDevice;
       }),
-      catchError(_ => of(null)));
-
+    catchError(err =>
+      throwError(new Error('Cannot update device' +
+        device.hwDeviceId ? ' with hwDeviceId ' + device.hwDeviceId :
+          device.secondaryIndex ? ' with secondaryIndex ' + device.secondaryIndex : ': no id set'))
+    ));
   }
 
   /**

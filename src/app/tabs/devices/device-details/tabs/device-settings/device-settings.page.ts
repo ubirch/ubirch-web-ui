@@ -73,7 +73,7 @@ export class DeviceSettingsPage implements OnInit {
   ngOnInit() {
     this.deviceAttributesForm = this.fb.group({
       apiConfig: [''],
-      claimingTags: [[]],
+      claiming_tags: [[]],
     });
     this.deviceDetailsForm = this.fb.group({
       hwDeviceId: [''],
@@ -101,7 +101,7 @@ export class DeviceSettingsPage implements OnInit {
     });
   }
 
-  saveDevice() {
+  async saveDevice() {
     const details = this.deviceDetailsForm.getRawValue();
 
     this.deviceService.updateDeviceFromData(details).subscribe(
@@ -110,6 +110,9 @@ export class DeviceSettingsPage implements OnInit {
         this.patchForm(this.loadedDevice);
         this.finished('save');
         this.deviceHasUnsavedChanges = false;
+      },
+      async (error: Error) => {
+        this.finished('err', error.message);
       }
     );
   }
@@ -150,7 +153,7 @@ export class DeviceSettingsPage implements OnInit {
       hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
       description: device && device.description ? device.description : '',
       attributes: {
-        claimingTags: device && device.attributes && device.attributes.claiming_tags ?
+        claiming_tags: device && device.attributes && device.attributes.claiming_tags ?
           device.attributes.claiming_tags : [],
         apiConfig: device && device.attributes && device.attributes.apiConfig && device.attributes.apiConfig.length > 0 ?
           this.getPrettyJSON(device.attributes.apiConfig[0]) : undefined
