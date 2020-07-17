@@ -18,15 +18,17 @@
           <ion-label slot="start">description:</ion-label>
           <ion-input formControlName="description"></ion-input>
         </ion-item>
-        <ion-item class="ion-margin-bottom">
-          <ion-label slot="start">tags:</ion-label>
-          <tag-input formControlName="claimingTags" placeholder="Add tags for this device"></tag-input>
-        </ion-item>
-        <ion-item>
-          <ion-label slot="start">apiConfig:</ion-label>
-          <ion-textarea ngClass="config-area" class="ion-margin-vertical config-input" readonly
-                        formControlName="apiConfig" placeholder="NO API CONFIG AVAILABLE"></ion-textarea>
-        </ion-item>
+        <ng-container [formGroup]="deviceAttributesForm">
+          <ion-item class="ion-margin-bottom">
+            <ion-label slot="start">tags:</ion-label>
+            <tag-input formControlName="claimingTags" placeholder="Add tags for this device"></tag-input>
+          </ion-item>
+          <ion-item>
+            <ion-label slot="start">apiConfig:</ion-label>
+            <ion-textarea ngClass="config-area" class="ion-margin-vertical config-input" readonly
+                          formControlName="apiConfig" placeholder="NO API CONFIG AVAILABLE"></ion-textarea>
+          </ion-item>
+        </ng-container>
       </form>
       <ion-grid>
         <ion-row class="ion-align-items-center ion-justify-content-center padding-row">

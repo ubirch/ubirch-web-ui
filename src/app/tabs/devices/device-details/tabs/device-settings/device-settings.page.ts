@@ -6,6 +6,7 @@ import {DeviceService} from '../../../../../services/device.service';
 import {ModalController, ToastController} from '@ionic/angular';
 // tslint:disable-next-line:max-line-length
 import {ConfirmDeleteDevicePopupComponent} from '../../../devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
+import {BEDevice} from '../../../../../models/bedevice';
 
 @Component({
   selector: 'app-device-settings',
@@ -15,7 +16,8 @@ import {ConfirmDeleteDevicePopupComponent} from '../../../devices-list-page/popu
 export class DeviceSettingsPage implements OnInit {
 
   deviceDetailsForm: FormGroup;
-  loadedDevice: Device;
+  deviceAttributesForm: FormGroup;
+  loadedDevice: BEDevice;
 
   toastrContent: Map<string, any> = new Map([
     ['del', {
@@ -69,11 +71,14 @@ export class DeviceSettingsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.deviceAttributesForm = this.fb.group({
+      apiConfig: [''],
+      claimingTags: [[]],
+    });
     this.deviceDetailsForm = this.fb.group({
       hwDeviceId: [''],
       description: [''],
-      claimingTags: [[]],
-      apiConfig: ['']
+      attributes: this.deviceAttributesForm,
     });
     this.patchForm();
 
@@ -97,9 +102,11 @@ export class DeviceSettingsPage implements OnInit {
   }
 
   saveDevice() {
-    this.deviceService.updateDevice(this.loadedDevice.patchDevice(this.deviceDetailsForm.value)).subscribe(
+    const details = this.deviceDetailsForm.getRawValue();
+
+    this.deviceService.updateDeviceFromData(details).subscribe(
       updatedDevice => {
-        this.loadedDevice = new Device(updatedDevice);
+        this.loadedDevice = new BEDevice(updatedDevice);
         this.patchForm(this.loadedDevice);
         this.finished('save');
         this.deviceHasUnsavedChanges = false;
@@ -138,13 +145,16 @@ export class DeviceSettingsPage implements OnInit {
     this.patchForm(this.loadedDevice);
   }
 
-  private patchForm(device?: Device): any {
+  private patchForm(device?: BEDevice): any {
     const val = {
       hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
       description: device && device.description ? device.description : '',
-      claimingTags: device && device.claimingTags ? device.claimingTags : [],
-      apiConfig: device && device.apiConfig && device.apiConfig.length > 0 ?
-        this.getPrettyJSON(device.apiConfig) : undefined
+      attributes: {
+        claimingTags: device && device.attributes && device.attributes.claiming_tags ?
+          device.attributes.claiming_tags : [],
+        apiConfig: device && device.attributes && device.attributes.apiConfig && device.attributes.apiConfig.length > 0 ?
+          this.getPrettyJSON(device.attributes.apiConfig[0]) : undefined
+      }
     };
     return val;
   }

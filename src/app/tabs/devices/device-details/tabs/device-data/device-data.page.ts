@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { environment } from '../../../../../../environments/environment';
+import {BEDevice} from '../../../../../models/bedevice';
 
 @Component({
   selector: 'app-device-data',
@@ -29,12 +30,12 @@ export class DeviceDataPage implements OnInit {
   private readonly uuid = this.route.snapshot.parent.parent.parent.params.id;
 
   public iframeUrl$: Observable<SafeResourceUrl> = this.deviceService.observableCurrentDevice.pipe(
-    filter(device => {
-      return device && device.hwDeviceId === this.uuid;
+    filter((device: BEDevice) => {
+      return device && (device.hwDeviceId === this.uuid || device.secondaryIndex === this.uuid);
     }),
     map(device => {
-      const tag = device.claimingTags.find(t => this.panelMap[t]);
-      const panelId = this.panelMap[tag];
+      const tag = this.deviceService.getAllowedCaimingTagsOfDevice(device);
+      const panelId = this.panelMap[ tag && tag.length > 0 ? tag[0] : ''];
 
       const url = this.url +
         `?orgId=${this.orgId}` +

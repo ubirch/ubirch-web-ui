@@ -1,6 +1,5 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {DeviceService} from '../../../../../services/device.service';
-import {Device} from '../../../../../models/device';
 import {KeyService} from '../../../../../services/key.service';
 import {PubKeyInfo} from '../../../../../models/pub-key-info';
 import {environment} from '../../../../../../environments/environment';
@@ -8,6 +7,7 @@ import {interval, of, Subscription} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
 import {UbirchWebUIUtilsService} from '../../../../../utils/ubirch-web-uiutils.service';
 import {LoadingController} from '@ionic/angular';
+import {BEDevice} from '../../../../../models/bedevice';
 
 @Component({
   selector: 'app-device-pubkeys',
@@ -15,81 +15,48 @@ import {LoadingController} from '@ionic/angular';
   styleUrls: ['./device-pubkeys.page.scss'],
 })
 export class DevicePubkeysPage implements OnInit {
-    @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
+  @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
-    polling = new Subscription();
+  polling = new Subscription();
 
-    loadedDevice: Device;
-    pubKeyList: PubKeyInfo[];
+  loadedDevice: BEDevice;
+  pubKeyList: PubKeyInfo[];
 
-    loadingSpinner: Promise<void | HTMLIonLoadingElement>;
-    loaded = false;
+  loadingSpinner: Promise<void | HTMLIonLoadingElement>;
+  loaded = false;
 
   constructor(
-      private deviceService: DeviceService,
-      private keyService: KeyService,
-      private loadingController: LoadingController
-  ) { }
-
-    ionViewWillEnter() {
-        this.restartPolling();
-    }
-
-    ngOnInit() {
-      this.deviceService.observableCurrentDevice
-        .subscribe(
-            loadedDevice =>  {
-              this.loadedDevice = loadedDevice;
-              this.restartPolling(true);
-            }
-        );
+    private deviceService: DeviceService,
+    private keyService: KeyService,
+    private loadingController: LoadingController
+  ) {
   }
 
-    ionViewWillLeave() {
-        this.stopPolling();
-    }
+  get DATE_TIME_ZONE_FORMAT(): string {
+    return environment.DATE_TIME_ZONE_FORMAT;
+  }
 
-    private restartPolling(showSpinner?: boolean) {
-        this.stopPolling();
+  ionViewWillEnter() {
+    this.restartPolling();
+  }
 
-        this.polling = interval(environment.POLLING_INTERVAL_MILLISECONDS)
-            .pipe(
-                startWith(0),
-                switchMap(() => {
-                    if (this.loadedDevice && this.loadedDevice.hwDeviceId) {
-                        // load pubKeys
-                        if (showSpinner) {
-                          this.showLoader();
-                        }
-                        return this.keyService.getPubKeysOfThing(this.loadedDevice.hwDeviceId);
-                    } else {
-                        return of(null);
-                    }
-                })
-            )
-            .subscribe( pubKeyList => {
-                // list of pubKeys, sort by validNotAfter
-                this.pubKeyList = pubKeyList && pubKeyList.length > 0 ?
-                  pubKeyList.sort(KeyService.compareKeys) : undefined;
-                this.loaded = true;
-                this.hideLoader();
-              }
-            );
-    }
-
-    private stopPolling() {
-        if (this.polling) {
-            this.polling.unsubscribe();
+  ngOnInit() {
+    this.deviceService.observableCurrentDevice
+      .subscribe(
+        loadedDevice => {
+          this.loadedDevice = loadedDevice;
+          this.restartPolling(true);
         }
-    }
+      );
+  }
 
-    get DATE_TIME_ZONE_FORMAT(): string {
-      return environment.DATE_TIME_ZONE_FORMAT;
-    }
+  ionViewWillLeave() {
+    this.stopPolling();
+  }
 
-    copyToClipboard(val: string) {
-      UbirchWebUIUtilsService.copyToClipboard(val);
-    }
+  copyToClipboard(val: string) {
+    UbirchWebUIUtilsService.copyToClipboard(val);
+  }
 
   showLoader() {
     this.loadingSpinner = this.loadingController.create({
@@ -103,6 +70,40 @@ export class DevicePubkeysPage implements OnInit {
     if (this.loadingSpinner) {
       this.loadingController.dismiss();
       this.loadingSpinner = undefined;
+    }
+  }
+
+  private restartPolling(showSpinner?: boolean) {
+    this.stopPolling();
+
+    this.polling = interval(environment.POLLING_INTERVAL_MILLISECONDS)
+      .pipe(
+        startWith(0),
+        switchMap(() => {
+          if (this.loadedDevice && this.loadedDevice.hwDeviceId) {
+            // load pubKeys
+            if (showSpinner) {
+              this.showLoader();
+            }
+            return this.keyService.getPubKeysOfThing(this.loadedDevice.hwDeviceId);
+          } else {
+            return of(null);
+          }
+        })
+      )
+      .subscribe(pubKeyList => {
+          // list of pubKeys, sort by validNotAfter
+          this.pubKeyList = pubKeyList && pubKeyList.length > 0 ?
+            pubKeyList.sort(KeyService.compareKeys) : undefined;
+          this.loaded = true;
+          this.hideLoader();
+        }
+      );
+  }
+
+  private stopPolling() {
+    if (this.polling) {
+      this.polling.unsubscribe();
     }
   }
 

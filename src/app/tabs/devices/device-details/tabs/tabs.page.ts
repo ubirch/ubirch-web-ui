@@ -19,10 +19,7 @@ export class TabsPage implements OnInit {
   showDataTab$: Observable<boolean> = this.currentDevice$.pipe(
     filter(device => !!device),
     map(device => {
-      const allowedTag = device.claimingTags.find(tag => {
-        return environment.deviceData.panelMap[tag];
-      });
-
+      const allowedTag = this.deviceService.getAllowedCaimingTagsOfDevice(device);
       return !!allowedTag;
     }),
   );

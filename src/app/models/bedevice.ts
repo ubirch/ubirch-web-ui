@@ -9,10 +9,10 @@ export class BEDevice {
   public groups: Group[];
   public attributes: {
     apiConfig: string[];
-    apiConfig_new: string[];
-    apiConfig_old: string[];
+    apiConfig_new?: string[];
+    apiConfig_old?: string[];
     deviceTypeProperties: string[];
-    claiming_tags: string[];
+    claiming_tags?: string[];
     deviceConfig: string[];
   };
   public deviceType: string;

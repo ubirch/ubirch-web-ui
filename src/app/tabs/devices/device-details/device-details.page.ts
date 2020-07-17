@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {Device} from '../../../models/device';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {DeviceService} from '../../../services/device.service';
 import {ToastController} from '@ionic/angular';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
+import {BEDevice} from '../../../models/bedevice';
 
 @Component({
   selector: 'app-device-details',
@@ -14,7 +15,7 @@ export class DeviceDetailsPage {
 
    id: string;
    private deviceHasUnsavedChanges = false;
-   loadedDevice: Device;
+   loadedDevice: BEDevice;
 
    constructor(
        private deviceService: DeviceService,

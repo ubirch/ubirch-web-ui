@@ -3,8 +3,8 @@ import {forkJoin, interval, Observable, of, Subscription} from 'rxjs';
 import {environment} from '../../../../../../environments/environment';
 import {startWith, switchMap} from 'rxjs/operators';
 import {DeviceService} from '../../../../../services/device.service';
-import {Device} from '../../../../../models/device';
 import {DeviceState, TIME_RANGES} from '../../../../../models/device-state';
+import {BEDevice} from '../../../../../models/bedevice';
 
 @Component({
   selector: 'app-device-state',
@@ -15,7 +15,7 @@ export class DeviceStatePage implements OnInit {
 
   polling = new Subscription();
 
-  loadedDevice: Device;
+  loadedDevice: BEDevice;
   errorMessage: string;
 
   deviceStateNames: Map<number, string> = new Map([

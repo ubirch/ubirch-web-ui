@@ -12,6 +12,7 @@ import {DevicesListWrapper} from '../models/devices-list-wrapper';
 import {UserService} from './user.service';
 import {isArray} from 'util';
 import {DeviceState, TIME_RANGES} from '../models/device-state';
+import {BEDevice} from '../models/bedevice';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +25,9 @@ export class DeviceService {
   deviceStateUrl = this.url + 'devices/state';  // URL to web api to access the states of requested devices
   devicesCreateUrl = this.url + 'devices/elephants'; // URL to web api to create devices
   searchUrl = this.devicesUrl + '/search';  // URL to web api to search devices by hwDeviceId or description (substrings)
-  private currentDevice: Device;
-  private behaviorSubject = new BehaviorSubject<Device>(this.currentDevice);
-  public observableCurrentDevice: Observable<Device> = this.behaviorSubject.asObservable();
+  private currentDevice: BEDevice;
+  private behaviorSubject = new BehaviorSubject<BEDevice>(this.currentDevice);
+  public observableCurrentDevice: Observable<BEDevice> = this.behaviorSubject.asObservable();
 
   constructor(
     private utils: UbirchWebUIUtilsService,
@@ -34,15 +35,6 @@ export class DeviceService {
     private userService: UserService,
     private http: HttpClient
   ) {
-  }
-
-  public static tagArrayFromString(tags: string): string[] {
-    if (tags) {
-      // split input string from claiming
-      return tags[0].split(', ');
-    } else {
-      return [];
-    }
   }
 
   public static nxgChipObjToStringArray(tagArray: any[]): string[] {
@@ -128,17 +120,17 @@ export class DeviceService {
    * load device
    * @param id hwDeviceId of the device that should be loaded
    */
-  public loadDevice(id: string): Observable<Device> {
+  public loadDevice(id: string): Observable<BEDevice> {
     // reset currentLoaded device if it is a different one
     const current = this.behaviorSubject.getValue();
-    if (current && current.hwDeviceId !== id) {
+    if (current && current.hwDeviceId !== id && current.secondaryIndex !== id) {
       this.behaviorSubject.next(null);
     }
 
     const url = `${this.devicesUrl}/${id}`;
-    return this.http.get<Device>(url).pipe(
+    return this.http.get<BEDevice>(url).pipe(
       map(jsonDevice => {
-        const respDevice = new Device(jsonDevice);
+        const respDevice = new BEDevice(jsonDevice);
         this.behaviorSubject.next(respDevice);
         return respDevice;
       })
@@ -194,10 +186,10 @@ export class DeviceService {
    * if no item
    * @param data form data, containing several device properties
    */
-  public updateDeviceFromData(data: FormGroup): Observable<Device> {
+  public updateDeviceFromData(data: FormGroup): Observable<BEDevice> {
     if (data && data.value) {
-      const device = new Device(data.value);
-      if (device && device.hwDeviceId) {
+      const device = new BEDevice(data.value);
+      if (device && (device.hwDeviceId || device.secondaryIndex)) {
         return this.updateDevice(device);
       } else {
         return of(null);
@@ -205,17 +197,31 @@ export class DeviceService {
     }
   }
 
-  public updateDevice(device: Device): Observable<Device> {
+  public updateDevice(device: BEDevice): Observable<BEDevice> {
     // TODO: before sending a device stringify every property that is here an object but a string on the other side
     const url = `${this.devicesUrl}/${device.hwDeviceId}`;
-    return this.http.put<Device>(url, device).pipe(
+    return this.http.put<BEDevice>(url, device).pipe(
       map(jsonDevice => {
-        const respDevice = new Device(jsonDevice);
+        const respDevice = new BEDevice(jsonDevice);
         this.behaviorSubject.next(respDevice);
         return respDevice;
       }),
       catchError(_ => of(null)));
 
+  }
+
+  /**
+   * returns a list of all allowed tags of that device, set by environment param deviceData.panelMap
+   * @param device to be checked
+   */
+  public getAllowedCaimingTagsOfDevice(device: BEDevice): string[] {
+    let allowedTags;
+    if (device.attributes && device.attributes.claiming_tags) {
+      allowedTags = device.attributes.claiming_tags.find(tag => {
+        return environment.deviceData.panelMap[tag];
+      });
+    }
+    return allowedTags;
   }
 
   storeUnsavedChangesOfDevice(val: any): boolean {
