@@ -37,6 +37,18 @@ export class DeviceService {
   ) {
   }
 
+  public static createClaimingTagsFromFormData(tags: any): string[] {
+    if (!tags) {
+      return [];
+    }
+    if (typeof tags === 'string') {
+      return tags.split(',').map(tag => tag.trim());
+    }
+    if (Array.isArray(tags)) {
+      return DeviceService.nxgChipObjToStringArray(tags);
+    }
+  }
+
   public static nxgChipObjToStringArray(tagArray: any[]): string[] {
     if (Array.isArray(tagArray) && tagArray.length > 0) {
       return tagArray.map((e: any) => e.value !== undefined ? e.value : e);

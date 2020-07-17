@@ -146,11 +146,11 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
     this.currentIdType$.next(type);
   }
 
-  private patchFormValue(device?: Device): any {
+  private patchFormValue(): any {
     const val = {
-      hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
-      secondaryIndex: device && device.secondaryIndex ? device.secondaryIndex : '',
-      description: device && device.description ? device.description : '',
+      hwDeviceId: '',
+      secondaryIndex: '',
+      description: '',
       deviceType: environment.default_device_type,
       tags: '',
       prefix: '',
@@ -184,7 +184,7 @@ export class CreateDevicesFormData {
       props.secondaryIndex = (props.secondaryIndex as string).trim();
     }
 
-    const tagList = props.tags ? DeviceService.nxgChipObjToStringArray(props.tags) : [];
+    const tagList = props.tags ? DeviceService.createClaimingTagsFromFormData(props.tags) : [];
     props.tags = tagList;
 
     Object.assign(this, props);
