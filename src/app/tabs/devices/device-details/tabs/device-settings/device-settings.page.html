@@ -10,6 +10,8 @@
   <ion-card class="ion-padding">
     <ion-card-content>
       <form [formGroup]="deviceDetailsForm">
+        <ion-input type="hidden"
+                   formControlName="id"></ion-input>
         <ion-item class="ion-margin-bottom">
           <ion-label slot="start">ID:</ion-label>
           <ion-input formControlName="hwDeviceId" readonly color="medium"></ion-input>
@@ -18,6 +20,16 @@
           <ion-label slot="start">description:</ion-label>
           <ion-input formControlName="description"></ion-input>
         </ion-item>
+        <div [formGroup]="deviceOwnerForm" hidden>
+          <ion-input type="hidden"
+                     formControlName="id"></ion-input>
+          <ion-input type="hidden"
+                     formControlName="username"></ion-input>
+          <ion-input type="hidden"
+                     formControlName="lastname"></ion-input>
+          <ion-input type="hidden"
+                     formControlName="firstname"></ion-input>
+        </div>
         <ng-container [formGroup]="deviceAttributesForm">
           <ion-item class="ion-margin-bottom">
             <ion-label slot="start">tags:</ion-label>

@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Device} from '../../../../../models/device';
 import {Router} from '@angular/router';
 import {DeviceService} from '../../../../../services/device.service';
 import {ModalController, ToastController} from '@ionic/angular';
 // tslint:disable-next-line:max-line-length
 import {ConfirmDeleteDevicePopupComponent} from '../../../devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {BEDevice} from '../../../../../models/bedevice';
+import {User} from '../../../../../models/user';
 
 @Component({
   selector: 'app-device-settings',
@@ -17,6 +17,7 @@ export class DeviceSettingsPage implements OnInit {
 
   deviceDetailsForm: FormGroup;
   deviceAttributesForm: FormGroup;
+  deviceOwnerForm: FormGroup;
   loadedDevice: BEDevice;
 
   toastrContent: Map<string, any> = new Map([
@@ -72,12 +73,20 @@ export class DeviceSettingsPage implements OnInit {
 
   ngOnInit() {
     this.deviceAttributesForm = this.fb.group({
-      apiConfig: [''],
+      apiConfig: [['']],
       claiming_tags: [[]],
     });
+    this.deviceOwnerForm = this.fb.group({
+      id: [''],
+      username: [''],
+      lastname: [''],
+      firstname: ['']
+    });
     this.deviceDetailsForm = this.fb.group({
+      id: [''],
       hwDeviceId: [''],
       description: [''],
+      owner: this.fb.array( [this.deviceOwnerForm] ),
       attributes: this.deviceAttributesForm,
     });
     this.patchForm();
@@ -149,14 +158,20 @@ export class DeviceSettingsPage implements OnInit {
   }
 
   private patchForm(device?: BEDevice): any {
+    let owner;
+    if (device && device.owner && device.owner.length > 0) {
+      owner = new User(device.owner[0]);
+    }
     const val = {
+      id: device && device.id ? device.id : '',
       hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
       description: device && device.description ? device.description : '',
+      owner: owner ? [ owner ] : [],
       attributes: {
         claiming_tags: device && device.attributes && device.attributes.claiming_tags ?
           device.attributes.claiming_tags : [],
         apiConfig: device && device.attributes && device.attributes.apiConfig && device.attributes.apiConfig.length > 0 ?
-          this.getPrettyJSON(device.attributes.apiConfig[0]) : undefined
+          [this.getPrettyJSON(device.attributes.apiConfig[0])] : []
       }
     };
     return val;
