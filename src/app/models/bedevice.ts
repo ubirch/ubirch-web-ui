@@ -39,7 +39,14 @@ export class BEDevice {
     if (!props) {
       return this;
     }
-    Object.assign(this, this, props);
+    const mergedDevice: BEDevice = Object.assign({}, this, props);
+
+    if (props.attributes) {
+      mergedDevice.attributes = Object.assign({}, this.attributes, props.attributes);
+    }
+    // TODO: check if also special handling for groups and owner needed!
+
+    Object.assign(this, mergedDevice);
     this.fixSpecials();
 
     return this;
@@ -51,8 +58,10 @@ export class BEDevice {
         this.hwDeviceId = '';
       }
     }
-    if (this.attributes && this.attributes.claiming_tags) {
-      this.attributes.claiming_tags = UbirchWebUIUtilsService.createClaimingTagsFromFormData(this.attributes.claiming_tags);
+    if (this.attributes) {
+      if (this.attributes.claiming_tags) {
+        this.attributes.claiming_tags = UbirchWebUIUtilsService.createClaimingTagsFromFormData(this.attributes.claiming_tags);
+      }
     }
   }
 }
