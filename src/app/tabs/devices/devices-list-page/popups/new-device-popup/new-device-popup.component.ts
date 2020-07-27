@@ -1,12 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import {FormBuilder, FormGroup, Validators, FormControl, AbstractControl} from '@angular/forms';
-import {Device} from '../../../../../models/device';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ModalController, ToastController} from '@ionic/angular';
 import {environment} from '../../../../../../environments/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, skip } from 'rxjs/operators';
-import { ValidatorsService } from 'src/app/validators/validators.service';
-import {DeviceService} from '../../../../../services/device.service';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map, skip} from 'rxjs/operators';
+import {ValidatorsService} from 'src/app/validators/validators.service';
+import {UbirchWebUIUtilsService} from '../../../../../utils/ubirch-web-uiutils.service';
 
 const ID_VALIDATORS = [Validators.required, Validators.pattern(/^ *\S{1,} *$/)];
 
@@ -184,7 +183,7 @@ export class CreateDevicesFormData {
       props.secondaryIndex = (props.secondaryIndex as string).trim();
     }
 
-    const tagList = props.tags ? DeviceService.createClaimingTagsFromFormData(props.tags) : [];
+    const tagList = props.tags ? UbirchWebUIUtilsService.createClaimingTagsFromFormData(props.tags) : [];
     props.tags = tagList;
 
     Object.assign(this, props);

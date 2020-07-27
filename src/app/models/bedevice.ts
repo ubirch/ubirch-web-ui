@@ -1,6 +1,6 @@
 import {User} from './user';
 import {Group} from './group';
-import {DeviceService} from '../services/device.service';
+import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
 
 export class BEDevice {
   public id: string;
@@ -37,7 +37,7 @@ export class BEDevice {
       }
     }
     if (this.attributes && this.attributes.claiming_tags) {
-      this.attributes.claiming_tags = DeviceService.createClaimingTagsFromFormData(this.attributes.claiming_tags);
+      this.attributes.claiming_tags = UbirchWebUIUtilsService.createClaimingTagsFromFormData(this.attributes.claiming_tags);
     }
 
     return this;
