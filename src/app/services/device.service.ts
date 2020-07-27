@@ -168,21 +168,6 @@ export class DeviceService {
       catchError(_ => of(false)));
   }
 
-  /**
-   * if device already loaded, the current loaded device is patched with form data;
-   * if no item
-   * @param data form data, containing several device properties
-   */
-  public updateDeviceFromData(data: FormGroup): Observable<BEDevice> {
-    if (data) {
-      const device = new BEDevice(data);
-      if (device && (device.hwDeviceId || device.secondaryIndex)) {
-        return this.updateDevice(device);
-      }
-    }
-    throwError(new Error('tried to update device without data'));
-  }
-
   public updateDevice(device: BEDevice): Observable<BEDevice> {
     // TODO: before sending a device stringify every property that is here an object but a string on the other side
     const url = `${this.devicesUrl}/${device.hwDeviceId}`;

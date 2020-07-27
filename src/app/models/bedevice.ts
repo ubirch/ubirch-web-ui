@@ -42,4 +42,13 @@ export class BEDevice {
 
     return this;
   }
+
+  public patch(props): BEDevice {
+    if (!props) {
+      return this;
+    }
+    Object.assign(this, this, props);
+
+    return this;
+  }
 }

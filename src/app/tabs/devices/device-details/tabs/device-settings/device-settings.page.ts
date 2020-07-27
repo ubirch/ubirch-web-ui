@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {DeviceService} from '../../../../../services/device.service';
@@ -7,17 +7,17 @@ import {ModalController, ToastController} from '@ionic/angular';
 import {ConfirmDeleteDevicePopupComponent} from '../../../devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {BEDevice} from '../../../../../models/bedevice';
 import {User} from '../../../../../models/user';
+import {Observable, Subscription, throwError} from 'rxjs';
 
 @Component({
   selector: 'app-device-settings',
   templateUrl: './device-settings.page.html',
   styleUrls: ['./device-settings.page.scss'],
 })
-export class DeviceSettingsPage implements OnInit {
+export class DeviceSettingsPage implements OnInit, OnDestroy {
 
   deviceDetailsForm: FormGroup;
   deviceAttributesForm: FormGroup;
-  deviceOwnerForm: FormGroup;
   loadedDevice: BEDevice;
 
   toastrContent: Map<string, any> = new Map([
@@ -48,6 +48,7 @@ export class DeviceSettingsPage implements OnInit {
     }]
   ]);
   private deviceHasUnsavedChanges = false;
+  private deviceSubsc: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -76,22 +77,14 @@ export class DeviceSettingsPage implements OnInit {
       apiConfig: [['']],
       claiming_tags: [[]],
     });
-    this.deviceOwnerForm = this.fb.group({
-      id: [''],
-      username: [''],
-      lastname: [''],
-      firstname: ['']
-    });
     this.deviceDetailsForm = this.fb.group({
-      id: [''],
       hwDeviceId: [''],
       description: [''],
-      owner: this.fb.array( [this.deviceOwnerForm] ),
       attributes: this.deviceAttributesForm,
     });
     this.patchForm();
 
-    this.deviceService.observableCurrentDevice
+    this.deviceSubsc = this.deviceService.observableCurrentDevice
       .subscribe(
         loadedDevice => {
           this.loadedDevice = loadedDevice;
@@ -103,6 +96,11 @@ export class DeviceSettingsPage implements OnInit {
         }
       );
   }
+  ngOnDestroy(): void {
+    if (this.deviceSubsc) {
+      this.deviceSubsc.unsubscribe();
+    }
+  }
 
   watchFormControls(): void {
     this.deviceDetailsForm.valueChanges.subscribe(val => {
@@ -113,7 +111,7 @@ export class DeviceSettingsPage implements OnInit {
   async saveDevice() {
     const details = this.deviceDetailsForm.getRawValue();
 
-    this.deviceService.updateDeviceFromData(details).subscribe(
+    this.updateDeviceFromData(details).subscribe(
       updatedDevice => {
         this.loadedDevice = new BEDevice(updatedDevice);
         this.patchForm(this.loadedDevice);
@@ -124,6 +122,21 @@ export class DeviceSettingsPage implements OnInit {
         this.finished('err', error.message);
       }
     );
+  }
+
+  /**
+   * if device already loaded, the current loaded device is patched with form data;
+   * if no item
+   * @param data form data, containing several device properties
+   */
+  public updateDeviceFromData(data: FormGroup): Observable<BEDevice> {
+    if (data) {
+      const device = this.loadedDevice.patch(data);
+      if (device && (device.hwDeviceId || device.secondaryIndex)) {
+        return this.deviceService.updateDevice(device);
+      }
+    }
+    throwError(new Error('tried to update device without data'));
   }
 
   async confirmDeviceDelete() {
@@ -154,19 +167,13 @@ export class DeviceSettingsPage implements OnInit {
 
   discardChanges() {
     this.finished('cancl_save');
-    this.patchForm(this.loadedDevice);
+    this.deviceDetailsForm.patchValue(this.patchForm(this.loadedDevice));
   }
 
   private patchForm(device?: BEDevice): any {
-    let owner;
-    if (device && device.owner && device.owner.length > 0) {
-      owner = new User(device.owner[0]);
-    }
     const val = {
-      id: device && device.id ? device.id : '',
       hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
       description: device && device.description ? device.description : '',
-      owner: owner ? [ owner ] : [],
       attributes: {
         claiming_tags: device && device.attributes && device.attributes.claiming_tags ?
           device.attributes.claiming_tags : [],
