@@ -30,15 +30,7 @@ export class BEDevice {
 
     Object.assign(this, props);
 
-    if (this.secondaryIndex) {
-      if (this.hwDeviceId !== undefined && this.hwDeviceId !== '') {
-        console.warn('BEDevice constructor call with both hwDeviceId and secondaryIndex - hwDeviceId will be ignored!');
-        this.hwDeviceId = '';
-      }
-    }
-    if (this.attributes && this.attributes.claiming_tags) {
-      this.attributes.claiming_tags = UbirchWebUIUtilsService.createClaimingTagsFromFormData(this.attributes.claiming_tags);
-    }
+    this.fixSpecials();
 
     return this;
   }
@@ -48,7 +40,19 @@ export class BEDevice {
       return this;
     }
     Object.assign(this, this, props);
+    this.fixSpecials();
 
     return this;
+  }
+  public fixSpecials() {
+    if (this.secondaryIndex) {
+      if (this.hwDeviceId !== undefined && this.hwDeviceId !== '') {
+        console.warn('BEDevice constructor call with both hwDeviceId and secondaryIndex - hwDeviceId will be ignored!');
+        this.hwDeviceId = '';
+      }
+    }
+    if (this.attributes && this.attributes.claiming_tags) {
+      this.attributes.claiming_tags = UbirchWebUIUtilsService.createClaimingTagsFromFormData(this.attributes.claiming_tags);
+    }
   }
 }
