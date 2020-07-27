@@ -1,9 +1,17 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>DeviceLastUPP</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding-horizontal">
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-end padding-row">
+    </ion-row>
+  </ion-grid>
+  <ion-card class="ion-padding">
+    <ion-card-header>Last UPP:</ion-card-header>
+    <ion-card-content>
+      <ion-item class="ion-margin-bottom">
+        <ion-label slot="start" *ngIf="upp === undefined">loading...</ion-label>
+        <ion-label slot="start" *ngIf="upp && upp.found">{{upp.hash}}</ion-label>
+        <ion-label slot="start" *ngIf="upp && !upp.found">No hash found for device</ion-label>
+      </ion-item>
 
-<ion-content>
-
+    </ion-card-content>
+  </ion-card>
 </ion-content>

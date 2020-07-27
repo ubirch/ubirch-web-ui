@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {DeviceService} from '../../../../../services/device.service';
 import {KeyService} from '../../../../../services/key.service';
 import {PubKeyInfo} from '../../../../../models/pub-key-info';
@@ -14,7 +14,7 @@ import {BEDevice} from '../../../../../models/bedevice';
   templateUrl: './device-pubkeys.page.html',
   styleUrls: ['./device-pubkeys.page.scss'],
 })
-export class DevicePubkeysPage implements OnInit {
+export class DevicePubkeysPage implements OnInit, OnDestroy {
   @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
   polling = new Subscription();
@@ -24,6 +24,7 @@ export class DevicePubkeysPage implements OnInit {
 
   loadingSpinner: Promise<void | HTMLIonLoadingElement>;
   loaded = false;
+  private deviceSubscr: Subscription;
 
   constructor(
     private deviceService: DeviceService,
@@ -41,7 +42,7 @@ export class DevicePubkeysPage implements OnInit {
   }
 
   ngOnInit() {
-    this.deviceService.observableCurrentDevice
+    this.deviceSubscr = this.deviceService.observableCurrentDevice
       .subscribe(
         loadedDevice => {
           this.loadedDevice = loadedDevice;
@@ -104,6 +105,13 @@ export class DevicePubkeysPage implements OnInit {
   private stopPolling() {
     if (this.polling) {
       this.polling.unsubscribe();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.stopPolling();
+    if (this.deviceSubscr) {
+      this.deviceSubscr.unsubscribe();
     }
   }
 

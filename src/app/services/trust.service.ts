@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpParams, HttpResponseBase} from '@angular/common/http';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Upp} from '../models/upp';
-import {VERIFY_RESULT} from '../../../testdata/verify-result';
 import {BlockChainNode} from '../models/block-chain-node';
 import {VERIFY_RESULT_2BCS} from '../../../testdata/verify-result-2bc-nodes';
+import {UppStub} from '../models/upp-stub';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -28,6 +28,7 @@ export class TrustService {
   private withPathSuffix = new HttpParams().set('response_form', 'anchors_with_path').set('blockchain_info', 'ext');
 //  private getAnchor = 'anchor';
 //  private withoutPathSuffix = new HttpParams().set('response_form', 'anchors_no_path');
+  private getLastHashUrl = environment.serverUrl + environment.apiPrefix + 'devices/lastHash/';
 
   /**
    * Observable of current hash
@@ -60,6 +61,12 @@ export class TrustService {
   constructor(
     private http: HttpClient
   ) {
+  }
+  public getLastHashOfDevice(deviceId: string): Observable<UppStub> {
+    const url = this.getLastHashUrl + deviceId;
+    return this.http.get(url).pipe(
+      map((upp: UppStub) => new UppStub(upp))
+    );
   }
 
   public saveHash(vHash: string) {
