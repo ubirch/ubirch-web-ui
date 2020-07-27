@@ -34,6 +34,10 @@ const routes: Routes = [
         loadChildren: () => import('./device-state/device-state.module').then(m => m.DeviceStatePageModule)
       },
       {
+        path: 'upp',
+        loadChildren: () => import('./device-last-upp/device-last-upp.module').then(m => m.DeviceLastUPPPageModule)
+      },
+      {
         path: 'pubkeys',
         loadChildren: () => import('./device-pubkeys/device-pubkeys.module').then(m => m.DevicePubkeysPageModule)
       }

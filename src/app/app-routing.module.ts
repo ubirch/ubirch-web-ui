@@ -35,6 +35,7 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/logout/logout.module').then(m => m.LogoutPageModule)
   },
   { path: 'device-data', loadChildren: './tabs/devices/device-details/tabs/device-data/device-data.module#DeviceDataPageModule' },
+  { path: 'device-last-upp', loadChildren: './tabs/devices/device-details/tabs/device-last-upp/device-last-upp.module#DeviceLastUPPPageModule' },
 ];
 
 @NgModule({
