@@ -6,6 +6,7 @@ import {DeviceService} from '../../../../../services/device.service';
 import {BEDevice} from '../../../../../models/bedevice';
 import {ToastController} from '@ionic/angular';
 import {environment} from '../../../../../../environments/environment';
+import {NavigationExtras, Router} from '@angular/router';
 
 @Component({
   selector: 'app-device-last-upp',
@@ -28,7 +29,8 @@ export class DeviceLastUPPPage implements OnInit, OnDestroy {
 
   constructor(
     private deviceService: DeviceService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private router: Router
   ) { }
 
   async finished(param: string, details?: string) {
@@ -68,7 +70,11 @@ export class DeviceLastUPPPage implements OnInit, OnDestroy {
   }
 
   public openVerification(uppHash: UppHash): void {
-    console.log('Open Verification Page with: ' + uppHash.hash);
+    const navigationExtras: NavigationExtras = {
+      queryParams: { hash: uppHash.hash }
+    };
+
+    this.router.navigate(['verification'], navigationExtras);
   }
 
   get DATE_TIME_ZONE_FORMAT(): string {
