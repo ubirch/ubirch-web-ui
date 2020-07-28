@@ -76,7 +76,7 @@ export class DeviceLastUPPPage implements OnInit, OnDestroy {
 
   public openVerification(uppHash: UppHash): void {
     const navigationExtras: NavigationExtras = {
-      queryParams: {hash: uppHash.hash}
+      queryParams: {hash: uppHash.hash, deviceId: this.loadedDevice.hwDeviceId}
     };
 
     this.router.navigate(['verification'], navigationExtras);

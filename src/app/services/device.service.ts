@@ -200,7 +200,6 @@ export class DeviceService {
   }
 
   public getLastNHashesOfDevice(deviceId: string, count: number = 10): Observable<UppHash[]> {
-    /*
     const testData = [
       {
         deviceId: '55424952-30ae-a44e-4f40-30aea44e4f40',
@@ -219,9 +218,9 @@ export class DeviceService {
       }
     ];
     return of(testData)
-    */
+    /*
     const url = `${this.getLastNHashesUrl}/${deviceId}/${count}`;
-    return this.http.get(url)
+    return this.http.get(url) */
       .pipe(
         map((hashes: UppHash[]) => hashes.map((hash: UppHash) => new UppHash(hash)))
       );
