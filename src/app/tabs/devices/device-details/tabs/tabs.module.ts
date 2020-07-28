@@ -34,7 +34,7 @@ const routes: Routes = [
         loadChildren: () => import('./device-state/device-state.module').then(m => m.DeviceStatePageModule)
       },
       {
-        path: 'upps',
+        path: 'upphashes',
         loadChildren: () => import('./device-last-upp/device-last-upp.module').then(m => m.DeviceLastUPPPageModule)
       },
       {
