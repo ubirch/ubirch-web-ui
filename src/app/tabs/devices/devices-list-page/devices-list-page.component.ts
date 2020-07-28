@@ -32,7 +32,7 @@ export class DevicesListPage {
   searchStr: string;
   numOfFilteredItems = 0;
 
-  loadingSpinner: Promise<void | HTMLIonLoadingElement>;
+  loadingSpinner: HTMLIonLoadingElement;
   loaded = false;
   stateLoading = false;
 
@@ -267,20 +267,19 @@ export class DevicesListPage {
     return this.searchActive() ? this.numOfFilteredItems : this.numberOfDevices;
   }
 
-  showLoader() {
+  public async showLoader(): Promise<void> {
     // avoid cascading spinners on longer loading processes
     if (!this.loadingSpinner) {
-      this.loadingSpinner = this.loadingController.create({
+      this.loadingSpinner = await this.loadingController.create({
         message: 'Loading your Things'
-      }).then((res) => {
-        res.present();
       });
+      this.loadingSpinner.present();
     }
   }
 
-  hideLoader() {
+  public hideLoader() {
     if (this.loadingSpinner) {
-      this.loadingController.dismiss();
+      this.loadingSpinner.dismiss();
       this.loadingSpinner = undefined;
     }
   }
