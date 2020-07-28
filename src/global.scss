@@ -138,6 +138,25 @@ ion-tab-button.tab-selected {
   display: none
 }
 
+.list-item-end-button div {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.item-note {
+  height: 100%;
+}
+
+.list-item-end-button {
+  height: 100%;
+}
+
+.list-item-end-icon {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
 @media only screen and (min-width: 768px) and (min-height: 600px) {
   .sc-ion-modal-md-h {
     --width: 600px;

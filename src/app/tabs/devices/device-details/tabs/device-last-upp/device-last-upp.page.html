@@ -17,6 +17,14 @@
           <ion-text class="ion-text-wrap">{{uppHash.hash}}</ion-text>
           <p>{{uppHash.timestamp | date: DATE_TIME_ZONE_FORMAT}}</p>
         </ion-label>
+        <div class="item-note" slot="end">
+          <ion-button (click)="openVerification(uppHash)" color="secondary" class="list-item-end-button">
+            <div class="ion-align-items-center">
+              <ion-icon src="assets/app-icons/checkmark-circle-outline.svg" class="list-item-end-icon"></ion-icon>
+              verify
+            </div>
+          </ion-button>
+        </div>
       </ion-item>
 
     </ion-card-content>

@@ -67,6 +67,10 @@ export class DeviceLastUPPPage implements OnInit, OnDestroy {
     }
   }
 
+  public openVerification(uppHash: UppHash): void {
+    console.log('Open Verification Page with: ' + uppHash.hash);
+  }
+
   get DATE_TIME_ZONE_FORMAT(): string {
     return environment.DATE_TIME_ZONE_FORMAT;
   }
