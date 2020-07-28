@@ -1,7 +1,6 @@
-export class UppStub {
+export class UppHash {
   public deviceId: string;
-  public found: boolean;
-  public hash?: string;
+  public hash: string;
   public timestamp?: string;
 
   constructor(props: any) {

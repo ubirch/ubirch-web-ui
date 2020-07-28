@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UppStub} from '../../../../../models/upp-stub';
+import {UppHash} from '../../../../../models/upp-hash';
 import {Subscription} from 'rxjs';
 import {TrustService} from '../../../../../services/trust.service';
 import {DeviceService} from '../../../../../services/device.service';
 import {BEDevice} from '../../../../../models/bedevice';
 import {ToastController} from '@ionic/angular';
+import {environment} from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-device-last-upp',
@@ -14,7 +15,7 @@ import {ToastController} from '@ionic/angular';
 export class DeviceLastUPPPage implements OnInit, OnDestroy {
 
   public loadedDevice: BEDevice;
-  public upp: UppStub;
+  public uppHashes: UppHash[];
   private uppSubscr: Subscription;
   private deviceSubsc: Subscription;
   toastrContent: Map<string, any> = new Map([
@@ -26,7 +27,6 @@ export class DeviceLastUPPPage implements OnInit, OnDestroy {
   ]);
 
   constructor(
-    private trustService: TrustService,
     private deviceService: DeviceService,
     private toastCtrl: ToastController
   ) { }
@@ -46,8 +46,8 @@ export class DeviceLastUPPPage implements OnInit, OnDestroy {
         loadedDevice => {
           this.loadedDevice = loadedDevice;
           if (this.loadedDevice) {
-            this.uppSubscr = this.trustService.getLastHashOfDevice(this.loadedDevice.hwDeviceId).subscribe(
-              (resp: UppStub) => this.upp = new UppStub(resp),
+            this.uppSubscr = this.deviceService.getLastNHashesOfDevice(this.loadedDevice.hwDeviceId).subscribe(
+              (resp: UppHash[]) => this.uppHashes = resp,
               (err: Error) =>
                 this.finished('err', err.message)
             );
@@ -67,4 +67,7 @@ export class DeviceLastUPPPage implements OnInit, OnDestroy {
     }
   }
 
+  get DATE_TIME_ZONE_FORMAT(): string {
+    return environment.DATE_TIME_ZONE_FORMAT;
+  }
 }

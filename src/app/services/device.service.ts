@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import {Device} from '../models/device';
-import {FormGroup} from '@angular/forms';
 import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
@@ -13,18 +12,20 @@ import {UserService} from './user.service';
 import {isArray} from 'util';
 import {DeviceState, TIME_RANGES} from '../models/device-state';
 import {BEDevice} from '../models/bedevice';
+import {UppHash} from '../models/upp-hash';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeviceService {
 
-
   url = environment.serverUrl + environment.apiPrefix;
   devicesUrl = this.url + 'devices';  // URL to web api to access devices
   deviceStateUrl = this.url + 'devices/state';  // URL to web api to access the states of requested devices
   devicesCreateUrl = this.url + 'devices/elephants'; // URL to web api to create devices
   searchUrl = this.devicesUrl + '/search';  // URL to web api to search devices by hwDeviceId or description (substrings)
+  getLastNHashesUrl = this.url + 'devices/lastNHashes'; // URL to web api to get last n hashes anchored for given device
+
   private currentDevice: BEDevice;
   private behaviorSubject = new BehaviorSubject<BEDevice>(this.currentDevice);
   public observableCurrentDevice: Observable<BEDevice> = this.behaviorSubject.asObservable();
@@ -177,11 +178,11 @@ export class DeviceService {
         this.behaviorSubject.next(respDevice);
         return respDevice;
       }),
-    catchError(err =>
-      throwError(new Error('Cannot update device' +
+      catchError(err =>
+        throwError(new Error('Cannot update device' +
         device.hwDeviceId ? ' with hwDeviceId ' + device.hwDeviceId :
           device.secondaryIndex ? ' with secondaryIndex ' + device.secondaryIndex : ': no id set'))
-    ));
+      ));
   }
 
   /**
@@ -196,6 +197,34 @@ export class DeviceService {
       );
     }
     return allowedTags;
+  }
+
+  public getLastNHashesOfDevice(deviceId: string, count: number = 10): Observable<UppHash[]> {
+    const testData = [
+      {
+        deviceId: '55424952-30ae-a44e-4f40-30aea44e4f40',
+        hash: 'WC7B9qbwn5A4oU/I6/0IJ+NzmBDG63QO6hXe7KuU2ul4yAPc3CldKd5CKKbhf0qXZJAva0CLXWTz00tr3F9BeQ==',
+        timestamp: '2020-07-03T09:51:36.000Z'
+      },
+      {
+        deviceId: '55424952-30ae-a44e-4f40-30aea44e4f40',
+        hash: 'WC7B9qbwn5A4oU/I6/0IJ+NzmBDG63QO6hXe7KuU2ul4yAPc3CldKd5CKKbhf0qXZJAva0CLXWTz00tr3F9BeQ==',
+        timestamp: '2020-07-03T09:52:36.000Z'
+      },
+      {
+        deviceId: '55424952-30ae-a44e-4f40-30aea44e4f40',
+        hash: 'WC7B9qbwn5A4oU/I6/0IJ+NzmBDG63QO6hXe7KuU2ul4yAPc3CldKd5CKKbhf0qXZJAva0CLXWTz00tr3F9BeQ==',
+        timestamp: '2020-07-03T09:53:36.000Z'
+      }
+    ];
+    /*
+    const url = `${this.getLastNHashesUrl}/${deviceId}/${count}`;
+    return this.http.get(url)
+    */
+    return of(testData)
+      .pipe(
+        map((hashes: UppHash[]) => hashes.map((hash: UppHash) => new UppHash(hash)))
+      );
   }
 
   storeUnsavedChangesOfDevice(val: any): boolean {

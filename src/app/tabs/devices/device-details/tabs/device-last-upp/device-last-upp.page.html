@@ -4,12 +4,19 @@
     </ion-row>
   </ion-grid>
   <ion-card class="ion-padding">
-    <ion-card-header>Last UPP:</ion-card-header>
+    <ion-card-header>Last anchored hashes:</ion-card-header>
     <ion-card-content>
-      <ion-item class="ion-margin-bottom">
-        <ion-label slot="start" *ngIf="upp === undefined">loading...</ion-label>
-        <ion-label slot="start" *ngIf="upp && upp.found">{{upp.hash}}</ion-label>
-        <ion-label slot="start" *ngIf="upp && !upp.found">No hash found for device</ion-label>
+      <ion-item class="ion-margin-bottom" *ngIf="uppHashes === undefined">
+        <ion-label slot="start">loading...</ion-label>
+      </ion-item>
+      <ion-item *ngIf="uppHashes && uppHashes.length === 0">
+        <ion-label slot="start" >No hash found for device</ion-label>
+      </ion-item>
+      <ion-item *ngFor="let uppHash of uppHashes">
+        <ion-label lines="full">
+          <ion-text class="ion-text-wrap">{{uppHash.hash}}</ion-text>
+          <p>{{uppHash.timestamp | date: DATE_TIME_ZONE_FORMAT}}</p>
+        </ion-label>
       </ion-item>
 
     </ion-card-content>
