@@ -12,15 +12,13 @@ export class BEDevice {
     apiConfig: string[];
     apiConfig_new?: string[];
     apiConfig_old?: string[];
-    deviceTypeProperties: string[];
+    deviceTypeProperties?: string[];
     claiming_tags?: string[];
-    deviceConfig: string[];
+    deviceConfig?: string[];
   };
   public deviceType: string;
   public created: string; // timestamp
-
-  public secondaryIndex: string;
-  public ownerId: string;
+  public ownerId?: string;
 
   constructor(props) {
     if (!props || (!props.hwDeviceId && !props.secondaryIndex)) {
@@ -52,12 +50,6 @@ export class BEDevice {
     return this;
   }
   public fixSpecials() {
-    if (this.secondaryIndex) {
-      if (this.hwDeviceId !== undefined && this.hwDeviceId !== '') {
-        console.warn('BEDevice constructor call with both hwDeviceId and secondaryIndex - hwDeviceId will be ignored!');
-        this.hwDeviceId = '';
-      }
-    }
     if (this.attributes) {
       if (this.attributes.claiming_tags) {
         this.attributes.claiming_tags = UbirchWebUIUtilsService.createClaimingTagsFromFormData(this.attributes.claiming_tags);
