@@ -132,7 +132,7 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
   public updateDeviceFromData(data: FormGroup): Observable<BEDevice> {
     if (data) {
       const device = this.loadedDevice.patch(data);
-      if (device && (device.hwDeviceId || device.secondaryIndex)) {
+      if (device && device.hwDeviceId) {
         return this.deviceService.updateDevice(device);
       }
     }
