@@ -31,7 +31,7 @@ export class DeviceDataPage implements OnInit {
 
   public iframeUrl$: Observable<SafeResourceUrl> = this.deviceService.observableCurrentDevice.pipe(
     filter((device: BEDevice) => {
-      return device && (device.hwDeviceId === this.uuid || device.secondaryIndex === this.uuid);
+      return device && device.hwDeviceId === this.uuid;
     }),
     map(device => {
       const tag = this.deviceService.getAllowedCaimingTagsOfDevice(device) || '';
