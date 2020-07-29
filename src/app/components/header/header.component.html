@@ -10,18 +10,7 @@
         <ion-col size="6">
           <div class="ion-text-right">
             <ion-grid>
-              <ion-row
-                id="header-user-data-row"
-                class="ion-justify-content-end"
-                *ngIf="isLoggedIn"
-              >
-                <ion-col size="8" class="ion-align-items-center">
-                  <ion-label  class="header-right-label">
-                    Logged in as:
-                  </ion-label>
-                  <span>{{username}}</span>
-                </ion-col>
-              </ion-row>
+              <ubirch-web-ui-logged-in-user></ubirch-web-ui-logged-in-user>
               <ion-row class="ion-justify-content-end max-content-height"  *ngIf="headerRightValue">
                 <ion-col size="8" class="ion-align-items-center">
                   <ion-label  class="header-right-label">

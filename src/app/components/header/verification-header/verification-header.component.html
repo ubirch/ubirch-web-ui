@@ -10,24 +10,13 @@
         <ion-col size="6">
           <div class="ion-text-right">
             <ion-grid>
-              <ion-row
-                id="header-user-data-row"
-                class="ion-justify-content-end"
-                *ngIf="isLoggedIn"
-              >
+              <ubirch-web-ui-logged-in-user></ubirch-web-ui-logged-in-user>
+              <ion-row class="ion-justify-content-end max-content-height"  *ngIf="currentDevice">
                 <ion-col size="8" class="ion-align-items-center">
                   <ion-label  class="header-right-label">
-                    Logged in as:
+                    thing:
                   </ion-label>
-                  <span>{{username}}</span>
-                </ion-col>
-              </ion-row>
-              <ion-row class="ion-justify-content-end max-content-height"  *ngIf="headerRightValue">
-                <ion-col size="8" class="ion-align-items-center">
-                  <ion-label  class="header-right-label">
-                    {{headerRightLabel}}
-                  </ion-label>
-                  <span>{{headerRightValue}}</span>
+                  <span>{{currentDevice.description}}</span>
                 </ion-col>
               </ion-row>
             </ion-grid>

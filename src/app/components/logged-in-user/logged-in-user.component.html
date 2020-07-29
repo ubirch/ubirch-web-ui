@@ -1,0 +1,12 @@
+<ion-row
+  id="header-user-data-row"
+  class="ion-justify-content-end"
+  *ngIf="isLoggedIn"
+>
+  <ion-col size="8" class="ion-align-items-center">
+    <ion-label  class="header-right-label">
+      Logged in as:
+    </ion-label>
+    <span>{{username}}</span>
+  </ion-col>
+</ion-row>
