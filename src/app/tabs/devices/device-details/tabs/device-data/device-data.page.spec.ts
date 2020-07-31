@@ -3,19 +3,37 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { DeviceDataPage } from './device-data.page';
-import { of } from 'rxjs';
+import {BehaviorSubject, of} from 'rxjs';
 
 import { DeviceService } from 'src/app/services/device.service';
 
 import { environment } from '../../../../../../environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 
-describe('DeviceDataPage', () => {
+fdescribe('DeviceDataPage', () => {
   let component: DeviceDataPage;
   let fixture: ComponentFixture<DeviceDataPage>;
 
   const DEVICE_ID = '0';
   const CLAIMIN_TAG = 'pysense';
+  const mockDevice = {
+    DEVICE_ID,
+    attributes: {
+      claiming_tags: [CLAIMIN_TAG]
+    }
+  };
+
+  class MockDeviceService {
+    observableCurrentDevice = new BehaviorSubject(mockDevice);
+    getAllowedCaimingTagsOfDevice = (device) => {
+      try {
+        console.log(device);
+        return device.attributes.claiming_tags;
+      } catch (e) {
+        return undefined;
+      }
+    }
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -41,9 +59,7 @@ describe('DeviceDataPage', () => {
         },
         {
           provide: DeviceService,
-          useValue: {
-            observableCurrentDevice: of({ hwDeviceId: DEVICE_ID, claimingTags: [CLAIMIN_TAG] })
-          }
+          useValue: MockDeviceService
         },
         {
           provide: DomSanitizer,

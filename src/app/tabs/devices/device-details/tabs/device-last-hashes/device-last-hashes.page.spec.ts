@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeviceLastUPPPage } from './device-last-upp.page';
+import { DeviceLastHashesPage } from './device-last-hashes.page';
 
 describe('DeviceLastUPPPage', () => {
-  let component: DeviceLastUPPPage;
-  let fixture: ComponentFixture<DeviceLastUPPPage>;
+  let component: DeviceLastHashesPage;
+  let fixture: ComponentFixture<DeviceLastHashesPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeviceLastUPPPage ],
+      declarations: [ DeviceLastHashesPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeviceLastUPPPage);
+    fixture = TestBed.createComponent(DeviceLastHashesPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

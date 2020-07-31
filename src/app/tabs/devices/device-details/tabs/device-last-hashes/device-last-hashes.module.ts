@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DeviceLastUPPPage } from './device-last-upp.page';
+import { DeviceLastHashesPage } from './device-last-hashes.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: DeviceLastUPPPage
+    component: DeviceLastHashesPage
   }
 ];
 
@@ -21,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DeviceLastUPPPage]
+  declarations: [DeviceLastHashesPage]
 })
-export class DeviceLastUPPPageModule {}
+export class DeviceLastHashesPageModule {}

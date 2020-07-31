@@ -12,20 +12,22 @@ describe('TabsPage', () => {
   let component: TabsPage;
   let fixture: ComponentFixture<TabsPage>;
   let injector: TestBed;
-  let deviceService: MockDeviceService;
+  let deviceServiceSpy: any;
   let nativeElement: HTMLElement;
 
+  const hwDeviceId = '0';
   const mockDevice = {
-    claimingTags: Object.keys(environment.deviceData.panelMap)
-  }
-
-  class MockDeviceService {
-    observableCurrentDevice = new BehaviorSubject(mockDevice);
-  }
+    hwDeviceId,
+    attributes: {
+      claiming_tags: Object.keys(environment.deviceData.panelMap)
+    }
+  };
 
   const dataTabSelector = '#tabs-data-tab-button';
 
   beforeEach(async(() => {
+    deviceServiceSpy = jasmine.createSpyObj('DeviceService', ['observableCurrentDevice', 'createDevicesFromData']);
+
     TestBed.configureTestingModule({
       declarations: [ TabsPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -33,7 +35,7 @@ describe('TabsPage', () => {
       providers: [
         {
           provide: DeviceService,
-          useClass: MockDeviceService
+          useClass: deviceServiceSpy
         }
       ]
     })
@@ -45,7 +47,6 @@ describe('TabsPage', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     injector = getTestBed();
-    deviceService = injector.get(DeviceService);
     nativeElement = fixture.nativeElement;
   });
 
@@ -58,7 +59,7 @@ describe('TabsPage', () => {
   });
 
   it('showDataTab should be false if device has no allowed tags', () => {
-    deviceService.observableCurrentDevice.next({ claimingTags: []});
+    deviceServiceSpy.observableCurrentDevice.next({ claimingTags: []});
     component.showDataTab$.subscribe(v => expect(v).toBe(false));
   });
 
@@ -70,7 +71,7 @@ describe('TabsPage', () => {
   });
 
   it('data tab should be hidden if device has no allowed tags', () => {
-    deviceService.observableCurrentDevice.next({ claimingTags: []});
+    deviceServiceSpy.observableCurrentDevice.next({ claimingTags: []});
 
     fixture.detectChanges();
     const tabButton = nativeElement.querySelector(dataTabSelector);

@@ -29,26 +29,27 @@ export class DeviceDataPage implements OnInit {
 
   private readonly uuid = this.route.snapshot.parent.parent.parent.params.id;
 
-  public iframeUrl$: Observable<SafeResourceUrl> = this.deviceService.observableCurrentDevice.pipe(
-    filter((device: BEDevice) => {
-      return device && device.hwDeviceId === this.uuid;
-    }),
-    map(device => {
-      const tag = this.deviceService.getAllowedCaimingTagsOfDevice(device) || '';
-      const panelId = this.panelMap[ tag ];
-
-      const url = this.url +
-        `?orgId=${this.orgId}` +
-        `&from=${this.from}` +
-        `&to=${this.to}` +
-        `&panelId=${panelId}` +
-        `&var-uuid=${device.hwDeviceId}`;
-
-      return this.sanitize(url);
-    }),
-  );
+  public iframeUrl$: Observable<SafeResourceUrl>;
 
   ngOnInit() {
+    this.iframeUrl$ = this.deviceService.observableCurrentDevice.pipe(
+      filter((device: BEDevice) => {
+        return device && device.hwDeviceId === this.uuid;
+      }),
+      map(device => {
+        const tag = this.deviceService.getAllowedCaimingTagsOfDevice(device) || '';
+        const panelId = this.panelMap[ tag ];
+
+        const url = this.url +
+          `?orgId=${this.orgId}` +
+          `&from=${this.from}` +
+          `&to=${this.to}` +
+          `&panelId=${panelId}` +
+          `&var-uuid=${device.hwDeviceId}`;
+
+        return this.sanitize(url);
+      }),
+    );
   }
 
   private sanitize(url: string): SafeResourceUrl {
