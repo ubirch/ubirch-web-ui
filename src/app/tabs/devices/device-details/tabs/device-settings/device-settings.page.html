@@ -1,7 +1,7 @@
 <ion-content class="ion-padding-horizontal">
   <ion-grid>
     <ion-row class="ion-align-items-center ion-justify-content-end padding-row">
-      <ion-button  color="danger" (click)="confirmDeviceDelete()">
+      <ion-button  color="danger" (click)="confirmDeviceDelete()" *ngIf="thingCanBeDeleted()">
         <ion-icon slot="end" src="assets/app-icons/delete.svg"></ion-icon>
         delete
       </ion-button>
@@ -21,7 +21,7 @@
         <ng-container [formGroup]="deviceAttributesForm">
           <ion-item class="ion-margin-bottom">
             <ion-label slot="start">tags:</ion-label>
-            <tag-input formControlName="claiming_tags" placeholder="Add tags for this device"></tag-input>
+            <tag-input item-content formControlName="claiming_tags" placeholder="Add tags for this device"></tag-input>
           </ion-item>
           <ion-item>
             <ion-label slot="start">apiConfig:</ion-label>

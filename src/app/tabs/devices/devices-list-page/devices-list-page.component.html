@@ -37,7 +37,7 @@
 
         </ion-label>
         <div class="item-note" slot="end">
-          <ion-button (click)="confirmDeviceDelete(item)" color="danger" class="list-item-end-button">
+          <ion-button (click)="confirmDeviceDelete(item)" color="danger" class="list-item-end-button" *ngIf="thingCanBeDeleted(item)">
             <div class="ion-align-items-center">
               <ion-icon src="assets/app-icons/delete.svg" class="list-item-end-icon"></ion-icon>
               delete

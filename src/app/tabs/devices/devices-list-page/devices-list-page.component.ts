@@ -11,6 +11,7 @@ import {CreatedDevicesListPopupComponent} from './popups/created-devices-list-po
 import {MatPaginator} from '@angular/material/paginator';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
 import {DevicesListWrapper} from '../../../models/devices-list-wrapper';
+import {BEDevice} from '../../../models/bedevice';
 
 @Component({
   selector: 'app-list',
@@ -282,5 +283,9 @@ export class DevicesListPage {
       this.loadingSpinner.dismiss();
       this.loadingSpinner = undefined;
     }
+  }
+
+  public thingCanBeDeleted(device: DeviceStub): boolean {
+    return device && device.canBeDeleted;
   }
 }

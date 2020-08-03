@@ -6,8 +6,8 @@ import {ModalController, ToastController} from '@ionic/angular';
 // tslint:disable-next-line:max-line-length
 import {ConfirmDeleteDevicePopupComponent} from '../../../devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {BEDevice} from '../../../../../models/bedevice';
-import {User} from '../../../../../models/user';
 import {Observable, Subscription, throwError} from 'rxjs';
+import {Group} from '../../../../../models/group';
 
 @Component({
   selector: 'app-device-settings',
@@ -137,6 +137,14 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
       }
     }
     throwError(new Error('tried to update device without data'));
+  }
+
+  public thingCanBeDeleted(): boolean {
+    try {
+      return this.loadedDevice.groups.find((group: Group) => group.name.includes('CLAIMED_')) === undefined;
+    } catch (e) {
+      return false;
+    }
   }
 
   async confirmDeviceDelete() {

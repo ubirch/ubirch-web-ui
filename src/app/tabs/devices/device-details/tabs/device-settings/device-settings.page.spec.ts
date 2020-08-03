@@ -38,4 +38,12 @@ describe('DeviceSettingsPage', () => {
     () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display delete button if it can be deleted', () => {
+    pending('TODO: implement');
+  });
+
+  it('should NOT display delete button if it cannot be deleted', () => {
+    pending('TODO: implement');
+  });
 });
