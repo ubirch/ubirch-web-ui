@@ -15,15 +15,16 @@ describe('DeviceService', () => {
   let httpMock: HttpTestingController;
 
   const deviceIds = ['00000000', '11111111'];
+  const hwDeviceIdJoinedStr = deviceIds.join(', ');
   const reqType = 'creation';
-  const hwDeviceId = deviceIds.join(', ');
   const description = 'Lorem ipsum dolor sit amet';
   const deviceType = environment.default_device_type;
   const tags = ['Lorem', 'ipsum', 'dolor', 'sit', 'amet'];
   const prefix = 'prefix';
 
-  const formData = new CreateDevicesFormData({ reqType, hwDeviceId, description, deviceType, tags, prefix });
-  const devicesArray = deviceIds.map(hwDId => new Device({ ...formData, hwDId }));
+  const formData = new CreateDevicesFormData({ reqType, hwDeviceId: hwDeviceIdJoinedStr, description, deviceType, tags, prefix });
+  const devicesArray = deviceIds.map(hwDId =>
+    new Device({ ...formData, hwDeviceId: hwDId }));
 
   beforeEach(() => {
     TestBed.configureTestingModule({

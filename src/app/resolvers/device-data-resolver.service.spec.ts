@@ -1,6 +1,6 @@
 import {TestBed, getTestBed, async, fakeAsync, flush} from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, of} from 'rxjs';
 
 import { DeviceService } from '../services/device.service';
 import { DeviceDataResolverService } from './device-data-resolver.service';
@@ -11,28 +11,15 @@ describe('DeviceDataResolverService', () => {
   let resolver: DeviceDataResolverService;
   let router: Router;
   let injector: TestBed;
-  let deviceService: MockDeviceService;
+  let deviceService: any;
 
-  const hwDeviceId = '0';
+  const DEVICE_ID = '0';
   const mockDevice = {
-    hwDeviceId,
+    DEVICE_ID,
     attributes: {
       claiming_tags: Object.keys(environment.deviceData.panelMap)
     }
   };
-
-  class MockDeviceService {
-    observableCurrentDevice = new BehaviorSubject(mockDevice);
-    getAllowedCaimingTagsOfDevice = (device) => {
-      try {
-        console.log(device.attributes.claiming_tags);
-        return device.attributes.claiming_tags;
-      } catch (e) {
-        console.log(device);
-        return undefined;
-      }
-    }
-  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -43,7 +30,19 @@ describe('DeviceDataResolverService', () => {
         DeviceDataResolverService,
         {
           provide: DeviceService,
-          useClass: MockDeviceService
+          useValue: {
+            observableCurrentDevice: new BehaviorSubject({
+              hwDeviceId: DEVICE_ID,
+              attributes: {claiming_tags: Object.keys(environment.deviceData.panelMap)}
+            }),
+            getAllowedCaimingTagsOfDevice: (device) => {
+              try {
+                return device.attributes.claiming_tags;
+              } catch (e) {
+                return undefined;
+              }
+            }
+          }
         },
         {
           provide: Router,
@@ -64,7 +63,7 @@ describe('DeviceDataResolverService', () => {
     expect(resolver).toBeTruthy();
   });
 
-  xit('do not redirect if device has allowed tags', async(() => {
+  it('do not redirect if device has allowed tags', async(() => {
     const navigateSpy = spyOn(router, 'navigate');
     deviceService.observableCurrentDevice.next(mockDevice);
     resolver.resolve().subscribe(() => {
@@ -77,10 +76,13 @@ describe('DeviceDataResolverService', () => {
     const navigateSpy = spyOn(router, 'navigate');
     const mockDeviceWithoutTags = {...mockDevice};
     mockDeviceWithoutTags.attributes.claiming_tags = [];
+    console.log('mockDeviceWithoutTags: ' + mockDeviceWithoutTags);
     deviceService.observableCurrentDevice.next(mockDeviceWithoutTags);
 
     resolver.resolve().subscribe(() => {
-      expect(navigateSpy).toHaveBeenCalledWith(['devices', 'details', hwDeviceId, 'settings']);
+      console.log('DeviceDataResolverService called');
+      expect(navigateSpy).toHaveBeenCalledTimes(1);
+      expect(navigateSpy).toHaveBeenCalledWith(['devices', 'details', DEVICE_ID, 'settings']);
     });
 
   }));
