@@ -8,6 +8,7 @@ export class DeviceStub {
     public deviceType: DeviceType;
   // tslint:disable-next-line:variable-name
     public deviceState: DeviceState;
+    public canBeDeleted?: boolean;
 
     constructor(jsonDevice: any) {
         if (!jsonDevice || !jsonDevice.hwDeviceId) {
@@ -18,6 +19,7 @@ export class DeviceStub {
             DeviceTypeService.getDeviceType(jsonDevice.deviceType).subscribe
                 (foundDeviceType =>
                     this.deviceType = foundDeviceType);
+            this.canBeDeleted = jsonDevice.canBeDeleted !== undefined ? jsonDevice.canBeDeleted : false;
         }
 
         return this;

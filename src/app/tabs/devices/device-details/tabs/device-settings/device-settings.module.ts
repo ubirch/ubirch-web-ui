@@ -7,6 +7,7 @@ import { TagInputModule } from 'ngx-chips';
 import { IonicModule } from '@ionic/angular';
 
 import { DeviceSettingsPage } from './device-settings.page';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     IonicModule,
     TagInputModule,
     RouterModule.forChild(routes)

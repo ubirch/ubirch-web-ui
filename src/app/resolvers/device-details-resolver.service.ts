@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { catchError, switchMap, filter, tap, skipWhile, take } from 'rxjs/operators';
-import { ToastController } from '@ionic/angular';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Resolve, Router} from '@angular/router';
+import {catchError} from 'rxjs/operators';
+import {ToastController} from '@ionic/angular';
 
-import { DeviceService } from '../services/device.service';
+import {DeviceService} from '../services/device.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,8 @@ export class DeviceDetailsResolverService implements Resolve<any> {
     private router: Router,
     private deviceService: DeviceService,
     private toastCtrl: ToastController,
-  ) { }
+  ) {
+  }
 
   resolve(next: ActivatedRouteSnapshot) {
     const id = next.paramMap.get('id');
