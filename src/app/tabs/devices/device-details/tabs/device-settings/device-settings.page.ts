@@ -141,7 +141,7 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
 
   public thingCanBeDeleted(): boolean {
     try {
-      return this.loadedDevice.groups.find((group: Group) => group.name.includes('CLAIMED_')) === undefined;
+      return this.loadedDevice.canBeDeleted ? true : false;
     } catch (e) {
       return false;
     }

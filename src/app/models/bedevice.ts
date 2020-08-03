@@ -18,6 +18,7 @@ export class BEDevice {
   };
   public deviceType: string;
   public created: string; // timestamp
+  public canBeDeleted?: boolean;
   public ownerId?: string;
 
   constructor(props) {
@@ -54,6 +55,9 @@ export class BEDevice {
       if (this.attributes.claiming_tags) {
         this.attributes.claiming_tags = UbirchWebUIUtilsService.createClaimingTagsFromFormData(this.attributes.claiming_tags);
       }
+    }
+    if (this.canBeDeleted === undefined) {
+      this.canBeDeleted = false;
     }
   }
 }
