@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Resolve, Router } from '@angular/router';
-import { DeviceService } from '../services/device.service';
-import { Observable } from 'rxjs';
-import { take, map, tap } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import {Injectable} from '@angular/core';
+import {Resolve, Router} from '@angular/router';
+import {DeviceService} from '../services/device.service';
+import {Observable} from 'rxjs';
+import {map, take, tap} from 'rxjs/operators';
 import {BEDevice} from '../models/bedevice';
 
 @Injectable({
@@ -11,7 +10,8 @@ import {BEDevice} from '../models/bedevice';
 })
 export class DeviceDataResolverService implements Resolve<any> {
 
-  constructor(private deviceService: DeviceService, private router: Router) { }
+  constructor(private deviceService: DeviceService, private router: Router) {
+  }
 
   resolve(): Observable<void> {
     return this.deviceService.observableCurrentDevice.pipe(
@@ -21,7 +21,8 @@ export class DeviceDataResolverService implements Resolve<any> {
           this.router.navigate(['devices', 'details', device.hwDeviceId, 'settings']);
         }
       }),
-      map(() => {}),
+      map(() => {
+      }),
     );
   }
 }

@@ -1,52 +1,58 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed, getTestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {async, ComponentFixture, fakeAsync, flush, getTestBed, TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
-import { TabsPage } from './tabs.page';
-import { DeviceService } from 'src/app/services/device.service';
-import { of, BehaviorSubject } from 'rxjs';
+import {TabsPage} from './tabs.page';
+import {DeviceService} from 'src/app/services/device.service';
+import {BehaviorSubject} from 'rxjs';
 
-import { environment } from '../../../../../environments/environment';
+import {environment} from '../../../../../environments/environment';
 
 describe('TabsPage', () => {
   let component: TabsPage;
   let fixture: ComponentFixture<TabsPage>;
   let injector: TestBed;
-  let deviceService: MockDeviceService;
   let nativeElement: HTMLElement;
+  let deviceService: any;
 
-  const mockDevice = {
-    claimingTags: Object.keys(environment.deviceData.panelMap)
-  }
-
-  class MockDeviceService {
-    observableCurrentDevice = new BehaviorSubject(mockDevice);
-  }
-
+  const DEVICE_ID = '0';
+  const CLAIMIN_TAG = 'pysense';
   const dataTabSelector = '#tabs-data-tab-button';
 
   beforeEach(async(() => {
+
     TestBed.configureTestingModule({
-      declarations: [ TabsPage ],
+      declarations: [TabsPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [HttpClientTestingModule],
       providers: [
         {
           provide: DeviceService,
-          useClass: MockDeviceService
+          useValue: {
+            observableCurrentDevice: new BehaviorSubject({
+              hwDeviceId: DEVICE_ID,
+              attributes: {claiming_tags: Object.keys(environment.deviceData.panelMap)}
+            }),
+            getAllowedCaimingTagsOfDevice: (device) => {
+              try {
+                return device.attributes.claiming_tags;
+              } catch (e) {
+                return undefined;
+              }
+            }
+          }
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TabsPage);
     component = fixture.componentInstance;
-    fixture.detectChanges();
     injector = getTestBed();
-    deviceService = injector.get(DeviceService);
     nativeElement = fixture.nativeElement;
+    deviceService = injector.get(DeviceService);
   });
 
   it('should create', () => {
@@ -54,27 +60,36 @@ describe('TabsPage', () => {
   });
 
   it('showDataTab should be true if device has allowed tags', () => {
-    component.showDataTab$.subscribe(v => expect(v).toBe(true));
+    component.showDataTab$.subscribe(v => {
+      console.log('showDataTab$ set initially: ' + v);
+      expect(v).toBe(true);
+    });
   });
 
   it('showDataTab should be false if device has no allowed tags', () => {
-    deviceService.observableCurrentDevice.next({ claimingTags: []});
-    component.showDataTab$.subscribe(v => expect(v).toBe(false));
+    deviceService.observableCurrentDevice.next({claimingTags: []});
+    component.showDataTab$.subscribe(v => {
+      console.log('set no claiming tags - showDataTab$ changed: ' + v);
+      expect(v).toBe(false);
+    });
   });
 
-  it('data tab should be shown if device has allowed tags', () => {
-    const tabButton = nativeElement.querySelector(dataTabSelector);
+  it('data tab should be shown if device has allowed tags', fakeAsync(() => {
     fixture.detectChanges();
+    flush();
 
+//    console.log('tabButton: ' + nativeElement.outerHTML);
+    const tabButton = nativeElement.querySelector(dataTabSelector);
     expect(tabButton).toBeTruthy();
-  });
+  }));
 
-  it('data tab should be hidden if device has no allowed tags', () => {
-    deviceService.observableCurrentDevice.next({ claimingTags: []});
-
+  it('data tab should be hidden if device has no allowed tags', fakeAsync(() => {
+    deviceService.observableCurrentDevice.next({claimingTags: []});
     fixture.detectChanges();
-    const tabButton = nativeElement.querySelector(dataTabSelector);
+    flush();
 
+    console.log('tabButton: ' + nativeElement.outerHTML);
+    const tabButton = nativeElement.querySelector(dataTabSelector);
     expect(tabButton).toBeNull();
-  });
+  }));
 });

@@ -35,7 +35,7 @@ const routes: Routes = [
       },
       {
         path: 'upphashes',
-        loadChildren: () => import('./device-last-upp/device-last-upp.module').then(m => m.DeviceLastUPPPageModule)
+        loadChildren: () => import('./device-last-hashes/device-last-hashes.module').then(m => m.DeviceLastHashesPageModule)
       },
       {
         path: 'pubkeys',

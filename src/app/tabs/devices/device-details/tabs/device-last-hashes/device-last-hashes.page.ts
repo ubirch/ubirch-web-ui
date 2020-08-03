@@ -8,11 +8,11 @@ import {environment} from '../../../../../../environments/environment';
 import {NavigationExtras, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-device-last-upp',
-  templateUrl: './device-last-upp.page.html',
-  styleUrls: ['./device-last-upp.page.scss'],
+  selector: 'app-device-last-hashes',
+  templateUrl: './device-last-hashes.page.html',
+  styleUrls: ['./device-last-hashes.page.scss'],
 })
-export class DeviceLastUPPPage implements OnInit, OnDestroy {
+export class DeviceLastHashesPage implements OnInit, OnDestroy {
 
   public loadedDevice: BEDevice;
   public uppHashes: UppHash[];

@@ -199,26 +199,7 @@ export class DeviceService {
   }
 
   public getLastNHashesOfDevice(deviceId: string, count: number = 10): Observable<UppHash[]> {
-    /*
-    const testData = [
-      {
-        deviceId: '55424952-30ae-a44e-4f40-30aea44e4f40',
-        hash: 'WC7B9qbwn5A4oU/I6/0IJ+NzmBDG63QO6hXe7KuU2ul4yAPc3CldKd5CKKbhf0qXZJAva0CLXWTz00tr3F9BeQ==',
-        timestamp: '2020-07-03T09:51:36.000Z'
-      },
-      {
-        deviceId: '55424952-30ae-a44e-4f40-30aea44e4f40',
-        hash: 'WC7B9qbwn5A4oU/I6/0IJ+NzmBDG63QO6hXe7KuU2ul4yAPc3CldKd5CKKbhf0qXZJAva0CLXWTz00tr3F9BeQ==',
-        timestamp: '2020-07-03T09:52:36.000Z'
-      },
-      {
-        deviceId: '55424952-30ae-a44e-4f40-30aea44e4f40',
-        hash: 'WC7B9qbwn5A4oU/I6/0IJ+NzmBDG63QO6hXe7KuU2ul4yAPc3CldKd5CKKbhf0qXZJAva0CLXWTz00tr3F9BeQ==',
-        timestamp: '2020-07-03T09:53:36.000Z'
-      }
-    ];
-    return of(testData)
-    */
+
     const url = `${this.getLastNHashesUrl}/${deviceId}/${count}`;
     return this.http.get(url)
       .pipe(

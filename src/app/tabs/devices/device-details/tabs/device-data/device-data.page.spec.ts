@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { DeviceDataPage } from './device-data.page';
-import { of } from 'rxjs';
+import {BehaviorSubject, of} from 'rxjs';
 
 import { DeviceService } from 'src/app/services/device.service';
 
@@ -42,7 +42,15 @@ describe('DeviceDataPage', () => {
         {
           provide: DeviceService,
           useValue: {
-            observableCurrentDevice: of({ hwDeviceId: DEVICE_ID, claimingTags: [CLAIMIN_TAG] })
+            observableCurrentDevice: of({ hwDeviceId: DEVICE_ID, attributes: {claiming_tags: [CLAIMIN_TAG] }}),
+            getAllowedCaimingTagsOfDevice: (device) => {
+              try {
+                console.log(device);
+                return device.attributes.claiming_tags;
+              } catch (e) {
+                return undefined;
+              }
+            }
           }
         },
         {
