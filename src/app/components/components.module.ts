@@ -6,6 +6,7 @@ import {IonicModule} from '@ionic/angular';
 import { FileInputComponent } from './file-input/file-input.component';
 import {VerificationHeaderComponent} from './header/verification-header/verification-header.component';
 import {LoggedInUserComponent} from './logged-in-user/logged-in-user.component';
+import {TagChipsListInputComponent} from './tag-chips-list-input/tag-chips-list-input.component';
 
 
 
@@ -15,6 +16,7 @@ import {LoggedInUserComponent} from './logged-in-user/logged-in-user.component';
       VerificationHeaderComponent,
       LoggedInUserComponent,
       FileInputComponent,
+      TagChipsListInputComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import {LoggedInUserComponent} from './logged-in-user/logged-in-user.component';
       HeaderComponent,
       VerificationHeaderComponent,
       LoggedInUserComponent,
-      FileInputComponent
+      FileInputComponent,
+      TagChipsListInputComponent
   ]
 })
 export class ComponentsModule { }

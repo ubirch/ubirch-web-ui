@@ -21,7 +21,6 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     IonicModule,
     TagInputModule,
     RouterModule.forChild(routes)
