@@ -65,14 +65,14 @@ export const environment = {
     },
     'gov-digital': {
       mainnet: {
-        url: 'http://bcp-govdigi01.tir.budru.de/',
-        icon_url: 'GovDigital_Icon_verify.png'
+        url: 'http://bcp-govdigi01.tir.budru.de/tx/',
+        icon_url: '/wp-content/uploads/workshop_images/GovDigital_Icon_verify_right.png'
       }
     },
     regioit: {
       bdr: {
-        url: 'http://bcp-govdigi01.tir.budru.de/',
-        icon_url: 'GovDigital_Icon_verify.png'
+        url: 'http://bcp-govdigi01.tir.budru.de/tx/',
+        icon_url: '/wp-content/uploads/workshop_images/GovDigital_Icon_verify_right.png'
       }
     }
   },

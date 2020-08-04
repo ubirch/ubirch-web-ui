@@ -66,13 +66,13 @@ export const environment = {
     'gov-digital': {
       mainnet: {
         url: 'http://bcp-govdigi01.tir.budru.de/',
-        icon_url: 'GovDigital_Icon_verify.png'
+        icon_url: 'GovDigital_Icon_verify_right.png'
       }
     },
     regioit: {
       bdr: {
         url: 'https://rinkeby.etherscan.io/tx/',
-        icon_url: 'GovDigital_Icon_verify.png'
+        icon_url: 'GovDigital_Icon_verify_right.png'
       }
     }
   },
