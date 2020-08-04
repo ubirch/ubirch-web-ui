@@ -1,9 +1,10 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Upp} from '../../../../models/upp';
 import {TrustService, VERIFICATION_STATE} from '../../../../services/trust.service';
 import {CytoscapeNodeLayout, LAYOUT_SETTINGS} from '../../../../models/cytoscape-node-layout';
 import {BlockChainNode} from '../../../../models/block-chain-node';
 import {ToastController} from '@ionic/angular';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-verification-graph',
@@ -11,7 +12,7 @@ import {ToastController} from '@ionic/angular';
   styleUrls: ['./verification-graph.page.scss'],
 })
 
-export class VerificationGraphPage implements OnInit {
+export class VerificationGraphPage implements OnInit, OnDestroy {
   @ViewChild('NO_HASH', {static: true}) NO_HASH: TemplateRef<any>;
   @ViewChild('HASH_INSERTED_UNVERIFIED', {static: true}) HASH_INSERTED_UNVERIFIED: TemplateRef<any>;
   @ViewChild('PENDING', {static: true}) PENDING: TemplateRef<any>;
@@ -23,6 +24,9 @@ export class VerificationGraphPage implements OnInit {
   public verifiedUpp: Upp;
   public verificationState = VERIFICATION_STATE.NO_HASH;
   public hash2Verify: string;
+  private observableVerifiedHashSubsc: Subscription;
+  private observableVerificationStateSubsc: Subscription;
+  private observableUPPSubsc: Subscription;
 
   layoutOffset = 50;
   layout = {
@@ -76,13 +80,13 @@ export class VerificationGraphPage implements OnInit {
   }
 
   ngOnInit() {
-    this.truster.observableVerifiedHash.subscribe(
+    this.observableVerifiedHashSubsc = this.truster.observableVerifiedHash.subscribe(
       hash => this.hash2Verify = hash
     );
-    this.truster.observableVerificationState.subscribe(
+    this.observableVerificationStateSubsc = this.truster.observableVerificationState.subscribe(
       state => this.verificationState = state
     );
-    this.truster.observableUPP.subscribe(
+    this.observableUPPSubsc = this.truster.observableUPP.subscribe(
       upp => {
         if (upp) {
           this.createUppTree(upp);
@@ -136,5 +140,17 @@ export class VerificationGraphPage implements OnInit {
 
   public get VERIFICATION_STATE(): any {
     return VERIFICATION_STATE;
+  }
+
+  ngOnDestroy(): void {
+    if (this.observableVerifiedHashSubsc) {
+      this.observableVerifiedHashSubsc.unsubscribe();
+    }
+    if (this.observableVerificationStateSubsc) {
+      this.observableVerificationStateSubsc.unsubscribe();
+    }
+    if (this.observableUPPSubsc) {
+      this.observableUPPSubsc.unsubscribe();
+    }
   }
 }

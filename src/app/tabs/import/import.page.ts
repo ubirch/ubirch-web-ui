@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -12,7 +12,7 @@ import { DeviceImportResult } from 'src/app/models/device-import-result';
   templateUrl: './import.page.html',
   styleUrls: ['./import.page.scss'],
 })
-export class ImportPage implements OnInit {
+export class ImportPage implements OnInit, OnDestroy {
   /**
    * maxiumum rows in the file count
    */
@@ -65,6 +65,8 @@ export class ImportPage implements OnInit {
     }),
   );
 
+  private importSubscr: Subscription;
+
   constructor(private deviceImportService: DeviceImportService) { }
 
   ngOnInit() {
@@ -84,7 +86,7 @@ export class ImportPage implements OnInit {
     this.result$.next(null);
 
     // send import request with FormData
-    this.deviceImportService.importDevice(formData).subscribe(
+    this.importSubscr = this.deviceImportService.importDevice(formData).subscribe(
       (result: DeviceImportResult) => {
         // turn off spinner
         this.loading$.next(false);
@@ -119,5 +121,11 @@ export class ImportPage implements OnInit {
     });
 
     return formData;
+  }
+
+  ngOnDestroy(): void {
+    if (this.importSubscr) {
+      this.importSubscr.unsubscribe();
+    }
   }
 }

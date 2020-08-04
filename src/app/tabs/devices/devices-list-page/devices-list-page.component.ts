@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {DeviceStub} from '../../../models/device-stub';
 import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
@@ -18,7 +18,7 @@ import {BEDevice} from '../../../models/bedevice';
   templateUrl: 'devices-list-page.component.html',
   styleUrls: ['devices-list-page.component.scss']
 })
-export class DevicesListPage {
+export class DevicesListPage implements OnDestroy {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public deviceStubs: Array<DeviceStub> = [];
 
@@ -36,6 +36,11 @@ export class DevicesListPage {
   loadingSpinner: HTMLIonLoadingElement;
   loaded = false;
   stateLoading = false;
+
+  private paginatorSubscr: Subscription;
+  private devideStateSubscr: Subscription;
+  private deleteDeviceSubscr: Subscription;
+  private createDeviceSubscr: Subscription;
 
   constructor(
       private deviceService: DeviceService,
@@ -96,16 +101,12 @@ export class DevicesListPage {
   }
 
   ionViewDidEnter() {
-    this.paginator.page
+    this.paginatorSubscr = this.paginator.page
         .pipe(
             tap(() => this.restartPolling(true))
         )
         .subscribe();
 
-  }
-
-  ionViewWillLeave() {
-    this.stopPolling();
   }
 
   private restartPolling(showSpinner?: boolean) {
@@ -172,7 +173,7 @@ export class DevicesListPage {
 
     if (listWrapper && listWrapper.devices) {
       this.stateLoading = true;
-      this.deviceService.getDeviceStates(listWrapper.devices.map(device => device.hwDeviceId)).subscribe(
+      this.devideStateSubscr = this.deviceService.getDeviceStates(listWrapper.devices.map(device => device.hwDeviceId)).subscribe(
         states => {
           this.stateLoading = false;
           listWrapper.setDeviceStates(states);
@@ -199,7 +200,7 @@ export class DevicesListPage {
     });
     modal.onDidDismiss().then((detail: any) => {
       if (detail !== null && detail.data && detail.data.confirmed) {
-        this.deviceService.deleteDevice(
+        this.deleteDeviceSubscr = this.deviceService.deleteDevice(
             device.hwDeviceId)
             .subscribe(
                 _ => {
@@ -223,7 +224,7 @@ export class DevicesListPage {
     });
     modal.onDidDismiss().then((details: any) => {
       if (details && details.data) {
-        this.deviceService.createDevicesFromData(
+        this.createDeviceSubscr = this.deviceService.createDevicesFromData(
             details.data)
             .subscribe(
                 createdDevice => {
@@ -288,4 +289,21 @@ export class DevicesListPage {
   public thingCanBeDeleted(device: DeviceStub): boolean {
     return device && device.canBeDeleted;
   }
+
+  ngOnDestroy(): void {
+    this.stopPolling();
+    if (this.paginatorSubscr) {
+      this.paginatorSubscr.unsubscribe();
+    }
+    if (this.devideStateSubscr) {
+      this.devideStateSubscr.unsubscribe();
+    }
+    if (this.deleteDeviceSubscr) {
+      this.deleteDeviceSubscr.unsubscribe();
+    }
+    if (this.createDeviceSubscr) {
+      this.createDeviceSubscr.unsubscribe();
+    }
+  }
+
 }

@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {ToastController} from '@ionic/angular';
 import {KeycloakService} from 'keycloak-angular';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'ubirch-web-ui-logged-in-user',
   templateUrl: './logged-in-user.component.html',
   styleUrls: ['./logged-in-user.component.scss'],
 })
-export class LoggedInUserComponent implements OnInit {
+export class LoggedInUserComponent implements OnInit, OnDestroy {
 
   username: string;
   isLoggedIn = false;
+  private accountSubsc: Subscription;
+  private accountSubsc2: Subscription;
 
   constructor(
     private toastCtrl: ToastController,
@@ -31,11 +34,11 @@ export class LoggedInUserComponent implements OnInit {
 
     this.isLoggedIn = true;
 
-    this.userService.observableAccountInfo.subscribe(accountInfo => {
+    this.accountSubsc = this.userService.observableAccountInfo.subscribe(accountInfo => {
       if (accountInfo) {
         this.username = accountInfo.user.toString();
       } else {
-        this.userService.getAccountInfo().subscribe(
+        this.accountSubsc2 = this.userService.getAccountInfo().subscribe(
           _ => {},
           error => this.handleError(error)
         );
@@ -49,5 +52,14 @@ export class LoggedInUserComponent implements OnInit {
       color: 'danger'
     };
     this.toastCtrl.create(errorContent).then(toast => toast.present());
+  }
+
+  ngOnDestroy(): void {
+    if (this.accountSubsc) {
+      this.accountSubsc.unsubscribe();
+    }
+    if (this.accountSubsc2) {
+      this.accountSubsc2.unsubscribe();
+    }
   }
 }

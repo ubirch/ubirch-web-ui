@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {forkJoin, interval, Observable, of, Subscription} from 'rxjs';
 import {environment} from '../../../../../../environments/environment';
 import {startWith, switchMap} from 'rxjs/operators';
@@ -11,7 +11,7 @@ import {BEDevice} from '../../../../../models/bedevice';
   templateUrl: './device-state.page.html',
   styleUrls: ['./device-state.page.scss'],
 })
-export class DeviceStatePage implements OnInit {
+export class DeviceStatePage implements OnInit, OnDestroy {
 
   polling = new Subscription();
 
@@ -26,6 +26,8 @@ export class DeviceStatePage implements OnInit {
   deviceStates: Map<number, DeviceState> = new Map<number, DeviceState>();
   stateLoading = false;
 
+  private currDeviceSubscr: Subscription;
+
   constructor(
     private deviceService: DeviceService
   ) { }
@@ -35,7 +37,7 @@ export class DeviceStatePage implements OnInit {
   }
 
   ngOnInit() {
-    this.deviceService.observableCurrentDevice
+    this.currDeviceSubscr = this.deviceService.observableCurrentDevice
       .subscribe(
         loadedDevice =>  {
           this.loadedDevice = loadedDevice;
@@ -116,6 +118,13 @@ export class DeviceStatePage implements OnInit {
   private stopPolling() {
     if (this.polling) {
       this.polling.unsubscribe();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.stopPolling();
+    if (this.currDeviceSubscr) {
+      this.currDeviceSubscr.unsubscribe();
     }
   }
 

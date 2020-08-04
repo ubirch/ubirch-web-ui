@@ -49,6 +49,8 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
   ]);
   private deviceHasUnsavedChanges = false;
   private deviceSubsc: Subscription;
+  private valueChangesSubscr: Subscription;
+  private updateDeviceSubscr: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -100,10 +102,16 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
     if (this.deviceSubsc) {
       this.deviceSubsc.unsubscribe();
     }
+    if (this.valueChangesSubscr) {
+      this.valueChangesSubscr.unsubscribe();
+    }
+    if (this.updateDeviceSubscr) {
+      this.updateDeviceSubscr.unsubscribe();
+    }
   }
 
   watchFormControls(): void {
-    this.deviceDetailsForm.valueChanges.subscribe(val => {
+    this.valueChangesSubscr = this.deviceDetailsForm.valueChanges.subscribe(val => {
       this.deviceHasUnsavedChanges = true;
     });
   }
@@ -111,7 +119,7 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
   async saveDevice() {
     const details = this.deviceDetailsForm.getRawValue();
 
-    this.updateDeviceFromData(details).subscribe(
+    this.updateDeviceSubscr = this.updateDeviceFromData(details).subscribe(
       updatedDevice => {
         this.loadedDevice = new BEDevice(updatedDevice);
         this.patchForm(this.loadedDevice);
