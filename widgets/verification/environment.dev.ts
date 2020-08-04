@@ -35,7 +35,7 @@ export default {
         },
         regioit: {
             bdr: {
-                url: 'https://rinkeby.etherscan.io/tx/',
+                url: 'http://bcp-govdigi01.tir.budru.de/',
                 icon_url: 'GovDigital_Icon_verify.png'
            }
         }

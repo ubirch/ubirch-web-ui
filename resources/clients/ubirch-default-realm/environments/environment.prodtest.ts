@@ -70,7 +70,7 @@ export const environment = {
     },
     regioit: {
       bdr: {
-        url: 'https://rinkeby.etherscan.io/tx/',
+        url: 'http://bcp-govdigi01.tir.budru.de/',
         icon_url: '/fileadmin/Bilder/Zertifikate/govlogo_small.png'
       }
     }
