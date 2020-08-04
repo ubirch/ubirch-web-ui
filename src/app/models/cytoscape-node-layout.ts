@@ -17,6 +17,8 @@ export const LAYOUT_SETTINGS = [
     nodeIcon: 'assets/app-icons/Ethereum-Classic_verify_right.png'},
   { type: 'regioit',
     nodeIcon: 'assets/app-icons/GovDigital_Icon_verify_right.png'},
+  { type: 'gov-digital',
+    nodeIcon: 'assets/app-icons/GovDigital_Icon_verify_right.png'},
   ];
 
 export class CytoscapeNodeLayout {
