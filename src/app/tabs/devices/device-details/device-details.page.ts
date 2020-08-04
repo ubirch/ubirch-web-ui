@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {Device} from '../../../models/device';
 import {Router} from '@angular/router';
 import {DeviceService} from '../../../services/device.service';
@@ -11,7 +11,7 @@ import {BEDevice} from '../../../models/bedevice';
   templateUrl: './device-details.page.html',
   styleUrls: ['./device-details.page.scss'],
 })
-export class DeviceDetailsPage {
+export class DeviceDetailsPage implements OnDestroy {
 
    id: string;
    private deviceHasUnsavedChanges = false;
@@ -52,4 +52,10 @@ export class DeviceDetailsPage {
   get title(): string {
     return this.loadedDevice ? this.loadedDevice.description : '';
   }
+  ngOnDestroy(): void {
+    if (this.deviceSubscription) {
+      this.deviceSubscription.unsubscribe();
+    }
+  }
+
 }

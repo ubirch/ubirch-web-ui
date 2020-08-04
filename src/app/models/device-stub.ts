@@ -1,14 +1,17 @@
 import {DeviceType} from './device-type';
 import {DeviceTypeService} from '../services/device-type.service';
 import {DeviceState} from './device-state';
+import {Subscription} from 'rxjs';
+import {OnDestroy} from '@angular/core';
 
-export class DeviceStub {
+export class DeviceStub implements OnDestroy {
     public hwDeviceId: string;
     public description: string;
     public deviceType: DeviceType;
   // tslint:disable-next-line:variable-name
     public deviceState: DeviceState;
     public canBeDeleted?: boolean;
+    private deviceTypeSubscr: Subscription;
 
     constructor(jsonDevice: any) {
         if (!jsonDevice || !jsonDevice.hwDeviceId) {
@@ -16,7 +19,7 @@ export class DeviceStub {
         } else {
             this.hwDeviceId = jsonDevice.hwDeviceId;
             this.description = jsonDevice.description || '';
-            DeviceTypeService.getDeviceType(jsonDevice.deviceType).subscribe
+            this.deviceTypeSubscr = DeviceTypeService.getDeviceType(jsonDevice.deviceType).subscribe
                 (foundDeviceType =>
                     this.deviceType = foundDeviceType);
             this.canBeDeleted = jsonDevice.canBeDeleted !== undefined ? jsonDevice.canBeDeleted : false;
@@ -24,4 +27,10 @@ export class DeviceStub {
 
         return this;
     }
+
+  ngOnDestroy(): void {
+      if (this.deviceTypeSubscr) {
+        this.deviceTypeSubscr.unsubscribe();
+      }
+  }
 }

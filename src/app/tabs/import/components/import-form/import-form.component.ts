@@ -1,27 +1,9 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  SimpleChanges,
-  OnChanges,
-  OnDestroy,
-} from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
-import {
-  BehaviorSubject,
-  Observable,
-  combineLatest,
-  Subscription,
-} from 'rxjs';
-import { map, distinctUntilChanged } from 'rxjs/operators';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges,} from '@angular/core';
+import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
+import {BehaviorSubject, combineLatest, Observable, Subscription,} from 'rxjs';
+import {distinctUntilChanged, map} from 'rxjs/operators';
 
-import { ValidatorsService } from 'src/app/validators/validators.service';
+import {ValidatorsService} from 'src/app/validators/validators.service';
 
 enum EImportDeviceBatchType {
   SIM_IMPORT = 'sim_import',
@@ -34,7 +16,7 @@ const INITIAL_FORM_VALUE = {
   batch_provider: '',
   batch_description: '',
   batch_tags: '',
-}
+};
 
 @Component({
   selector: 'app-import-form',
@@ -46,7 +28,7 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
    * observable to reset form from parent component
    */
   @Input('resetForm') resetForm$: Observable<void>;
- 
+
   @Input() public readonly loading: boolean;
 
   /**
@@ -68,28 +50,32 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
    * submit event
    */
   @Output() public submitForm: EventEmitter<ImportDeviceFormData> = new EventEmitter();
-
+  /**
+   * file size in kylobytes to be shown in the form
+   */
+  public fileSizePrettified$: Observable<number> = this.fileSizeBytes$.pipe(
+    map((bytes: number) => {
+      return Math.floor(bytes / 1024);
+    }),
+  );
+  public importForm: FormGroup;
   /**
    * maximum rows per file subject
    */
   private rowsCountLimit$: BehaviorSubject<number> = new BehaviorSubject(this.rowsCountLimit);
-
   /**
    * row size in bytes subject
    */
   private rowSize$: BehaviorSubject<number> = new BehaviorSubject(this.rowSize);
-
   /**
    * header row size in bytes subject
    */
   private headerRowSize$: BehaviorSubject<number> = new BehaviorSubject(this.headerRowSize);
-
   /**
    * defines should the header row size be
    * included into file size calculation or no
    */
   private skipHeader$: BehaviorSubject<boolean> = new BehaviorSubject(INITIAL_FORM_VALUE.skip_header);
-
   /**
    * computed maximum file size
    */
@@ -112,38 +98,25 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
       return size;
     }),
   );
-
-  /**
-   * file size in kylobytes to be shown in the form
-   */
-  public fileSizePrettified$: Observable<number> = this.fileSizeBytes$.pipe(
-    map((bytes: number) => {
-      return Math.floor(bytes / 1024);
-    }),
-  );
-
   /**
    * subscription to watch maximum file size and update
    * form validator
    */
   private updateFormFileSizeSubscription: Subscription;
-
   /**
    * update file size limit with (or without) header row size
    */
   private watchHeaderRowSizeSubscription: Subscription;
-
   /**
    * subscription for reset form observable
    */
   private resetFormSubscription: Subscription;
 
-  public importForm: FormGroup;
-
   constructor(
     private fb: FormBuilder,
     private validators: ValidatorsService,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.importForm = this.initImportForm();
@@ -192,6 +165,19 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   /**
+   * prepare value to submit and emit submit event
+   */
+  public submitImportForm() {
+    if (this.importForm.invalid) {
+      return;
+    }
+
+    const formValue = new ImportDeviceFormData(this.importForm.getRawValue());
+
+    this.submitForm.emit(formValue);
+  }
+
+  /**
    * initialize form
    */
   private initImportForm(): FormGroup {
@@ -211,19 +197,6 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
   private resetImportForm() {
     this.importForm.reset();
     this.importForm.setValue(INITIAL_FORM_VALUE);
-  }
-
-  /**
-   * prepare value to submit and emit submit event
-   */
-  public submitImportForm() {
-    if (this.importForm.invalid) {
-      return;
-    }
-
-    const formValue = new ImportDeviceFormData(this.importForm.getRawValue());
-
-    this.submitForm.emit(formValue);
   }
 
   /**
@@ -278,10 +251,15 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
 
 export class ImportDeviceFormData {
   public file: File;
+  // tslint:disable-next-line:variable-name
   public skip_header: boolean;
+  // tslint:disable-next-line:variable-name
   public batch_type: EImportDeviceBatchType;
+  // tslint:disable-next-line:variable-name
   public batch_provider: string;
+  // tslint:disable-next-line:variable-name
   public batch_description: string;
+  // tslint:disable-next-line:variable-name
   public batch_tags: string;
 
   constructor(props: any) {
