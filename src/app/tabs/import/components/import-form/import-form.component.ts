@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges,} from '@angular/core';
-import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
-import {BehaviorSubject, combineLatest, Observable, Subscription,} from 'rxjs';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 
 import {ValidatorsService} from 'src/app/validators/validators.service';
 
 enum EImportDeviceBatchType {
   SIM_IMPORT = 'sim_import',
-};
+}
 
 const INITIAL_FORM_VALUE = {
   file: null,
@@ -27,6 +27,7 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * observable to reset form from parent component
    */
+    // tslint:disable-next-line:no-input-rename
   @Input('resetForm') resetForm$: Observable<void>;
 
   @Input() public readonly loading: boolean;
@@ -50,14 +51,7 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
    * submit event
    */
   @Output() public submitForm: EventEmitter<ImportDeviceFormData> = new EventEmitter();
-  /**
-   * file size in kylobytes to be shown in the form
-   */
-  public fileSizePrettified$: Observable<number> = this.fileSizeBytes$.pipe(
-    map((bytes: number) => {
-      return Math.floor(bytes / 1024);
-    }),
-  );
+
   public importForm: FormGroup;
   /**
    * maximum rows per file subject
@@ -96,6 +90,14 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
       }
 
       return size;
+    }),
+  );
+  /**
+   * file size in kylobytes to be shown in the form
+   */
+  public fileSizePrettified$: Observable<number> = this.fileSizeBytes$.pipe(
+    map((bytes: number) => {
+      return Math.floor(bytes / 1024);
     }),
   );
   /**

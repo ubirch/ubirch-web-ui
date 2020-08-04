@@ -106,7 +106,7 @@ describe('ImportFormComponent', () => {
       .pipe(take(1))
       .subscribe(v => expect(v).toEqual(limitWithHeader));
 
-    form.get('skip_header').patchValue(true); 
+    form.get('skip_header').patchValue(true);
 
     component
       .fileSizeBytes$
