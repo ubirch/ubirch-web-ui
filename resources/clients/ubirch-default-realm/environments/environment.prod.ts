@@ -63,10 +63,16 @@ export const environment = {
         icon_url: '/wp-content/uploads/workshop_images/IOTA_verify_right.png'
       }
     },
+    'gov-digital': {
+      mainnet: {
+        url: 'http://bcp-govdigi01.tir.budru.de/',
+        icon_url: 'GovDigital_Icon_verify.png'
+      }
+    },
     regioit: {
       bdr: {
         url: 'http://bcp-govdigi01.tir.budru.de/',
-        icon_url: '/fileadmin/Bilder/Zertifikate/govlogo_small.png'
+        icon_url: 'GovDigital_Icon_verify.png'
       }
     }
   },

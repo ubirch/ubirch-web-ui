@@ -34,6 +34,12 @@ export default {
 //       icon_url: 'IOTA_verify_right.png'
 //     }
 //   },
+//  'gov-digital': {
+//    mainnet: {
+//      url: 'http://bcp-govdigi01.tir.budru.de/',
+//      icon_url: 'GovDigital_Icon_verify.png'
+//    }
+//  },
 //   regioit: {
 //     bdr: {
 //       url: 'http://bcp-govdigi01.tir.budru.de/',
