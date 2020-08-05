@@ -34,10 +34,17 @@ a {
   cursor: pointer;
 }
 
-ion-header ion-toolbar:first-child {
-  height: 350px;
-  --ion-padding: 50px;
-  padding-top: 50px;
+ion-header {
+  height: var(--header-height);
+  background-color: white;
+}
+
+ion-menu ion-header {
+  background: transparent;
+}
+
+ion-header ion-grid {
+  padding: 0 50px;
 }
 
 .max-content-height {
@@ -56,7 +63,7 @@ ion-header ion-toolbar:first-child {
 .page-title {
   font-size: 45px;
   font-weight: normal;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 }
 
 ion-button {
@@ -116,7 +123,7 @@ ion-badge {
   fill:#000;
 }
 app-tabs.ion-page, verification-tabs.ion-page {
-  margin-top: 350px;
+  margin-top: var(--header-height);
 }
 
 ion-tab-bar {

@@ -1,12 +1,12 @@
 // App Styles
 // ----------------------------------------------------------------------------
-// Put style rules here that you want to apply to the entire application. These 
-// styles are for the entire app and not just one component. Additionally, this 
-// file can hold Sass mixins, functions, and placeholder classes to be imported 
+// Put style rules here that you want to apply to the entire application. These
+// styles are for the entire app and not just one component. Additionally, this
+// file can hold Sass mixins, functions, and placeholder classes to be imported
 // and used throughout the application.
 
 .logo {
-  max-height: 250px;
+  max-height: 150px;
 }
 
 .ubirch-brand {
@@ -23,7 +23,7 @@ ion-content, ion-menu, ion-item {
 }
 
 .active-menu-item {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .list-md {
@@ -34,9 +34,17 @@ ion-icon {
   color: #ffffff;
   height: 30px;
   width: 30px;
+  padding: 20px;
 }
 
-ion-label.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
+ion-icon.ubirch-brand {
+  height: 70px;
+  width: 70px;
+  padding: 0;
+}
+
+ion-label {
+  padding: 20px;
   font-size: 18px;
   font-weight: 400;
 }
@@ -47,12 +55,51 @@ ion-label.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
 }
 
 ion-footer {
-  margin-bottom: 100px;
+  margin-bottom: 10%;
 }
 
-ion-icon {
-  padding: 20px;
+ion-split-pane {
+  ion-menu {
+    ion-header, ion-content, ion-footer {
+      background-color: black;
+    }
+  }
 }
-ion-label {
-  padding: 20px;
+
+ion-split-pane.split-pane-visible {
+  ion-menu {
+    ion-header, ion-content, ion-footer {
+      background: none;
+    }
+  }
+}
+
+@media screen and (max-height: 600px) {
+  ion-menu ion-header {
+    height: var(--small-header-height);
+
+    .big-header {
+      display: none;
+    }
+
+    .small-header {
+      --inner-border-width: 0;
+      margin-top: 20px;
+      display: block;
+    }
+  }
+}
+
+@media screen and (min-height: 601px) {
+  ion-menu ion-header {
+    height: var(--header-height);
+
+    .big-header {
+      display: block;
+    }
+
+    .small-header {
+      display: none;
+    }
+  }
 }
