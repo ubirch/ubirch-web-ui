@@ -2,7 +2,7 @@
 // http://ionicframework.com/docs/theming/
 
 /** Ionic CSS Variables **/
-:root { 
+:root {
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56,128,255;
   --ion-color-primary-contrast: #ffffff;
@@ -58,5 +58,8 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-  --ion-padding: 100px;
+  --ion-padding: 50px;
+  --header-height: 250px;
+  --small-header-height: 100px;
+  --max-logo-height: 200px;
 }
