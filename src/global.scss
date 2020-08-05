@@ -34,10 +34,17 @@ a {
   cursor: pointer;
 }
 
-ion-header ion-toolbar:first-child {
+ion-header {
   height: 350px;
-  --ion-padding: 50px;
-  padding-top: 50px;
+  background-color: white;
+}
+
+ion-menu ion-header {
+  background: transparent;
+}
+
+ion-header ion-grid {
+  padding: 0 50px;
 }
 
 .max-content-height {
