@@ -42,6 +42,9 @@ export const BlockchainSettings = {
     explorerUrl: {
       mainnet: {
         url: 'http://bcp-govdigi01.tir.budru.de/tx/'
+      },
+      testnet: {
+        url: 'http://bcp-govdigi01.tir.budru.de/tx/'
       }
     }
   },
