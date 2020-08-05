@@ -23,33 +23,21 @@
           <ion-list>
               <ion-menu-toggle auto-hide="false" *ngFor="let p of (appPages$ | async)">
                   <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" routerLinkActive="active-menu-item" lines="none">
-                      <ion-grid>
-                          <ion-row class="ion-justify-content-center">
-                              <ion-col size="8" class="ion-align-items-center">
-                                  <ion-icon src="{{'assets/app-icons/'+p.icon}}" class="ion-float-start"></ion-icon>
-                                  <ion-label class="ion-float-left">
-                                      {{p.title}}
-                                  </ion-label>
-                              </ion-col>
-                          </ion-row>
-                      </ion-grid>
+                      <ion-icon src="{{'assets/app-icons/'+p.icon}}" class="ion-float-start"></ion-icon>
+                      <ion-label class="ion-float-left">
+                          {{p.title}}
+                      </ion-label>
                   </ion-item>
               </ion-menu-toggle>
           </ion-list>
       </ion-content>
       <ion-footer>
         <ion-item>
-          <ion-grid>
-            <ion-row class="ion-justify-content-center">
-              <ion-col size="8" class="ion-align-items-center">
-                <img src="assets/app-images/UBIRCH_Wort_Bildmarke_white.svg" class="ion-float-start ubirch-brand">
-                <ion-label class="ion-float-left">
-                  powered by<br/>
-                  ubirch GmbH
-                </ion-label>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+          <ion-icon src="assets/app-images/UBIRCH_Wort_Bildmarke_white.svg" class="ion-float-start ubirch-brand"></ion-icon>
+          <ion-label class="ion-float-left">
+            powered by<br/>
+            ubirch GmbH
+          </ion-label>
         </ion-item>
       </ion-footer>
     </ion-menu>
