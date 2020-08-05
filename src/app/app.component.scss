@@ -56,3 +56,31 @@ ion-label {
 ion-footer {
   margin-bottom: 10%;
 }
+
+ion-split-pane {
+  ion-menu {
+    ion-header, ion-content, ion-footer {
+      background-color: black;
+    }
+  }
+}
+
+ion-split-pane.split-pane-visible {
+  ion-menu {
+    ion-header, ion-content, ion-footer {
+      background: none;
+    }
+  }
+}
+
+@media screen and (max-height: 600px) {
+  ion-menu ion-header {
+    display: none;
+  }
+}
+
+@media screen and (min-height: 601px) {
+  ion-menu ion-header {
+    display: block;
+  }
+}
