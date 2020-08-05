@@ -32,50 +32,7 @@ export const environment = {
   POLLING_INTERVAL_MILLISECONDS: 15000,
   LIST_ITEMS_PER_PAGE: 10,
   DATE_TIME_ZONE_FORMAT: 'dd.MM.yyyy, HH:mm:ss (zzz)',
-  blockchain_transid_check_url: {
-    'ethereum-classic': {
-      testnet: {
-        url: 'https://kottiexplorer.ethernode.io/search?q=',
-        icon_url: '/wp-content/uploads/2019/08/Ethereum-Classic_verify_right.png'
-      },
-      mainnet: {
-        url: 'https://gastracker.io/search?q=',
-        icon_url: '/wp-content/uploads/2019/08/Ethereum-Classic_verify_right.png'
-      }
-    },
-    ethereum: {
-      testnet: {
-        url: 'https://rinkeby.etherscan.io/tx/',
-        icon_url: '/wp-content/uploads/workshop_images/Ethereum_verify_right.png'
-      },
-      mainnet: {
-        url: 'https://etherscan.io/tx/',
-        icon_url: '/wp-content/uploads/workshop_images/Ethereum_verify_right.png'
-      }
-    },
-    iota: {
-      testnet: {
-        url: 'https://comnet.thetangle.org/transaction/',
-        icon_url: '/wp-content/uploads/workshop_images/IOTA_verify_right.png'
-      },
-      mainnet: {
-        url: 'https://thetangle.org/transaction/',
-        icon_url: '/wp-content/uploads/workshop_images/IOTA_verify_right.png'
-      }
-    },
-    'gov-digital': {
-      mainnet: {
-        url: 'http://bcp-govdigi01.tir.budru.de/tx/',
-        icon_url: '/wp-content/uploads/workshop_images/GovDigital_Icon_verify_right.png'
-      }
-    },
-    regioit: {
-      bdr: {
-        url: 'http://bcp-govdigi01.tir.budru.de/tx/',
-        icon_url: '/wp-content/uploads/workshop_images/GovDigital_Icon_verify_right.png'
-      }
-    }
-  },
+
   deviceImport: {
     default: {
       rowSizeBytes: 1640,

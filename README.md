@@ -182,29 +182,37 @@ from resources folder to src folder (as a preparation to serve, build or deploy 
 
         src/assets/app-icons
     
-2. Add icon path to const LAYOUT_SETTINGS in cytoscape-node-layout.ts:
-
-
-        export const LAYOUT_SETTINGS = [
-        ...
-          { type: 'ethereum-classic',
-            nodeIcon: 'assets/app-icons/Ethereum-Classic_verify_right.png'},
-          { type: 'regioit',
-            nodeIcon: 'assets/app-icons/GovDigital_Icon_verify_right.png'},
-          ];
+2. Add icon path to resources/constants/blockchain-settings.const.ts as <code>nodeIcon</code> property
+ of the blockchain (see next example)
           
-3. Add blockchain explorer test link to environments files that belong to your tenant's realm resource settings:
+3. Add blockchain explorer test link also to resources/constants/blockchain-settings.const.ts as <code>explorerUrl</code>.
+The structure has to be the same as in the blockchain anchor:
 
-          blockchain_transid_check_url: {
-            ...
-            regioit: {
-              bdr: {
-                url: 'https://rinkeby.etherscan.io/tx/',
-              }
+
+        export const BlockchainSettings = {
+          'ethereum-classic': {
+                nodeIcon: 'assets/app-icons/Ethereum-Classic_verify_right.png',
+                explorerUrl: {
+                  testnet: {
+                    url: 'https://kottiexplorer.ethernode.io/search?q='
+                  },
+                  mainnet: {
+                    url: 'https://gastracker.io/search?q='
+                  }
+                }
+            },
+            'my-blockchain-name': {
+                nodeIcon: 'assets/app-icons/my-blockchain-icon.png'
+                explorerUrl: {
+                  net-name: {
+                    url: 'https://my-used-blockchain-explorer/xyz/'
+                  }
+                }
             }
           }
 
-4. Don't forget to start app with right realm settings
+4. Don't forget to restart app by calling ./run-local.sh or start deployment with right realm settings
+ (in this step the constants are copied to the right position)
 
 
 ## Run App locally

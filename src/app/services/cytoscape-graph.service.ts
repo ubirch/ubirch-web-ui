@@ -1,10 +1,25 @@
 import {Injectable} from '@angular/core';
 import {Point} from '../models/point';
+import {BlockchainSettings} from '../constants/blockchain-settings.const';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CytoscapeGraphService {
+
+  private layoutSettings = [
+    { type: 'UPP',
+      nodeIcon: 'assets/app-icons/ubirch_verify_right.png'},
+    { type: 'FOUNDATION_TREE',
+      nodeIcon: 'assets/app-icons/foundation-tree.png'},
+    { type: 'MASTER_TREE',
+      nodeIcon: 'assets/app-icons/master-tree.png'},
+    { type: 'PUBLIC_CHAIN',
+      nodeIcon: 'https://live.staticflickr.com/2660/3715569167_7e978e8319_b.jpg'},
+    { type: 'TIMESTAMP',
+      nodeIcon: 'assets/app-icons/time_tick.png'}
+  ];
+  private layoutSettingsInitialized = false;
 
   private currentZoomFactorDefault = 1;
   // tslint:disable-next-line:variable-name
@@ -36,5 +51,30 @@ export class CytoscapeGraphService {
   public resetAll() {
     this._currentZoomFactor = this.currentZoomFactorDefault;
     this._currentPanPos = this.currentPanPosDefault;
+  }
+
+  public get LAYOUT_SETTINGS(): any[] {
+    if (!this.layoutSettingsInitialized) {
+      this.initializeBlockchainNodes();
+    }
+    return this.layoutSettings;
+  }
+
+  private initializeBlockchainNodes(): void {
+    if (BlockchainSettings) {
+      const bcNames: string[] = Object.keys(BlockchainSettings);
+      bcNames.forEach((bc: string) => {
+        try {
+          const bcIconSettings = {
+            type: bc,
+            nodeIcon: BlockchainSettings[bc].nodeIcon
+          };
+          this.layoutSettings.push(bcIconSettings);
+        } catch (e) {
+          console.log(`Cannot find icon for ${bc} - please add it to resources/constants/blockchain-settings.const.ts`);
+        }
+      });
+    }
+    this.layoutSettingsInitialized = true;
   }
 }
