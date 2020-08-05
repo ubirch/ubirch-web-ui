@@ -7,6 +7,7 @@ import {Upp} from '../models/upp';
 import {BlockChainNode} from '../models/block-chain-node';
 import {VERIFY_RESULT_2BCS} from '../../../testdata/verify-result-2bc-nodes';
 import {UppHash} from '../models/upp-hash';
+import {BlockchainSettings} from '../constants/blockchain-settings.const';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -97,9 +98,8 @@ export class TrustService {
     if (bcNode) {
       if (bcNode instanceof BlockChainNode) {
         try {
-          const envVar = environment.blockchain_transid_check_url;
-          const bcSettings = envVar[bcNode.blockchain];
-          const bcSettingOfNetworkType = bcSettings[bcNode.networkType];
+          const bcSettings = BlockchainSettings[bcNode.blockchain];
+          const bcSettingOfNetworkType = bcSettings.explorerUrl[bcNode.networkType];
           const bcExplUrl = bcSettingOfNetworkType.url;
           bcExplorerURLWithTxid = bcExplUrl + bcNode.txid;
           console.log('bcExplorerURL:' + bcExplorerURLWithTxid);

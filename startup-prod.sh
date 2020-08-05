@@ -3,6 +3,8 @@
 env
 set -o nounset # abort on undefined variables.
 
+bash copy-blockchain-settings.sh
+
 bash preprocess4client.sh "${UBIRCH_TR_KC_REALM}"
 
 echo "creating src/environments/environment.ts"

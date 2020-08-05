@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Upp} from '../../../../models/upp';
 import {TrustService, VERIFICATION_STATE} from '../../../../services/trust.service';
-import {CytoscapeNodeLayout, LAYOUT_SETTINGS} from '../../../../models/cytoscape-node-layout';
+import {CytoscapeNodeLayout} from '../../../../models/cytoscape-node-layout';
 import {BlockChainNode} from '../../../../models/block-chain-node';
 import {ToastController} from '@ionic/angular';
 import {Subscription} from 'rxjs';
+import {CytoscapeGraphService} from '../../../../services/cytoscape-graph.service';
 
 @Component({
   selector: 'app-verification-graph',
@@ -75,7 +76,8 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
 
   constructor(
     private truster: TrustService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private cyto: CytoscapeGraphService
   ) {
   }
 
@@ -134,7 +136,7 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
 
   private createNodeLayouter(): Map<string, CytoscapeNodeLayout> {
     const layouter: Map<string, CytoscapeNodeLayout> = new Map<string, CytoscapeNodeLayout>();
-    LAYOUT_SETTINGS.forEach(sett => layouter.set(sett.type, new CytoscapeNodeLayout(sett.nodeIcon)));
+    this.cyto.LAYOUT_SETTINGS.forEach(sett => layouter.set(sett.type, new CytoscapeNodeLayout(sett.nodeIcon)));
     return layouter;
   }
 

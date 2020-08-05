@@ -9,6 +9,8 @@ then
     echo "secure app by realm 'ubirch-default-realm'"
 fi
 
+./copy-blockchain-settings.sh
+
 ./preprocess4client.sh $client
 
 ./preprocess-replace-secrets.sh $client

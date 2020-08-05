@@ -1,5 +1,5 @@
 import {IUbirchVerificationEnvConfig} from './models';
-
+// TODO: copy settings from resources/constants
 export default {
   verify_api_url: 'https://verify.dev.ubirch.com/api/upp/verify/anchor?blockchain_info=ext',
   blockchain_transid_check_url: {
