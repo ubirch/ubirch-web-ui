@@ -23,7 +23,7 @@ ion-content, ion-menu, ion-item {
 }
 
 .active-menu-item {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .list-md {
@@ -36,6 +36,7 @@ ion-icon {
   width: 30px;
   padding: 20px;
 }
+
 ion-icon.ubirch-brand {
   height: 70px;
   width: 70px;
@@ -75,12 +76,30 @@ ion-split-pane.split-pane-visible {
 
 @media screen and (max-height: 600px) {
   ion-menu ion-header {
-    display: none;
+    height: var(--small-header-height);
+
+    .big-header {
+      display: none;
+    }
+
+    .small-header {
+      --inner-border-width: 0;
+      margin-top: 20px;
+      display: block;
+    }
   }
 }
 
 @media screen and (min-height: 601px) {
   ion-menu ion-header {
-    display: block;
+    height: var(--header-height);
+
+    .big-header {
+      display: block;
+    }
+
+    .small-header {
+      display: none;
+    }
   }
 }

@@ -2,38 +2,46 @@
   <ion-split-pane contentId="main-content">
     <ion-menu type="overlay" contentId="main-content">
       <ion-header no-border>
-          <ion-grid>
-            <ion-row class="ion-justify-content-center ion-margin-top">
-              <ion-col size="10">
-                <div>
-                  <img [src]="clientLogoPath" class="logo">
-                </div>
-              </ion-col>
-            </ion-row>
-            <ion-row class="ion-justify-content-center" *ngIf="addClientNameToLogo">
-              <ion-col>
-                <div class="ion-text-center">
-                  <h4>{{clientName}}</h4>
-                </div>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+        <ion-item class="small-header">
+          <ion-icon [src]="clientLogoPath" class="ion-float-start ubirch-brand"></ion-icon>
+          <ion-label class="ion-float-left">
+            <h4 *ngIf="addClientNameToLogo">{{clientName}}</h4>
+          </ion-label>
+        </ion-item>
+        <ion-grid class="big-header">
+          <ion-row class="ion-justify-content-center ion-margin-top">
+            <ion-col size="10">
+              <div>
+                <img [src]="clientLogoPath" class="logo">
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-center" *ngIf="addClientNameToLogo">
+            <ion-col>
+              <div class="ion-text-center">
+                <h4>{{clientName}}</h4>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-header>
       <ion-content>
-          <ion-list>
-              <ion-menu-toggle auto-hide="false" *ngFor="let p of (appPages$ | async)">
-                  <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" routerLinkActive="active-menu-item" lines="none">
-                      <ion-icon src="{{'assets/app-icons/'+p.icon}}" class="ion-float-start"></ion-icon>
-                      <ion-label class="ion-float-left">
-                          {{p.title}}
-                      </ion-label>
-                  </ion-item>
-              </ion-menu-toggle>
-          </ion-list>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of (appPages$ | async)">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" routerLinkActive="active-menu-item"
+                      lines="none">
+              <ion-icon src="{{'assets/app-icons/'+p.icon}}" class="ion-float-start"></ion-icon>
+              <ion-label class="ion-float-left">
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
       </ion-content>
       <ion-footer>
         <ion-item>
-          <ion-icon src="assets/app-images/UBIRCH_Wort_Bildmarke_white.svg" class="ion-float-start ubirch-brand"></ion-icon>
+          <ion-icon src="assets/app-images/UBIRCH_Wort_Bildmarke_white.svg"
+                    class="ion-float-start ubirch-brand"></ion-icon>
           <ion-label class="ion-float-left">
             powered by<br/>
             ubirch GmbH
