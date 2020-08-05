@@ -1,12 +1,12 @@
 // App Styles
 // ----------------------------------------------------------------------------
-// Put style rules here that you want to apply to the entire application. These 
-// styles are for the entire app and not just one component. Additionally, this 
-// file can hold Sass mixins, functions, and placeholder classes to be imported 
+// Put style rules here that you want to apply to the entire application. These
+// styles are for the entire app and not just one component. Additionally, this
+// file can hold Sass mixins, functions, and placeholder classes to be imported
 // and used throughout the application.
 
 .logo {
-  max-height: 250px;
+  max-height: 150px;
 }
 
 .ubirch-brand {
@@ -34,9 +34,11 @@ ion-icon {
   color: #ffffff;
   height: 30px;
   width: 30px;
+  padding: 20px;
 }
 
-ion-label.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
+ion-label {
+  padding: 20px;
   font-size: 18px;
   font-weight: 400;
 }
@@ -47,12 +49,5 @@ ion-label.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
 }
 
 ion-footer {
-  margin-bottom: 100px;
-}
-
-ion-icon {
-  padding: 20px;
-}
-ion-label {
-  padding: 20px;
+  margin-bottom: 10%;
 }

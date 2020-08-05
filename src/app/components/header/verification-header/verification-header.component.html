@@ -1,65 +1,69 @@
 <ion-header>
-  <ion-toolbar class="ion-padding-horizontal ion-padding-top">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="6">
-          <div class="ion-text-left page-title">
-            {{title}}
-          </div>
-        </ion-col>
-        <ion-col size="6">
-          <div class="ion-text-right">
-            <ion-grid>
-              <ubirch-web-ui-logged-in-user></ubirch-web-ui-logged-in-user>
-              <ion-row class="ion-justify-content-end max-content-height"  *ngIf="currentDevice">
-                <ion-col size="8" class="ion-align-items-center">
-                  <ion-label  class="header-right-label">
-                    thing:
-                  </ion-label>
-                  <span>{{currentDevice.description}}</span>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="6">
-          <div class="ion-justify-content-start">
-            <ng-container *ngFor="let but of actionButtons">
-              <ion-back-button *ngIf="but.isBackButton; else normalButton" [text]="but.label" default-href="devices">
-              </ion-back-button>
-              <ng-template #normalButton>
-                <ion-button  [color]="but.color" (click)="_buttonClicked(but.action)">
-                  <ion-icon *ngIf="but.iconPath; else buttonWithIcon" slot="start" [src]="but.iconPath"></ion-icon>
-                  {{but.label}}
-                </ion-button>
-              </ng-template>
-              <ng-template #buttonWithIcon>
-                <ion-icon *ngIf="but.iconName" slot="start" [name]="but.iconName"></ion-icon>
-              </ng-template>
-            </ng-container>
-          </div>
-        </ion-col>
-        <ion-col size="6">
-          <ng-container [ngTemplateOutlet]="SEARCH" *ngIf="!fullWidthSearch"></ng-container>
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-justify-content-end max-content-height"  *ngIf="headerFullWidthValue">
-        <ion-col size="12" class="ion-align-items-center">
-          <ion-label  class="header-right-label">
-            {{headerFullWidthLabel}}
-          </ion-label>
-          <span>{{headerFullWidthValue}}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="fullWidthSearch">
-        <ion-col size="12">
-          <ng-container [ngTemplateOutlet]="SEARCH"></ng-container>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <div class="ion-text-left page-title">
+          {{title}}
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <div class="ion-text-right">
+          <ion-grid>
+            <ubirch-web-ui-logged-in-user></ubirch-web-ui-logged-in-user>
+            <ion-row class="ion-justify-content-end max-content-height" *ngIf="currentDevice">
+              <ion-col size="8" class="ion-align-items-center">
+                <ion-label class="header-right-label">
+                  thing:
+                </ion-label>
+                <span>{{currentDevice.description}}</span>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <div class="ion-justify-content-start">
+          <ng-container *ngFor="let but of actionButtons">
+            <ion-back-button *ngIf="but.isBackButton; else normalButton" [text]="but.label" default-href="devices">
+            </ion-back-button>
+            <ng-template #normalButton>
+              <ion-button [color]="but.color" (click)="_buttonClicked(but.action)">
+                <ion-icon *ngIf="but.iconPath; else buttonWithIcon" slot="start" [src]="but.iconPath"></ion-icon>
+                {{but.label}}
+              </ion-button>
+            </ng-template>
+            <ng-template #buttonWithIcon>
+              <ion-icon *ngIf="but.iconName" slot="start" [name]="but.iconName"></ion-icon>
+            </ng-template>
+          </ng-container>
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <ng-container [ngTemplateOutlet]="SEARCH" *ngIf="!fullWidthSearch"></ng-container>
+      </ion-col>
+    </ion-row>
+<!--    <ion-row class="ion-justify-content-end max-content-height" *ngIf="headerFullWidthValue">
+      <ion-col size="12" class="ion-align-items-center">
+        <ion-label class="header-right-label">
+          {{headerFullWidthLabel}}
+        </ion-label>
+        <span>{{headerFullWidthValue}}</span>
+      </ion-col>
+    </ion-row>
+-->
+    <ion-row *ngIf="fullWidthSearch">
+      <ion-col size="12">
+        <ng-container [ngTemplateOutlet]="SEARCH"></ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-header>
 
 <ng-template #SEARCH>
