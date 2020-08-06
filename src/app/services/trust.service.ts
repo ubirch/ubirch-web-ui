@@ -104,13 +104,17 @@ export class TrustService {
           bcExplorerURLWithTxid = bcExplUrl + bcNode.txid;
           console.log('bcExplorerURL:' + bcExplorerURLWithTxid);
         } catch (e) {
-          console.log('error!');
+          console.warn('BlockchainExplorer url not configured for given settings:');
+          console.warn('bcNode.blockchain: ' + bcNode.blockchain);
+          console.warn('bcNode.networkType: ' + bcNode.networkType);
+          console.warn('BlockchainSettings: ' + JSON.stringify(BlockchainSettings));
+          console.warn(e.message);
         }
       } else {
-        console.log('cannot open BlockchainExplorer: node for id is not instance of type BlockChainNode (no txid)');
+        console.warn('cannot open BlockchainExplorer: node for id is not instance of type BlockChainNode (no txid)');
       }
     } else {
-      console.log('cannot open BlockchainExplorer: node for id missing');
+      console.warn('cannot open BlockchainExplorer: node for id missing');
     }
     return bcExplorerURLWithTxid;
   }

@@ -126,6 +126,9 @@ export class NgCytoComponent implements OnChanges {
       tsNodes = this.elements.nodes.filter(node => node.classes === 'TIMESTAMP');
     }
 
+    // TODO: check if no anchors exist -> display unsigned upp node only
+    // TODO: if hash has not yet been anchored inform user: 'we received the upp, but it takes time until the anchoring will be done'
+
     bcNodes.forEach(bcNode => {
       const nodeId = bcNode.data.id;
       const tsId = 'timestamp_' + nodeId;

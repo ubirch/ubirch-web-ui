@@ -11,7 +11,7 @@ export const BlockchainSettings = {
         url: 'https://kottiexplorer.ethernode.io/search?q='
       },
       mainnet: {
-        url: 'https://gastracker.io/search?q='
+        url: 'https://blockscout.com/etc/mainnet/search?q='
       }
     }
   },
@@ -41,9 +41,6 @@ export const BlockchainSettings = {
     nodeIcon: 'assets/app-icons/GovDigital_Icon_verify_right.png',
     explorerUrl: {
       mainnet: {
-        url: 'https://blockscout.com/etc/mainnet/tx/'
-      },
-      testnet: {
         url: 'http://bcp-govdigi01.tir.budru.de/tx/'
       }
     }
