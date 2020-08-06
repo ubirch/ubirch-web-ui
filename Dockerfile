@@ -25,8 +25,7 @@ RUN \
 RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
 RUN apt-get install -qqy nodejs
 
-RUN npm config set registry https://skimdb.npmjs.com/registry
-# RUN npm config set registry https://registry.npmjs.com
+RUN npm config set registry https://registry.npmjs.com
 
 RUN npm install -g cordova ionic typescript
 
