@@ -88,6 +88,10 @@ export class NgCytoComponent implements OnChanges {
       .css({
         'content': 'data(label)',
       })
+      .selector('node.UPP_UNSIGNED')
+      .css({
+        'content': 'data(label)',
+      })
       .selector('node.PUBLIC_CHAIN')
       .css({
         'content': 'data(subType)',
@@ -120,8 +124,7 @@ export class NgCytoComponent implements OnChanges {
     });
 
     // TODO: check if no anchors exist -> display unsigned upp node only
-    // TODO: if hash has not yet been anchored inform user: 'we received the upp, but it takes time until the anchoring will be done'
-
+      // TODO: if hash has not yet been anchored inform user: 'we received the upp, but it takes time until the anchoring will be done'
     // put timestamp nodes under their corresponding nodes
     cy.filter('[type="PUBLIC_CHAIN"]').forEach(bcNode => {
       const nodeId = bcNode.data.id;
