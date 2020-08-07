@@ -211,7 +211,12 @@ export class Upp {
     if (data && isArray(data)) {
       switch (type) {
         case('AnchorPathNode'):
-          data.forEach(path => target.push(new AnchorPathNode(path)));
+          data.forEach(path => {
+            target.push(new AnchorPathNode(path));
+            if (path.label === 'UPP') {
+              target.push(new TimestampNode({...path, properties: { ...path.properties, next_hash: undefined}}));
+            }
+          });
           break;
         case('BlockChainNode'):
           data.forEach(path => {

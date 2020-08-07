@@ -55,7 +55,9 @@ export class DeviceLastHashesPage implements OnInit, OnDestroy {
         loadedDevice => {
           this.loadedDevice = loadedDevice;
           if (this.loadedDevice) {
-            this.uppSubscr = this.deviceService.getLastNHashesOfDevice(this.loadedDevice.hwDeviceId).subscribe(
+            this.uppSubscr = this.deviceService.getLastNHashesOfDevice(
+              this.loadedDevice.hwDeviceId,
+              environment.lashHashesListLength).subscribe(
               (resp: UppHash[]) => this.uppHashes = resp,
               (err: Error) => this.finished('err', err.message, [])
             );

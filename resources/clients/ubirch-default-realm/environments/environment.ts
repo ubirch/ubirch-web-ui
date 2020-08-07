@@ -54,7 +54,8 @@ export const environment = {
       pytrack: 2,
       testkit: 3,
     }
-  }
+  },
+  lashHashesListLength: 30
 };
 
 /*

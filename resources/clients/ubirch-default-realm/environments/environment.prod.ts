@@ -46,5 +46,6 @@ export const environment = {
     from: 'now-3h',
     to: 'now',
     panelMap: JSON.parse('@@UBIRCH_TR_GRAFANA_PANEL_MAP@@')
-  }
+  },
+  lashHashesListLength: 30
 };
