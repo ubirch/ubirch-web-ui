@@ -7,11 +7,11 @@ import * as automove from 'cytoscape-automove';
   selector: 'ng2-cytoscape',
   template: '<div id="cy"></div>',
   styles: [`#cy {
-      height: 100%;
-      width: 100%;
-      position: relative;
-      left: 0;
-      top: 0;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    left: 0;
+    top: 0;
   }`]
 })
 
@@ -57,8 +57,8 @@ export class NgCytoComponent implements OnChanges {
         'shape': 'data(shapeType)',
         'height': 50,
         'width': 50,
-        "text-valign": "bottom",
-        "text-halign": "center",
+        'text-valign': 'bottom',
+        'text-halign': 'center',
         'background-fit': 'cover',
         'border-width': 0,
         'background-image': 'data(nodeIcon)',
@@ -97,7 +97,8 @@ export class NgCytoComponent implements OnChanges {
         'content': 'data(label)',
         'height': 15,
         'width': 15,
-        "text-wrap": "wrap"
+        'text-wrap': 'wrap',
+        'margin-top': 20,
       });
   }
 
@@ -118,18 +119,11 @@ export class NgCytoComponent implements OnChanges {
       elements: this.elements,
     });
 
-    let bcNodes: any[] = [];
-    let tsNodes: any[] = [];
-
-    if (this.elements && this.elements.nodes) {
-      bcNodes = this.elements.nodes.filter(node => node.classes === 'PUBLIC_CHAIN');
-      tsNodes = this.elements.nodes.filter(node => node.classes === 'TIMESTAMP');
-    }
-
     // TODO: check if no anchors exist -> display unsigned upp node only
     // TODO: if hash has not yet been anchored inform user: 'we received the upp, but it takes time until the anchoring will be done'
 
-    bcNodes.forEach(bcNode => {
+    // put timestamp nodes under their corresponding nodes
+    cy.filter('[type="PUBLIC_CHAIN"]').forEach(bcNode => {
       const nodeId = bcNode.data.id;
       const tsId = 'timestamp_' + nodeId;
       cy.automove({
@@ -138,6 +132,9 @@ export class NgCytoComponent implements OnChanges {
         dragWith: cy.getElementById(nodeId)
       });
     });
+
+    // move all timestamp nodes down
+    cy.filter('[type="TIMESTAMP"]').shift({x: 0, y: 50});
 
     if (this.cytoService.currentZoomFactor) {
       cy.zoom(this.cytoService.currentZoomFactor);
