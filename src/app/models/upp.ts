@@ -38,7 +38,7 @@ export class Upp {
       };
       if (jsonUpp.anchors) {
         const anchors = jsonUpp.anchors;
-        this.readArrayOfAnchorNodes(anchors.upper_path, this.anchors.upperPath, 'AnchorPathNode');
+        this.readArrayOfAnchorNodes(anchors.upper_path, this.anchors.upperPath, 'AnchorPathNode', true);
         this.readArrayOfAnchorNodes(anchors.lower_path, this.anchors.lowerPath, 'AnchorPathNode');
         this.readArrayOfAnchorNodes(anchors.upper_blockchains, this.anchors.upperBlockChains, 'BlockChainNode');
         this.readArrayOfAnchorNodes(anchors.lower_blockchains, this.anchors.lowerBlockChains, 'BlockChainNode');
@@ -207,8 +207,8 @@ export class Upp {
     }
   }
 
-  private readArrayOfAnchorNodes(data: any, target: any[], type: string) {
-    if (data && isArray(data)) {
+  private readArrayOfAnchorNodes(data: any, target: any[], type: string, addUnsignedUpp: boolean = false) {
+    if (data && isArray(data) && data.length > 0) {
       switch (type) {
         case('AnchorPathNode'):
           data.forEach(path => {
@@ -225,6 +225,18 @@ export class Upp {
           });
           break;
       }
+    } else if (addUnsignedUpp) {
+      const settings = {
+        id: 'upp_temp' + this.upp,
+        label: 'UPP_UNSIGNED',
+        properties: {
+          hash: this.upp,
+          next_hash: '',
+          prev_hash: '',
+          timestamp: ''
+        }
+      };
+      target.push(new AnchorPathNode(settings));
     }
   }
 }

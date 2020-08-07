@@ -10,6 +10,8 @@ export class CytoscapeGraphService {
   private layoutSettings = [
     { type: 'UPP',
       nodeIcon: 'assets/app-icons/ubirch_verify_right.png'},
+    { type: 'UPP_UNSIGNED',
+      nodeIcon: 'assets/app-icons/ubirch_verify_notyet.png'},
     { type: 'FOUNDATION_TREE',
       nodeIcon: 'assets/app-icons/foundation-tree.png'},
     { type: 'MASTER_TREE',
