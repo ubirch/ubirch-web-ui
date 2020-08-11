@@ -92,8 +92,8 @@ class UbirchVerification {
     }
   }
 
-  public verifyJSON(json: string): void {
-    const formattedJSON = this.formatJSON(json);
+  public verifyJSON(json: string, sort: boolean = true): void {
+    const formattedJSON = this.formatJSON(json, sort);
     const hash = this.createHash(formattedJSON);
 
     this.verifyHash(hash);
@@ -228,12 +228,12 @@ class UbirchVerification {
     });
   }
 
-  private formatJSON(json: string): string {
+  private formatJSON(json: string, sort: boolean = true): string {
     const object: object = JSON.parse(json);
     const objectSorted: { [key: string]: any } = {};
 
-    const keysSorted = Object.keys(object).sort();
-    keysSorted.forEach(key => objectSorted[key] = object[key]);
+    const keysOrdered = sort ? Object.keys(object).sort() : Object.keys(object);
+    keysOrdered.forEach(key => objectSorted[key] = object[key]);
 
     return JSON.stringify(objectSorted);
   }
@@ -244,6 +244,7 @@ class UbirchVerification {
  */
 class UbirchFormVerification extends UbirchVerification {
   private formIds: string[];
+  private paramsFormIdsMapping: string[];
 
   constructor(config: IUbirchFormVerificationConfig = DEFAULT_FORM_CONFIG) {
     super(config);
@@ -251,6 +252,12 @@ class UbirchFormVerification extends UbirchVerification {
       throw new Error('Please, provide a string array with param ids');
     }
     this.formIds = config.formIds;
+    if (config.paramsFormIdsMapping) {
+      if (config.paramsFormIdsMapping.length !== this.formIds.length) {
+        throw new Error('If you provide paramsFormIdsMapping define a mapping for each formId; they need to be in the same order');
+      }
+      this.paramsFormIdsMapping = config.paramsFormIdsMapping;
+    }
   }
 
   /**
@@ -289,8 +296,18 @@ class UbirchFormVerification extends UbirchVerification {
       };
     });
     allParams.forEach(param => {
-      if (param.key && documentRef.getElementById(param.key) && documentRef.getElementById(param.key) !== null) {
-        documentRef.getElementById(param.key).value = param.value;
+      if (param.key) {
+        let key = param.key;
+        if (this.paramsFormIdsMapping && this.paramsFormIdsMapping.length > 0) {
+          const idIndex = this.paramsFormIdsMapping.indexOf(key);
+          if (idIndex < 0) {
+            throw new Error('No mapping defined for ' + key);
+          }
+          key = this.formIds[idIndex];
+        }
+        if (documentRef.getElementById(key) && documentRef.getElementById(key) !== null) {
+          documentRef.getElementById(key).value = param.value;
+        }
       }
     });
   }

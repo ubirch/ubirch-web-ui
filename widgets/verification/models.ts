@@ -22,6 +22,7 @@ export interface IUbirchVerificationConfig {
 
 export interface IUbirchFormVerificationConfig extends IUbirchVerificationConfig {
   formIds: string[];
+  paramsFormIdsMapping?: string[];
 }
 
 export interface IUbirchVerificationResponse {
