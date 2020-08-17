@@ -5,7 +5,6 @@
 Widget configuration should be done on Ubirch side before deploy.
 
  - `verify_api_url` - URL to send verification request
- - `blockchain_transid_check_url` - blockchains configuration
  - `seal_icon_url` - URL to seal icon
  - `no_seal_icon_url` - URL to no-seal icon
  - `console_verify_url` - URL to console web app verification page

@@ -55,7 +55,6 @@ export interface IUbirchVerificationAnchorProperties {
 
 export interface IUbirchVerificationEnvConfig {
     verify_api_url: string;
-    blockchain_transid_check_url: IUbirchBlockhainTransidCheckUrlMap;
     seal_icon_url: string;
     no_seal_icon_url: string;
     console_verify_url: string;
