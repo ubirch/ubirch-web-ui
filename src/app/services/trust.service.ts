@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpParams, HttpResponseBase} from '@angular/common/http';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Upp} from '../models/upp';
 import {BlockChainNode} from '../models/block-chain-node';
 import {VERIFY_RESULT_2BCS} from '../../../testdata/verify-result-2bc-nodes';
-import {UppHash} from '../models/upp-hash';
-import {BlockchainSettings} from '../constants/blockchain-settings.const';
+import * as BlockchainSettings from '../../assets/constants/blockchain-settings.json';
+import {IUbirchBlockhainSettings} from '../models/iubirch-blockhain-settings';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -62,6 +62,10 @@ export class TrustService {
     private http: HttpClient
   ) {}
 
+  public static get BlockchainSettings(): IUbirchBlockhainSettings {
+    return BlockchainSettings && BlockchainSettings['default'] ? BlockchainSettings['default'] : BlockchainSettings;
+  }
+
   public saveHash(vHash: string) {
     if (vHash) {
       this.bsHash.next(vHash);
@@ -98,7 +102,7 @@ export class TrustService {
     if (bcNode) {
       if (bcNode instanceof BlockChainNode) {
         try {
-          const bcSettings = BlockchainSettings[bcNode.blockchain];
+          const bcSettings = TrustService.BlockchainSettings[bcNode.blockchain];
           const bcSettingOfNetworkType = bcSettings.explorerUrl[bcNode.networkType];
           const bcExplUrl = bcSettingOfNetworkType.url;
           bcExplorerURLWithTxid = bcExplUrl + bcNode.txid;
@@ -107,7 +111,7 @@ export class TrustService {
           console.warn('BlockchainExplorer url not configured for given settings:');
           console.warn('bcNode.blockchain: ' + bcNode.blockchain);
           console.warn('bcNode.networkType: ' + bcNode.networkType);
-          console.warn('BlockchainSettings: ' + JSON.stringify(BlockchainSettings));
+          console.warn('BlockchainSettings: ' + JSON.stringify(TrustService.BlockchainSettings));
           console.warn(e.message);
         }
       } else {

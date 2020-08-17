@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = function(env) {
     const STAGE = env.STAGE || 'dev';
@@ -45,7 +46,7 @@ module.exports = function(env) {
                 template: './verification/index.html'
             }),
             new webpack.NormalModuleReplacementPlugin(/(.*)environment.dev(\.*)/, function(resource) {
-                resource.request = resource.request.replace(/environment.dev/, `environment.${STAGE}`);
+              resource.request = resource.request.replace(/environment.dev/, `environment.${STAGE}`);
             }),
             new CleanWebpackPlugin(),
         ],

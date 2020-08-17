@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Point} from '../models/point';
-import {BlockchainSettings} from '../constants/blockchain-settings.const';
+import {TrustService} from './trust.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +31,7 @@ export class CytoscapeGraphService {
   // tslint:disable-next-line:variable-name
   private _currentPanPos = this.currentPanPosDefault;
 
-  constructor() {
-  }
+  constructor() {}
 
   public get currentZoomFactor(): number {
     return this._currentZoomFactor;
@@ -63,17 +62,17 @@ export class CytoscapeGraphService {
   }
 
   private initializeBlockchainNodes(): void {
-    if (BlockchainSettings) {
-      const bcNames: string[] = Object.keys(BlockchainSettings);
+    if (TrustService.BlockchainSettings) {
+      const bcNames: string[] = Object.keys(TrustService.BlockchainSettings);
       bcNames.forEach((bc: string) => {
         try {
           const bcIconSettings = {
             type: bc,
-            nodeIcon: BlockchainSettings[bc].nodeIcon
+            nodeIcon: TrustService.BlockchainSettings[bc].nodeIcon
           };
           this.layoutSettings.push(bcIconSettings);
         } catch (e) {
-          console.log(`Cannot find icon for ${bc} - please add it to resources/constants/blockchain-settings.const.ts`);
+          console.log(`Cannot find icon for ${bc} - please add it to resources/blockchain-settings.json`);
         }
       });
     }

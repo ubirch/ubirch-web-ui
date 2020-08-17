@@ -1,12 +1,12 @@
-path="./resources/constants"
+bxcsetfile="./resources/blockchain-settings.json"
 
-if [[ -d $path ]]
+if [[ -f $bxcsetfile ]]
 then
     echo "Copy blockchain settings into web ui project..."
-    if [[ ! -d ./src/app/constants ]]
+    if [[ ! -d ./src/assets/constants ]]
     then
-        mkdir ./src/app/constants
+        mkdir ./src/assets/constants
     fi
-    cp -r $path/* ./src/app/constants/
+    cp $bxcsetfile ./src/assets/constants/
 fi
 echo "finished copying blockchain settings"

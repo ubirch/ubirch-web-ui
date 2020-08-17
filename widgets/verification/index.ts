@@ -3,7 +3,6 @@ import {sha512} from 'js-sha512';
 import {
   EError,
   EInfo,
-  IUbirchBlockchainNet,
   IUbirchFormVerificationConfig,
   IUbirchFormError,
   IUbirchVerificationAnchorProperties,
@@ -12,6 +11,7 @@ import {
   UbirchHashAlgorithm
 } from './models';
 import environment from './environment.dev';
+
 // assets
 import './style.scss';
 import '../../src/assets/app-icons/Ethereum_verify_right.png';
@@ -20,7 +20,10 @@ import '../../src/assets/app-icons/IOTA_verify_right.png';
 import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_wrong.png';
+import * as BlockchainSettings from '../../resources/blockchain-settings.json';
 import {runTest} from 'tslint/lib/test';
+import {IUbirchBlockchain} from '../../src/app/models/iubirch-blockchain';
+import {IUbirchBlockchainNet} from '../../src/app/models/iubirch-blockchain-net';
 
 const MESSAGE_STRINGS = {
   PENDING: {
@@ -487,12 +490,16 @@ class View {
       return;
     }
 
-    const bloxTXData: IUbirchBlockchainNet =
-      ((environment || {} as any).blockchain_transid_check_url[blockchain] || {} as any)[networkType];
+    const blox: IUbirchBlockchain =
+      BlockchainSettings[blockchain];
 
-    if (!bloxTXData || !bloxTX.txid) {
+    if (!blox || !bloxTX.txid) {
       return;
     }
+
+    const bloxTXData: IUbirchBlockchainNet =
+      blox.explorerUrl[networkType];
+
 
     const linkTag: HTMLElement = document.createElement('a');
 
@@ -507,9 +514,9 @@ class View {
     linkTag.setAttribute('target', '_blanc');
 
     // if icon url is given add img, otherwise add text
-    if (bloxTXData.icon_url) {
+    if (blox.nodeIcon) {
       const iconId = `blockchain_transid_check${index === undefined ? '' : '_' + index}`;
-      linkTag.appendChild(this.createIconTag(environment.assets_url_prefix + bloxTXData.icon_url, iconId));
+      linkTag.appendChild(this.createIconTag(environment.assets_url_prefix + blox.nodeIcon, iconId));
     } else {
       linkTag.innerHTML = titleStr;
     }

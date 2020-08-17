@@ -182,14 +182,14 @@ from resources folder to src folder (as a preparation to serve, build or deploy 
 
         src/assets/app-icons
     
-2. Add icon path to resources/constants/blockchain-settings.const.ts as <code>nodeIcon</code> property
+2. Add icon path to resources/blockchain-settings.json as <code>nodeIcon</code> property
  of the blockchain (see next example)
           
-3. Add blockchain explorer test link also to resources/constants/blockchain-settings.const.ts as <code>explorerUrl</code>.
+3. Add blockchain explorer test link also to resources/blockchain-settings.json as <code>explorerUrl</code>.
 The structure has to be the same as in the blockchain anchor:
 
 
-        export const BlockchainSettings = {
+        {
           'ethereum-classic': {
                 nodeIcon: 'assets/app-icons/Ethereum-Classic_verify_right.png',
                 explorerUrl: {
