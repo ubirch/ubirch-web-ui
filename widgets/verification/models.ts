@@ -1,3 +1,6 @@
+import {IUbirchBlockchainNet} from '../../src/app/models/iubirch-blockchain-net';
+import {IUbirchBlockhainTransidCheckUrlMap} from '../../src/app/models/iubirch-blockhain-transid-check-url-map';
+
 export type UbirchHashAlgorithm = 'sha256' | 'sha512';
 
 export enum EInfo {
@@ -57,21 +60,6 @@ export interface IUbirchVerificationEnvConfig {
     no_seal_icon_url: string;
     console_verify_url: string;
     assets_url_prefix: string;
-}
-
-export interface IUbirchBlockhainTransidCheckUrlMap {
-    [key: string]: IUbirchBlockhainTransidCheckUrl;
-}
-
-export interface IUbirchBlockhainTransidCheckUrl {
-    bdr?: IUbirchBlockchainNet;
-    testnet?: IUbirchBlockchainNet;
-    mainnet?: IUbirchBlockchainNet;
-}
-
-export interface IUbirchBlockchainNet {
-    url: string;
-    icon_url: string;
 }
 
 export interface IUbirchFormError {
