@@ -1,11 +1,12 @@
 {
-  "ubirch-icons": {
+  "ubirchIcons": {
     "seal": "ubirch_verify_right.png",
     "no_seal": "ubirch_verify_wrong.png"
   },
-  "blockchain-settings": {
+  "asset_path": "assets/app-icons/",
+  "blockchainSettings": {
     "ethereum-classic": {
-      "nodeIcon": "assets/app-icons/Ethereum-Classic_verify_right.png",
+      "nodeIcon": "Ethereum-Classic_verify_right.png",
       "explorerUrl": {
         "testnet": {
           "url": "https://kottiexplorer.ethernode.io/search?q="
@@ -16,7 +17,7 @@
       }
     },
     "ethereum": {
-      "nodeIcon": "assets/app-icons/Ethereum_verify_right.png",
+      "nodeIcon": "Ethereum_verify_right.png",
       "explorerUrl": {
         "testnet": {
           "url": "https://rinkeby.etherscan.io/tx/"
@@ -27,7 +28,7 @@
       }
     },
     "iota": {
-      "nodeIcon": "assets/app-icons/IOTA_verify_right.png",
+      "nodeIcon": "IOTA_verify_right.png",
       "explorerUrl": {
         "testnet": {
           "url": "https://comnet.thetangle.org/transaction/"
@@ -38,7 +39,7 @@
       }
     },
     "gov-digital": {
-      "nodeIcon": "assets/app-icons/GovDigital_Icon_verify_right.png",
+      "nodeIcon": "GovDigital_Icon_verify_right.png",
       "explorerUrl": {
         "mainnet": {
           "url": "http://bcp-govdigi01.tir.budru.de/tx/"
@@ -46,7 +47,7 @@
       }
     },
     "regioit": {
-      "nodeIcon": "assets/app-icons/GovDigital_Icon_verify_right.png",
+      "nodeIcon": "GovDigital_Icon_verify_right.png",
       "explorerUrl": {
         "bdr": {
           "url": "http://bcp-govdigi01.tir.budru.de/tx/"
