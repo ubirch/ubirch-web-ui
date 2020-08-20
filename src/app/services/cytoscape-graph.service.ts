@@ -10,14 +10,14 @@ export class CytoscapeGraphService {
   private layoutSettings = [
     { type: 'UPP',
       nodeIcon: 'assets/app-icons/ubirch_verify_right.png'},
-    { type: 'UPP_UNSIGNED',
+    { type: 'UPP (not yet anchored)',
       nodeIcon: 'assets/app-icons/ubirch_verify_notyet.png'},
     { type: 'FOUNDATION_TREE',
       nodeIcon: 'assets/app-icons/foundation-tree.png'},
     { type: 'MASTER_TREE',
       nodeIcon: 'assets/app-icons/master-tree.png'},
-    { type: 'PUBLIC_CHAIN',
-      nodeIcon: 'https://live.staticflickr.com/2660/3715569167_7e978e8319_b.jpg'},
+//    { type: 'PUBLIC_CHAIN',
+//      nodeIcon: 'https://live.staticflickr.com/2660/3715569167_7e978e8319_b.jpg'},
     { type: 'TIMESTAMP',
       nodeIcon: 'assets/app-icons/time_tick.png'}
   ];

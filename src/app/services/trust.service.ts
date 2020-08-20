@@ -63,7 +63,8 @@ export class TrustService {
   ) {}
 
   public static get BlockchainSettings(): IUbirchBlockhainSettings {
-    return BlockchainSettings && BlockchainSettings['default'] ? BlockchainSettings['default'] : BlockchainSettings;
+    return BlockchainSettings && BlockchainSettings['default'] ?
+      BlockchainSettings['default']['blockchain-settings'] : BlockchainSettings['blockchain-settings'];
   }
 
   public saveHash(vHash: string) {
