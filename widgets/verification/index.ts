@@ -460,9 +460,9 @@ class View {
     link.setAttribute('target', '_blank');
 
     if (successful) {
-      icon = this.createIconTag(environment.assets_url_prefix + environment.seal_icon_url, 'ubirch-verification-seal-img');
+      icon = this.createIconTag(environment.assets_url_prefix + BlockchainSettings['ubirch-icons'].seal, 'ubirch-verification-seal-img');
     } else {
-      icon = this.createIconTag(environment.assets_url_prefix + environment.no_seal_icon_url, 'ubirch-verification-no-seal-img');
+      icon = this.createIconTag(environment.assets_url_prefix + BlockchainSettings['ubirch-icons'].no_seal, 'ubirch-verification-no-seal-img');
     }
 
     link.appendChild(icon);
@@ -491,7 +491,7 @@ class View {
     }
 
     const blox: IUbirchBlockchain =
-      BlockchainSettings[blockchain];
+      BlockchainSettings['blockchain-settings'] ? BlockchainSettings['blockchain-settings'][blockchain] : undefined;
 
     if (!blox || !bloxTX.txid) {
       return;

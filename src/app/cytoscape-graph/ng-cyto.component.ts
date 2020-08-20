@@ -88,7 +88,7 @@ export class NgCytoComponent implements OnChanges {
       .css({
         'content': 'data(label)',
       })
-      .selector('node.UPP_UNSIGNED')
+      .selector('node.UPP (not yet anchored)')
       .css({
         'content': 'data(label)',
       })

@@ -228,7 +228,7 @@ export class Upp {
     } else if (addUnsignedUpp) {
       const settings = {
         id: 'upp_temp' + this.upp,
-        label: 'UPP_UNSIGNED',
+        label: 'UPP (not yet anchored)',
         properties: {
           hash: this.upp,
           next_hash: '',
