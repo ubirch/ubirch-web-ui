@@ -6,8 +6,9 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Upp} from '../models/upp';
 import {BlockChainNode} from '../models/block-chain-node';
 import {VERIFY_RESULT_2BCS} from '../../../testdata/verify-result-2bc-nodes';
-import * as BlockchainSettings from '../../assets/constants/blockchain-settings.json';
+import * as VerificationSettings from '../../assets/constants/blockchain-settings.json';
 import {IUbirchBlockhainSettings} from '../models/iubirch-blockhain-settings';
+import {IUbirchVerificationSettings} from '../models/iubirch-verification-settings';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -23,6 +24,28 @@ export const VERIFICATION_STATE = {
   providedIn: 'root'
 })
 export class TrustService {
+
+  constructor(
+    private http: HttpClient
+  ) {}
+
+  public static verificationSettings: IUbirchVerificationSettings;
+
+  public static get BlockchainSettings(): IUbirchBlockhainSettings {
+    return TrustService.VerificationSettings.blockchainSettings;
+  }
+
+  public static get BlockchainIconsPath(): string {
+    return TrustService.VerificationSettings.asset_path;
+  }
+
+  private static  get VerificationSettings(): IUbirchVerificationSettings {
+    if (!TrustService.verificationSettings) {
+      TrustService.verificationSettings = VerificationSettings && VerificationSettings['default'] ?
+        VerificationSettings['default'] : VerificationSettings;
+    }
+    return TrustService.verificationSettings;
+  }
 
   public API_URL = environment.trustServiceServerUrl + environment.verifyApiPrefix;
   private getRecord = 'record';
@@ -57,15 +80,6 @@ export class TrustService {
   private currUPP: Upp;
   private bsUPP = new BehaviorSubject<Upp>(this.currUPP);
   public observableUPP: Observable<Upp> = this.bsUPP.asObservable();
-
-  constructor(
-    private http: HttpClient
-  ) {}
-
-  public static get BlockchainSettings(): IUbirchBlockhainSettings {
-    return BlockchainSettings && BlockchainSettings['default'] ?
-      BlockchainSettings['default']['blockchain-settings'] : BlockchainSettings['blockchain-settings'];
-  }
 
   public saveHash(vHash: string) {
     if (vHash) {
@@ -112,7 +126,7 @@ export class TrustService {
           console.warn('BlockchainExplorer url not configured for given settings:');
           console.warn('bcNode.blockchain: ' + bcNode.blockchain);
           console.warn('bcNode.networkType: ' + bcNode.networkType);
-          console.warn('BlockchainSettings: ' + JSON.stringify(TrustService.BlockchainSettings));
+          console.warn('BlockchainSettings: ' + JSON.stringify(TrustService.VerificationSettings));
           console.warn(e.message);
         }
       } else {

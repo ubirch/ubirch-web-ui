@@ -68,7 +68,7 @@ export class CytoscapeGraphService {
         try {
           const bcIconSettings = {
             type: bc,
-            nodeIcon: TrustService.BlockchainSettings[bc].nodeIcon
+            nodeIcon: TrustService.BlockchainIconsPath + TrustService.BlockchainSettings[bc].nodeIcon
           };
           this.layoutSettings.push(bcIconSettings);
         } catch (e) {
