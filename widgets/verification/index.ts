@@ -82,6 +82,7 @@ class UbirchVerification {
     this.elementSelector = config.elementSelector;
 
     this.view = new View(this.elementSelector);
+    console.log('VerificationSettings: ' + JSON.stringify(BlockchainSettings));
   }
 
   public setMessageString(key, info, headline?) {
@@ -460,9 +461,11 @@ class View {
     link.setAttribute('target', '_blank');
 
     if (successful) {
-      icon = this.createIconTag(environment.assets_url_prefix + BlockchainSettings['ubirchIcons'].seal, 'ubirch-verification-seal-img');
+      icon = this.createIconTag(environment.assets_url_prefix + BlockchainSettings.ubirchIcons.seal,
+        'ubirch-verification-seal-img');
     } else {
-      icon = this.createIconTag(environment.assets_url_prefix + BlockchainSettings['ubirchIcons'].no_seal, 'ubirch-verification-no-seal-img');
+      icon = this.createIconTag(environment.assets_url_prefix + BlockchainSettings.ubirchIcons.no_seal,
+        'ubirch-verification-no-seal-img');
     }
 
     link.appendChild(icon);
@@ -491,7 +494,7 @@ class View {
     }
 
     const blox: IUbirchBlockchain =
-      BlockchainSettings['blockchainSettings'] ? BlockchainSettings['blockchainSettings'][blockchain] : undefined;
+      BlockchainSettings.blockchainSettings ? BlockchainSettings.blockchainSettings[blockchain] : undefined;
 
     if (!blox || !bloxTX.txid) {
       return;
@@ -557,6 +560,7 @@ class View {
   }
 
   private createIconTag(src: string, imgTagId: string, width?: string, height?: string): HTMLElement {
+    console.log('createIconTag: ' + src);
     const imgTag: HTMLElement = document.createElement('img');
     imgTag.setAttribute('width', width ? width : '50');
     imgTag.setAttribute('height', height ? height : '50');
