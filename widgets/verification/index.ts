@@ -82,7 +82,6 @@ class UbirchVerification {
     this.elementSelector = config.elementSelector;
 
     this.view = new View(this.elementSelector);
-    console.log('VerificationSettings: ' + JSON.stringify(BlockchainSettings));
   }
 
   public setMessageString(key, info, headline?) {
@@ -560,7 +559,6 @@ class View {
   }
 
   private createIconTag(src: string, imgTagId: string, width?: string, height?: string): HTMLElement {
-    console.log('createIconTag: ' + src);
     const imgTag: HTMLElement = document.createElement('img');
     imgTag.setAttribute('width', width ? width : '50');
     imgTag.setAttribute('height', height ? height : '50');
