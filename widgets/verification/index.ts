@@ -75,7 +75,7 @@ class UbirchVerification {
 
   constructor(config: IUbirchVerificationConfig = DEFAULT_CONFIG) {
     if (!config.elementSelector) {
-      throw new Error('Please, provide the `elementSelector` to UbirchVerification config');
+      throw new Error('Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance');
     }
 
     this.algorithm = config.algorithm;
