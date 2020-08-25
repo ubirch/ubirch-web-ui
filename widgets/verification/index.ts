@@ -100,6 +100,7 @@ const DEFAULT_FORM_CONFIG: IUbirchFormVerificationConfig = {
   formIds: ['created', 'name', 'workshop'],
 };
 let MESSAGE_STRINGS: any;
+let HIGHLIGHT_PAGE_AFTER_VERIFICATION = false;
 
 class UbirchVerification {
   private responseHandler: ResponseHandler = new ResponseHandler();
@@ -110,6 +111,10 @@ class UbirchVerification {
   constructor(config: IUbirchVerificationConfig = DEFAULT_CONFIG) {
     MESSAGE_STRINGS = config.language && LANGUAGE_MESSAGE_STRINGS[config.language] ?
       LANGUAGE_MESSAGE_STRINGS[config.language] : LANGUAGE_MESSAGE_STRINGS.de;
+
+    if (config.HIGHLIGHT_PAGE_AFTER_VERIFICATION !== undefined) {
+      HIGHLIGHT_PAGE_AFTER_VERIFICATION = config.HIGHLIGHT_PAGE_AFTER_VERIFICATION;
+    }
 
     if (!config.elementSelector) {
       throw new Error('Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance');
@@ -577,6 +582,9 @@ class View {
         this.resultOutput.appendChild(this.createTxtTag(MESSAGE_STRINGS.FAIL.info,
           'ubirch-verification-fail'));
       }
+      // if HIGHLIGHT_PAGE_AFTER_VERIFICATION is set the whole page is flashed in green, if verification returned successful,
+      // or red, if verification failed
+      this.highlightPage(successful);
     }
   }
 
@@ -606,6 +614,20 @@ class View {
       imgTag.setAttribute('id', imgTagId);
     }
     return imgTag;
+  }
+
+  private highlightPage(successful: boolean) {
+    if (HIGHLIGHT_PAGE_AFTER_VERIFICATION) {
+      const highlightClass = successful ? 'flashgreen' : 'flashred';
+      const mainElement = document.getElementsByTagName('main')[0];
+      setTimeout(_ => {
+        mainElement.classList.toggle(highlightClass);
+      }, 100);
+      setTimeout(_ => {
+        mainElement.classList.toggle(highlightClass);
+      }, 2400);
+
+    }
   }
 }
 

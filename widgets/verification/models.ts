@@ -27,6 +27,7 @@ export interface IUbirchVerificationConfig {
   algorithm: UbirchHashAlgorithm;
   elementSelector: string;
   language?: ELanguages;
+  HIGHLIGHT_PAGE_AFTER_VERIFICATION?: boolean;
 }
 
 export interface IUbirchFormVerificationConfig extends IUbirchVerificationConfig {
