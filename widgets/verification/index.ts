@@ -3,15 +3,14 @@ import {sha512} from 'js-sha512';
 import {
   EError,
   EInfo,
-  IUbirchFormVerificationConfig,
   IUbirchFormError,
+  IUbirchFormVerificationConfig,
   IUbirchVerificationAnchorProperties,
   IUbirchVerificationConfig,
   IUbirchVerificationResponse,
   UbirchHashAlgorithm
 } from './models';
 import environment from './environment.dev';
-
 // assets
 import './style.scss';
 import '../../src/assets/app-icons/Ethereum_verify_right.png';
@@ -21,51 +20,86 @@ import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_wrong.png';
 import * as BlockchainSettings from '../../resources/blockchain-settings.json';
-import {runTest} from 'tslint/lib/test';
 import {IUbirchBlockchain} from '../../src/app/models/iubirch-blockchain';
 import {IUbirchBlockchainNet} from '../../src/app/models/iubirch-blockchain-net';
 
-const MESSAGE_STRINGS = {
-  PENDING: {
-    info: '...Verifikation wird durchgeführt....'
+const LANGUAGE_MESSAGE_STRINGS = {
+  de: {
+    PENDING: {
+      info: '...Verifikation wird durchgeführt....'
+    },
+    SUCCESS: {
+      headline: 'Verifikation erfolgreich!',
+      info: 'Für zusätzliche Informationen zur Verankerung klicken Sie auf das ubirch Icon um die Details ver Verifikation in der ' +
+        ' ubirch Konsole anzuzeigen oder auf die Blockchain Icons um den jeweiligen Blockchain-Explorer zu öffnen:'
+    },
+    FAIL: {
+      headline: 'Verifikation fehlgeschlagen!',
+      info: 'Zu den eingegebenen Daten gibt es keine Blockchain-Verankerung'
+    },
+    CERTIFICATE_DATA_MISSING: {
+      info: 'Zertifikatsdaten fehlen - bitte füllen Sie das Formular aus oder scannen Sie Ihren QR-Code!!!'
+    },
+    VERIFICATION_FAILED: {
+      info: 'Verifikation fehlgeschlagen!'
+    },
+    CERTIFICATE_ID_CANNOT_BE_FOUND: {
+      info: 'Zertifikat konnte nicht gefunden werden!!!!!'
+    },
+    VERIFICATION_FAILED_EMPTY_RESPONSE: {
+      info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel'
+    },
+    VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE: {
+      info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel'
+    },
+    UNKNOWN_ERROR: {
+      info: 'Problem!!! Ein unerwarteter Fehler ist aufgetreten....!'
+    }
   },
-  SUCCESS: {
-    headline: 'Verifikation erfolgreich!',
-    info: 'Für zusätzliche Informationen zur Verankerung klicken Sie auf das Icon der jeweiligen Blockchain:'
-  },
-  FAIL: {
-    headline: 'Verifikation fehlgeschlagen!',
-    info: 'Zu den eingegebenen Daten gibt es keine Blockchain-Verankerung'
-  },
-  CERTIFICATE_DATA_MISSING: {
-    info: 'Zertifikatsdaten fehlen - bitte füllen Sie das Formular aus oder scannen Sie Ihren QR-Code!!!'
-  },
-  VERIFICATION_FAILED: {
-    info: 'Verifikation fehlgeschlagen!'
-  },
-  CERTIFICATE_ID_CANNOT_BE_FOUND: {
-    info: 'Zertifikat konnte nicht gefunden werden!!!!!'
-  },
-  VERIFICATION_FAILED_EMPTY_RESPONSE: {
-    info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel'
-  },
-  VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE: {
-    info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel'
-  },
-  UNKNOWN_ERROR: {
-    info: 'Problem!!! Ein unerwarteter Fehler ist aufgetreten....!'
+  en: {
+    PENDING: {
+      info: '...verification pending....'
+    },
+    SUCCESS: {
+      headline: 'Verification Successful!',
+      info: 'For more information about anchoring click the ubirch icon to  open verification details in ubirch console ` +' +
+        'or click the blockchain icons to open corresponding blockchain explorer:'
+    },
+    FAIL: {
+      headline: 'Verification Failed!',
+      info: 'No blockchain anchor for given data'
+    },
+    CERTIFICATE_DATA_MISSING: {
+      info: 'Missing data - please fill out form completely or scan your QR code!!!'
+    },
+    VERIFICATION_FAILED: {
+      info: 'Verification Failed!'
+    },
+    CERTIFICATE_ID_CANNOT_BE_FOUND: {
+      info: 'Cannot find certificate!!!!!'
+    },
+    VERIFICATION_FAILED_EMPTY_RESPONSE: {
+      info: 'Verification Failed!! Empty certificate or missing seal'
+    },
+    VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE: {
+      info: 'Verification Failed!! Empty certificate or missing seal'
+    },
+    UNKNOWN_ERROR: {
+      info: 'An unexpected error occurred....!'
+    }
   }
 };
 
 const DEFAULT_CONFIG: IUbirchVerificationConfig = {
   algorithm: 'sha512',
-  elementSelector: null
+  elementSelector: null,
 };
 const DEFAULT_FORM_CONFIG: IUbirchFormVerificationConfig = {
   algorithm: 'sha512',
   elementSelector: null,
   formIds: ['created', 'name', 'workshop'],
 };
+let MESSAGE_STRINGS: any;
 
 class UbirchVerification {
   private responseHandler: ResponseHandler = new ResponseHandler();
@@ -74,6 +108,9 @@ class UbirchVerification {
   private elementSelector: string;
 
   constructor(config: IUbirchVerificationConfig = DEFAULT_CONFIG) {
+    MESSAGE_STRINGS = config.language && LANGUAGE_MESSAGE_STRINGS[config.language] ?
+      LANGUAGE_MESSAGE_STRINGS[config.language] : LANGUAGE_MESSAGE_STRINGS.de;
+
     if (!config.elementSelector) {
       throw new Error('Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance');
     }
@@ -291,11 +328,11 @@ class UbirchFormVerification extends UbirchVerification {
    */
   public setDataIntoForm(dataP, documentRef, separatorP?) {
     const separator = separatorP || '&';
-    const allParams = dataP.split(separator).map( (value: string) => {
+    const allParams = dataP.split(separator).map((value: string) => {
       const data = value.split('=');
       return {
-        key : data[0],
-        value : decodeURIComponent(data[1])
+        key: data[0],
+        value: decodeURIComponent(data[1])
       };
     });
     allParams.forEach(param => {
@@ -304,9 +341,10 @@ class UbirchFormVerification extends UbirchVerification {
         if (this.paramsFormIdsMapping && this.paramsFormIdsMapping.length > 0) {
           const idIndex = this.paramsFormIdsMapping.indexOf(key);
           if (idIndex < 0) {
-            throw new Error('No mapping defined for ' + key);
+            console.warn('No mapping defined for ' + key);
+          } else {
+            key = this.formIds[idIndex];
           }
-          key = this.formIds[idIndex];
         }
         if (documentRef.getElementById(key) && documentRef.getElementById(key) !== null) {
           documentRef.getElementById(key).value = param.value;
@@ -336,7 +374,7 @@ class UbirchFormVerification extends UbirchVerification {
     } else {
       // helper to generate correct JSON from input fields
       // attention: ids of input fields have to be same as field names in anchored JSON
-      const genJson = this.createJsonFromInputs( this.formIds, documentRef);
+      const genJson = this.createJsonFromInputs(this.formIds, documentRef);
       return genJson;
     }
   }

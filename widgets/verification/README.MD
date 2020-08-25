@@ -1,5 +1,16 @@
 # Ubirch Verification Widget
 
+## Example
+
+Live-Demo:
+
+https://console.demo.ubirch.com/libs/verification/verification.html
+
+You can find an example with full documentation here:
+
+https://github.com/ubirch/ubirch-verify-widget
+
+
 ## Configuration
 
 Widget configuration should be done on Ubirch side before deploy.

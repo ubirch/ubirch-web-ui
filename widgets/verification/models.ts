@@ -18,9 +18,15 @@ export enum EError {
     UNKNOWN_ERROR = 99
 }
 
+export enum ELanguages {
+  de = 'de',
+  en = 'en'
+}
+
 export interface IUbirchVerificationConfig {
   algorithm: UbirchHashAlgorithm;
   elementSelector: string;
+  language?: ELanguages;
 }
 
 export interface IUbirchFormVerificationConfig extends IUbirchVerificationConfig {
