@@ -103,7 +103,7 @@ For **Verification widget**, `assets_url_prefix` field and `@@UBIRCH_WIDGET_ASSE
 On deploy, some values in the environment files could be replaced. Currently, they contains a placeholder like
 
 ```
-seal_icon_url: '@@UBIRCH_SEAL_ICON_URL@@'
+assets_url_prefix: '@@UBIRCH_WIDGET_ASSETS_PREFIX@@'
 ```
 
 ...to easily find and change with data you need.
