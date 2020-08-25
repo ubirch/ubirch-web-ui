@@ -31,7 +31,7 @@ const LANGUAGE_MESSAGE_STRINGS = {
     SUCCESS: {
       headline: 'Verifikation erfolgreich!',
       info: 'Für zusätzliche Informationen zur Verankerung klicken Sie auf das ubirch Icon um die Details der Verifikation in der ' +
-        ' ubirch Konsole anzuzeigen oder auf die Blockchain Icons um den jeweiligen Blockchain-Explorer zu öffnen'
+        'ubirch Konsole anzuzeigen oder auf die Blockchain Icons um den jeweiligen Blockchain-Explorer zu öffnen'
     },
     FAIL: {
       headline: 'Verifikation fehlgeschlagen!',
@@ -62,7 +62,7 @@ const LANGUAGE_MESSAGE_STRINGS = {
     },
     SUCCESS: {
       headline: 'Verification Successful!',
-      info: 'For more information about anchoring click the ubirch icon to open verification details in ubirch console ` +' +
+      info: 'For more information about anchoring click the ubirch icon to open verification details in ubirch console ' +
         'or click the blockchain icons to open corresponding blockchain explorer'
     },
     FAIL: {
