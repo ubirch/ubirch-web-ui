@@ -13,6 +13,8 @@ import {initializer} from './utils/app-init';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MarkdownModule} from 'ngx-markdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     KeycloakAngularModule,
     HttpClientModule,
     MarkdownModule.forRoot({loader: HttpClient}),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     StatusBar,
@@ -39,7 +48,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       deps: [KeycloakService]
     }
   ],
-  exports: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
+
+// required for AOT compilation
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

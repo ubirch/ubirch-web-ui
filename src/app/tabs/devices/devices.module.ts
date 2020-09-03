@@ -13,6 +13,9 @@ import {ConfirmDeleteDevicePopupComponent} from './devices-list-page/popups/conf
 import {CreatedDevicesListPopupComponent} from './devices-list-page/popups/created-devices-list-popup/created-devices-list-popup.component';
 import { DeviceDetailsResolverService } from 'src/app/resolvers/device-details-resolver.service';
 import {TagInputModule} from 'ngx-chips';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {HttpClient} from '@angular/common/http';
+import {HttpLoaderFactory} from '../../app.module';
 
 @NgModule({
     imports: [
@@ -47,7 +50,14 @@ import {TagInputModule} from 'ngx-chips';
             }
         ]),
         ComponentsModule,
-        TagInputModule
+        TagInputModule,
+        TranslateModule.forChild({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [ HttpClient ],
+          },
+        }),
     ],
   declarations: [
     DevicesListPage,

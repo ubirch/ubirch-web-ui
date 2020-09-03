@@ -1,0 +1,14 @@
+{
+  "devices.list.new-thing.heading": "Register new Things",
+  "devices.list.new-thing.id-type": "ID type",
+  "devices.list.new-thing.UUID": "UUID",
+  "devices.list.new-thing.IMSI": "IMSI",
+  "devices.list.new-thing.ID": "ID",
+  "devices.list.new-thing.description": "Description",
+  "devices.list.new-thing.tags": "Tags",
+  "devices.list.new-thing.prefix": "Prefix",
+  "devices.list.new-thing.register": "Register",
+  "devices.list.new-thing.cancel-creation": "Cancel",
+  "devices.list.new-thing.note": "Note",
+  "devices.list.new-thing.note.text": "You can directly register more than one thing by inserting several hardware device IDs comma separated ( , ).\nYou can add a couple of tags comma separated."
+}

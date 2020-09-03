@@ -89,7 +89,7 @@ ion-badge {
 }
 
 .popup-grid {
-  padding: 0 50px 20px;
+  padding: 0 50px;
 }
 
 .popup-padding-row {
@@ -207,5 +207,8 @@ ion-tab-button.tab-selected {
   -webkit-transform: translate3d(0, 40px, 0);
   transform: translate3d(0, 40px, 0);
   opacity: .01;
-  height: 700px;
+  height: 800px;
+}
+.translated-with-linebreaks{
+  white-space: pre-wrap;
 }
