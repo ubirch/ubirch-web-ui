@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 import { UserService } from './services/user.service';
 import { AccountInfo } from './models/account-info';
 import { KeycloakService } from 'keycloak-angular';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -78,8 +79,10 @@ export class AppComponent {
     private statusBar: StatusBar,
     private userService: UserService,
     private keycloackService: KeycloakService,
+    private translate: TranslateService
   ) {
     this.initializeApp();
+    translate.setDefaultLang('en');
   }
 
   initializeApp() {

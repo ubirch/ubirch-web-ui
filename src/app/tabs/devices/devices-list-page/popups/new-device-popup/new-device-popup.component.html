@@ -6,7 +6,7 @@
     <ion-row>
       <ion-col>
         <div class="ion-text-center">
-          <h1>Register new Things</h1>
+          <h1>{{ 'devices.list.new-thing.heading' | translate }}</h1>
         </div>
       </ion-col>
     </ion-row>
@@ -19,7 +19,7 @@
                 <ion-content>
                   <ion-row class="ion-align-items-center">
                     <ion-col class="ion-no-padding">
-                      ID type:
+                      {{ 'devices.list.new-thing.id-type' | translate }}:
                     </ion-col>
                     <ion-col class="ion-no-padding">
                       <ion-button
@@ -29,7 +29,7 @@
                         expand="full"
                         (click)="switchToUuid()"
                       >
-                        UUID
+                        {{ 'devices.list.new-thing.UUID' | translate }}
                       </ion-button>
                     </ion-col>
                     <ion-col class="ion-no-padding">
@@ -40,14 +40,18 @@
                         expand="full"
                         (click)="switchToImsi()"
                       >
-                        IMSI
+                        {{ 'devices.list.new-thing.IMSI' | translate }}
                       </ion-button>
                     </ion-col>
                   </ion-row>
                 </ion-content>
               </ion-item>
               <ion-item class="ion-margin-bottom">
-                <ion-label slot="start">ID:<ion-text color="danger">*</ion-text>:</ion-label>
+                <ion-label slot="start">
+                  {{ 'devices.list.new-thing.ID' | translate }}
+                  <ion-text color="danger">*</ion-text>
+                  :
+                </ion-label>
                 <ion-textarea
                   rows="3"
                   formControlName="hwDeviceId"
@@ -60,15 +64,21 @@
                 ></ion-textarea>
               </ion-item>
               <ion-item>
-                <ion-label slot="start">Description:</ion-label>
+                <ion-label slot="start">
+                  {{ 'devices.list.new-thing.description' | translate }}:
+                  </ion-label>
                 <ion-input formControlName="description"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-label slot="start">Tags:</ion-label>
+                <ion-label slot="start">
+                  {{ 'devices.list.new-thing.tags' | translate }}:
+                </ion-label>
                 <ion-input formControlName="tags"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-label slot="start">Prefix:</ion-label>
+                <ion-label slot="start">
+                  {{ 'devices.list.new-thing.prefix' | translate }}:
+                  </ion-label>
                 <ion-input formControlName="prefix"></ion-input>
               </ion-item>
             </form>
@@ -79,7 +89,13 @@
     <ion-row>
       <ion-col>
         <div class="ion-text-start">
-          <p><strong>Note:</strong> By using a ( , ) you can directly register more than one thing.</p>
+          <p><strong>
+            {{ 'devices.list.new-thing.note' | translate }}:
+          </strong>
+          </p>
+          <p class="translated-with-linebreaks">
+            {{ 'devices.list.new-thing.note.text' | translate }}
+          </p>
         </div>
       </ion-col>
     </ion-row>
@@ -91,14 +107,14 @@
         <ion-button color="success" expand="full" class="ion-margin-vertical"
                     (click)="createDevice()" [disabled]="!deviceDetailsForm.valid"
                     id="new-device-popup-submit">
-          Register
+          {{ 'devices.list.new-thing.register' | translate }}
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button id="new-device-popup-cancel" color="light" expand="full" (click)="dismiss()" >
-          Cancel
+        <ion-button id="new-device-popup-cancel" color="light" expand="full" (click)="dismiss()">
+          {{ 'devices.list.new-thing.cancel-creation' | translate }}
         </ion-button>
       </ion-col>
     </ion-row>
