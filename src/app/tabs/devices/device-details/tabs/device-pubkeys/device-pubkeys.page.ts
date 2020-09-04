@@ -6,8 +6,8 @@ import {environment} from '../../../../../../environments/environment';
 import {interval, of, Subscription} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
 import {UbirchWebUIUtilsService} from '../../../../../utils/ubirch-web-uiutils.service';
-import {LoadingController} from '@ionic/angular';
 import {BEDevice} from '../../../../../models/bedevice';
+import {LoaderService} from '../../../../../services/loader.service';
 
 @Component({
   selector: 'app-device-pubkeys',
@@ -29,7 +29,7 @@ export class DevicePubkeysPage implements OnInit, OnDestroy {
   constructor(
     private deviceService: DeviceService,
     private keyService: KeyService,
-    private loadingController: LoadingController
+    private loading: LoaderService
   ) {
   }
 
@@ -59,21 +59,6 @@ export class DevicePubkeysPage implements OnInit, OnDestroy {
     UbirchWebUIUtilsService.copyToClipboard(val);
   }
 
-  showLoader() {
-    this.loadingSpinner = this.loadingController.create({
-      message: 'Loading pubKeys of thing'
-    }).then((res) => {
-      res.present();
-    });
-  }
-
-  hideLoader() {
-    if (this.loadingSpinner) {
-      this.loadingController.dismiss();
-      this.loadingSpinner = undefined;
-    }
-  }
-
   private restartPolling(showSpinner?: boolean) {
     this.stopPolling();
 
@@ -84,7 +69,7 @@ export class DevicePubkeysPage implements OnInit, OnDestroy {
           if (this.loadedDevice && this.loadedDevice.hwDeviceId) {
             // load pubKeys
             if (showSpinner) {
-              this.showLoader();
+              this.loading.show();
             }
             return this.keyService.getPubKeysOfThing(this.loadedDevice.hwDeviceId);
           } else {
@@ -92,12 +77,17 @@ export class DevicePubkeysPage implements OnInit, OnDestroy {
           }
         })
       )
-      .subscribe(pubKeyList => {
+      .subscribe(
+        pubKeyList => {
           // list of pubKeys, sort by validNotAfter
           this.pubKeyList = pubKeyList && pubKeyList.length > 0 ?
             pubKeyList.sort(KeyService.compareKeys) : undefined;
           this.loaded = true;
-          this.hideLoader();
+          this.loading.hide();
+        },
+        error => {
+          this.loaded = true;
+          this.loading.hide();
         }
       );
   }

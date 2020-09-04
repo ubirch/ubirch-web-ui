@@ -6,14 +6,14 @@
     <ion-row>
       <ion-col>
         <div class="ion-text-center">
-          <h1>Things registered</h1>
+          <h1>{{ 'devices.list.new-thing-created.heading' | translate }}</h1>
         </div>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <div class="ion-text-start">
-          <p>Things Registration State:</p>
+          <p>{{ 'devices.list.new-thing-created.sub-header' | translate }}:</p>
         </div>
       </ion-col>
     </ion-row>
@@ -23,7 +23,7 @@
           <ng-container *ngIf="successful && successful.size > 0">
             <ion-list>
               <ion-item-divider>
-                <ion-label>These Things have been registered successfully:</ion-label>
+                <ion-label>{{ 'devices.list.new-thing-created.successful-list' | translate }}:</ion-label>
               </ion-item-divider>
               <ion-item *ngFor="let item of successful | keyvalue"
                         [routerLink]="['/devices','details', item.key]" (click)="dismiss()">
@@ -39,7 +39,7 @@
           <ng-container *ngIf="failed && failed.size > 0">
             <ion-list>
               <ion-item-divider>
-                  <ion-label color="danger"><strong>Registration of the following Things failed:</strong></ion-label>
+                  <ion-label color="danger"><strong>{{ 'devices.list.new-thing-created.failed-list' | translate }}:</strong></ion-label>
               </ion-item-divider>
               <ion-item *ngFor="let item of failed | keyvalue">
                 <ion-label color="danger" slot="start">
@@ -60,7 +60,7 @@
       <ion-col>
         <ion-button color="dark" expand="full" (click)="dismiss()" >
             <ion-icon src="assets/app-icons/list.svg" slot="start"></ion-icon>
-            Go to Things Overview
+            {{ 'button.to-things-overview' | translate }}
         </ion-button>
       </ion-col>
     </ion-row>
