@@ -10,5 +10,10 @@
   "devices.list.new-thing.register": "Register",
   "devices.list.new-thing.cancel-creation": "Cancel",
   "devices.list.new-thing.note": "Note",
-  "devices.list.new-thing.note.text": "You can directly register more than one thing by inserting several hardware device IDs comma separated ( , ).\nYou can add a couple of tags comma separated."
+  "devices.list.new-thing.note.text": "You can directly register more than one thing by inserting several hardware device IDs comma separated ( , ).\nYou can add a couple of tags comma separated.",
+  "devices.list.new-thing-created.heading": "Things registered",
+  "devices.list.new-thing-created.sub-header": "Things Registration State",
+  "devices.list.new-thing-created.successful-list": "These Things have been registered successfully",
+  "devices.list.new-thing-created.failed-list": "Registration of the following Things failed",
+  "button.to-things-overview": "Go to Things Overview"
 }
