@@ -1,4 +1,9 @@
 {
+  "devices.list.searchbar.placeholder": "Filter Things by description or ID",
+  "devices.list.item.num-upps.last-day": "UPPs in the last day",
+  "devices.list.item.num-upps.loading": "loading state...",
+  "devices.list.item.num-upps.not-available": "state not available",
+  "devices.list.info.no-items": "You seem to have no things already.",
   "devices.list.new-thing.heading": "Register new Things",
   "devices.list.new-thing.id-type": "ID type",
   "devices.list.new-thing.UUID": "UUID",
