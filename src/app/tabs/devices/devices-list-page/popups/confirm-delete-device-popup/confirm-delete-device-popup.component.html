@@ -6,23 +6,23 @@
     <ion-row>
       <ion-col>
         <div class="ion-text-center">
-          <h1><ion-icon src="assets/app-icons/delete.svg"></ion-icon> Delete Thing</h1>
+          <h1><ion-icon src="assets/app-icons/delete.svg"></ion-icon>{{ 'devices.list.delete-thing.heading' | translate }}</h1>
         </div>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <div class="ion-text-start">
-          <p>Do you really want to delete the selected thing?</p>
+          <p>{{ 'devices.list.delete-thing.sub-header' | translate }}</p>
         </div>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <div class="ion-text-start">
-          <ion-item *ngFor="let device of devices">
+          <ion-item *ngFor="let device of devices; index as i;">
             <ion-label>
-              <h2>Device 1:</h2>
+              <h2>{{ 'label.thing' | translate }} {{i+1}}:</h2>
               <p>{{device.hwDeviceId}}</p>
               <p>{{device.description}}</p>
             </ion-label>
@@ -33,7 +33,7 @@
     <ion-row>
       <ion-col>
         <div class="ion-text-start">
-          <p><strong>Note:</strong> If you delete a thing all stored data of this thing will get lost.</p>
+          <p><strong>{{ 'label.note' | translate }}:</strong> {{ 'devices.list.delete-thing.note.text' | translate }}</p>
         </div>
       </ion-col>
     </ion-row>
@@ -43,14 +43,14 @@
       <ion-col>
         <ion-button color="danger" expand="full" (click)="deleteDevice()" class="ion-margin-vertical">
           <ion-icon src="assets/app-icons/delete.svg"></ion-icon>
-          Delete
+          {{ 'button.delete' | translate }}
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-button color="light" expand="full" (click)="dismiss()" >
-          Cancel
+          {{ 'button.cancel' | translate }}
         </ion-button>
       </ion-col>
     </ion-row>
