@@ -23,6 +23,8 @@
   "label.thing": "Device",
   "label.note": "Note",
   "label.notes": "Notes",
+  "label.files": "{count, plural, =0{} one{file} other{files}}",
+  "file-input.info.no-files-chosen": "No file chosen",
   "button.to-things-overview": "Go to Things Overview",
   "button.new-thing.register": "Register",
   "button.new-thing.cancel-creation": "Cancel",
