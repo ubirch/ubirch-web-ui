@@ -7,6 +7,7 @@ import { FileInputComponent } from './file-input/file-input.component';
 import {VerificationHeaderComponent} from './header/verification-header/verification-header.component';
 import {LoggedInUserComponent} from './logged-in-user/logged-in-user.component';
 import {TagChipsListInputComponent} from './tag-chips-list-input/tag-chips-list-input.component';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 
@@ -21,7 +22,8 @@ import {TagChipsListInputComponent} from './tag-chips-list-input/tag-chips-list-
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    IonicModule,
+    TranslateModule
   ],
   exports: [
       HeaderComponent,

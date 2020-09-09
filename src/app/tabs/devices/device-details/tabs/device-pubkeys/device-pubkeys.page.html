@@ -7,27 +7,27 @@
           <ion-row class="ion-justify-content-center">
             <ion-col size="10">
               <ion-row class="ion-margin-bottom">
-                <h1 class="ion-text-wrap">PubKey: {{pubkey.pubKey}}</h1>
+                <h1 class="ion-text-wrap">{{ 'device.details.tab.pubkeys.label.pubkey' | translate }}: {{pubkey.pubKey}}</h1>
                 <ion-button color="success" (click)="copyToClipboard(pubkey.pubKey)" class="ion-float-end ion-margin-horizontal">
                   <ion-icon name="copy"></ion-icon>
                 </ion-button>
               </ion-row>
               <ion-row>
                 <ion-col size="7">
-                  <h2 class="ion-text-wrap">PubKeyId: {{pubkey.pubKeyId}}</h2>
-                  <h2>Algorithm: {{pubkey.algorithm}}</h2>
+                  <h2 class="ion-text-wrap">{{ 'device.details.tab.pubkeys.label.pubkeyid' | translate }}: {{pubkey.pubKeyId}}</h2>
+                  <h2>{{ 'device.details.tab.pubkeys.label.algorithm' | translate }}: {{pubkey.algorithm}}</h2>
                 </ion-col>
                 <ion-col size="5">
                   <ion-row>
-                    <ion-col size="5" class="ion-text-wrap">created:</ion-col>
+                    <ion-col size="5" class="ion-text-wrap">{{ 'device.details.tab.pubkeys.label.created' | translate }}:</ion-col>
                     <ion-col size="7" class="ion-text-wrap">{{pubkey.created | date: DATE_TIME_ZONE_FORMAT}}</ion-col>
                   </ion-row>
                   <ion-row>
-                    <ion-col size="5" class="ion-text-wrap">not valid before:</ion-col>
+                    <ion-col size="5" class="ion-text-wrap">{{ 'device.details.tab.pubkeys.label.not-valid-before' | translate }}:</ion-col>
                     <ion-col size="7" class="ion-text-wrap">{{pubkey.validNotBefore | date: DATE_TIME_ZONE_FORMAT}}</ion-col>
                   </ion-row>
                   <ion-row>
-                    <ion-col size="5" class="ion-text-wrap">not valid after:</ion-col>
+                    <ion-col size="5" class="ion-text-wrap">{{ 'device.details.tab.pubkeys.label.not-valid-after' | translate }}:</ion-col>
                     <ion-col size="7" class="ion-text-wrap">{{pubkey.validNotAfter | date: DATE_TIME_ZONE_FORMAT}}</ion-col>
                   </ion-row>
                 </ion-col>
@@ -46,7 +46,7 @@
     <ion-row *ngIf="loaded" class="ion-padding ion-align-items-center ion-justify-content-center">
       <ion-col size="6">
         <div class="ion-text-center">
-          <h1>There seems to be no public keys available for this thing...</h1>
+          <h1>{{ 'device.details.tab.pubkeys.info.no-pubkeys-for-thing' | translate }}</h1>
         </div>
       </ion-col>
     </ion-row>

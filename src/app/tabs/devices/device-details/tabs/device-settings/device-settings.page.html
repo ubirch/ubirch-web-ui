@@ -3,7 +3,7 @@
     <ion-row class="ion-align-items-center ion-justify-content-end padding-row">
       <ion-button  color="danger" (click)="confirmDeviceDelete()" *ngIf="thingCanBeDeleted()">
         <ion-icon slot="end" src="assets/app-icons/delete.svg"></ion-icon>
-        delete
+        {{ 'button.delete' | translate }}
       </ion-button>
     </ion-row>
   </ion-grid>
@@ -11,22 +11,26 @@
     <ion-card-content>
       <form [formGroup]="deviceDetailsForm">
         <ion-item class="ion-margin-bottom">
-          <ion-label slot="start">ID:</ion-label>
+          <ion-label slot="start">{{ 'device.details.tab.things-settings.label.id' | translate }}:</ion-label>
           <ion-input formControlName="hwDeviceId" readonly color="medium"></ion-input>
         </ion-item>
         <ion-item class="ion-margin-bottom">
-          <ion-label slot="start">description:</ion-label>
+          <ion-label slot="start">{{ 'device.details.tab.things-settings.label.description' | translate }}:</ion-label>
           <ion-input formControlName="description"></ion-input>
         </ion-item>
         <ng-container [formGroup]="deviceAttributesForm">
           <ion-item class="ion-margin-bottom">
-            <ion-label slot="start">tags:</ion-label>
-            <tag-input item-content formControlName="claiming_tags" placeholder="Add tags for this device"></tag-input>
+            <ion-label slot="start">{{ 'device.details.tab.things-settings.label.tags' | translate }}:</ion-label>
+            <tag-input item-content formControlName="claiming_tags"
+                       placeholder="{{ 'device.details.tab.things-settings.placeholder.tags' | translate }}">
+            </tag-input>
           </ion-item>
           <ion-item>
-            <ion-label slot="start">apiConfig:</ion-label>
+            <ion-label slot="start">{{ 'device.details.tab.things-settings.label.api-config' | translate }}:</ion-label>
             <ion-textarea ngClass="config-area" class="ion-margin-vertical config-input" readonly
-                          formControlName="apiConfig" placeholder="NO API CONFIG AVAILABLE"></ion-textarea>
+                          formControlName="apiConfig"
+                          placeholder="{{ 'device.details.tab.things-settings.placeholder.api-config' | translate }}">
+            </ion-textarea>
           </ion-item>
         </ng-container>
       </form>
@@ -35,14 +39,14 @@
           <ion-col size="6">
             <ion-button color="success"  expand="full" *ngIf="deviceHasUnsavedChanges" (click)="saveDevice()">
               <ion-icon slot="start" name="save"></ion-icon>
-              Save
+              {{ 'button.save' | translate }}
             </ion-button>
           </ion-col>
         </ion-row>
         <ion-row class="ion-align-items-center ion-justify-content-center">
           <ion-col size="2">
             <ion-button color="light"  expand="full" *ngIf="deviceHasUnsavedChanges" (click)="discardChanges()">
-              Cancel
+              {{ 'button.cancel' | translate }}
             </ion-button>
           </ion-col>
         </ion-row>
