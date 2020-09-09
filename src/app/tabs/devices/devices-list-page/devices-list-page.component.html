@@ -1,46 +1,49 @@
 <ubirch-web-ui-header
-        title="Your Things"
-        [headerRightLabel]="headerRightLabel"
-        [headerRightValue]="headerRightValue"
-        [actionButtons]="actionButtons"
-        (buttonClicked)="handleButtonClick($event)"
-        addSearchBarWithPlaceholder="Filter Things by description or ID"
-        (startSearch)="search($event)"
+  title="{{ 'devices.list.title' | translate }}"
+  [headerRightLabel]="headerRightLabel"
+  [headerRightValue]="headerRightValue"
+  [actionButtons]="actionButtons"
+  (buttonClicked)="handleButtonClick($event)"
+  addSearchBarWithPlaceholder="{{ 'devices.list.searchbar.placeholder' | translate }}"
+  (startSearch)="search($event)"
 ></ubirch-web-ui-header>
 
 <ion-content class="ion-padding-horizontal">
-  <ng-container *ngIf="deviceStubs; else NO_LIST">
-    <ion-grid>
-      <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
-        <ion-col size="12">
-          <mat-paginator #paginator
-                         [ngClass]="{'invisible': searchActive()}"
-                         [length]="numberOfDevices"
-                         [pageSize]="pageSize">
-          </mat-paginator>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
+      <ion-col size="12">
+        <mat-paginator #paginator
+                       [ngClass]="{'invisible': searchActive()}"
+                       [length]="numberOfDevices"
+                       [pageSize]="pageSize">
+        </mat-paginator>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ng-container *ngIf="deviceStubs && deviceStubs.length > 0; else NO_LIST">
     <ion-list>
       <ion-item *ngFor="let item of deviceStubs" color="light" class="device-list-item ion-margin-bottom" lines="none">
         <ion-label [routerLink]="['/devices','details', item.hwDeviceId]" class="devices-list-item-content">
           <h2>{{item.description}}</h2>
           <h3>{{item.hwDeviceId}}</h3>
           <p *ngIf="item.deviceState; else STATE_NOT_AVAILABLE">
-            <ion-badge [color]="item.deviceState.getStateColor()">UPPs in the last day: {{item.deviceState.numberUPPs}}</ion-badge>
+            <ion-badge [color]="item.deviceState.getStateColor()">
+              {{ 'devices.list.item.num-upps.last-day' | translate }}: {{item.deviceState.numberUPPs}}
+            </ion-badge>
           </p>
 
           <ng-template #STATE_NOT_AVAILABLE>
-            <p *ngIf="stateLoading">loading state...</p>
-            <p *ngIf="!stateLoading">state not available</p>
+            <p *ngIf="stateLoading">{{ 'devices.list.item.num-upps.loading' | translate }}</p>
+            <p *ngIf="!stateLoading">{{ 'devices.list.item.num-upps.not-available' | translate }}</p>
           </ng-template>
 
         </ion-label>
         <div class="item-note" slot="end">
-          <ion-button (click)="confirmDeviceDelete(item)" color="danger" class="list-item-end-button" *ngIf="thingCanBeDeleted(item)">
+          <ion-button (click)="confirmDeviceDelete(item)" color="danger" class="list-item-end-button"
+                      *ngIf="thingCanBeDeleted(item)">
             <div class="ion-align-items-center">
               <ion-icon src="assets/app-icons/delete.svg" class="list-item-end-icon"></ion-icon>
-              delete
+              {{ 'button.delete' | translate }}
             </div>
           </ion-button>
         </div>
@@ -51,7 +54,7 @@
     <ion-row *ngIf="loaded" class="ion-padding ion-align-items-center ion-justify-content-center">
       <ion-col size="6">
         <div class="ion-text-center">
-          <h1>You seem to have no things already.</h1>
+          <h1>{{ 'devices.list.info.no-items' | translate }}</h1>
         </div>
       </ion-col>
     </ion-row>

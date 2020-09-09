@@ -51,13 +51,7 @@ import {HttpLoaderFactory} from '../../app.module';
         ]),
         ComponentsModule,
         TagInputModule,
-        TranslateModule.forChild({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [ HttpClient ],
-          },
-        }),
+        TranslateModule,
     ],
   declarations: [
     DevicesListPage,
