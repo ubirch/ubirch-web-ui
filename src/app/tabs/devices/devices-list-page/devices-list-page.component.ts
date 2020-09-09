@@ -4,14 +4,14 @@ import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
 import {startWith, switchMap, tap} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
-import {LoadingController, ModalController, ToastController} from '@ionic/angular';
+import {ModalController, ToastController} from '@ionic/angular';
 import {NewDevicePopupComponent} from './popups/new-device-popup/new-device-popup.component';
 import {ConfirmDeleteDevicePopupComponent} from './popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {CreatedDevicesListPopupComponent} from './popups/created-devices-list-popup/created-devices-list-popup.component';
 import {MatPaginator} from '@angular/material/paginator';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
 import {DevicesListWrapper} from '../../../models/devices-list-wrapper';
-import {BEDevice} from '../../../models/bedevice';
+import {LoaderService} from '../../../services/loader.service';
 
 @Component({
   selector: 'app-list',
@@ -33,29 +33,15 @@ export class DevicesListPage implements OnDestroy {
   searchStr: string;
   numOfFilteredItems = 0;
 
-  loadingSpinner: HTMLIonLoadingElement;
   loaded = false;
   stateLoading = false;
-
-  private paginatorSubscr: Subscription;
-  private devideStateSubscr: Subscription;
-  private deleteDeviceSubscr: Subscription;
-  private createDeviceSubscr: Subscription;
-
-  constructor(
-      private deviceService: DeviceService,
-      private modalCtrl: ModalController,
-      private toastCtrl: ToastController,
-      private loadingController: LoadingController
-  ) {}
-
   toastrContent: Map<string, any> = new Map([
     ['del', {
       message: 'Device deleted',
       duration: 4000,
       color: 'success'
     }],
-      ['cancl_del', {
+    ['cancl_del', {
       message: 'Deleting Device canceled',
       duration: 4000,
       color: 'light'
@@ -71,13 +57,32 @@ export class DevicesListPage implements OnDestroy {
       color: 'danger'
     }]
   ]);
-
   actionButtons = [new HeaderActionButton({
     color: 'success',
     label: 'Add New Device',
     iconName: 'add-circle-outline',
     action: 'addDevice'
   })];
+  private paginatorSubscr: Subscription;
+  private devideStateSubscr: Subscription;
+  private deleteDeviceSubscr: Subscription;
+  private createDeviceSubscr: Subscription;
+
+  constructor(
+    private deviceService: DeviceService,
+    private modalCtrl: ModalController,
+    private toastCtrl: ToastController,
+    private loading: LoaderService
+  ) {
+  }
+
+  get headerRightLabel(): string {
+    return this.searchActive() ? 'Filtered Things: ' : 'Total Things:';
+  }
+
+  get headerRightValue(): number {
+    return this.searchActive() ? this.numOfFilteredItems : this.numberOfDevices;
+  }
 
   handleButtonClick(action: string) {
     switch (action) {
@@ -97,66 +102,16 @@ export class DevicesListPage implements OnDestroy {
   }
 
   ionViewWillEnter() {
-    this.restartPolling(true);
+    this.restartPolling();
   }
 
   ionViewDidEnter() {
     this.paginatorSubscr = this.paginator.page
-        .pipe(
-            tap(() => this.restartPolling(true))
-        )
-        .subscribe();
+      .pipe(
+        tap(() => this.restartPolling())
+      )
+      .subscribe();
 
-  }
-
-  private restartPolling(showSpinner?: boolean) {
-      this.stopPolling();
-      if (showSpinner) {
-        this.loaded = false;
-      }
-
-      this.polling = interval(environment.POLLING_INTERVAL_MILLISECONDS)
-          .pipe(
-              startWith(0),
-              switchMap(() => {
-                if (this.searchActive()) {
-                  return this.deviceService.searchDevices(
-                      this.searchStr
-                  );
-                } else {
-                  if (!this.loaded) {
-                    this.showLoader();
-                  }
-                  return this.deviceService.reloadDeviceStubs(
-                      this.paginator ? this.paginator.pageIndex : 0,
-                      this.pageSize
-                  );
-                }
-              })
-          )
-          .subscribe(
-              wrapper => {
-                this.numberOfDevices = wrapper.numberOfDevices || 0;
-                this.numOfFilteredItems = wrapper.filteredDevicesSize || 0;
-                this.deviceStubs = wrapper.devices || [];
-                this.loaded = true;
-                this.hideLoader();
-                this.loadDeviceStates(wrapper);
-              },
-            error => {
-                this.loaded = true;
-                this.hideLoader();
-                this.finished(
-                  'err',
-                  error.toString());
-              }
-          );
-  }
-
-  private stopPolling() {
-    if (this.polling) {
-      this.polling.unsubscribe();
-    }
   }
 
   search(event: any) {
@@ -171,7 +126,7 @@ export class DevicesListPage implements OnDestroy {
 
   async loadDeviceStates(listWrapper: DevicesListWrapper) {
 
-    if (listWrapper && listWrapper.devices) {
+    if (listWrapper && listWrapper.devices && listWrapper.devices.length > 0) {
       this.stateLoading = true;
       this.devideStateSubscr = this.deviceService.getDeviceStates(listWrapper.devices.map(device => device.hwDeviceId)).subscribe(
         states => {
@@ -201,15 +156,15 @@ export class DevicesListPage implements OnDestroy {
     modal.onDidDismiss().then((detail: any) => {
       if (detail !== null && detail.data && detail.data.confirmed) {
         this.deleteDeviceSubscr = this.deviceService.deleteDevice(
-            device.hwDeviceId)
-            .subscribe(
-                _ => {
-                  this.restartPolling(true);
-                  this.finished('del');
-                },
-                err => this.finished(
-                    'err',
-                    err.toString()));
+          device.hwDeviceId)
+          .subscribe(
+            _ => {
+              this.restartPolling();
+              this.finished('del');
+            },
+            err => this.finished(
+              'err',
+              err.toString()));
       } else {
         this.finished('cancl_del');
       }
@@ -220,25 +175,25 @@ export class DevicesListPage implements OnDestroy {
 
   async presentNewDeviceModal() {
     const modal = await this.modalCtrl.create({
-        component: NewDevicePopupComponent
+      component: NewDevicePopupComponent
     });
     modal.onDidDismiss().then((details: any) => {
       if (details && details.data) {
         this.createDeviceSubscr = this.deviceService.createDevicesFromData(
-            details.data)
-            .subscribe(
-                createdDevice => {
-                  this.restartPolling(true);
-                  this.presentDevicesCreatedModal(createdDevice);
-                },
-                err => {
-                  this.restartPolling(true);
-                  const errMsg = 'something went wrong during devices creation: ' + err.message;
-                  this.presentDevicesCreatedModal(err, errMsg);
-                  this.finished(
-                      'err',
-                      ': ' + errMsg );
-                });
+          details.data)
+          .subscribe(
+            createdDevice => {
+              this.restartPolling();
+              this.presentDevicesCreatedModal(createdDevice);
+            },
+            err => {
+              this.restartPolling();
+              const errMsg = 'something went wrong during devices creation: ' + err.message;
+              this.presentDevicesCreatedModal(err, errMsg);
+              this.finished(
+                'err',
+                ': ' + errMsg);
+            });
       } else {
         this.finished('cancl_create');
       }
@@ -261,31 +216,6 @@ export class DevicesListPage implements OnDestroy {
     return this.searchStr && this.searchStr.trim().length > 0;
   }
 
-  get headerRightLabel(): string {
-    return this.searchActive() ? 'Filtered Things: ' : 'Total Things:';
-  }
-
-  get headerRightValue(): number {
-    return this.searchActive() ? this.numOfFilteredItems : this.numberOfDevices;
-  }
-
-  public async showLoader(): Promise<void> {
-    // avoid cascading spinners on longer loading processes
-    if (!this.loadingSpinner) {
-      this.loadingSpinner = await this.loadingController.create({
-        message: 'Loading your Things'
-      });
-      this.loadingSpinner.present();
-    }
-  }
-
-  public hideLoader() {
-    if (this.loadingSpinner) {
-      this.loadingSpinner.dismiss();
-      this.loadingSpinner = undefined;
-    }
-  }
-
   public thingCanBeDeleted(device: DeviceStub): boolean {
     return device && device.canBeDeleted;
   }
@@ -303,6 +233,53 @@ export class DevicesListPage implements OnDestroy {
     }
     if (this.createDeviceSubscr) {
       this.createDeviceSubscr.unsubscribe();
+    }
+  }
+
+  private restartPolling() {
+
+    this.stopPolling();
+
+    this.polling = interval(environment.POLLING_INTERVAL_MILLISECONDS)
+      .pipe(
+        startWith(0),
+        switchMap(() => {
+          if (this.searchActive()) {
+            this.loading.show();
+            return this.deviceService.searchDevices(
+              this.searchStr
+            );
+          } else {
+            this.loading.show();
+            return this.deviceService.reloadDeviceStubs(
+              this.paginator ? this.paginator.pageIndex : 0,
+              this.pageSize
+            );
+          }
+        })
+      )
+      .subscribe(
+        wrapper => {
+          this.numberOfDevices = wrapper.numberOfDevices || 0;
+          this.numOfFilteredItems = wrapper.filteredDevicesSize || 0;
+          this.deviceStubs = wrapper.devices || [];
+          this.loading.hide();
+          this.loaded = true;
+          this.loadDeviceStates(wrapper);
+        },
+        error => {
+          this.loading.hide();
+          this.loaded = true;
+          this.finished(
+            'err',
+            error.toString());
+        }
+      );
+  }
+
+  private stopPolling() {
+    if (this.polling) {
+      this.polling.unsubscribe();
     }
   }
 

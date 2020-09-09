@@ -19,11 +19,11 @@ import {TranslateModule} from '@ngx-translate/core';
       FileInputComponent,
       TagChipsListInputComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    TranslateModule
+    imports: [
+      CommonModule,
+      FormsModule,
+      IonicModule,
+      TranslateModule
   ],
   exports: [
       HeaderComponent,

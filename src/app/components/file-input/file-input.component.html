@@ -11,11 +11,12 @@
       {{ value[0].name }}
     </ng-container>
     <ng-template #filesCounter>
-      {{ value.length }} files
+      {{ value.length }}
+      {{'label.files' | translate :"{ count: value.length }"}}
     </ng-template>
   </ng-container>
   <ng-template #noFile>
-    No file chosen
+    {{ 'file-input.info.no-files-chosen' | translate }}
   </ng-template>
 </ion-button>
 <input

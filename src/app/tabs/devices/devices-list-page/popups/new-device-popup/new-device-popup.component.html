@@ -90,7 +90,7 @@
       <ion-col>
         <div class="ion-text-start">
           <p><strong>
-            {{ 'devices.list.new-thing.note' | translate }}:
+            {{ 'label.notes' | translate }}:
           </strong>
           </p>
           <p class="translated-with-linebreaks">
@@ -107,14 +107,14 @@
         <ion-button color="success" expand="full" class="ion-margin-vertical"
                     (click)="createDevice()" [disabled]="!deviceDetailsForm.valid"
                     id="new-device-popup-submit">
-          {{ 'devices.list.new-thing.register' | translate }}
+          {{ 'button.new-thing.register' | translate }}
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-button id="new-device-popup-cancel" color="light" expand="full" (click)="dismiss()">
-          {{ 'devices.list.new-thing.cancel-creation' | translate }}
+          {{ 'button.new-thing.cancel-creation' | translate }}
         </ion-button>
       </ion-col>
     </ion-row>
