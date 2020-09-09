@@ -2,13 +2,13 @@
   <!-- type -->
   <ion-item class="ion-margin-bottom">
     <ion-label slot="start">
-      Type<ion-text color="danger">*</ion-text>:
+      {{ 'import.form.label.type' | translate }}<ion-text color="danger">*</ion-text>:
     </ion-label>
     <ion-select
       formControlName="batch_type"
       interface="popover"
     >
-      <ion-select-option value="sim_import">uSIM</ion-select-option>
+      <ion-select-option value="sim_import">{{ 'import.form.type.uSIM' | translate }}</ion-select-option>
     </ion-select>
   </ion-item>
 
@@ -23,7 +23,7 @@
     }"
   >
     <ion-label slot="start">
-      File<ion-text color="danger">*</ion-text>:
+      {{ 'label.file' | translate }}<ion-text color="danger">*</ion-text>:
     </ion-label>
     <app-file-input
       class="file-input"
@@ -35,7 +35,7 @@
   <!-- skip header -->
   <ion-item class="ion-margin-bottom" lines="full">
     <ion-label slot="start">
-      Skip header:
+      {{ 'import.form.label.skip-header' | translate }}:
     </ion-label>
     <ion-toggle
       slot="end"
@@ -46,7 +46,7 @@
   <!-- provider -->
   <ion-item class="ion-margin-bottom">
     <ion-label slot="start">
-      Provider<ion-text color="danger">*</ion-text>:
+      {{ 'import.form.label.provider' | translate }}<ion-text color="danger">*</ion-text>:
     </ion-label>
     <ion-input formControlName="batch_provider"></ion-input>
   </ion-item>
@@ -54,7 +54,7 @@
   <!-- description -->
   <ion-item class="ion-margin-bottom">
     <ion-label slot="start">
-      Description<ion-text color="danger">*</ion-text>:
+      {{ 'import.form.label.description' | translate }}<ion-text color="danger">*</ion-text>:
     </ion-label>
     <ion-input formControlName="batch_description"></ion-input>
   </ion-item>
@@ -62,7 +62,7 @@
   <!-- tags -->
   <ion-item class="ion-margin-bottom">
     <ion-label slot="start">
-      Tags<ion-text color="danger">*</ion-text>:
+      {{ 'import.form.label.tags' | translate }}<ion-text color="danger">*</ion-text>:
     </ion-label>
     <ion-input formControlName="batch_tags"></ion-input>
   </ion-item>
@@ -75,11 +75,11 @@
     expand="full"
     [disabled]="importForm.invalid || loading"
   >
-    Upload
+    {{ 'button.upload' | translate }}
   </ion-button>
   <ion-text color="danger">
     <p *ngIf="importForm?.controls.file.errors?.fileMaxSize" id="import-form-file-size-limit-warning">
-      Maximum file size is {{ fileSizePrettified$ | async }}kb
+      {{ 'import.form.info.max-file-size' | translate: { filesize: (fileSizePrettified$ | async) } }}
     </p>
   </ion-text>
 </form>
