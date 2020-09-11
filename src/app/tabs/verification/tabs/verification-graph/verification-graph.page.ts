@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Upp} from '../../../../models/upp';
 import {TrustService, VERIFICATION_STATE} from '../../../../services/trust.service';
 import {CytoscapeNodeLayout} from '../../../../models/cytoscape-node-layout';
@@ -18,10 +18,6 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
   public verifiedUpp: Upp;
   public verificationState = VERIFICATION_STATE.NO_HASH;
   public hash2Verify: string;
-  private observableVerifiedHashSubsc: Subscription;
-  private observableVerificationStateSubsc: Subscription;
-  private observableUPPSubsc: Subscription;
-
   layoutOffset = 50;
   layout = {
     name: 'preset',
@@ -56,9 +52,7 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
       return position;
     }
   };
-
   graphData: any;
-
   toastrContent: Map<string, any> = new Map([
     ['err', {
       message: 'Error occurred',
@@ -66,12 +60,19 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
       color: 'danger'
     }]
   ]);
+  private observableVerifiedHashSubsc: Subscription;
+  private observableVerificationStateSubsc: Subscription;
+  private observableUPPSubsc: Subscription;
 
   constructor(
     private truster: TrustService,
     private toastCtrl: ToastController,
     private cyto: CytoscapeGraphService
   ) {
+  }
+
+  public get VERIFICATION_STATE(): any {
+    return VERIFICATION_STATE;
   }
 
   ngOnInit() {
@@ -116,6 +117,18 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
     console.log(msg);
   }
 
+  ngOnDestroy(): void {
+    if (this.observableVerifiedHashSubsc) {
+      this.observableVerifiedHashSubsc.unsubscribe();
+    }
+    if (this.observableVerificationStateSubsc) {
+      this.observableVerificationStateSubsc.unsubscribe();
+    }
+    if (this.observableUPPSubsc) {
+      this.observableUPPSubsc.unsubscribe();
+    }
+  }
+
   private createUppTree(upp: Upp) {
     if (!upp.nodeLayouter) {
       upp.nodeLayouter = this.createNodeLayouter();
@@ -131,21 +144,5 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
     const layouter: Map<string, CytoscapeNodeLayout> = new Map<string, CytoscapeNodeLayout>();
     this.cyto.LAYOUT_SETTINGS.forEach(sett => layouter.set(sett.type, new CytoscapeNodeLayout(sett.nodeIcon)));
     return layouter;
-  }
-
-  public get VERIFICATION_STATE(): any {
-    return VERIFICATION_STATE;
-  }
-
-  ngOnDestroy(): void {
-    if (this.observableVerifiedHashSubsc) {
-      this.observableVerifiedHashSubsc.unsubscribe();
-    }
-    if (this.observableVerificationStateSubsc) {
-      this.observableVerificationStateSubsc.unsubscribe();
-    }
-    if (this.observableUPPSubsc) {
-      this.observableUPPSubsc.unsubscribe();
-    }
   }
 }

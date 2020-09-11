@@ -12,7 +12,8 @@
     </ng-container>
     <ng-template #filesCounter>
       {{ value.length }}
-      {{'label.files' | translate :"{ count: value.length }"}}
+      <ng-container *ngIf="value.length > 1; else ONE_FILE">{{'label.files' | translate }}</ng-container>
+      <ng-template #ONE_FILE>{{'label.file' | translate }}</ng-template>
     </ng-template>
   </ng-container>
   <ng-template #noFile>

@@ -1,10 +1,10 @@
 <ubirch-web-ui-verification-header
-  title="Verification"
+  title="{{ 'verification.title' | translate }}"
   [currentDevice]="currrentDevice"
   [headerFullWidthLabel]="verificationStateLabel"
   [headerFullWidthValue]="verifiedHash"
   [searchInput]="hash2Verify"
-  addSearchBarWithPlaceholder="Insert hash for verification and press enter"
+  addSearchBarWithPlaceholder="{{ 'verification.searchbar.label' | translate }}"
   [searchOnEnter]="true"
   showSearchCancelButton="focus"
   [fullWidthSearch]="true"

@@ -8,6 +8,7 @@ import {IonicModule} from '@ionic/angular';
 import {VerificationPage} from './verification.page';
 import {ComponentsModule} from '../../components/components.module';
 import {CytoscapeGraphModule} from '../../cytoscape-graph/cytoscape-graph.module';
+import {TranslateModule} from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -29,7 +30,8 @@ const routes: Routes = [
     IonicModule,
     CytoscapeGraphModule,
     RouterModule.forChild(routes),
-    ComponentsModule
+    ComponentsModule,
+    TranslateModule
   ],
   declarations: [
     VerificationPage
