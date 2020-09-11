@@ -25,6 +25,9 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+$color-background-grafana: #212124;
+$color-text-grafana: #eee;
+
 body {
   background: url(/assets/app-images/ubirch_grey_bg.jpg) no-repeat center/cover fixed;
 }
@@ -117,11 +120,13 @@ ion-badge {
 }
 
 .icon-color-white {
-  fill:#fff;
+  fill: #fff;
 }
+
 .icon-color-black {
-  fill:#000;
+  fill: #000;
 }
+
 app-tabs.ion-page, verification-tabs.ion-page {
   margin-top: var(--header-height);
 }
@@ -209,6 +214,22 @@ ion-tab-button.tab-selected {
   opacity: .01;
   height: 800px;
 }
-.translated-with-linebreaks{
+
+.translated-with-linebreaks {
   white-space: pre-wrap;
+}
+
+.info-block {
+  background-color: $color-background-grafana;
+  color: $color-text-grafana;
+  padding: 15px;
+  &:before {
+    content: "";
+    display: block;
+    background: url(/assets/app-icons/information.svg) no-repeat;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin: 0 6px 0 0;
+  }
 }
