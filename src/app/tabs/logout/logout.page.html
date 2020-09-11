@@ -1,25 +1,25 @@
 <ubirch-web-ui-header
-        title="Logout"
-        [actionButtons]="actionButtons"
-        (buttonClicked)="handleButtonClick($event)"
+  title="{{ 'logout.title' | translate }}"
+  [actionButtons]="actionButtons"
+  (buttonClicked)="handleButtonClick($event)"
 ></ubirch-web-ui-header>
 <ion-content class="ion-padding">
-    <ion-row class="ion-align-items-center ion-justify-content-center">
-        <ion-col size="6">
-            <div class="ion-text-center">
-                <h1>Do you really want to log out?</h1>
-            </div>
-        </ion-col>
-    </ion-row>
-    <ion-row class="ion-padding ion-align-items-center ion-justify-content-center">
-        <ion-col size="2">
-            <div class="ion-justify-content-center">
-                <ion-button  color="danger" (click)="doLogout()">
-                    <ion-icon slot="start" src="assets/app-icons/logout.svg"></ion-icon>
-                    Logout
-                </ion-button>
+  <ion-row class="ion-align-items-center ion-justify-content-center">
+    <ion-col size="6">
+      <div class="ion-text-center">
+        <h1>{{ 'logout.info.really-logout-question' | translate }}</h1>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-padding ion-align-items-center ion-justify-content-center">
+    <ion-col size="2">
+      <div class="ion-justify-content-center">
+        <ion-button  color="danger" (click)="doLogout()">
+          <ion-icon slot="start" src="assets/app-icons/logout.svg"></ion-icon>
+          {{ 'button.logout' | translate }}
+        </ion-button>
 
-            </div>
-        </ion-col>
-    </ion-row>
+      </div>
+    </ion-col>
+  </ion-row>
 </ion-content>

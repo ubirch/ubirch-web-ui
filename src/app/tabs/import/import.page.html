@@ -1,5 +1,5 @@
 <ubirch-web-ui-header
-  title="Import"
+  title="{{ 'import.title' | translate }}"
 ></ubirch-web-ui-header>
 
 <ion-content class="ion-padding-horizontal">
@@ -23,10 +23,10 @@
           <ion-card id="import-error-output" *ngIf="(errorMessages$ | async)?.length">
             <ion-card-header>
               <ion-card-title>
-                Error
+                {{ 'import.error-output.title' | translate }}
               </ion-card-title>
               <ion-card-subtitle>
-                Import failed
+                {{ 'import.error-output.subtitle' | translate }}
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
@@ -44,17 +44,17 @@
           <ion-card id="import-result-output" *ngIf="result$ | async">
             <ion-card-header>
               <ion-card-title>
-                Result
+                {{ 'import.success-output.title' | translate }}
               </ion-card-title>
               <ion-card-subtitle>
-                The data is received for import
+                {{ 'import.success-output.subtitle' | translate }}
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
               <ion-list>
                 <ion-item id="import-accepted">
                   <ion-text color="dark">
-                    Accepted: 
+                    {{ 'import.success-output.label.import-accepted' | translate }}:
                     <strong id="import-accepted-output">
                       {{ (result$ | async).accepted }}
                     </strong>
@@ -62,7 +62,7 @@
                 </ion-item>
                 <ion-item id="import-failure">
                   <ion-text color="danger">
-                    Failure: 
+                    {{ 'import.success-output.label.import-failure' | translate }}:
                     <strong id="import-failure-output">
                       {{ (result$ | async).failure }}
                     </strong>
@@ -70,7 +70,7 @@
                 </ion-item>
                 <ion-item id="import-success">
                   <ion-text color="success">
-                    Success: 
+                    {{ 'import.success-output.label.import-success' | translate }}:
                     <strong id="import-success-output">
                       {{ (result$ | async).success }}
                     </strong>
@@ -78,7 +78,7 @@
                 </ion-item>
                 <ng-container *ngIf="(result$ | async).failures?.length">
                   <ion-item>
-                    Failures:
+                    {{ 'import.success-output.label.import-failures' | translate }}:
                   </ion-item>
                   <ion-item *ngFor="let failure of (result$ | async).failures">
                     <ion-text color="danger" data-test-import-failure-output>

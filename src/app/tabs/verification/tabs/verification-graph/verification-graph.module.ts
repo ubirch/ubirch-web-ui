@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { VerificationGraphPage } from './verification-graph.page';
 import {CytoscapeGraphModule} from '../../../../cytoscape-graph/cytoscape-graph.module';
+import {ComponentsModule} from '../../../../components/components.module';
 
 const routes: Routes = [
   {
@@ -16,13 +17,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    CytoscapeGraphModule,
-    RouterModule.forChild(routes)
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        CytoscapeGraphModule,
+        RouterModule.forChild(routes),
+        ComponentsModule
+    ],
   declarations: [VerificationGraphPage]
 })
 export class VerificationGraphPageModule {}

@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { DeviceSettingsPage } from './device-settings.page';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateModule} from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -17,14 +18,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonicModule,
-    TagInputModule,
-    RouterModule.forChild(routes)
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        IonicModule,
+        TagInputModule,
+        RouterModule.forChild(routes),
+        TranslateModule
+    ],
   declarations: [DeviceSettingsPage]
 })
 export class DeviceSettingsPageModule {}

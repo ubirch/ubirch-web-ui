@@ -4,14 +4,14 @@
     </ion-row>
   </ion-grid>
   <ion-card class="ion-padding">
-    <ion-card-header>Number of UPPs in the last..</ion-card-header>
+    <ion-card-header>{{ 'device.details.tab.things-state.heading' | translate }}</ion-card-header>
     <ion-card-content>
 
       <ng-template #STATE_NOT_AVAILABLE>
-        <p *ngIf="stateLoading">loading state...</p>
+        <p *ngIf="stateLoading">{{ 'device.details.tab.things-state.info.loading-state' | translate }}</p>
         <ng-container *ngIf="!stateLoading">
           <p *ngIf="errorMessage">{{errorMessage}}</p>
-          <p *ngIf="!errorMessage">state not available</p>
+          <p *ngIf="!errorMessage">{{ 'device.details.tab.things-state.info.state-not-available' | translate }}</p>
         </ng-container>
       </ng-template>
 

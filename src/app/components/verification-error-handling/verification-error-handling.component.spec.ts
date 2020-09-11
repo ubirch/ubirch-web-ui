@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TagChipsListInputComponent } from './tag-chips-list-input.component';
+import { VerificationErrorHandlingComponent } from './verification-error-handling.component';
 
-describe('TagChipsListInputComponent', () => {
-  let component: TagChipsListInputComponent;
-  let fixture: ComponentFixture<TagChipsListInputComponent>;
+describe('VerificationErrorHandlingComponent', () => {
+  let component: VerificationErrorHandlingComponent;
+  let fixture: ComponentFixture<VerificationErrorHandlingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TagChipsListInputComponent ],
+      declarations: [ VerificationErrorHandlingComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TagChipsListInputComponent);
+    fixture = TestBed.createComponent(VerificationErrorHandlingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

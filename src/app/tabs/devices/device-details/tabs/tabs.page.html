@@ -7,27 +7,27 @@
       *ngIf="showDataTab$ | async"
     >
       <ion-icon name="stats"></ion-icon>
-      <ion-label>Data</ion-label>
+      <ion-label>{{ 'device.details.tabs.header.data' | translate }}</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="settings" layout="icon-start">
       <ion-icon name="settings"></ion-icon>
-      <ion-label>ThingsSettings</ion-label>
+      <ion-label>{{ 'device.details.tabs.header.things-settings' | translate }}</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="state" layout="icon-start">
       <ion-icon name="pulse"></ion-icon>
-      <ion-label>ThingsState</ion-label>
+      <ion-label>{{ 'device.details.tabs.header.things-state' | translate }}</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="upphashes" layout="icon-start">
       <ion-icon src="assets/app-icons/shield-checkmark.svg"></ion-icon>
-      <ion-label>RecentHashes</ion-label>
+      <ion-label>{{ 'device.details.tabs.header.recent-hashes' | translate }}</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="pubkeys" layout="icon-start">
       <ion-icon name="key"></ion-icon>
-      <ion-label>PublicKeys</ion-label>
+      <ion-label>{{ 'device.details.tabs.header.pubkeys' | translate }}</ion-label>
     </ion-tab-button>
 
   </ion-tab-bar>
