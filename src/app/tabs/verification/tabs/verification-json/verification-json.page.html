@@ -22,8 +22,8 @@
 </ng-template>
 
 <ng-template #HASH_VERIFICATION_FAILED>
-  <h1>Verification failed!</h1>
-  <p>Your inserted hash {{hash2Verify}} is not anchored in any blockchain.</p>
+  <h1>{{ 'verification.state.HASH_VERIFICATION_FAILED.heading' | translate }}</h1>
+  <p>{{ 'verification.state.HASH_VERIFICATION_FAILED.info' | translate: {hash: (hash2Verify)} }}</p>
 </ng-template>
 <ng-template #HASH_INSERTED_UNVERIFIED>
   <h1>Verification Process will start soon...</h1>

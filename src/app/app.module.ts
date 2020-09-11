@@ -1,21 +1,20 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import {BrowserModule} from '@angular/platform-browser';
+import {RouteReuseStrategy} from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
 import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
 import {initializer} from './utils/app-init';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MarkdownModule} from 'ngx-markdown';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {TranslateCompiler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {TranslateMessageFormatCompiler} from 'ngx-translate-messageformat-compiler';
 
 @NgModule({
   declarations: [
@@ -35,12 +34,6 @@ import {TranslateMessageFormatCompiler} from 'ngx-translate-messageformat-compil
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
-      },
-
-      // compiler configuration
-      compiler: {
-        provide: TranslateCompiler,
-        useClass: TranslateMessageFormatCompiler
       }
     })
   ],
@@ -57,7 +50,8 @@ import {TranslateMessageFormatCompiler} from 'ngx-translate-messageformat-compil
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {

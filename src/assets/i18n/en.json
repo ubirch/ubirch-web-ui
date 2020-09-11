@@ -68,11 +68,11 @@
   "verification.tabs.header.graph": "as Graph",
   "verification.tabs.header.json": "as JSON Responcese",
   "verification.state.HASH_VERIFICATION_FAILED.heading": "Verification failed!",
-  "verification.state.HASH_VERIFICATION_FAILED.info": "Your inserted hash {hash} is not anchored in any blockchain.",
+  "verification.state.HASH_VERIFICATION_FAILED.info": "Your inserted hash {{hash}} is not anchored in any blockchain.",
   "verification.state.HASH_INSERTED_UNVERIFIED.heading": "Verification Process will start soon...",
   "verification.state.HASH_INSERTED_UNVERIFIED.info": "Please wait a second....",
   "verification.state.PENDING.heading": "Processing Verification...",
-  "verification.state.PENDING.info": "We currently try to verify your inserted hash {hash}.\n\nPlease wait a second....",
+  "verification.state.PENDING.info": "We currently try to verify your inserted hash {{hash}}.\n\nPlease wait a second....",
   "verification.state.NO_HASH.heading": "Please insert a hash into search field to verify and view its blockchain anchoring...",
   "verification.state.NO_HASH.info": "",
   "verification.state.HASH_VERIFICATION_ERROR.heading": "During verification an unexpected error occurred!",
@@ -95,7 +95,7 @@
   "import.form.label.provider": "Provider",
   "import.form.label.description": "Description",
   "import.form.label.tags": "Tags",
-  "import.form.info.max-file-size": "Maximum file size is {filesize}kb",
+  "import.form.info.max-file-size": "Maximum file size is {{filesize}}kb",
 
   "file-input.info.no-files-chosen": "No file chosen",
 

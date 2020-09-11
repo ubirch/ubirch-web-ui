@@ -1,0 +1,33 @@
+<ion-row class="ion-padding ion-align-items-center ion-justify-content-center">
+  <ion-col size="6">
+    <div class="ion-text-center">
+      <ng-container [ngTemplateOutlet]="this[verificationState]"
+                    [ngTemplateOutletContext]="{verifiedUpp: verifiedUpp}"></ng-container>
+    </div>
+  </ion-col>
+</ion-row>
+
+<ng-template #HASH_VERIFICATION_FAILED>
+  <h1>{{ 'verification.state.HASH_VERIFICATION_FAILED.heading' | translate }}</h1>
+  <p>{{ 'verification.state.HASH_VERIFICATION_FAILED.info' | translate: {hash: (hash2Verify)} }}</p>
+</ng-template>
+<ng-template #HASH_INSERTED_UNVERIFIED>
+  <h1>{{ 'verification.state.HASH_INSERTED_UNVERIFIED.heading' | translate }}</h1>
+  <p>{{ 'verification.state.HASH_INSERTED_UNVERIFIED.info' | translate }}</p>
+</ng-template>
+<ng-template #PENDING>
+  <h1>{{ 'verification.state.PENDING.heading' | translate }}</h1>
+  <p class="translated-with-linebreaks">{{ 'verification.state.PENDING.info' | translate: {hash: (hash2Verify)} }}</p>
+</ng-template>
+<ng-template #NO_HASH>
+  <h1>{{ 'verification.state.NO_HASH.heading' | translate }}</h1>
+  <!--  <p>{{ 'verification.state.NO_HASH.info' | translate }}</p> -->
+</ng-template>
+<ng-template #HASH_VERIFICATION_ERROR>
+  <h1>{{ 'verification.state.HASH_VERIFICATION_ERROR.heading' | translate }}</h1>
+  <!--  <p>{{ 'verification.state.HASH_VERIFICATION_ERROR.info' | translate }}</p> -->
+</ng-template>
+<ng-template #SERVICE_CURRENTLY_UNAVAILABLE>
+  <h1>{{ 'verification.state.SERVICE_CURRENTLY_UNAVAILABLE.heading' | translate }}</h1>
+  <p>{{ 'verification.state.SERVICE_CURRENTLY_UNAVAILABLE.info' | translate }}</p>
+</ng-template>
