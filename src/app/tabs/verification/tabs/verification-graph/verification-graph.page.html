@@ -7,36 +7,7 @@
 </ion-content>
 
 <ng-template #ERROR_HANDLING>
-  <ion-row class="ion-padding ion-align-items-center ion-justify-content-center">
-    <ion-col size="6">
-      <div class="ion-text-center">
-        <ng-container [ngTemplateOutlet]="this[verificationState]"
-                      [ngTemplateOutletContext]="{verifiedUpp: verifiedUpp}"></ng-container>
-      </div>
-    </ion-col>
-  </ion-row>
-</ng-template>
-
-<ng-template #HASH_VERIFICATION_FAILED>
-  <h1>Verification failed!</h1>
-  <p>Your inserted hash {{hash2Verify}} is not anchored in any blockchain.</p>
-</ng-template>
-<ng-template #HASH_INSERTED_UNVERIFIED>
-  <h1>Verification Process will start soon...</h1>
-  <p>Please wait a second....</p>
-</ng-template>
-<ng-template #PENDING>
-  <h1>Processing Verification...</h1>
-  <p>We currently try to verify your inserted hash {{hash2Verify}}.</p>
-  <p>Please wait a second....</p>
-</ng-template>
-<ng-template #NO_HASH>
-  <h1>Please insert a hash into search field to verify and view its blockchain anchoring...</h1>
-</ng-template>
-<ng-template #HASH_VERIFICATION_ERROR>
-  <h1>During verification an unexpected error occurred!</h1>
-</ng-template>
-<ng-template #SERVICE_CURRENTLY_UNAVAILABLE>
-  <h1>Sorry, but verification service is currrently unavailable</h1>
-  <p>Please try again later....</p>
+  <ubirch-verification-error-handling
+    [hash2Verify]="hash2Verify"
+    [verificationState]="verificationState"></ubirch-verification-error-handling>
 </ng-template>

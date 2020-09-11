@@ -7,6 +7,7 @@ import {FileInputComponent} from './file-input/file-input.component';
 import {VerificationHeaderComponent} from './header/verification-header/verification-header.component';
 import {LoggedInUserComponent} from './logged-in-user/logged-in-user.component';
 import {TranslateModule} from '@ngx-translate/core';
+import {VerificationErrorHandlingComponent} from './verification-error-handling/verification-error-handling.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import {TranslateModule} from '@ngx-translate/core';
     VerificationHeaderComponent,
     LoggedInUserComponent,
     FileInputComponent,
+    VerificationErrorHandlingComponent
   ],
   imports: [
     CommonModule,
@@ -27,6 +29,7 @@ import {TranslateModule} from '@ngx-translate/core';
     VerificationHeaderComponent,
     LoggedInUserComponent,
     FileInputComponent,
+    VerificationErrorHandlingComponent
   ]
 })
 export class ComponentsModule {

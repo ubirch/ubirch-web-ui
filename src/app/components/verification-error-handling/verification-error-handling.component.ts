@@ -1,6 +1,5 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {Upp} from '../../../../models/upp';
-import {VERIFICATION_STATE} from '../../../../services/trust.service';
+import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {VERIFICATION_STATE} from '../../services/trust.service';
 
 @Component({
   selector: 'ubirch-verification-error-handling',
@@ -16,12 +15,13 @@ export class VerificationErrorHandlingComponent implements OnInit {
   @ViewChild('HASH_VERIFICATION_ERROR', {static: true}) HASH_VERIFICATION_ERROR: TemplateRef<any>;
   @ViewChild('SERVICE_CURRENTLY_UNAVAILABLE', {static: true}) SERVICE_CURRENTLY_UNAVAILABLE: TemplateRef<any>;
 
-  public verifiedUpp: Upp;
-  public verificationState = VERIFICATION_STATE.NO_HASH;
-  public hash2Verify: string;
+  @Input() public verificationState = VERIFICATION_STATE.NO_HASH;
+  @Input() public hash2Verify: string;
 
-  constructor() { }
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
 }

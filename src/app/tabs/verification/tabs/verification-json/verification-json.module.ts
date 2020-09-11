@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {RouterModule, Routes} from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { VerificationJsonPage } from './verification-json.page';
+import {VerificationJsonPage} from './verification-json.page';
 import {PrettyJsonModule} from 'angular2-prettyjson';
-import {TranslateModule} from '@ngx-translate/core';
+import {ComponentsModule} from '../../../../components/components.module';
 
 const routes: Routes = [
   {
@@ -23,8 +23,9 @@ const routes: Routes = [
     IonicModule,
     PrettyJsonModule,
     RouterModule.forChild(routes),
-    TranslateModule
+    ComponentsModule
   ],
   declarations: [VerificationJsonPage]
 })
-export class VerificationJsonPageModule {}
+export class VerificationJsonPageModule {
+}
