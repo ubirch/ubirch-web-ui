@@ -33,7 +33,7 @@ export interface IUbirchVerificationConfig {
 export interface IUbirchFormVerificationConfig extends IUbirchVerificationConfig {
   formIds: string[];
   paramsFormIdsMapping?: string[];
-  checkFormFilled?: boolean;
+  CHECK_FORM_FILLED?: boolean;
 }
 
 export interface IUbirchVerificationResponse {

@@ -290,7 +290,7 @@ class UbirchVerification {
 class UbirchFormVerification extends UbirchVerification {
   private formIds: string[];
   private paramsFormIdsMapping: string[];
-  private checkFormFilled = false;
+  private CHECK_FORM_FILLED = true;
 
   constructor(config: IUbirchFormVerificationConfig = DEFAULT_FORM_CONFIG) {
     super(config);
@@ -304,8 +304,8 @@ class UbirchFormVerification extends UbirchVerification {
       }
       this.paramsFormIdsMapping = config.paramsFormIdsMapping;
     }
-    if (config.checkFormFilled !== undefined) {
-      this.checkFormFilled = config.checkFormFilled;
+    if (config.CHECK_FORM_FILLED !== undefined) {
+      this.CHECK_FORM_FILLED = config.CHECK_FORM_FILLED;
     }
   }
 
@@ -369,7 +369,7 @@ class UbirchFormVerification extends UbirchVerification {
   public getJsonFromInputs(documentRef): string {
     const formFilled = [];
 
-    if (this.checkFormFilled) {
+    if (this.CHECK_FORM_FILLED) {
       this.formIds.forEach((formId, index) => {
         if (!this.check(index, documentRef)) {
           formFilled.push(formId);
@@ -392,16 +392,6 @@ class UbirchFormVerification extends UbirchVerification {
   }
 
   public createJsonFromInputs(labels, documentRef) {
-    let allParamsSet = true;
-    labels.forEach(label => {
-      if (!documentRef.getElementById(label) || !documentRef.getElementById(label).value) {
-        allParamsSet = false;
-      }
-    });
-    if (!allParamsSet) {
-      return undefined;
-    }
-
     let certJson = '{';
     labels.forEach((label, index) => {
       certJson += index > 0 ? ',' : '';
