@@ -290,6 +290,7 @@ class UbirchVerification {
 class UbirchFormVerification extends UbirchVerification {
   private formIds: string[];
   private paramsFormIdsMapping: string[];
+  private checkFormFilled = false;
 
   constructor(config: IUbirchFormVerificationConfig = DEFAULT_FORM_CONFIG) {
     super(config);
@@ -302,6 +303,9 @@ class UbirchFormVerification extends UbirchVerification {
         throw new Error('If you provide paramsFormIdsMapping define a mapping for each formId; they need to be in the same order');
       }
       this.paramsFormIdsMapping = config.paramsFormIdsMapping;
+    }
+    if (config.checkFormFilled !== undefined) {
+      this.checkFormFilled = config.checkFormFilled;
     }
   }
 
@@ -365,11 +369,14 @@ class UbirchFormVerification extends UbirchVerification {
   public getJsonFromInputs(documentRef): string {
     const formFilled = [];
 
-    this.formIds.forEach((formId, index) => {
-      if (!this.check(index, documentRef)) {
-        formFilled.push(formId);
-      }
-    });
+    if (this.checkFormFilled) {
+      this.formIds.forEach((formId, index) => {
+        if (!this.check(index, documentRef)) {
+          formFilled.push(formId);
+        }
+      });
+    }
+
     if (formFilled.length > 0) {
       const err: IUbirchFormError = {
         msg: 'form fields not set',
