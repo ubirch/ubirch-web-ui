@@ -20,7 +20,7 @@ export class HomePage implements OnInit, OnDestroy {
   actionButtons = [
 //    new HeaderActionButton({
 //      color: 'dark',
-//     label: 'Change User Profile',
+//     labelKey: 'action-button.change-user-profile',
 //      iconName: 'settings',
 //      action: 'changeUserProfile'
 //    })

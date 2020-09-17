@@ -40,7 +40,7 @@ export class DevicesListPage implements OnDestroy {
 
   actionButtons = [new HeaderActionButton({
     color: 'success',
-    label: 'Add New Device',
+    labelKey: 'action-button.device.create',
     iconName: 'add-circle-outline',
     action: 'addDevice'
   })];

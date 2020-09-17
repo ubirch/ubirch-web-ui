@@ -19,7 +19,7 @@ export class LogoutPage implements OnInit {
 
   actionButtons = [new HeaderActionButton({
     color: 'dark',
-    label: 'Back',
+    labelKey: 'action-button.back',
     iconPath: 'assets/app-icons/back-button.svg',
     action: 'historyBack'
   })];

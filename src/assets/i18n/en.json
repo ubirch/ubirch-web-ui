@@ -105,6 +105,10 @@
   "label.file": "File",
   "label.files": "Files",
 
+  "action-button.back": "Back",
+  "action-button.back-to.thingslist": "Back to Things List",
+  "action-button.device.create": "Add New Device",
+  "action-button.change-user-profile": "Change User Profile",
   "button.to-things-overview": "Go to Things Overview",
   "button.new-thing.register": "Register",
   "button.new-thing.cancel-creation": "Cancel",

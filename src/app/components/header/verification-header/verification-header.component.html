@@ -31,12 +31,12 @@
       <ion-col size="6">
         <div class="ion-justify-content-start">
           <ng-container *ngFor="let but of actionButtons">
-            <ion-back-button *ngIf="but.isBackButton; else normalButton" [text]="but.label" default-href="devices">
+            <ion-back-button *ngIf="but.isBackButton; else normalButton" text="{{ but.labelKey | translate }}" default-href="devices">
             </ion-back-button>
             <ng-template #normalButton>
               <ion-button [color]="but.color" (click)="_buttonClicked(but.action)">
                 <ion-icon *ngIf="but.iconPath; else buttonWithIcon" slot="start" [src]="but.iconPath"></ion-icon>
-                {{but.label}}
+                {{ but.labelKey  | translate }}
               </ion-button>
             </ng-template>
             <ng-template #buttonWithIcon>

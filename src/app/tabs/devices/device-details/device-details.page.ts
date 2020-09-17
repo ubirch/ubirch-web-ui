@@ -32,7 +32,7 @@ export class DeviceDetailsPage implements OnDestroy {
 
   actionButtons = [new HeaderActionButton({
     color: 'dark',
-    label: 'Back to Things List',
+    labelKey: 'action-button.back-to.thingslist',
     iconPath: 'assets/app-icons/back-button.svg',
     action: 'back2DevicesList'
   })];
