@@ -4,7 +4,7 @@ import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
 import {startWith, switchMap, tap} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
-import {ModalController, ToastController} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 import {NewDevicePopupComponent} from './popups/new-device-popup/new-device-popup.component';
 import {ConfirmDeleteDevicePopupComponent} from './popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {CreatedDevicesListPopupComponent} from './popups/created-devices-list-popup/created-devices-list-popup.component';
@@ -12,6 +12,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
 import {DevicesListWrapper} from '../../../models/devices-list-wrapper';
 import {LoaderService} from '../../../services/loader.service';
+import {ToastService} from '../../../services/toast.service';
+import {ToastType} from '../../../enums/toast-type.enum';
 
 @Component({
   selector: 'app-list',
@@ -35,28 +37,7 @@ export class DevicesListPage implements OnDestroy {
 
   loaded = false;
   stateLoading = false;
-  toastrContent: Map<string, any> = new Map([
-    ['del', {
-      message: 'Device deleted',
-      duration: 4000,
-      color: 'success'
-    }],
-    ['cancl_del', {
-      message: 'Deleting Device canceled',
-      duration: 4000,
-      color: 'light'
-    }],
-    ['cancl_create', {
-      message: 'Device creation canceled',
-      duration: 4000,
-      color: 'warning'
-    }],
-    ['err', {
-      message: 'Error occurred',
-      duration: 10000,
-      color: 'danger'
-    }]
-  ]);
+
   actionButtons = [new HeaderActionButton({
     color: 'success',
     label: 'Add New Device',
@@ -71,13 +52,15 @@ export class DevicesListPage implements OnDestroy {
   constructor(
     private deviceService: DeviceService,
     private modalCtrl: ModalController,
-    private toastCtrl: ToastController,
-    private loading: LoaderService
+    private toast: ToastService,
+    private loading: LoaderService,
   ) {
   }
 
   get headerRightLabel(): string {
-    return this.searchActive() ? 'Filtered Things: ' : 'Total Things:';
+    return this.searchActive() ?
+      'devices.list.label.count-filtered' :
+      'devices.list.label.count-all';
   }
 
   get headerRightValue(): number {
@@ -90,15 +73,6 @@ export class DevicesListPage implements OnDestroy {
         this.presentNewDeviceModal();
         break;
     }
-  }
-
-  async finished(param: string, details?: string) {
-    const content = this.toastrContent.get(param);
-    if (details && content && content.message) {
-      content.message = content.message + ': ' + details;
-    }
-    const toast = await this.toastCtrl.create(content);
-    toast.present();
   }
 
   ionViewWillEnter() {
@@ -160,13 +134,11 @@ export class DevicesListPage implements OnDestroy {
           .subscribe(
             _ => {
               this.restartPolling();
-              this.finished('del');
+              this.toast.openToast(ToastType.success, 'toast.device.deleted.success', 4000);
             },
-            err => this.finished(
-              'err',
-              err.toString()));
+            err => this.toast.openToast(ToastType.danger, 'toast.error.default', 10000, err.toString()));
       } else {
-        this.finished('cancl_del');
+        this.toast.openToast(ToastType.light, 'toast.device.deleted.canceled', 4000);
       }
     });
 
@@ -188,14 +160,11 @@ export class DevicesListPage implements OnDestroy {
             },
             err => {
               this.restartPolling();
-              const errMsg = 'something went wrong during devices creation: ' + err.message;
-              this.presentDevicesCreatedModal(err, errMsg);
-              this.finished(
-                'err',
-                ': ' + errMsg);
+              this.presentDevicesCreatedModal(err, err.message);
+              this.toast.openToast(ToastType.danger, 'toast.device.creation.failed', 10000, err.message);
             });
       } else {
-        this.finished('cancl_create');
+        this.toast.openToast(ToastType.light, 'toast.device.creation.canceled', 4000);
       }
     });
     await modal.present();
@@ -270,9 +239,7 @@ export class DevicesListPage implements OnDestroy {
         error => {
           this.loading.hide();
           this.loaded = true;
-          this.finished(
-            'err',
-            error.toString());
+          this.toast.openToast(ToastType.danger, 'toast.error.default', 10000, error.toString());
         }
       );
   }

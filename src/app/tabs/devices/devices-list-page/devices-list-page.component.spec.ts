@@ -8,6 +8,8 @@ import { DevicesListPage } from './devices-list-page.component';
 import {environment} from '../../../../environments/environment';
 import { DeviceService } from 'src/app/services/device.service';
 import { of, throwError } from 'rxjs';
+import {ToastService} from '../../../services/toast.service';
+import {ToastType} from '../../../enums/toast-type.enum';
 
 describe('ListPage', () => {
   let component: DevicesListPage;
@@ -18,6 +20,7 @@ describe('ListPage', () => {
   let modalCtrl: ModalController;
   let debugElement: DebugElement;
   let deviceService: DeviceService;
+  let toastService: ToastService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -62,6 +65,7 @@ describe('ListPage', () => {
     fixture.detectChanges();
     modalCtrl = debugElement.injector.get(ModalController);
     deviceService = debugElement.injector.get(DeviceService);
+    toastService = debugElement.injector.get(ToastService);
   });
 
   it('should create', () => {
@@ -123,7 +127,7 @@ describe('ListPage', () => {
   }));
 
   it('call finished after dismissing create device modal', fakeAsync(() => {
-    const finishedSpy = spyOn(component, 'finished');
+    const finishedSpy = spyOn(toastService, 'openToast');
     spyOn(modalCtrl, 'create').and.returnValue({
       // @ts-ignore
       present() {},
@@ -135,7 +139,7 @@ describe('ListPage', () => {
     component.presentNewDeviceModal();
     tick();
 
-    expect(finishedSpy).toHaveBeenCalledWith('cancl_create');
+    expect(finishedSpy).toHaveBeenCalledWith([ToastType.light, 'toast.device.creation.canceled', 4000]);
   }));
 
   it('call presentDevicesCreatedModal on device create success', fakeAsync(() => {
@@ -152,7 +156,7 @@ describe('ListPage', () => {
 
   it('show error message on device create failure', fakeAsync(() => {
     const createdModalSpy = spyOn(component, 'presentDevicesCreatedModal').and.callThrough();
-    const finishedSpy = spyOn(component, 'finished');
+    const finishedSpy = spyOn(toastService, 'openToast');
 
     const err = new Error('test error');
     const errMsg = 'something went wrong during devices creation: ' + err.message;
@@ -165,6 +169,6 @@ describe('ListPage', () => {
 
     component.polling.unsubscribe();
     expect(createdModalSpy).toHaveBeenCalledWith(err, errMsg);
-    expect(finishedSpy).toHaveBeenCalledWith('err', ': ' + errMsg);
+    expect(finishedSpy).toHaveBeenCalledWith([ToastType.danger, 'toast.device.creation.failed', 10000, err.message]);
   }));
 });

@@ -115,5 +115,11 @@
   "button.upload": "Upload",
   "button.logout": "Logout",
 
-  "loading": "loading..."
+  "loading": "loading...",
+
+  "toast.device.deleted.success": "Device deleted",
+  "toast.device.deleted.canceled": "Deleting Device canceled",
+  "toast.device.creation.canceled": "Device creation canceled",
+  "toast.device.creation.failed": "something went wrong during devices creation",
+  "toast.error.default": "Error occurred"
 }
