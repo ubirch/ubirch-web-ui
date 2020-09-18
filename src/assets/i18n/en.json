@@ -125,5 +125,8 @@
   "toast.device.deleted.canceled": "Deleting Device canceled",
   "toast.device.creation.canceled": "Device creation canceled",
   "toast.device.creation.failed": "something went wrong during devices creation",
-  "toast.error.default": "Error occurred"
+  "toast.error.default": "Error occurred",
+  "error.device.details.called-without-id": "things details url called without ID",
+  "error.device.details.called.failed": "Unable to access things details with id {{deviceid}}",
+  "error.be.Bad hwDeviceId": "provided hwDeviceId '{{deviceid}}' is not a valid UUID"
 }
