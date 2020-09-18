@@ -128,5 +128,8 @@
   "toast.error.default": "Error occurred",
   "error.device.details.called-without-id": "things details url called without ID",
   "error.device.details.called.failed": "Unable to access things details with id {{deviceid}}",
+  "error.device.details.recent-hashes.load.failed": "Cannot load recent hashes of device",
+  "error.device.details.unavailable": "Things details not loaded properly",
+
   "error.be.Bad hwDeviceId": "provided hwDeviceId '{{deviceid}}' is not a valid UUID"
 }
