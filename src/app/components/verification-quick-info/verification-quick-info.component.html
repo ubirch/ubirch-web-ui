@@ -1,3 +1,91 @@
-<div class="verification-quick-info">
-  verification-quick-info works!
+<div  class="verification-quick-info">
+  <ion-grid class="grid">
+<ion-row>
+    
+    <ion-col size="6" class="resultCol">
+     <ion-row>
+       <ion-col size="6">
+        <div class="vTag">
+          Verification Status:
+        </div> 
+      </ion-col>
+      <ion-col size="6">
+        <ng-container [ngTemplateOutlet]="this[hashState]" [ngTemplateOutletContext]="{hash: hash}">
+    </ng-container>
+      </ion-col>
+     </ion-row>
+    </ion-col>
+    <ion-col size ="6" class="anchorCol">
+     <ion-row>
+      <ion-col class="vTag" size="6">
+        Blockchain Anchors:
+      </ion-col>
+      <ion-col  size="6" >
+      <div *ngIf="upp">
+        <a *ngFor="let anchor of anchors" href="{{anchor.href}}" class="anchorIcon">
+          <img alt="{{anchor.title}}" height="64px" src="{{anchor.icon}}" width="64px">
+          <p *ngIf="!anchor.icon">{{anchor.title}}</p>
+        </a>
+      </div>
+    </ion-col>
+    </ion-row> 
+    </ion-col>
+    
+    
+  </ion-row>
+
+  </ion-grid>
+  
+  
+  
+  
+  
+  <ng-template #PENDING >
+    <div class="notAvailable">
+      {{'verification.state.PENDING.heading' | translate}}
+    </div>
+    
+  </ng-template>
+  <ng-template #HASH_VERIFIED >
+    <div class="success" color="success">
+      Verification succeeded!
+    </div>
+    
+  </ng-template>
+  <ng-template #HASH_VERIFICATION_FAILED >
+    <div class="failed">
+      {{'verification.state.HASH_VERIFICATION_FAILED.heading' | translate}}
+    </div>
+    
+  </ng-template>
+  <ng-template #HASH_INSERTED_UNVERIFIED >
+    <div class="notAvailable">
+      {{'verification.state.HASH_INSERTED_UNVERIFIED.heading' | translate}}
+    </div>
+    
+    
+  </ng-template>
+  <ng-template #NO_HASH >
+    <div class="notAvailable">
+      {{'verification.state.NO_HASH.heading' | translate}}
+    </div>
+    
+  </ng-template>
+  <ng-template #HASH_VERIFICATION_ERROR >
+    <div class="failed">
+      {{'verification.state.HASH_VERIFICATION_ERROR.heading' | translate}}
+    </div>
+    
+    
+  </ng-template>
+  <ng-template #SERVICE_CURRENTLY_UNAVAILABLE >
+    <div class="failed">
+      {{'verification.state.SERVICE_CURRENTLY_UNAVAILABLE.heading' | translate}}
+    </div>
+    
+  </ng-template>
+  
 </div>
+
+
+

@@ -1,3 +1,45 @@
 .verification-quick-info {
-  padding: 15px;
+  display: block;
+  height: 90px;
+  background-color: lightgray;
+}
+
+.resultCol {
+  align-content: center;
+}
+
+.anchorCol{
+  text-align: center;;
+}
+
+.success{
+    vertical-align: middle;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 2px;
+    background-color: var(--ion-color-success) 
+}
+
+.failed{
+    vertical-align: middle;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 2px;
+    background-color: var(--ion-color-danger)   
+  }
+
+.notAvailable
+
+.anchorIcon{
+  size: 60px;
+}
+
+.vTag{
+  vertical-align: middle;
+  text-align: center;
+  line-height: 60px;
+}
+
+.grid{
+  height: 60px;
 }
