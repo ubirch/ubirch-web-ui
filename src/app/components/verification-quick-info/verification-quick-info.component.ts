@@ -37,7 +37,9 @@ export class VerificationQuickInfoComponent implements OnInit {
     this.trustService.observableHash.subscribe(hash => this.hash = hash); 
     this.trustService.observableUPP.subscribe(upp => this.upp = upp)  
     console.log('upp')   
-    this.showAnchors(this.upp.jsonInput.anchors.upper_blockchains)
+    if(this.upp){
+      this.showAnchors(this.upp.jsonInput.anchors.upper_blockchains)
+    }    
     console.log(this.anchors)
   }
 

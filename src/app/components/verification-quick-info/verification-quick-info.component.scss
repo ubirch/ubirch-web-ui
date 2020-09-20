@@ -1,7 +1,8 @@
 .verification-quick-info {
   display: block;
   height: 90px;
-  background-color: lightgray;
+  background-color: var(--ion-color-light);
+  white-space: nowrap;
 }
 
 .resultCol {
@@ -17,7 +18,8 @@
     text-align: center;
     line-height: 60px;
     border-radius: 2px;
-    background-color: var(--ion-color-success) 
+    background-color: var(--ion-color-success);
+    width: 60px
 }
 
 .failed{
@@ -25,7 +27,8 @@
     text-align: center;
     line-height: 60px;
     border-radius: 2px;
-    background-color: var(--ion-color-danger)   
+    background-color: var(--ion-color-danger);
+    width: 60px
   }
 
 .notAvailable

@@ -22,11 +22,12 @@
       </ion-col>
       <ion-col  size="6" >
       <div *ngIf="upp">
-        <a *ngFor="let anchor of anchors" href="{{anchor.href}}" class="anchorIcon">
-          <img alt="{{anchor.title}}" height="64px" src="{{anchor.icon}}" width="64px">
+        <a *ngFor="let anchor of anchors" href="{{anchor.href}}" >
+          <img alt="{{anchor.title}}" height="64px" src="{{anchor.icon}}" width="64px" class="anchorIcon">
           <p *ngIf="!anchor.icon">{{anchor.title}}</p>
         </a>
       </div>
+      <div *ngIf="!upp" class="vTag">No Blockchain Anchors!</div>
     </ion-col>
     </ion-row> 
     </ion-col>
@@ -42,45 +43,45 @@
   
   <ng-template #PENDING >
     <div class="notAvailable">
-      {{'verification.state.PENDING.heading' | translate}}
+     ? 
     </div>
     
   </ng-template>
   <ng-template #HASH_VERIFIED >
     <div class="success" color="success">
-      Verification succeeded!
+      ✓ 
     </div>
     
   </ng-template>
   <ng-template #HASH_VERIFICATION_FAILED >
     <div class="failed">
-      {{'verification.state.HASH_VERIFICATION_FAILED.heading' | translate}}
+      X
     </div>
     
   </ng-template>
   <ng-template #HASH_INSERTED_UNVERIFIED >
     <div class="notAvailable">
-      {{'verification.state.HASH_INSERTED_UNVERIFIED.heading' | translate}}
+     ?
     </div>
     
     
   </ng-template>
   <ng-template #NO_HASH >
     <div class="notAvailable">
-      {{'verification.state.NO_HASH.heading' | translate}}
+    ?
     </div>
     
   </ng-template>
   <ng-template #HASH_VERIFICATION_ERROR >
     <div class="failed">
-      {{'verification.state.HASH_VERIFICATION_ERROR.heading' | translate}}
+     X
     </div>
     
     
   </ng-template>
   <ng-template #SERVICE_CURRENTLY_UNAVAILABLE >
     <div class="failed">
-      {{'verification.state.SERVICE_CURRENTLY_UNAVAILABLE.heading' | translate}}
+      X
     </div>
     
   </ng-template>
