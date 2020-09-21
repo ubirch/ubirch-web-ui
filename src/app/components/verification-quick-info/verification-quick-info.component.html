@@ -17,18 +17,19 @@
     </ion-col>
     <ion-col size ="6" class="anchorCol">
      <ion-row>
-      <ion-col class="vTag" size="6">
+      <ion-col class="vTag" size="5">
         Blockchain Anchors:
       </ion-col>
-      <ion-col  size="6" >
+      <ion-col  size="5" >
       <div *ngIf="upp">
-        <a *ngFor="let anchor of anchors" href="{{anchor.href}}" >
+        <a *ngFor="let anchor of anchors" href="{{anchor.href}}" class="anchora">
           <img alt="{{anchor.title}}" height="64px" src="{{anchor.icon}}" width="64px" class="anchorIcon">
           <p *ngIf="!anchor.icon">{{anchor.title}}</p>
         </a>
       </div>
       <div *ngIf="!upp" class="vTag">No Blockchain Anchors!</div>
     </ion-col>
+    <ion-col size="2"></ion-col>
     </ion-row> 
     </ion-col>
     
