@@ -3,7 +3,6 @@ import {UppHash} from '../../../../../models/upp-hash';
 import {Subscription} from 'rxjs';
 import {DeviceService} from '../../../../../services/device.service';
 import {BEDevice} from '../../../../../models/bedevice';
-import {ToastController} from '@ionic/angular';
 import {environment} from '../../../../../../environments/environment';
 import {NavigationExtras, Router} from '@angular/router';
 import {ToastService} from '../../../../../services/toast.service';
@@ -31,13 +30,6 @@ export class DeviceLastHashesPage implements OnInit, OnDestroy {
 
   get DATE_TIME_ZONE_FORMAT(): string {
     return environment.DATE_TIME_ZONE_FORMAT;
-  }
-
-  private async handleError(messageKey: string, params?: any, payload?: any) {
-    if (payload) {
-      this.uppHashes = payload;
-    }
-    this.toast.openToast(ToastType.danger, messageKey, 10000, undefined, params);
   }
 
   ngOnInit() {
@@ -73,5 +65,12 @@ export class DeviceLastHashesPage implements OnInit, OnDestroy {
     };
 
     this.router.navigate(['verification'], navigationExtras);
+  }
+
+  private async handleError(messageKey: string, params?: any, payload?: any) {
+    if (payload) {
+      this.uppHashes = payload;
+    }
+    this.toast.openToast(ToastType.danger, messageKey, 10000, undefined, params);
   }
 }
