@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {DeviceService} from '../../../services/device.service';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
 import {BEDevice} from '../../../models/bedevice';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-device-details',
@@ -29,12 +30,17 @@ export class DeviceDetailsPage implements OnDestroy {
 
   constructor(
     private deviceService: DeviceService,
+    private translateService: TranslateService,
     public router: Router,
   ) {
   }
 
   get title(): string {
     return this.loadedDevice ? this.loadedDevice.description : '';
+  }
+
+  get lang(): string {
+    return this.translateService.currentLang;
   }
 
   handleButtonClick(action: string) {
