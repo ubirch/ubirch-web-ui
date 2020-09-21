@@ -82,7 +82,20 @@ export class AppComponent {
     private translate: TranslateService
   ) {
     this.initializeApp();
+    translate.addLangs(['en', 'de']);
+
     translate.setDefaultLang('en');
+    const usedLang = translate.getDefaultLang();
+
+    translate.use(usedLang);
+
+//    const browserLang = translate.getBrowserLang();
+//    translate.use(browserLang.match(/en|de/) ? browserLang : 'en');
+  }
+
+  // TODO: move to language change component
+  changeLang(lang) {
+    this.translate.use(lang);
   }
 
   initializeApp() {
