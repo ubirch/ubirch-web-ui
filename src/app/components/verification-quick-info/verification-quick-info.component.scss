@@ -1,61 +1,68 @@
 .verification-quick-info {
-  display: block;
-  height: 90px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  height: 70px;
   background-color: var(--ion-color-light);
-  white-space: nowrap;
 }
 
-.resultCol {
-  align-content: center;
+.result {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
 }
 
-.anchorCol{
-  text-align: center;
+.anchors{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
 .success{
-    vertical-align: middle;
-    text-align: center;
-    line-height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    line-height: 45px;
     border-radius: 2px;
     background-color: var(--ion-color-success);
-    width: 60px
+    width: 45px;
 }
 
 .failed{
-    vertical-align: middle;
-    text-align: center;
-    line-height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    line-height: 45px;
     border-radius: 2px;
     background-color: var(--ion-color-danger);
-    width: 60px
+    width: 45px
   }
 
 .notAvailable{
-  vertical-align: middle;
-    text-align: center;
-    line-height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    line-height: 45px;
     border-radius: 2px;
     background-color: var(--ion-color-warning);
-    width: 60px
+    width: 45px
 }
 
 .anchorIcon{
   border-radius: 15px;
   padding: 5px;
-  width: 64px;
-  height: 64px;
-  margin: 3px;
+  width: 60px;
+  height: 60px;
+  margin-right: 3px;
 }
 
 .vTag{
-  vertical-align: middle;
-  text-align: center;
-  line-height: 60px;
-}
-
-.grid{
-  height: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 60px;
 }
 
 .anchorIcon:hover {
