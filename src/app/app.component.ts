@@ -23,31 +23,31 @@ export class AppComponent {
   ).pipe(map(([isLoggedIn, account]: [boolean, AccountInfo]) => {
     const items = [
       {
-        title: 'Home',
+        titleKey: 'menu.main.home',
         url: '/home',
         icon: 'home.svg',
         authOnly: true
       },
       {
-        title: 'Things',
+        titleKey: 'menu.main.things',
         url: '/devices',
         icon: 'list.svg',
         authOnly: true
       },
       {
-        title: 'Verification',
+        titleKey: 'menu.main.verification',
         url: '/verification',
         icon: 'checkmark-circle-outline.svg'
       },
       {
-        title: 'Import',
+        titleKey: 'menu.main.import',
         url: '/import',
         icon: 'push.svg',
         authOnly: true,
         adminOnly: true
       },
       {
-        title: 'Logout',
+        titleKey: 'menu.main.logout',
         url: '/logout',
         icon: 'logout.svg',
         authOnly: true

@@ -1,6 +1,12 @@
 {
   "header.label:logged-in-as": "Logged in as",
 
+  "menu.main.home": "Home",
+  "menu.main.things": "Things",
+  "menu.main.verification": "Verification",
+  "menu.main.import": "Import",
+  "menu.main.logout": "Logout",
+
   "home.title": "Welcome",
   "home.label.num-of-active-things": "Active Things",
 
