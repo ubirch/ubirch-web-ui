@@ -31,7 +31,14 @@
     width: 60px
   }
 
-.notAvailable
+.notAvailable{
+  vertical-align: middle;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 2px;
+    background-color: var(--ion-color-warning);
+    width: 60px
+}
 
 .anchorIcon{
   size: 60px;
