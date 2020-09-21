@@ -1,26 +1,20 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router} from '@angular/router';
 import {catchError} from 'rxjs/operators';
-import {ToastController} from '@ionic/angular';
 
 import {DeviceService} from '../services/device.service';
+import {ToastService} from '../services/toast.service';
+import {ToastType} from '../enums/toast-type.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeviceDetailsResolverService implements Resolve<any> {
-  toastrContent: Map<string, any> = new Map([
-    ['err', {
-      message: 'Error occurred',
-      duration: 10000,
-      color: 'danger'
-    }]
-  ]);
 
   constructor(
     private router: Router,
     private deviceService: DeviceService,
-    private toastCtrl: ToastController,
+    private toast: ToastService,
   ) {
   }
 
@@ -31,7 +25,7 @@ export class DeviceDetailsResolverService implements Resolve<any> {
       return this.loadDevice(id);
     } else {
       // handle url missmatch!!!!
-      this.finished('err', 'things details url called without ID');
+      this.handleError('error.device.details.called-without-id');
     }
     return null;
   }
@@ -40,19 +34,23 @@ export class DeviceDetailsResolverService implements Resolve<any> {
     return this.deviceService.loadDevice(id)
       .pipe(catchError(err => {
         // handle url missmatch!!!!
-        this.finished('err', 'things details url called without ID');
+        if (err && err.error && err.error.error) {
+          switch (err.error.error.error_type) {
+            case 'Bad hwDeviceId':
+              this.handleError('error.be.Bad hwDeviceId', {deviceid: id});
+              break;
+            default:
+              this.handleError(err.error.error.message);
+          }
+        } else {
+          this.handleError(err.message, {id}, err);
+        }
         throw err;
       }));
   }
 
-  private async finished(param: string, details?: string) {
-    const content = this.toastrContent.get(param);
-    if (details && content && content.message) {
-      content.message = content.message + ': ' + details;
-    }
-    const toast = await this.toastCtrl.create(content);
-    toast.present();
-    console.log(content.message);
+  private async handleError(messageKey: string, params?: any, err?: Error) {
+    this.toast.openToast(ToastType.danger, messageKey, 10000, err ? err.message : undefined, params);
     this.router.navigate(['devices']);
   }
 }

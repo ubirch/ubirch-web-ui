@@ -2,12 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {DeviceService} from '../../../../../services/device.service';
-import {ModalController, ToastController} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 // tslint:disable-next-line:max-line-length
 import {ConfirmDeleteDevicePopupComponent} from '../../../devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {BEDevice} from '../../../../../models/bedevice';
 import {Observable, Subscription, throwError} from 'rxjs';
-import {Group} from '../../../../../models/group';
+import {ToastService} from '../../../../../services/toast.service';
+import {ToastType} from '../../../../../enums/toast-type.enum';
 
 @Component({
   selector: 'app-device-settings',
@@ -20,33 +21,6 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
   deviceAttributesForm: FormGroup;
   loadedDevice: BEDevice;
 
-  toastrContent: Map<string, any> = new Map([
-    ['del', {
-      message: 'Thing deleted',
-      duration: 4000,
-      color: 'success'
-    }],
-    ['cancl_del', {
-      message: 'Deleting Things canceled',
-      duration: 4000,
-      color: 'light'
-    }],
-    ['save', {
-      message: '<ion-icon src="assets/app-icons/information.svg"></ion-icon>    Changes on Thing saved',
-      duration: 4000,
-      color: 'success'
-    }],
-    ['cancl_save', {
-      message: 'Changes on Details of Thing discarded',
-      duration: 4000,
-      color: 'light'
-    }],
-    ['err', {
-      message: 'Error occurred',
-      duration: 10000,
-      color: 'danger'
-    }]
-  ]);
   private deviceHasUnsavedChanges = false;
   private deviceSubsc: Subscription;
   private valueChangesSubscr: Subscription;
@@ -55,19 +29,10 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private deviceService: DeviceService,
-    public toastCtrl: ToastController,
+    public toast: ToastService,
     public router: Router,
     private modalCtrl: ModalController
   ) {
-  }
-
-  async finished(param: string, details?: string) {
-    const content = this.toastrContent.get(param);
-    if (details && content && content.message) {
-      content.message = content.message + ': ' + details;
-    }
-    const toast = await this.toastCtrl.create(content);
-    toast.present();
   }
 
   navigate2DevicesList() {
@@ -98,6 +63,7 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
         }
       );
   }
+
   ngOnDestroy(): void {
     if (this.deviceSubsc) {
       this.deviceSubsc.unsubscribe();
@@ -123,11 +89,25 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
       updatedDevice => {
         this.loadedDevice = new BEDevice(updatedDevice);
         this.patchForm(this.loadedDevice);
-        this.finished('save');
+        this.toast.openToast(ToastType.success,
+          'toast.device.settings.update.success',
+          4000,
+          undefined,
+          undefined,
+          'assets/app-icons/information.svg'
+        );
         this.deviceHasUnsavedChanges = false;
       },
-      async (error: Error) => {
-        this.finished('err', error.message);
+      (err: Error) => {
+        switch (err.message) {
+          case 'update-without-data':
+            this.toast.openToast(
+              ToastType.danger, 'toast.device.settings.update.failed.no-data', 10000);
+            break;
+          default:
+            this.toast.openToast(
+              ToastType.danger, 'toast.device.settings.update.failed', 10000, err.toString());
+        }
       }
     );
   }
@@ -144,7 +124,7 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
         return this.deviceService.updateDevice(device);
       }
     }
-    throwError(new Error('tried to update device without data'));
+    throwError(new Error('update-without-data'));
   }
 
   public thingCanBeDeleted(): boolean {
@@ -169,20 +149,18 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
           .subscribe(
             _ => {
               this.navigate2DevicesList();
-              this.finished('del');
+              this.toast.openToast(ToastType.success, 'toast.device.deleted.success', 4000);
             },
-            err => this.finished(
-              'err',
-              err.toString()));
+            err => this.toast.openToast(ToastType.danger, 'toast.error.default', 10000, err.toString()));
       } else {
-        this.finished('cancl_del');
+        this.toast.openToast(ToastType.light, 'toast.device.deleted.canceled', 4000);
       }
     });
     await modal.present();
   }
 
   discardChanges() {
-    this.finished('cancl_save');
+    this.toast.openToast(ToastType.light, 'toast.device.settings.update.canceled', 4000);
     this.deviceDetailsForm.patchValue(this.patchForm(this.loadedDevice));
   }
 

@@ -1,8 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
-import {Device} from '../../../models/device';
 import {Router} from '@angular/router';
 import {DeviceService} from '../../../services/device.service';
-import {ToastController} from '@ionic/angular';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
 import {BEDevice} from '../../../models/bedevice';
 
@@ -13,29 +11,31 @@ import {BEDevice} from '../../../models/bedevice';
 })
 export class DeviceDetailsPage implements OnDestroy {
 
-   id: string;
-   private deviceHasUnsavedChanges = false;
-   loadedDevice: BEDevice;
-
-   constructor(
-       private deviceService: DeviceService,
-       public toastCtrl: ToastController,
-       public router: Router,
-   ) { }
-
-   deviceSubscription = this
+  id: string;
+  loadedDevice: BEDevice;
+  deviceSubscription = this
     .deviceService
     .observableCurrentDevice
     .subscribe(device => {
       this.loadedDevice = device;
     });
-
   actionButtons = [new HeaderActionButton({
     color: 'dark',
-    label: 'Back to Things List',
+    labelKey: 'action-button.back-to.thingslist',
     iconPath: 'assets/app-icons/back-button.svg',
     action: 'back2DevicesList'
   })];
+  private deviceHasUnsavedChanges = false;
+
+  constructor(
+    private deviceService: DeviceService,
+    public router: Router,
+  ) {
+  }
+
+  get title(): string {
+    return this.loadedDevice ? this.loadedDevice.description : '';
+  }
 
   handleButtonClick(action: string) {
     switch (action) {
@@ -49,9 +49,6 @@ export class DeviceDetailsPage implements OnDestroy {
     this.router.navigate(['devices']);
   }
 
-  get title(): string {
-    return this.loadedDevice ? this.loadedDevice.description : '';
-  }
   ngOnDestroy(): void {
     if (this.deviceSubscription) {
       this.deviceSubscription.unsubscribe();

@@ -3,9 +3,10 @@ import {Upp} from '../../../../models/upp';
 import {TrustService, VERIFICATION_STATE} from '../../../../services/trust.service';
 import {CytoscapeNodeLayout} from '../../../../models/cytoscape-node-layout';
 import {BlockChainNode} from '../../../../models/block-chain-node';
-import {ToastController} from '@ionic/angular';
 import {Subscription} from 'rxjs';
 import {CytoscapeGraphService} from '../../../../services/cytoscape-graph.service';
+import {ToastService} from '../../../../services/toast.service';
+import {ToastType} from '../../../../enums/toast-type.enum';
 
 @Component({
   selector: 'app-verification-graph',
@@ -53,20 +54,13 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
     }
   };
   graphData: any;
-  toastrContent: Map<string, any> = new Map([
-    ['err', {
-      message: 'Error occurred',
-      duration: 10000,
-      color: 'danger'
-    }]
-  ]);
   private observableVerifiedHashSubsc: Subscription;
   private observableVerificationStateSubsc: Subscription;
   private observableUPPSubsc: Subscription;
 
   constructor(
     private truster: TrustService,
-    private toastCtrl: ToastController,
+    private toast: ToastService,
     private cyto: CytoscapeGraphService
   ) {
   }
@@ -91,15 +85,6 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
     );
   }
 
-  async finished(param: string, details?: string) {
-    const content = this.toastrContent.get(param);
-    if (details && content && content.message) {
-      content.message = content.message + ': ' + details;
-    }
-    const toast = await this.toastCtrl.create(content);
-    toast.present();
-  }
-
   public openBlockchainExplorer(id: string) {
     if (this.verifiedUpp) {
       const bcNode = this.verifiedUpp.getNode(id);
@@ -112,9 +97,9 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
       }
     }
     // display error in toastr
-    const msg = 'cannot contruct explorerUrl for blockChainExplorer call from node with ID: ' + id;
-    this.finished('err', msg);
-    console.log(msg);
+    this.toast.openToast(
+      ToastType.danger,
+      'toast.verification.blockchainexplorer-call.cannot-build-url');
   }
 
   ngOnDestroy(): void {

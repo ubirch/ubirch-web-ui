@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
-import {ToastController} from '@ionic/angular';
 import {KeycloakService} from 'keycloak-angular';
 import {Subscription} from 'rxjs';
+import {ToastService} from '../../services/toast.service';
+import {ToastType} from '../../enums/toast-type.enum';
 
 @Component({
   selector: 'ubirch-web-ui-logged-in-user',
@@ -17,7 +18,7 @@ export class LoggedInUserComponent implements OnInit, OnDestroy {
   private accountSubsc2: Subscription;
 
   constructor(
-    private toastCtrl: ToastController,
+    private toast: ToastService,
     private userService: UserService,
     private keycloakService: KeycloakService,
   ) { }
@@ -27,9 +28,11 @@ export class LoggedInUserComponent implements OnInit, OnDestroy {
   }
 
   private async getUserData() {
+    // Force the user to log in if currently unauthenticated.
     if (!await this.keycloakService.isLoggedIn()) {
-      this.isLoggedIn = false;
-      return;
+      await this.keycloakService.login({
+        redirectUri: window.location.origin,
+      });
     }
 
     this.isLoggedIn = true;
@@ -46,12 +49,7 @@ export class LoggedInUserComponent implements OnInit, OnDestroy {
     });
   }
   handleError(error: Error) {
-    const errorContent = {
-      message: 'Error occurred',
-      duration: 10000,
-      color: 'danger'
-    };
-    this.toastCtrl.create(errorContent).then(toast => toast.present());
+    this.toast.openToast(ToastType.danger, 'error.user.not-logged_in');
   }
 
   ngOnDestroy(): void {

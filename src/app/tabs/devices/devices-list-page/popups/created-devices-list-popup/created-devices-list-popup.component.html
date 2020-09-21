@@ -38,6 +38,9 @@
           </ng-container>
           <ng-container *ngIf="failed && failed.size > 0">
             <ion-list>
+              <ion-item-divider *ngIf="errorMessage">
+                <ion-label color="danger"><strong>{{ 'toast.device.creation.failed' | translate }}: {{errorMessage}}</strong></ion-label>
+              </ion-item-divider>
               <ion-item-divider>
                   <ion-label color="danger"><strong>{{ 'devices.list.new-thing-created.failed-list' | translate }}:</strong></ion-label>
               </ion-item-divider>

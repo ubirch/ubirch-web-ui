@@ -19,9 +19,9 @@ export class DeviceStatePage implements OnInit, OnDestroy {
   errorMessage: string;
 
   deviceStateNames: Map<number, string> = new Map([
-    [TIME_RANGES.MINUTE, 'Minute'],
-    [TIME_RANGES.HOUR, 'Hour'],
-    [TIME_RANGES.DAY, 'Day']
+    [TIME_RANGES.MINUTE, 'minute'],
+    [TIME_RANGES.HOUR, 'hour'],
+    [TIME_RANGES.DAY, 'day']
   ]);
   deviceStates: Map<number, DeviceState> = new Map<number, DeviceState>();
   stateLoading = false;
