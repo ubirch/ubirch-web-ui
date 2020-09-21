@@ -18,15 +18,20 @@ export class ToastService {
 
   public async openToast(toastTypeP: ToastType = ToastType.light,
                          messageKeyP: string,
-                         durationP: number = 100000,
+                         durationP: number = 10000,
                          detailsP?: string,
-                         messageParams?: any) {
+                         messageParams?: any,
+                         icon?: string) {
     await this.translation.get(messageKeyP, messageParams).toPromise().then(async messageLang => {
       if (!messageLang) {
-        this.logger.warn('Missing language key for error: ' + messageKeyP);
+        this.logger.warn('Missing language key for: ' + messageKeyP);
+      }
+      let toastLabel = messageLang || messageKeyP || this.defaultMessage;
+      if (icon) {
+        toastLabel = '<ion-icon src="' + icon + '"></ion-icon>    ' + toastLabel;
       }
       const content = {
-        message: messageLang || messageKeyP || this.defaultMessage,
+        message: toastLabel,
         duration: durationP,
         color: toastTypeP
       };

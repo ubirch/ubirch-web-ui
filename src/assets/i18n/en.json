@@ -121,11 +121,19 @@
 
   "loading": "loading...",
 
-  "toast.device.deleted.success": "Device deleted",
-  "toast.device.deleted.canceled": "Deleting Device canceled",
-  "toast.device.creation.canceled": "Device creation canceled",
-  "toast.device.creation.failed": "something went wrong during devices creation",
+  "toast.device.deleted.success": "Thing deleted",
+  "toast.device.deleted.canceled": "Deleting Thing canceled",
+  "toast.device.creation.canceled": "Thing creation canceled",
+  "toast.device.creation.failed": "Something went wrong during Thing creation!",
+  "toast.device.creation.error.no-data-inserted": "No device data inserted",
+  "toast.device.settings.update.success": "Changes on Thing saved",
+  "toast.device.settings.update.canceled": "Changes on Details of Thing discarded",
+  "toast.device.settings.update.failed": "Something went wrong during saving changes on Details of Thing!",
+  "toast.device.settings.update.failed.no-data": "Tried to update Thing without data",
+  "toast.verification.blockchainexplorer-call.cannot-build-url": "Cannot open contruct blockChainExplorer for that provider (unable to create explorerUrl)",
   "toast.error.default": "Error occurred",
+
+  "error.user.not-logged_in": "User is not logged in",
   "error.device.details.called-without-id": "things details url called without ID",
   "error.device.details.called.failed": "Unable to access things details with id {{deviceid}}",
   "error.device.details.recent-hashes.load.failed": "Cannot load recent hashes of device",
