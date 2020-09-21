@@ -110,6 +110,12 @@
   "label.notes": "Notes",
   "label.file": "File",
   "label.files": "Files",
+  "label.minute": "minute",
+  "label.minutes": "minutes",
+  "label.hour": "hour",
+  "label.hours": "hours",
+  "label.day": "day",
+  "label.days": "days",
 
   "action-button.back": "Back",
   "action-button.back-to.thingslist": "Back to Things List",
