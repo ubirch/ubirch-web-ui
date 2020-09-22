@@ -1,79 +1,27 @@
-<div  class="verification-quick-info">       
-      <div class="result">
+<div class="verification-quick-info">
+    <div class="result">
         <div class="vTag">
-          Verification Status:
+            Initial Verification:
         </div>
         <div class="vTag">
-          <ng-container [ngTemplateOutlet]="this[hashState]" [ngTemplateOutletContext]="{hash: hash}">
-        </ng-container>
+            <img src="{{verificationDisplay.iVerIconSrc}}" alt="icon" [ngClass]="{'success': verificationDisplay.iClass === 'success', 'notAvailable': verificationDisplay.iClass === 'notAvailable', 'fail': verificationDisplay.iClass === 'fail'}">
         </div>
-      </div>  
-        
-      <div class="anchors" *ngIf="upp">
-        <div class="vTag">
-          Blockchain Anchors:
-        </div> 
-      
-      
-        <div *ngIf="upp" class="vTag">
-          <a *ngFor="let anchor of anchors" href="{{anchor.href}}" class="vTag">
-            <img alt="{{anchor.title}}" height="64px" src="{{anchor.icon}}" width="64px" class="anchorIcon">
-            <p *ngIf="!anchor.icon">{{anchor.title}}</p>
-          </a>
-        </div>
-          <div *ngIf="!upp" class="vTag">No Blockchain Anchors!</div>
-      </div>  
-      
-     
+    </div>
 
-     
-        
-  
-  <ng-template #PENDING >
-    <div class="notAvailable">
-     ? 
+    <div class="anchors">
+        <div class="vTag">
+            Blockchain Verification:
+        </div>
+
+
+        <div class="vTag">
+            <img src="{{verificationDisplay.aVerIconSrc}}" alt="icon" [ngClass]="{'success': verificationDisplay.aClass === 'success', 'notAvailable': verificationDisplay.aClass === 'notAvailable', 'fail': verificationDisplay.aClass === 'fail'}">
+            <a  *ngFor="let anchor of anchors" class="aTag" href="{{anchor.href}}">
+                <img *ngIf="verificationDisplay.aClass === 'success'" alt="{{anchor.title}}" class="anchorIcon" height="64px" src="{{anchor.icon}}" width="64px">
+                <p *ngIf="!anchor.icon">{{anchor.title}}</p>
+            </a>
+        </div>
     </div>
-    
-  </ng-template>
-  <ng-template #HASH_VERIFIED >
-    <div class="success">
-      ✓ 
-    </div>
-    
-  </ng-template>
-  <ng-template #HASH_VERIFICATION_FAILED >
-    <div class="failed">
-      X
-    </div>
-    
-  </ng-template>
-  <ng-template #HASH_INSERTED_UNVERIFIED >
-    <div class="notAvailable">
-     ?
-    </div>
-    
-    
-  </ng-template>
-  <ng-template #NO_HASH >
-    <div class="notAvailable">
-    ?
-    </div>
-    
-  </ng-template>
-  <ng-template #HASH_VERIFICATION_ERROR >
-    <div class="failed">
-     X
-    </div>
-    
-    
-  </ng-template>
-  <ng-template #SERVICE_CURRENTLY_UNAVAILABLE >
-    <div class="failed">
-      X
-    </div>
-    
-  </ng-template>
-  
 </div>
 
 

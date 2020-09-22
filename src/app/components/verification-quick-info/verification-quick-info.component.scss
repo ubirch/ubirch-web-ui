@@ -14,55 +14,58 @@
   justify-content: space-around;
 }
 
-.anchors{
+.anchors {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
 }
 
-.success{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    line-height: 45px;
-    border-radius: 2px;
-    background-color: var(--ion-color-success);
-    width: 45px;
+.success {
+  width: 45px;
+  height: 45px;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: var(--ion-color-success);
+  margin-right: 3px;
+  min-width: 45px;
 }
 
-.failed{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    line-height: 45px;
-    border-radius: 2px;
-    background-color: var(--ion-color-danger);
-    width: 45px
-  }
-
-.notAvailable{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    line-height: 45px;
-    border-radius: 2px;
-    background-color: var(--ion-color-warning);
-    width: 45px
+.fail {
+  width: 45px;
+  height: 45px;
+  padding: 10px;
+  min-width: 45px;
+  background-color: var(--ion-color-danger);
 }
 
-.anchorIcon{
+.notAvailable {
+  width: 45px;
+  height: 45px;
+  padding: 10px;
+  background-color: var(--ion-color-warning);
+  min-width: 45px;
+}
+
+.anchorIcon {
   border-radius: 15px;
   padding: 5px;
   width: 60px;
   height: 60px;
-  margin-right: 3px;
+  min-width: 60px;
 }
 
-.vTag{
+
+.vTag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+}
+
+.aTag {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  min-width: 60px;
 }
 
 .anchorIcon:hover {
