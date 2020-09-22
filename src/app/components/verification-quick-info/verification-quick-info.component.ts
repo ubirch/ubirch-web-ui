@@ -131,9 +131,12 @@ export class VerificationQuickInfoComponent implements OnInit {
     }
 
     setAIcon() {
+        console.log('anchors');
+        console.log(this.anchors);
         switch (this.verificationDisplay.iClass) {
             case 'success':
-                if (this.anchors === []) {
+                if (this.anchors.length === 0) {
+                    console.log('no anchors');
                     this.verificationDisplay.aClass = 'notAvailable';
                     this.verificationDisplay.aVerIconSrc = this.iconPath + 'hourglass-outline.svg';
                 } else {
