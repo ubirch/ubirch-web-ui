@@ -30,9 +30,8 @@ export class LoggedInUserComponent implements OnInit, OnDestroy {
   private async getUserData() {
     // Force the user to log in if currently unauthenticated.
     if (!await this.keycloakService.isLoggedIn()) {
-      await this.keycloakService.login({
-        redirectUri: window.location.origin,
-      });
+      this.isLoggedIn = false;
+      return;
     }
 
     this.isLoggedIn = true;
