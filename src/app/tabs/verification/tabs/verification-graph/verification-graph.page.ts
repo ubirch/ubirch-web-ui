@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Upp} from '../../../../models/upp';
 import {TrustService, VERIFICATION_STATE} from '../../../../services/trust.service';
-import {CytoscapeNodeLayout} from '../../../../models/cytoscape-node-layout';
 import {BlockChainNode} from '../../../../models/block-chain-node';
 import {Subscription} from 'rxjs';
 import {CytoscapeGraphService} from '../../../../services/cytoscape-graph.service';

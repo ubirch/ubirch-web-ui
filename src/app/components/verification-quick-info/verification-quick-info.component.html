@@ -1,7 +1,7 @@
 <div class="verification-quick-info">
     <div class="result">
         <div class="vTag">
-            Initial Verification:
+            {{ 'verification.quickinfo.label.initial-verification' | translate }}:
         </div>
         <div class="vTag">
             <img [ngClass]="{'success': verificationDisplay.iClass === 'success', 'notAvailable': verificationDisplay.iClass === 'notAvailable', 'fail': verificationDisplay.iClass === 'fail'}"
@@ -12,7 +12,7 @@
 
     <div class="anchors">
         <div class="vTag">
-            Blockchain Verification:
+          {{ 'verification.quickinfo.label.blockchain-verification' | translate }}:
         </div>
 
 
@@ -26,7 +26,7 @@
                 <p *ngIf="!anchor.icon">{{anchor.title}}</p>
             </a>
             <div *ngIf="verificationDisplay.aClass === 'notAvailable'" class="vTag">
-                We received the upp, but it takes time until the anchoring will be done.
+                {{ 'verification.quickinfo.info.upp-not-yet-anchored' | translate }}
             </div>
         </div>
     </div>
