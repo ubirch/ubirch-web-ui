@@ -6,9 +6,11 @@ import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
 import {CytoscapeEdge} from './cytoscape-edge';
 import {CytoscapeNodeLayout} from './cytoscape-node-layout';
 import {TimestampNode} from './timestamp-node';
+import {TranslateService} from '@ngx-translate/core';
 
 export class Upp {
   private jsonInput: any;
+  private translation: TranslateService;
   public upp: string;
   public anchors: {
     upperPath: AnchorPathNode[],
@@ -26,7 +28,8 @@ export class Upp {
   // tslint:disable-next-line:variable-name
   private _allEdges: CytoscapeEdge[];
 
-  constructor(jsonUpp: any) {
+  constructor(jsonUpp: any, translationP: TranslateService) {
+    this.translation = translationP;
     if (jsonUpp) {
       this.jsonInput = jsonUpp;
       this.upp = jsonUpp.upp;
@@ -214,14 +217,14 @@ export class Upp {
           data.forEach(path => {
             target.push(new AnchorPathNode(path));
             if (path.label === 'UPP') {
-              target.push(new TimestampNode({...path, properties: { ...path.properties, next_hash: undefined}}));
+              target.push(new TimestampNode({...path, properties: { ...path.properties, next_hash: undefined}}, this.translation));
             }
           });
           break;
         case('BlockChainNode'):
           data.forEach(path => {
             target.push(new BlockChainNode(path));
-            target.push(new TimestampNode(path));
+            target.push(new TimestampNode(path, this.translation));
           });
           break;
       }
