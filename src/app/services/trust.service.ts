@@ -9,6 +9,7 @@ import {VERIFY_RESULT_2BCS} from '../../../testdata/verify-result-2bc-nodes';
 import * as VerificationSettings from '../../assets/constants/blockchain-settings.json';
 import {IUbirchBlockhainSettings} from '../models/iubirch-blockhain-settings';
 import {IUbirchVerificationSettings} from '../models/iubirch-verification-settings';
+import {TranslateService} from '@ngx-translate/core';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -26,7 +27,8 @@ export const VERIFICATION_STATE = {
 export class TrustService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private translation: TranslateService
   ) {}
 
   public static verificationSettings: IUbirchVerificationSettings;
@@ -139,7 +141,7 @@ export class TrustService {
   }
 
   private handleUppCreation(jsonHashVerification: any, vHash: string, update: boolean): boolean {
-    const upp = new Upp(jsonHashVerification);
+    const upp = new Upp(jsonHashVerification, this.translation);
     upp.pureJSON = jsonHashVerification;
     if (upp) {
       return this.handleState(VERIFICATION_STATE.HASH_VERIFIED, update ? vHash : undefined, upp);

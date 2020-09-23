@@ -39,7 +39,7 @@ export class DeviceDetailsPage implements OnDestroy {
     return this.loadedDevice ? this.loadedDevice.description : '';
   }
 
-  get lang(): string {
+  get CURRENT_LANG(): string {
     return this.translateService.currentLang;
   }
 

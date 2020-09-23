@@ -8,6 +8,7 @@ import {startWith, switchMap} from 'rxjs/operators';
 import {UbirchWebUIUtilsService} from '../../../../../utils/ubirch-web-uiutils.service';
 import {BEDevice} from '../../../../../models/bedevice';
 import {LoaderService} from '../../../../../services/loader.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-device-pubkeys',
@@ -29,12 +30,13 @@ export class DevicePubkeysPage implements OnInit, OnDestroy {
   constructor(
     private deviceService: DeviceService,
     private keyService: KeyService,
-    private loading: LoaderService
+    private loading: LoaderService,
+    private translateService: TranslateService
   ) {
   }
 
-  get DATE_TIME_ZONE_FORMAT(): string {
-    return environment.DATE_TIME_ZONE_FORMAT;
+  get CURRENT_LANG(): string {
+    return this.translateService.currentLang;
   }
 
   ionViewWillEnter() {

@@ -1,7 +1,7 @@
 <ubirch-web-ui-header
         [title]="title"
         headerRightLabel="{{ 'device.details.header.created-date' | translate }}:"
-        [headerRightValue]="loadedDevice && (loadedDevice.created | date: 'long':undefined:lang)"
+        [headerRightValue]="loadedDevice && (loadedDevice.created | date: 'long':undefined:CURRENT_LANG)"
         [actionButtons]="actionButtons"
         (buttonClicked)="handleButtonClick($event)"
 ></ubirch-web-ui-header>
