@@ -221,7 +221,9 @@ The structure has to be the same as in the blockchain anchor:
 
 Enter the root directory and call the run-local script:
 
-without parameter the app is started with access to the keycloak on id.dev.ubirch.com with the ubirch-default-realm tenant configuration
+without parameter the app is started with access to the keycloak on id.dev.ubirch.com with the ubirch-default-realm tenant configuration.
+
+ATTENTION! If you start the app the first time you need to set the keycloak-secrect, see section "Keycloak Secrets"!
 
 ```
     ./run-local.sh

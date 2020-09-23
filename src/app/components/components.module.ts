@@ -8,6 +8,9 @@ import {VerificationHeaderComponent} from './header/verification-header/verifica
 import {LoggedInUserComponent} from './logged-in-user/logged-in-user.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {VerificationErrorHandlingComponent} from './verification-error-handling/verification-error-handling.component';
+import {VerificationQuickInfoComponent} from './verification-quick-info/verification-quick-info.component';
+import {VerificationGraphComponent} from './verification-graph/verification-graph.component';
+import {CytoscapeGraphModule} from '../cytoscape-graph/cytoscape-graph.module';
 
 
 @NgModule({
@@ -16,20 +19,25 @@ import {VerificationErrorHandlingComponent} from './verification-error-handling/
     VerificationHeaderComponent,
     LoggedInUserComponent,
     FileInputComponent,
-    VerificationErrorHandlingComponent
+    VerificationErrorHandlingComponent,
+    VerificationQuickInfoComponent,
+    VerificationGraphComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TranslateModule
+    TranslateModule,
+    CytoscapeGraphModule
   ],
   exports: [
     HeaderComponent,
     VerificationHeaderComponent,
     LoggedInUserComponent,
     FileInputComponent,
-    VerificationErrorHandlingComponent
+    VerificationErrorHandlingComponent,
+    VerificationQuickInfoComponent,
+    VerificationGraphComponent
   ]
 })
 export class ComponentsModule {

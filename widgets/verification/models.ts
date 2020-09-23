@@ -73,3 +73,10 @@ export interface IUbirchFormError {
   msg: string;
   missingIds: string[];
 }
+
+export interface IUbirchAnchorObject{
+  href: any;
+  target: string;
+  title: string;
+  icon: string;
+}

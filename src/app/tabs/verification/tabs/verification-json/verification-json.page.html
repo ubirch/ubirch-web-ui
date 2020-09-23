@@ -1,4 +1,7 @@
 <ion-content>
+
+  <ubirch-verification-quick-info [upp]="verifiedUpp"  [hashState]="verificationState" *ngIf="verificationState != VERIFICATION_STATE.Pending && verificationState != VERIFICATION_STATE.NO_HASH"></ubirch-verification-quick-info>
+
   <ng-container *ngIf="verificationState === VERIFICATION_STATE.HASH_VERIFIED; else ERROR_HANDLING">
     <ion-card class="ion-padding">
       <ion-card-content>
