@@ -7,7 +7,7 @@ export class TimestampNode extends AnchorPathNode {
   constructor(jsonNode: any) {
     super(jsonNode);
     if (jsonNode && jsonNode.properties) {
-      this.label = formatDate(jsonNode.properties.timestamp, 'dd.MM.yyyy\nhh:mm:ss', 'en-US');
+      this.label = formatDate(jsonNode.properties.timestamp, 'dd.MM.yyyy\nHH:mm:ss', 'en-US');
       this.refHash = jsonNode.properties.hash;
       this.hash = 'timestamp_' + jsonNode.properties.hash;
       this.type = 'TIMESTAMP';

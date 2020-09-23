@@ -29,7 +29,10 @@ export class UserService {
       return this.http.get<any>(this.accountUrl).pipe(
           tap(jsonAccount =>
               this.currentAccount = jsonAccount.user ?
-                  new AccountInfo({user: new User(jsonAccount.user), numberOfDevices: jsonAccount.numberOfDevices, isAdmin: jsonAccount.isAdmin}) : undefined ),
+                  new AccountInfo({
+                    user: new User(jsonAccount.user),
+                    numberOfDevices: jsonAccount.numberOfDevices,
+                    isAdmin: jsonAccount.isAdmin}) : undefined ),
           map(_ => this.currentAccount ? this.currentAccount.user : undefined));
     }
   }

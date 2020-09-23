@@ -16,7 +16,7 @@
       </ng-template>
 
       <ion-item class="ion-margin-bottom" *ngFor="let stateName of deviceStateNames | keyvalue">
-        <ion-label slot="start">..{{stateName.value}}:</ion-label>
+        <ion-label slot="start">..{{ 'label.' + stateName.value | translate }}:</ion-label>
         <ion-badge slot="end" [color]="deviceStates.get(stateName.key).getStateColor()"
            *ngIf="deviceStates.get(stateName.key); else STATE_NOT_AVAILABLE">
           {{getNumberOfUPPs(stateName.key)}}

@@ -1,11 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ModalController, ToastController} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 import {environment} from '../../../../../../environments/environment';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map, skip} from 'rxjs/operators';
 import {ValidatorsService} from 'src/app/validators/validators.service';
 import {UbirchWebUIUtilsService} from '../../../../../utils/ubirch-web-uiutils.service';
+import {ToastService} from '../../../../../services/toast.service';
+import {ToastType} from '../../../../../enums/toast-type.enum';
 
 const ID_VALIDATORS = [Validators.required, Validators.pattern(/^ *\S{1,} *$/)];
 
@@ -50,27 +52,15 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
     );
 
   constructor(
-      public modalCtrl: ModalController,
-      private fb: FormBuilder,
-      public toastCtrl: ToastController,
-      private validatorsService: ValidatorsService,
-  ) { }
+    public modalCtrl: ModalController,
+    private fb: FormBuilder,
+    public toast: ToastService,
+    private validatorsService: ValidatorsService,
+  ) {
+  }
 
-  toastrContent: Map<string, any> = new Map([
-    ['err', {
-      message: 'Error occurred',
-      duration: 10000,
-      color: 'danger'
-    }]
-  ]);
-
-  async finished(param: string, details?: string) {
-    const content = this.toastrContent.get(param);
-    if (details && content && content.message) {
-      content.message +=  ': ' + details;
-    }
-    const toast = await this.toastCtrl.create(content);
-    toast.present();
+  get defaultDeviceType(): string {
+    return environment.default_device_type;
   }
 
   ngOnInit() {
@@ -109,12 +99,8 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
         new CreateDevicesFormData(details)
       );
     } else {
-      this.finished('err', 'No device data entered');
+      this.toast.openToast(ToastType.danger, 'toast.device.creation.error.no-data-inserted');
     }
-  }
-
-  get defaultDeviceType(): string {
-    return environment.default_device_type;
   }
 
   dismiss() {

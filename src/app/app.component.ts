@@ -23,31 +23,31 @@ export class AppComponent {
   ).pipe(map(([isLoggedIn, account]: [boolean, AccountInfo]) => {
     const items = [
       {
-        title: 'Home',
+        titleKey: 'menu.main.home',
         url: '/home',
         icon: 'home.svg',
         authOnly: true
       },
       {
-        title: 'Things',
+        titleKey: 'menu.main.things',
         url: '/devices',
         icon: 'list.svg',
         authOnly: true
       },
       {
-        title: 'Verification',
+        titleKey: 'menu.main.verification',
         url: '/verification',
         icon: 'checkmark-circle-outline.svg'
       },
       {
-        title: 'Import',
+        titleKey: 'menu.main.import',
         url: '/import',
         icon: 'push.svg',
         authOnly: true,
         adminOnly: true
       },
       {
-        title: 'Logout',
+        titleKey: 'menu.main.logout',
         url: '/logout',
         icon: 'logout.svg',
         authOnly: true
@@ -82,7 +82,20 @@ export class AppComponent {
     private translate: TranslateService
   ) {
     this.initializeApp();
+    translate.addLangs(['en', 'de']);
+
     translate.setDefaultLang('en');
+    const usedLang = translate.getDefaultLang();
+
+    translate.use(usedLang);
+
+//    const browserLang = translate.getBrowserLang();
+//    translate.use(browserLang.match(/en|de/) ? browserLang : 'en');
+  }
+
+  // TODO: move to language change component
+  changeLang(lang) {
+    this.translate.use(lang);
   }
 
   initializeApp() {

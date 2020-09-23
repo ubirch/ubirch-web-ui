@@ -15,6 +15,13 @@ import {MarkdownModule} from 'ngx-markdown';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import localeEn from '@angular/common/locales/en';
+import localeDe from '@angular/common/locales/de';
+import {registerLocaleData} from '@angular/common';
+
+
+registerLocaleData(localeEn, 'en');
+registerLocaleData(localeDe, 'de');
 
 @NgModule({
   declarations: [
