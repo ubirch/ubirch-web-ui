@@ -75,7 +75,7 @@
   "verification.tabs.header.json": "as JSON Responcese",
   "verification.quickinfo.label.initial-verification": "Initial Verification",
   "verification.quickinfo.label.blockchain-verification": "Blockchain Verification",
-  "verification.quickinfo.info.upp-not-yet-anchored": "We received the upp, but it takes time until the anchoring will be done.",
+  "verification.quickinfo.info.upp-not-yet-anchored": "We received the according UPP and it will get anchored in the next interval.",
   "verification.state.HASH_VERIFICATION_FAILED.heading": "Verification failed!",
   "verification.state.HASH_VERIFICATION_FAILED.info": "Your inserted hash {{hash}} is not anchored in any blockchain.",
   "verification.state.HASH_INSERTED_UNVERIFIED.heading": "Verification Process will start soon...",
