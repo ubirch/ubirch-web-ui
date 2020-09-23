@@ -15,7 +15,7 @@
       <ion-item *ngFor="let uppHash of uppHashes">
         <ion-label lines="full">
           <ion-text class="ion-text-wrap">{{uppHash.hash}}</ion-text>
-          <p>{{uppHash.timestamp | date: DATE_TIME_ZONE_FORMAT}}</p>
+          <p>{{uppHash.timestamp | date: 'long':undefined:CURRENT_LANG}}</p>
         </ion-label>
         <div class="item-note" slot="end">
           <ion-button (click)="openVerification(uppHash)" color="secondary" class="list-item-end-button">

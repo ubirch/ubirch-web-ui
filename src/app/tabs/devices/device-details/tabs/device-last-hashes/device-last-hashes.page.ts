@@ -7,6 +7,7 @@ import {environment} from '../../../../../../environments/environment';
 import {NavigationExtras, Router} from '@angular/router';
 import {ToastService} from '../../../../../services/toast.service';
 import {ToastType} from '../../../../../enums/toast-type.enum';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-device-last-hashes',
@@ -24,12 +25,13 @@ export class DeviceLastHashesPage implements OnInit, OnDestroy {
   constructor(
     private deviceService: DeviceService,
     private toast: ToastService,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) {
   }
 
-  get DATE_TIME_ZONE_FORMAT(): string {
-    return environment.DATE_TIME_ZONE_FORMAT;
+  get CURRENT_LANG(): string {
+    return this.translateService.currentLang;
   }
 
   ngOnInit() {
