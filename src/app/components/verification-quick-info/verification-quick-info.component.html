@@ -21,7 +21,7 @@
             {{ 'verification.quickinfo.label.blockchain-verification' | translate }}:
           </div>
           <div class="vTag">
-            <img [ngClass]="{ 'success': verificationDisplay.aClass === 'success',
+            <img class="verification-icon" [ngClass]="{ 'success': verificationDisplay.aClass === 'success',
                               'notAvailable': verificationDisplay.aClass === 'notAvailable',
                               'fail': verificationDisplay.aClass === 'fail'}"
                  [alt]="verificationDisplay.aClass"
@@ -31,9 +31,9 @@
                    height="64px" src="{{anchor.icon}}" width="64px">
               <p *ngIf="!anchor.icon">{{anchor.title}}</p>
             </a>
-            <div *ngIf="verificationDisplay.aClass === 'notAvailable'" class="vTag">
+            <ion-text *ngIf="verificationDisplay.aClass === 'notAvailable'">
               {{ 'verification.quickinfo.info.upp-not-yet-anchored' | translate }}
-            </div>
+            </ion-text>
           </div>
         </div>
       </ion-col>
