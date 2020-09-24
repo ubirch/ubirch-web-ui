@@ -1,11 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Upp} from '../../../../models/upp';
 import {TrustService, VERIFICATION_STATE} from '../../../../services/trust.service';
-import {BlockChainNode} from '../../../../models/block-chain-node';
 import {Subscription} from 'rxjs';
-import {CytoscapeGraphService} from '../../../../services/cytoscape-graph.service';
-import {ToastService} from '../../../../services/toast.service';
-import {ToastType} from '../../../../enums/toast-type.enum';
 
 @Component({
   selector: 'app-verification-graph',
@@ -25,8 +21,6 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
 
   constructor(
     private truster: TrustService,
-    private toast: ToastService,
-    private cyto: CytoscapeGraphService
   ) {
   }
 
@@ -48,23 +42,6 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
         }
       }
     );
-  }
-
-  public openBlockchainExplorer(id: string) {
-    if (this.verifiedUpp) {
-      const bcNode = this.verifiedUpp.getNode(id);
-      if (bcNode && bcNode instanceof BlockChainNode) {
-        const explorerUrl = this.truster.getBlockchainExplorerUrl(bcNode);
-        if (explorerUrl) {
-          window.open(explorerUrl, '_bcexplorer');
-          return;
-        }
-      }
-    }
-    // display error in toastr
-    this.toast.openToast(
-      ToastType.danger,
-      'toast.verification.blockchainexplorer-call.cannot-build-url');
   }
 
   ngOnDestroy(): void {

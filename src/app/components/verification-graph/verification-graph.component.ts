@@ -5,6 +5,8 @@ import {BlockChainNode} from '../../models/block-chain-node';
 import {ToastController} from '@ionic/angular';
 import {CytoscapeGraphService} from '../../services/cytoscape-graph.service';
 import {TrustService} from '../../services/trust.service';
+import {ToastType} from '../../enums/toast-type.enum';
+import {ToastService} from '../../services/toast.service';
 
 @Component({
   selector: 'ubirch-verification-graph',
@@ -54,30 +56,14 @@ export class VerificationGraphComponent implements OnInit {
     }
   };
   graphData: any;
-  toastrContent: Map<string, any> = new Map([
-    ['err', {
-      message: 'Error occurred',
-      duration: 10000,
-      color: 'danger'
-    }]
-  ]);
 
   constructor(
     private truster: TrustService,
-    private toastCtrl: ToastController,
+    private toast: ToastService,
     private cyto: CytoscapeGraphService
   ) { }
 
   ngOnInit() {}
-
-  async finished(param: string, details?: string) {
-    const content = this.toastrContent.get(param);
-    if (details && content && content.message) {
-      content.message = content.message + ': ' + details;
-    }
-    const toast = await this.toastCtrl.create(content);
-    toast.present();
-  }
 
   public openBlockchainExplorer(id: string) {
     if (this.verifiedUpp) {
@@ -91,9 +77,9 @@ export class VerificationGraphComponent implements OnInit {
       }
     }
     // display error in toastr
-    const msg = 'cannot contruct explorerUrl for blockChainExplorer call from node with ID: ' + id;
-    this.finished('err', msg);
-    console.log(msg);
+    this.toast.openToast(
+      ToastType.danger,
+      'toast.verification.blockchainexplorer-call.cannot-build-url');
   }
 
   private createUppTree(upp: Upp) {
