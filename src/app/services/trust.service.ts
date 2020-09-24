@@ -142,7 +142,11 @@ export class TrustService {
   }
 
   private handleUppCreation(jsonHashVerification: any, vHash: string, update: boolean): boolean {
-    const upp = new Upp(VERIFY_RESULT, this.translation);
+    // for debug purpose manually add following line in the environment settings:
+    //   debug: true,
+    const upp = new Upp(
+      environment.debug ? VERIFY_RESULT : jsonHashVerification, this.translation);
+
     upp.pureJSON = jsonHashVerification;
     if (upp) {
       return this.handleState(VERIFICATION_STATE.HASH_VERIFIED, update ? vHash : undefined, upp);
