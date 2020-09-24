@@ -9,8 +9,6 @@ import {TimestampNode} from './timestamp-node';
 import {TranslateService} from '@ngx-translate/core';
 
 export class Upp {
-  private jsonInput: any;
-  private translation: TranslateService;
   public upp: string;
   public anchors: {
     upperPath: AnchorPathNode[],
@@ -18,15 +16,12 @@ export class Upp {
     lowerPath: AnchorPathNode[],
     lowerBlockChains: BlockChainNode[]
   };
+  private jsonInput: any;
+  private translation: TranslateService;
   private layouter: Map<string, CytoscapeNodeLayout>;
 
   // tslint:disable-next-line:variable-name
   private _allNodesMap: Map<string, AnchorPathNode>;
-  // tslint:disable-next-line:variable-name
-  private _allNodes: CytoscapeNode[];
-
-  // tslint:disable-next-line:variable-name
-  private _allEdges: CytoscapeEdge[];
 
   constructor(jsonUpp: any, translationP: TranslateService) {
     this.translation = translationP;
@@ -50,21 +45,8 @@ export class Upp {
     return this;
   }
 
-  public set nodeLayouter(layouter: Map<string, CytoscapeNodeLayout>) {
-    this.layouter = layouter;
-  }
-
-  public get nodeLayouter(): Map<string, CytoscapeNodeLayout> {
-    return this.layouter;
-  }
-
-  public set pureJSON(json: any) {
-    this.jsonInput = json;
-  }
-
-  public get pureJSON(): any {
-    return this.jsonInput;
-  }
+  // tslint:disable-next-line:variable-name
+  private _allNodes: CytoscapeNode[];
 
   public get allNodes(): CytoscapeNode[] {
     if (!this._allNodes) {
@@ -73,18 +55,37 @@ export class Upp {
     return this._allNodes;
   }
 
-  public getNode(id: string): AnchorPathNode | BlockChainNode {
-    if (this._allNodesMap) {
-      return this._allNodesMap.get(id);
-    }
-    return undefined;
-  }
+  // tslint:disable-next-line:variable-name
+  private _allEdges: CytoscapeEdge[];
 
   public get allEdges(): CytoscapeEdge[] {
     if (!this._allEdges) {
       this.createEdges();
     }
     return this._allEdges;
+  }
+
+  public get nodeLayouter(): Map<string, CytoscapeNodeLayout> {
+    return this.layouter;
+  }
+
+  public set nodeLayouter(layouter: Map<string, CytoscapeNodeLayout>) {
+    this.layouter = layouter;
+  }
+
+  public get pureJSON(): any {
+    return this.jsonInput;
+  }
+
+  public set pureJSON(json: any) {
+    this.jsonInput = json;
+  }
+
+  public getNode(id: string): AnchorPathNode | BlockChainNode {
+    if (this._allNodesMap) {
+      return this._allNodesMap.get(id);
+    }
+    return undefined;
   }
 
   /**
@@ -116,44 +117,104 @@ export class Upp {
 
     this._allNodesMap = new Map<string, AnchorPathNode>();
 
-    let pathEndIndex = this.addAnchorNodes(this.anchors.upperPath, 0);
-    this.addAnchorNodes(this.anchors.upperBlockChains, pathEndIndex, 1, 0, 'upperBC');
-    pathEndIndex = this.addAnchorNodes(this.anchors.lowerPath, -1, -1,
+    this.addAnchorNodes(this.anchors.upperPath, 0);
+    this.addBlockchainNodes(this.anchors.upperBlockChains, 'upperBC');
+    this.addAnchorNodes(this.anchors.lowerPath, -1, -1,
       this.anchors.lowerBlockChains ? this.anchors.lowerBlockChains.filter(node => node instanceof BlockChainNode).length - 1 : 0);
-    this.addAnchorNodes(this.anchors.lowerBlockChains, pathEndIndex, 1, 0, 'lowerBC');
+    this.addBlockchainNodes(this.anchors.lowerBlockChains, 'lowerBC', -1);
 
     const nodesArray = this.shiftNodeIndexInChains(
       UbirchWebUIUtilsService.mapToArray(this._allNodesMap));
     this._allNodes = nodesArray.map(node => new CytoscapeNode(node, this.layouter));
   }
 
-  private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1, endIndexOffset = 0, groupId?: string): number {
+  private addAnchorNodes(arr: AnchorPathNode[], startAtIndex: number, direction = 1, endIndexOffset = 0): void {
     let currIndex = startAtIndex;
     let offset = 0;
-    if (groupId !== undefined) {
-      if (!this._allNodesMap.get(groupId)) {
-        const parentNode = new AnchorPathNode({properties: {hash: groupId}});
-        this._allNodesMap.set(groupId, parentNode);
-      }
-    }
     arr.filter(node => node.type !== 'TIMESTAMP')
       .forEach((node, index) => {
-        if (groupId !== undefined) {
-          node.parent = groupId;
-        }
         const foundNode = this._allNodesMap.get(node.hash);
         if (foundNode && node.nextHash.length === 1) {
           foundNode.addNextHash(node.nextHash[0]);
           offset++;
         } else {
           currIndex = startAtIndex + ((index - offset) * direction);
-          if (index === arr.length - 1) { // last element
-            currIndex += endIndexOffset * direction;
-          }
           node.indexInChain = currIndex;
           this._allNodesMap.set(node.hash, node);
         }
-    });
+      });
+
+    this.addTimestampNodes(arr);
+  }
+
+  private addBlockchainNodes(arr: AnchorPathNode[], groupId: string, direction = 1): void {
+
+    if (groupId === undefined) {
+      throw new Error('blockchain-node-group-id-missing');
+    }
+
+    this.checkAndPrepareGroup(groupId);
+
+    arr.filter(node => node.type !== 'TIMESTAMP')
+      .forEach((node, index) => {
+        // assign BC nodes to green parent area
+        node.parent = groupId;
+
+        const foundNode: AnchorPathNode = this._allNodesMap.get(node.prevHash);
+
+        // predecessor node should be found if node is a blockchain node
+        if (foundNode) {
+          // set correct indexInChain for correct position on canvas
+          node.indexInChain = foundNode.indexInChain;
+          foundNode.addNextHash(node.hash);
+          this._allNodesMap.set(node.hash, node);
+        }
+      });
+
+    this.sortAndArrangeBCNodes(arr, direction);
+
+    this.addTimestampNodes(arr, groupId);
+  }
+
+  /**
+   * arranges the blockchain nodes: sort by timestamp AND rearrange if several blockchain nodes are anchored from the same master tree
+   * @param arr Array of blockchain nodes (and their timestamps)
+   * @param direction = 1 for upper blockchain nodes (default) and -1 for lower blockchain nodes
+   */
+  private sortAndArrangeBCNodes(arr: AnchorPathNode[], direction = 1): void {
+    let lastFoundIndex: number;
+    // filter out timestamps
+    arr.filter(node => node.type !== 'TIMESTAMP')
+      // sort by timestamp
+      .sort((a: AnchorPathNode, b: AnchorPathNode) =>
+        a.timestamp < b.timestamp ? -1 * direction :
+          a.timestamp > b.timestamp ? 1 * direction : 0)
+      // check if there are several blockchain nodes at the same x position
+      .forEach((node: AnchorPathNode) => {
+        const nodeInMap: AnchorPathNode = this._allNodesMap.get(node.hash);
+
+        let nextIndex = nodeInMap.indexInChain;
+        if (lastFoundIndex) {
+          if (direction > 0) {
+            if (lastFoundIndex >= nodeInMap.indexInChain) {
+              nextIndex = lastFoundIndex + 1;
+            }
+          } else {
+            if (lastFoundIndex <= nodeInMap.indexInChain) {
+              nextIndex = lastFoundIndex - 1;
+            }
+          }
+        }
+
+        nodeInMap.indexInChain = nextIndex;
+        lastFoundIndex = nodeInMap.indexInChain;
+      });
+  }
+
+  private addTimestampNodes(arr: AnchorPathNode[], groupId?: string) {
+
+    this.checkAndPrepareGroup(groupId);
+
     arr.filter(node => node.type === 'TIMESTAMP')
       .forEach((node: TimestampNode) => {
         if (groupId !== undefined) {
@@ -165,7 +226,17 @@ export class Upp {
           this._allNodesMap.set(node.hash, node);
         }
       });
-    return currIndex;
+  }
+
+  /**
+   * create parent group as node if it does not yet exist
+   * @param groupId id of group
+   */
+  private checkAndPrepareGroup(groupId: string): void {
+    if (!this._allNodesMap.get(groupId)) {
+      const parentNode = new AnchorPathNode({properties: {hash: groupId}});
+      this._allNodesMap.set(groupId, parentNode);
+    }
   }
 
   /**
@@ -186,14 +257,17 @@ export class Upp {
 
   private createEdges() {
     if (this._allNodesMap) {
-      this.allNodes.forEach(node => {
-        if (node.data) {
+      this.allNodes.forEach((node: CytoscapeNode) => {
+        if (node.data && node.data.type !== 'TIMESTAMP') {
           const fullNode = this._allNodesMap.get(node.data.id);
           if (fullNode) {
             fullNode.nextHash.forEach(nextHash =>
-            this.createEdgeIfExists(fullNode.hash, nextHash));
+              this.createEdgeIfExists(fullNode.hash, nextHash));
+            if (fullNode.prevHash) {
+              this.createEdgeIfExists(fullNode.prevHash, fullNode.hash);
+            }
           }
-          }
+        }
       });
     }
   }
@@ -205,9 +279,18 @@ export class Upp {
 
     if (source && target
       && this._allNodesMap.get(source)
-      && this._allNodesMap.get(target)) {
+      && this._allNodesMap.get(target)
+      && !this.edgeAlreadyExists(source, target)) {
       this._allEdges.push(new CytoscapeEdge(source, target));
     }
+  }
+
+  private edgeAlreadyExists(source, target): boolean {
+    if (this._allEdges) {
+      const found = this._allEdges.filter((edge: CytoscapeEdge) => edge.data && edge.data.source === source && edge.data.target === target);
+      return found && found.length > 0;
+    }
+    return false;
   }
 
   private readArrayOfAnchorNodes(data: any, target: any[], type: string, addUnsignedUpp: boolean = false) {
@@ -217,7 +300,7 @@ export class Upp {
           data.forEach(path => {
             target.push(new AnchorPathNode(path));
             if (path.label === 'UPP') {
-              target.push(new TimestampNode({...path, properties: { ...path.properties, next_hash: undefined}}, this.translation));
+              target.push(new TimestampNode({...path, properties: {...path.properties, next_hash: undefined}}, this.translation));
             }
           });
           break;
