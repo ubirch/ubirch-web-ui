@@ -10,6 +10,7 @@ import * as VerificationSettings from '../../assets/constants/blockchain-setting
 import {IUbirchBlockhainSettings} from '../models/iubirch-blockhain-settings';
 import {IUbirchVerificationSettings} from '../models/iubirch-verification-settings';
 import {TranslateService} from '@ngx-translate/core';
+import {VERIFY_RESULT} from '../../../testdata/verify-result';
 
 export const VERIFICATION_STATE = {
   NO_HASH: 'NO_HASH',
@@ -141,7 +142,7 @@ export class TrustService {
   }
 
   private handleUppCreation(jsonHashVerification: any, vHash: string, update: boolean): boolean {
-    const upp = new Upp(jsonHashVerification, this.translation);
+    const upp = new Upp(VERIFY_RESULT, this.translation);
     upp.pureJSON = jsonHashVerification;
     if (upp) {
       return this.handleState(VERIFICATION_STATE.HASH_VERIFIED, update ? vHash : undefined, upp);

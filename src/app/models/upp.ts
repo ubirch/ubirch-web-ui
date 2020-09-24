@@ -186,12 +186,15 @@ export class Upp {
 
   private createEdges() {
     if (this._allNodesMap) {
-      this.allNodes.forEach(node => {
-        if (node.data) {
+      this.allNodes.forEach((node: CytoscapeNode) => {
+        if (node.data && node.data.type !== 'TIMESTAMP') {
           const fullNode = this._allNodesMap.get(node.data.id);
           if (fullNode) {
             fullNode.nextHash.forEach(nextHash =>
             this.createEdgeIfExists(fullNode.hash, nextHash));
+            if (fullNode.prevHash) {
+              this.createEdgeIfExists(fullNode.prevHash, fullNode.hash);
+            }
           }
           }
       });
@@ -205,9 +208,18 @@ export class Upp {
 
     if (source && target
       && this._allNodesMap.get(source)
-      && this._allNodesMap.get(target)) {
+      && this._allNodesMap.get(target)
+      && !this.edgeAlreadyExists(source, target)) {
       this._allEdges.push(new CytoscapeEdge(source, target));
     }
+  }
+
+  private edgeAlreadyExists(source, target): boolean {
+    if (this._allEdges) {
+      const found = this._allEdges.filter((edge: CytoscapeEdge) => edge.data && edge.data.source === source && edge.data.target === target);
+      return found && found.length > 0;
+    }
+    return false;
   }
 
   private readArrayOfAnchorNodes(data: any, target: any[], type: string, addUnsignedUpp: boolean = false) {
