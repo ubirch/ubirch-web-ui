@@ -231,6 +231,23 @@ export const VERIFY_RESULT = {
           prev_hash: 'yFbhC0nKiStkUDVJVah5hJ7vHnnC4joTvY8AMMvJHAaeZ7JyS9sbQhqZfaJVkevb',
           created: '1970-01-01T03:33:13.356Z'
         }
+      },
+      {
+        id: '12369',
+        label: 'PUBLIC_CHAIN',
+        properties: {
+          timestamp: '1970-01-01T03:32:13.356Z',
+          network_info: 'IOTA Mainnet Network',
+          network_type: 'mainnet',
+          txid: 'Gkhnu8Qqo33r87bVONWBsuiX7j13LGqNvzkX4zbjPR4shmGCnVIJt8BWvqWgEdYP',
+          hash: 'Gkhnu8Qqo33r87bVONWBsuiX7j13LGqNvzkX4zbjPR4shmGCnVIJt8BWvqWgEdYP',
+          status: 'added',
+          public_chain: 'IOTA_MAINNET_IOTA_MAINNET_NETWORK',
+          blockchain: 'ethereum-classic',
+          message: 'yFbhC0nKiStkUDVJVah5hJ7vHnnC4joTvY8AMMvJHAaeZ7JyS9sbQhqZfaJVkevb',
+          prev_hash: 'yFbhC0nKiStkUDVJVah5hJ7vHnnC4joTvY8AMMvJHAaeZ7JyS9sbQhqZfaJVkevb',
+          created: '1970-01-01T03:32:13.356Z'
+        }
       }
     ],
     lower_path: [
@@ -415,6 +432,23 @@ export const VERIFY_RESULT = {
           status: 'added',
           public_chain: 'ETHEREUM-CLASSIC_TESTNET_ETHERERUM_CLASSIC_KOTTI_TESTNET_NETWORK',
           blockchain: 'ethereum-classic',
+          message: '9Btw1hzyPkYsy81fnC9YWnSUJhEZa4QMr1J2Ch4LWMsAqY0Zq0HvBsLE2WGstQeV',
+          prev_hash: '9Btw1hzyPkYsy81fnC9YWnSUJhEZa4QMr1J2Ch4LWMsAqY0Zq0HvBsLE2WGstQeV',
+          created: '2020-09-23T13:19:30.576Z'
+        }
+      },
+      {
+        id: '37025',
+        label: 'PUBLIC_CHAIN',
+        properties: {
+          timestamp: '1970-01-01T02:49:10.468Z',
+          network_info: 'Ethererum Classic Kotti Testnet Network',
+          network_type: 'testnet',
+          txid: 'G7Y2ABRb3PIPNOjbOUCgQVKQd0ekcXwYOBQGVkCupWnM8ccH7cUmKWLsKtAZE2bB',
+          hash: 'G7Y2ABRb3PIPNOjbOUCgQVKQd0ekcXwYOBQGVkCupWnM8ccH7cUmKWLsKtAZE2bB',
+          status: 'added',
+          public_chain: 'ETHEREUM-CLASSIC_TESTNET_ETHERERUM_CLASSIC_KOTTI_TESTNET_NETWORK',
+          blockchain: 'iota',
           message: '9Btw1hzyPkYsy81fnC9YWnSUJhEZa4QMr1J2Ch4LWMsAqY0Zq0HvBsLE2WGstQeV',
           prev_hash: '9Btw1hzyPkYsy81fnC9YWnSUJhEZa4QMr1J2Ch4LWMsAqY0Zq0HvBsLE2WGstQeV',
           created: '2020-09-23T13:19:30.576Z'

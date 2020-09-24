@@ -117,10 +117,10 @@ export class Upp {
     this._allNodesMap = new Map<string, AnchorPathNode>();
 
     this.addAnchorNodes(this.anchors.upperPath, 0);
-    this.addBlockchainNodes(this.anchors.upperBlockChains, this.anchors.upperPath, 'upperBC');
+    this.addBlockchainNodes(this.anchors.upperBlockChains, 'upperBC');
     this.addAnchorNodes(this.anchors.lowerPath, -1, -1,
       this.anchors.lowerBlockChains ? this.anchors.lowerBlockChains.filter(node => node instanceof BlockChainNode).length - 1 : 0);
-    this.addBlockchainNodes(this.anchors.lowerBlockChains, this.anchors.lowerPath, 'lowerBC');
+    this.addBlockchainNodes(this.anchors.lowerBlockChains, 'lowerBC', -1);
 
     const nodesArray = this.shiftNodeIndexInChains(
       UbirchWebUIUtilsService.mapToArray(this._allNodesMap));
@@ -145,34 +145,24 @@ export class Upp {
           this._allNodesMap.set(node.hash, node);
         }
     });
-    arr.filter(node => node.type === 'TIMESTAMP')
-      .forEach((node: TimestampNode) => {
-        const foundNode = this._allNodesMap.get(node.refHash);
-        if (foundNode) {
-          node.indexInChain = foundNode.indexInChain;
-          this._allNodesMap.set(node.hash, node);
-        }
-      });
+
+    this.addTimestampNodes(arr);
   }
 
-  private addBlockchainNodes(arr: AnchorPathNode[], refArr: AnchorPathNode[], groupId: string): void {
+  private addBlockchainNodes(arr: AnchorPathNode[], groupId: string, direction = 1): void {
 
     if (groupId === undefined) {
       throw new Error('blockchain-node-group-id-missing');
     }
 
-    // create parent group as node if it does not yet exist
-    if (!this._allNodesMap.get(groupId)) {
-      const parentNode = new AnchorPathNode({properties: {hash: groupId}});
-      this._allNodesMap.set(groupId, parentNode);
-    }
+    this.checkAndPrepareGroup(groupId);
 
     arr.filter(node => node.type !== 'TIMESTAMP')
       .forEach((node, index) => {
         // assign BC nodes to green parent area
         node.parent = groupId;
 
-        const foundNode = this._allNodesMap.get(node.prevHash);
+        const foundNode: AnchorPathNode = this._allNodesMap.get(node.prevHash);
 
         // predecessor node should be found if node is a blockchain node
         if (foundNode) {
@@ -182,6 +172,43 @@ export class Upp {
           this._allNodesMap.set(node.hash, node);
         }
       });
+
+    this.sortAndArrangeBCNodes(arr, direction);
+
+    this.addTimestampNodes(arr, groupId);
+  }
+
+  private sortAndArrangeBCNodes(arr: AnchorPathNode[], direction= 1): void {
+    let lastFoundIndex: number;
+    arr.filter(node => node.type !== 'TIMESTAMP')
+      .sort((a: AnchorPathNode, b: AnchorPathNode) =>
+        a.timestamp < b.timestamp ? -1 * direction :
+          a.timestamp > b.timestamp ? 1 * direction : 0)
+      .forEach((node: AnchorPathNode) => {
+      const nodeInMap: AnchorPathNode = this._allNodesMap.get(node.hash);
+
+      let nextIndex = nodeInMap.indexInChain;
+      if (lastFoundIndex) {
+        if (direction > 0) {
+          if (lastFoundIndex >= nodeInMap.indexInChain) {
+            nextIndex = lastFoundIndex + 1;
+          }
+        } else {
+          if (lastFoundIndex <= nodeInMap.indexInChain) {
+            nextIndex = lastFoundIndex - 1;
+          }
+        }
+      }
+
+      nodeInMap.indexInChain = nextIndex;
+      lastFoundIndex = nodeInMap.indexInChain;
+    });
+  }
+
+  private addTimestampNodes(arr: AnchorPathNode[], groupId?: string) {
+
+    this.checkAndPrepareGroup(groupId);
+
     arr.filter(node => node.type === 'TIMESTAMP')
       .forEach((node: TimestampNode) => {
         if (groupId !== undefined) {
@@ -193,6 +220,17 @@ export class Upp {
           this._allNodesMap.set(node.hash, node);
         }
       });
+  }
+
+  /**
+   * create parent group as node if it does not yet exist
+   * @param groupId id of group
+   */
+  private checkAndPrepareGroup(groupId: string): void {
+    if (!this._allNodesMap.get(groupId)) {
+      const parentNode = new AnchorPathNode({properties: {hash: groupId}});
+      this._allNodesMap.set(groupId, parentNode);
+    }
   }
 
   /**
