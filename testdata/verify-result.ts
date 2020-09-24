@@ -226,7 +226,7 @@ export const VERIFY_RESULT = {
           hash: 'JEonu8Qqo33r87bVONWBsuiX7j13LGqNvzkX4zbjPR4shmGCnVIJt8BWvqWgEdYP',
           status: 'added',
           public_chain: 'IOTA_MAINNET_IOTA_MAINNET_NETWORK',
-          blockchain: 'ETH',
+          blockchain: 'iota',
           message: 'yFbhC0nKiStkUDVJVah5hJ7vHnnC4joTvY8AMMvJHAaeZ7JyS9sbQhqZfaJVkevb',
           prev_hash: 'yFbhC0nKiStkUDVJVah5hJ7vHnnC4joTvY8AMMvJHAaeZ7JyS9sbQhqZfaJVkevb',
           created: '1970-01-01T03:33:13.356Z'
