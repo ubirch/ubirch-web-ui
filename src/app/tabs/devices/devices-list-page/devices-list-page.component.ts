@@ -20,7 +20,7 @@ import {ToastType} from '../../../enums/toast-type.enum';
   templateUrl: 'devices-list-page.component.html',
   styleUrls: ['devices-list-page.component.scss']
 })
-export class DevicesListPage implements OnDestroy {
+export class DevicesListPage {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public deviceStubs: Array<DeviceStub> = [];
 
@@ -189,7 +189,7 @@ export class DevicesListPage implements OnDestroy {
     return device && device.canBeDeleted;
   }
 
-  ngOnDestroy(): void {
+  ionViewWillLeave(): void {
     this.stopPolling();
     if (this.paginatorSubscr) {
       this.paginatorSubscr.unsubscribe();
