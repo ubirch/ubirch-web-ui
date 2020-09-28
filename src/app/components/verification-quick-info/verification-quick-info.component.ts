@@ -42,8 +42,10 @@ export class VerificationQuickInfoComponent implements OnInit {
 
     @Input()
     public set upp(upp: Upp) {
-        this.blockchains = upp.anchors.upperBlockChains;
-        console.log(upp);
+        if (upp) {
+            this.blockchains = upp.anchors.upperBlockChains;
+            console.log(upp);
+        }
     }
 
     ngOnInit() {
@@ -131,12 +133,9 @@ export class VerificationQuickInfoComponent implements OnInit {
     }
 
     setAIcon() {
-        console.log('anchors');
-        console.log(this.anchors);
         switch (this.verificationDisplay.iClass) {
             case 'success':
                 if (this.anchors.length === 0) {
-                    console.log('no anchors');
                     this.verificationDisplay.aClass = 'notAvailable';
                     this.verificationDisplay.aVerIconSrc = this.iconPath + 'hourglass-outline.svg';
                 } else {
