@@ -4,7 +4,7 @@
 
 body {
     background: url("../img/Home_Header_Visual_istockphoto-1170938285-1920x1180.jpg") no-repeat center center fixed;
-    background-size: cover;
+    background-size: auto;
     font-family: MuseoSansRounded-300, calibri, sans-serif;
     font-weight: normal;
     color: rgb(0, 0, 0);
@@ -305,7 +305,7 @@ nav .nav-wrapper ul.mainnav {
     transition: all 0.4s ease-in-out;
     -webkit-transition: all 0.4s ease-in-out;
     -moz-transition: all 0.4s ease-in-out; }
-@media (min-width: 1440px) {
+@media {
     nav .nav-wrapper ul.mainnav {
         display: initial;
         float: right;
@@ -412,7 +412,7 @@ nav .nav-wrapper ul.mainnav li .langmenue {
      top: 24px;
      }
      }*/ }
-@media (min-width: 1440px) {
+@media {
     nav .nav-wrapper ul.mainnav li .langmenue {
         /*position: absolute;
          top: 24px;*/
@@ -476,6 +476,14 @@ select:focus {
     padding-right: 35px;
     text-transform: uppercase;
     width: auto;
+}
+
+#info {
+    margin-bottom: 15px;
+}
+
+#resend {
+    margin-bottom: 15px;
 }
 
 form {
