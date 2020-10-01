@@ -1,0 +1,12 @@
+<svg id="Komponente_17_1" data-name="Komponente 17 – 1" xmlns="http://www.w3.org/2000/svg" width="25" height="18" viewBox="0 0 25 18">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <rect id="Rechteck_17" data-name="Rechteck 17" class="cls-1" width="25" height="4"/>
+  <rect id="Rechteck_18" data-name="Rechteck 18" class="cls-1" width="25" height="4" transform="translate(0 7)"/>
+  <rect id="Rechteck_19" data-name="Rechteck 19" class="cls-1" width="18" height="4" transform="translate(0 14)"/>
+</svg>
