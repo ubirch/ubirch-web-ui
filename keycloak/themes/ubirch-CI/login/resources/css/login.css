@@ -1,0 +1,247 @@
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.login-pf body {
+    background: url("../img/Home_Header_Visual_istockphoto-1170938285-1920x1180.jpg") no-repeat center center fixed;
+    background-size: cover;
+    font-family: MuseoSansRounded-300, calibri, sans-serif;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 14px;
+    line-height: 22px;
+    position: relative;
+}
+
+.login-pf-page {
+    min-height: 800px;
+    position: relative;
+}
+
+.navbar-fixed {
+    background-color: rgba(0, 0, 0, 1);
+    position: relative;
+    height: 66px;
+    z-index: 997;
+}
+
+.navbar-fixed nav {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 1);
+    color: #fff;
+    height: 66px;
+    line-height: 66px;
+    transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    width: 100%;
+}
+
+.navbar-fixed nav .container {
+    background-color: rgba(0, 0, 0, 1);
+    margin: 0 auto;
+    max-width: 1280px;
+    width: 70%;
+    bottom: unset;
+    padding: 0 0 0 80px;
+    height: 56px;
+}
+
+nav .nav-wrapper ul.mainnav li a {
+    display: inline-block;
+    font-family: MuseoSansRounded-300, calibri, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    padding: 0px 15px;
+    position: initial;
+    right: 0;
+    text-transform: uppercase;
+}
+nav ul a {
+    transition: background-color 0.3s;
+    font-size: 1rem;
+    color: #fff;
+    display: block;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+nav .nav-wrapper ul.mainnav {
+    display: initial;
+    float: right;
+    line-height: 60px;
+}
+nav .nav-wrapper ul.mainnav {
+    display: none;
+    transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+}
+ul:not(.browser-default) {
+    padding-left: 15px;
+}
+ul:not(.browser-default) {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+nav ul {
+    margin: 0;
+}
+
+.row .col {
+    float: left;
+    box-sizing: border-box;
+    padding: 0 0.75rem;
+    min-height: 1px;
+}
+
+.row .col.s12 {
+    width: 100%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+
+nav .nav-wrapper {
+    line-height: 30px;
+    position: relative;
+    height: 100%;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+}
+
+nav .nav-wrapper .logo img {
+    transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    height: 38px;
+    margin-top: 14px;
+    width: auto;
+}
+
+.clearfix:before, .clearfix:after, .dl-horizontal dd:before, .dl-horizontal dd:after, .container:before, .container:after, .container-fluid:before, .container-fluid:after, .row:before, .row:after, .form-horizontal .form-group:before, .form-horizontal .form-group:after, .btn-toolbar:before, .btn-toolbar:after, .btn-group-vertical > .btn-group:before, .btn-group-vertical > .btn-group:after, .nav:before, .nav:after, .navbar:before, .navbar:after, .navbar-header:before, .navbar-header:after, .navbar-collapse:before, .navbar-collapse:after, .pager:before, .pager:after, .panel-body:before, .panel-body:after, .modal-header:before, .modal-header:after, .modal-footer:before, .modal-footer:after {
+    clear: both;
+    content: " ";
+    display: table;
+}
+
+#ubirch-brand {
+    position: fixed;
+    display: flex;
+    align-items : center;
+    margin: 0 0 100px 100px;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+#ubirch-brand img {
+    width: 100px;
+}
+
+#ubirch-brand #img-div {
+    margin-right: 30px;
+}
+
+#ubirch-brand #txt-div p {
+    margin: 0;
+    font-weight: 300;
+}
+
+.card-pf {
+    background: rgba(256, 256, 256, .1);
+    color: #fff;
+    margin: 0 auto;
+    padding: 0 20px;
+    max-width: 630px;
+    border-top: 0;
+    box-shadow: 0 0 0;
+    min-width: 450px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.login-pf-page .form-control {
+    height: 36px;
+    width: 90%;
+}
+
+input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="button"].btn-block {
+    width: 90%;
+}
+
+.btn-primary {
+    background-color: #000000;
+    background-image: unset;
+    border-color: unset;
+    color: #fff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+    background-color: #333333;
+    background-image: none;
+    border-color: #353535;
+    color: #fff;
+}
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+    background-image: none;
+}
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.open .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.open .dropdown-toggle.btn-primary:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus,
+.open .dropdown-toggle.btn-primary.focus {
+    background-color: #333333;
+    border-color: #353535;
+}
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+    background-color: #333333;
+    border-color: #353535;
+}
+
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 60px #f0f0f0 inset !important;
+    background-color: #f0f0f0 !important;
+    background-clip: content-box !important;
+    border: none;
+}
+
+.form-control:focus {
+    border-color: #989898 !important;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(206, 206, 206, 0.6) !important;
+}
