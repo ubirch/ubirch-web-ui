@@ -3,78 +3,70 @@ queryParamsFromUrl = {
     account_type: "free",
 };
 
-ubirchParamSets = {
-    free: {
+valid_values = {
+    account_plan: {
         free: {
-            personality_check_required: "false",
-            personality_checked: "false",
-            personality_check_failed: "false"
-        }
-    },
-    pro: {
-        verifier: {
-            personality_check_required: "true",
-            personality_checked: "false",
-            personality_check_failed: "false"
-        },
-        anchorer: {
-            personality_check_required: "true",
-            personality_checked: "false",
-            personality_check_failed: "false"
-        }
-    }
+            account_type: { free: "free"}},
+        pro: {
+            account_type: { verifier: "verifier", anchorer: "anchorer"}}}
 };
 
-
 document.addEventListener("DOMContentLoaded", function() {
-    query = getFormParamsFromUrl();
-    setDataIntoForm(query);
+    setDataIntoForm();
 });
 
 /**
- * get params of form fields as string from fragment OR - if no fragment set - from query of url
- * @param windowRef Reference to window
+ * get params of form fields as string from query of url and split them into params
  */
 function getFormParamsFromUrl() {
+
     const query = window.location.search;
+
     if (query.length > 0) {
-        return query.substr(1);
+        const separator = '&';
+        const allParams = query.substr(1).split(separator).map((value) => {
+            const data = value.split('=');
+            return {
+                key: data[0],
+                value: decodeURIComponent(data[1])
+            };
+        });
+        return allParams;
     }
 
     return undefined;
 }
 
-/**
- * put params into form fields
- * @param dataP string that contains field params in a form like:
- *    pid=9ceb5551-d006-4648-8cf7-c7b1a1ddccb1&tid=FGXC-CL11-KDKC-P9XC-74MM&td=2020-06-12&tt=11:00:00&tr=negativ
- */
-function setDataIntoForm(dataP) {
-    const separator = '&';
-    const allParams = dataP.split(separator).map((value) => {
-        const data = value.split('=');
-        return {
-            key: data[0],
-            value: decodeURIComponent(data[1])
-        };
-    });
-    allParams.forEach(param => {
+function checkParamsWithDefaults(appParams) {
+
+    appParams.forEach(param => {
         if (queryParamsFromUrl[param.key] !== undefined) {
             queryParamsFromUrl[param.key] = param.value;
         }
     });
-    let selectedAccountType = ubirchParamSets[queryParamsFromUrl.account_plan][queryParamsFromUrl.account_type];
-    if (!selectedAccountType) {
-        console.warn("Wrong or missing query parameters for account_plan and account_type. Existing: free-free, pro-verifier, pro-anchorer");
-        selectedAccountType = ubirchParamSets.free.free;
+
+    let accountPlan = valid_values.account_plan[queryParamsFromUrl.account_plan];
+    if (!accountPlan) {
+        queryParamsFromUrl.account_plan = "free";
+        accountPlan = valid_values.account_plan.free;
     }
+    if (!accountPlan.account_type[queryParamsFromUrl.account_type]) {
+        queryParamsFromUrl.account_type = Object.keys(accountPlan.account_type)[0];
+    }
+
+}
+
+/**
+ * put params into form fields
+ */
+function setDataIntoForm() {
+
+    const allParams = getFormParamsFromUrl();
+
+    checkParamsWithDefaults(allParams);
 
     setInput("account_plan", queryParamsFromUrl.account_plan);
     setInput("account_type", queryParamsFromUrl.account_type);
-
-    setInput("personality_check_required", selectedAccountType.personality_check_required);
-    setInput("personality_checked", selectedAccountType.personality_checked);
-    setInput("personality_check_failed", selectedAccountType.personality_check_failed);
 }
 
 function setInput(key, value) {

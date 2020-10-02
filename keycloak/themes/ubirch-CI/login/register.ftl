@@ -110,15 +110,6 @@
                 </div>
             </div>
 
-            <div hidden>
-                <input id="user.attributes.personality_check_required" name="user.attributes.personality_check_required"
-                       type="text" value="true"/>
-                <input id="user.attributes.personality_checked" name="user.attributes.personality_checked"
-                       type="text" value="false"/>
-                <input id="user.attributes.personality_check_failed" name="user.attributes.personality_check_failed"
-                       type="text" value="false"/>
-            </div>
-
             <div class="${properties.kcFormGroupClass!}">
                 <div id="kc-form-options" class="${properties.kcFormOptionsClass!}">
                     <div class="${properties.kcFormOptionsWrapperClass!}">
