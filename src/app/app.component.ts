@@ -26,13 +26,15 @@ export class AppComponent {
         titleKey: 'menu.main.home',
         url: '/home',
         icon: 'home.svg',
-        authOnly: true
+        authOnly: true,
+        withProfileOnly: true
       },
       {
         titleKey: 'menu.main.things',
         url: '/devices',
         icon: 'list.svg',
-        authOnly: true
+        authOnly: true,
+        withProfileOnly: true
       },
       {
         titleKey: 'menu.main.verification',
@@ -44,12 +46,13 @@ export class AppComponent {
         url: '/import',
         icon: 'push.svg',
         authOnly: true,
-        adminOnly: true
+        adminOnly: true,
+        withProfileOnly: true
       },
       {
         titleKey: 'menu.main.account-profile',
         url: '/account-profile',
-        icon: 'push.svg',
+        icon: 'person.svg',
         authOnly: true
       },
       {
@@ -61,11 +64,18 @@ export class AppComponent {
     ];
 
     return items.filter(link => {
+      // NOT logged in? Only show menu items to free areas (like verification)
       if (!isLoggedIn && link.authOnly) {
         return false;
       }
 
+      // show menu items to admin areas only for admins
       if ((!account || !account.isAdmin) && link.adminOnly) {
+        return false;
+      }
+
+      // show menu items only if user profile is set sufficiently
+      if ((!account || (account.profileSettingsRequired && !account.profileSettingsSufficient)) && link.withProfileOnly) {
         return false;
       }
 

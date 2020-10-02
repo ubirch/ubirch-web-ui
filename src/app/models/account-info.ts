@@ -27,8 +27,8 @@ export class AccountInfo {
       this.personalityCheckRequired = this.parseBoolean(jsonAccount.personality_check_required);
       this.personalityChecked = this.parseBoolean(jsonAccount.personality_checked);
       this.personalityCheckFailed = this.parseBoolean(jsonAccount.personality_check_failed);
-      this.profileSettingsRequired = true; // this.parseBoolean(jsonAccount.profile_settings_required);
-      this.profileSettingsSufficient = false; // this.parseBoolean(jsonAccount.profile_settings_sufficient);
+      this.profileSettingsRequired = this.parseBoolean(jsonAccount.profile_settings_required);
+      this.profileSettingsSufficient = this.parseBoolean(jsonAccount.profile_settings_sufficient);
     }
     this._userEntered = false;
     return this;
