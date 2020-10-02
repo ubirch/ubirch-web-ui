@@ -171,6 +171,11 @@ nav .nav-wrapper .logo img {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+
+.login-pf-page .card-pf p {
+    color: #ccd0d5;
+}
+
 .login-pf-page .form-control {
     height: 36px;
     width: 90%;
