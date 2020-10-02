@@ -47,6 +47,12 @@ export class AppComponent {
         adminOnly: true
       },
       {
+        titleKey: 'menu.main.account-profile',
+        url: '/account-profile',
+        icon: 'push.svg',
+        authOnly: true
+      },
+      {
         titleKey: 'menu.main.logout',
         url: '/logout',
         icon: 'logout.svg',
