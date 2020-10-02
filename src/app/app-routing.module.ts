@@ -16,6 +16,11 @@ const routes: Routes = [
     canActivate: [ AuthOnlyGuard ]
   },
   {
+    path: 'account-profile',
+    loadChildren: () => import('./tabs/account-profile/account-profile.module').then(m => m.AccountProfilePageModule),
+    canActivate: [ AuthOnlyGuard ]
+  },
+  {
     path: 'devices',
     loadChildren: () => import('./tabs/devices/devices.module').then(m => m.ListPageModule),
     canActivate: [ AuthOnlyGuard ]
@@ -38,7 +43,7 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full'
-  }
+  },
 ];
 
 @NgModule({
