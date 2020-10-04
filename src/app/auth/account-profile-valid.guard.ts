@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {CanActivate, Router, UrlTree} from '@angular/router';
+import {Observable} from 'rxjs';
 import {UserService} from '../services/user.service';
 import {map, skipWhile, tap} from 'rxjs/operators';
 

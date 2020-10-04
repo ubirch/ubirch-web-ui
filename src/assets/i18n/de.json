@@ -109,6 +109,9 @@
 
   "file-input.info.no-files-chosen": "TRANSLATE!!No file chosen",
 
+  "account-profile.title": "Ihre Kundendaten",
+  "toast.account.profile.update.canceled": "TRANSLATE!!Changes on account profile discarded",
+
   "label.thing": "TRANSLATE!!Thing",
   "label.note": "TRANSLATE!!Note",
   "label.notes": "TRANSLATE!!Notes",

@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HeaderActionButton} from '../../components/header/header-action-button';
 import {UserService} from '../../services/user.service';
 import {Subscription} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,23 +15,24 @@ export class HomePage implements OnInit, OnDestroy {
   private accountInfoSubscr2: Subscription;
 
   constructor(
-      private userService: UserService
+      private userService: UserService,
+      private router: Router
   ) { }
 
   actionButtons = [
-//    new HeaderActionButton({
-//      color: 'dark',
-//     labelKey: 'action-button.change-user-profile',
-//      iconName: 'settings',
-//      action: 'changeUserProfile'
-//    })
+   new HeaderActionButton({
+     color: 'dark',
+    labelKey: 'action-button.change-user-profile',
+     iconName: 'settings',
+     action: 'changeUserProfile'
+   })
   ];
   activeDevices = 0;
 
   handleButtonClick(action: string) {
     switch (action) {
       case 'changeUserProfile':
-        console.log('changeUserProfile: NOT YET IMPLEMENTED!!!!');
+        this.router.navigate(['/account-profile']);
         break;
     }
   }

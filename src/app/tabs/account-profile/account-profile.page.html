@@ -1,9 +1,32 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>account-profile</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ubirch-web-ui-header
+  title="{{ 'account-profile.title' | translate }}"
+  [actionButtons]="actionButtons"
+  (buttonClicked)="handleButtonClick($event)"
+></ubirch-web-ui-header>
 
-<ion-content>
 
+<ion-content class="ion-padding-horizontal">
+  <ion-card class="ion-padding">
+    <ion-card-content>
+      <form [formGroup]="accountProfileForm">
+      </form>
+      <ion-grid>
+        <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
+          <ion-col size="6">
+            <ion-button color="success"  expand="full" *ngIf="profileHasUnsavedChanges" (click)="saveProfile()">
+              <ion-icon slot="start" name="save"></ion-icon>
+              {{ 'button.save' | translate }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center ion-justify-content-center">
+          <ion-col size="2">
+            <ion-button color="light"  expand="full" *ngIf="profileHasUnsavedChanges" (click)="discardChanges()">
+              {{ 'button.cancel' | translate }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

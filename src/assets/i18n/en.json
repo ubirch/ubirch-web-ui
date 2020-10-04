@@ -109,6 +109,9 @@
 
   "file-input.info.no-files-chosen": "No file chosen",
 
+  "account-profile.title": "Profile Data of Account",
+  "toast.account.profile.update.canceled": "TRANSLATE!!Changes on account profile discarded",
+
   "label.thing": "Thing",
   "label.note": "Note",
   "label.notes": "Notes",
