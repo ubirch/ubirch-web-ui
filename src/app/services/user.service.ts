@@ -43,8 +43,7 @@ export class UserService {
     } else {
       return this.http.get<any>(this.accountUrl).pipe(
           tap(jsonAccount => {
-            this.currentAccount = jsonAccount.user ?
-                new AccountInfo(jsonAccount) : undefined;
+            this.currentAccount = jsonAccount ? new AccountInfo(jsonAccount) : undefined;
             this.behaviorSubItem.next(this.currentAccount);
             this.userEntered();
           }),
