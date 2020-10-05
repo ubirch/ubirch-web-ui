@@ -32,21 +32,25 @@
     <script type="text/javascript" src="${url.resourcesPath}/js/ubirch-kc.js"></script>
 </head>
 
-<body class="${properties.kcBodyClass!}">
+<body class="">
 <div class="navbar-fixed">
     <nav class="">
         <div class="container">
-            <div class="row clearfix">
+            <div class="row">
                 <div class="col s12">
                     <div class="nav-wrapper">
-                        <a class="logo" href="https://ubirch.de"><img src="${url.resourcesPath}/img/Ubirch_Logo_weiss.svg" alt="logo"></a>
+                        <a class="logo" href="https://ubirch.de">
+                            <img src="${url.resourcesPath}/img/Ubirch_Logo_weiss.svg" alt="logo"></a>
                         <ul class="mainnav">
                             <li><a href="https://ubirch.de/unternehmen" title="Unternehmen">Unternehmen</a></li>
-                            <li class="noborder"><img class="langmenue" src="${url.resourcesPath}/img/Weltkugel_weiss.svg" alt="language">
+                            <li><a href="https://console.dev.ubirch.com" title="Console">Console</a></li>
+                            <li class="noborder"><img class="langmenue" src="${url.resourcesPath}/img/Weltkugel_weiss.svg"
+                                                      alt="language">
                                 <div class="langwrap">
                                     <div class="arrowup"></div>
                                     <div class="langmenuebox">
-                                        <span class="active"><a href="/">DE</a></span>|<span><a href="/en/">EN</a></span>
+                                        <span class="active"><a href="/">DE</a></span>|<span><a
+                                                    href="/en/">EN</a></span>
                                     </div>
                                 </div>
                             </li>
@@ -59,62 +63,62 @@
     </nav>
 </div>
 
+  <div class="login-pf-page">
+      <div id="img-col">
+          <h2>
+              <span class="text white">IoT Data.</span>
+              <br>
+              <span class="text white">Secured.</span>
+              <br>
+              <span class="text blue">Forever.</span>
+          </h2>
+      </div>
+      <div id="form-col">
+          <div id="kc-content">
+            <div id="kc-content-wrapper">
 
-  <div class="${properties.kcLoginClass!}">
-    <div class="${properties.kcFormCardClass!} <#if displayWide>${properties.kcFormCardAccountClass!}</#if>">
-      <header class="${properties.kcFormHeaderClass!}">
-        <#if realm.internationalizationEnabled  && locale.supported?size gt 1>
-            <div id="kc-locale">
-                <div id="kc-locale-wrapper" class="${properties.kcLocaleWrapperClass!}">
-                    <div class="kc-dropdown" id="kc-locale-dropdown">
-                        <a href="#" id="kc-current-locale-link">${locale.current}</a>
-                        <ul>
-                            <#list locale.supported as l>
-                                <li class="kc-dropdown-item"><a href="${l.url}">${l.label}</a></li>
-                            </#list>
-                        </ul>
-                    </div>
+
+                    <#if realm.internationalizationEnabled  && locale.supported?size gt 1>
+                        <div id="kc-locale">
+                            <div id="kc-locale-wrapper" class="${properties.kcLocaleWrapperClass!}">
+                                <div class="kc-dropdown" id="kc-locale-dropdown">
+                                    <a href="#" id="kc-current-locale-link">${locale.current}</a>
+                                    <ul>
+                                        <#list locale.supported as l>
+                                            <li class="kc-dropdown-item"><a href="${l.url}">${l.label}</a></li>
+                                        </#list>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </#if>
+                <div>
+                    <h1 id="kc-page-title"><#nested "header"></h1>
                 </div>
-            </div>
-        </#if>
-        <h1 id="kc-page-title"><#nested "header"></h1>
-      </header>
-      <div id="kc-content">
-        <div id="kc-content-wrapper">
 
-          <#-- App-initiated actions should not see warning messages about the need to complete the action -->
-          <#-- during login.                                                                               -->
-          <#if displayMessage && message?has_content && (message.type != 'warning' || !isAppInitiatedAction??)>
-              <div class="alert alert-${message.type}">
-                  <#if message.type = 'success'><span class="${properties.kcFeedbackSuccessIcon!}"></span></#if>
-                  <#if message.type = 'warning'><span class="${properties.kcFeedbackWarningIcon!}"></span></#if>
-                  <#if message.type = 'error'><span class="${properties.kcFeedbackErrorIcon!}"></span></#if>
-                  <#if message.type = 'info'><span class="${properties.kcFeedbackInfoIcon!}"></span></#if>
-                  <span class="kc-feedback-text">${kcSanitize(message.summary)?no_esc}</span>
-              </div>
-          </#if>
-
-          <#nested "form">
-
-          <#if displayInfo>
-              <div id="kc-info" class="${properties.kcSignUpClass!}">
-                  <div id="kc-info-wrapper" class="${properties.kcInfoAreaWrapperClass!}">
-                      <#nested "info">
+              <#-- App-initiated actions should not see warning messages about the need to complete the action -->
+              <#-- during login.                                                                               -->
+              <#if displayMessage && message?has_content && (message.type != 'warning' || !isAppInitiatedAction??)>
+                  <div class="alert alert-${message.type}">
+                      <#if message.type = 'success'><span class="${properties.kcFeedbackSuccessIcon!}"></span></#if>
+                      <#if message.type = 'warning'><span class="${properties.kcFeedbackWarningIcon!}"></span></#if>
+                      <#if message.type = 'error'><span class="${properties.kcFeedbackErrorIcon!}"></span></#if>
+                      <#if message.type = 'info'><span class="${properties.kcFeedbackInfoIcon!}"></span></#if>
+                      <span class="kc-feedback-text">${kcSanitize(message.summary)?no_esc}</span>
                   </div>
-              </div>
-          </#if>
-        </div>
-      </div>
+              </#if>
 
-    </div>
-  </div>
-  <div id="ubirch-brand">
-      <div id="img-div">
-          <img src="${url.resourcesPath}/img/UBIRCH_Wort_Bildmarke_white.svg" alt=""/>
-      </div>
-      <div id="txt-div">
-          <p>powered by</p>
-          <p>ubirch GmbH</p>
+              <#nested "form">
+
+              <#if displayInfo>
+                  <div id="kc-info" class="${properties.kcSignUpClass!}">
+                      <div id="kc-info-wrapper" class="${properties.kcInfoAreaWrapperClass!}">
+                          <#nested "info">
+                      </div>
+                  </div>
+              </#if>
+            </div>
+          </div>
       </div>
   </div>
 </body>
