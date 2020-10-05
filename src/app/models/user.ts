@@ -3,13 +3,14 @@ export class User {
     public username: string;
     public lastname: string;
     public firstname: string;
+    private unsetStr = '-';
 
     constructor(jsonUser: any) {
         if (jsonUser) {
-            this.id = jsonUser.id;
-            this.username = jsonUser.username;
-            this.lastname = jsonUser.lastname;
-            this.firstname = jsonUser.firstname;
+          this.id = jsonUser.id;
+          this.username = jsonUser.username !== this.unsetStr ? jsonUser.username : undefined;
+          this.lastname = jsonUser.lastname !== this.unsetStr ? jsonUser.lastname : undefined;
+          this.firstname = jsonUser.firstname !== this.unsetStr ? jsonUser.firstname : undefined;
         }
         return this;
     }

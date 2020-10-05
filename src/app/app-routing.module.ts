@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {EnterOnDashboardGuard} from './auth/enter-on-dashboard.guard';
 import { AdminOnlyGuard } from './auth/admin-only.guard';
 import { AuthOnlyGuard } from './auth/auth-only.guard';
+import {AccountProfileValidGuard} from './auth/account-profile-valid.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./tabs/home/home.module').then(m => m.HomePageModule),
-    canActivate: [ AuthOnlyGuard ]
+    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard ]
   },
   {
     path: 'account-profile',
@@ -23,7 +24,7 @@ const routes: Routes = [
   {
     path: 'devices',
     loadChildren: () => import('./tabs/devices/devices.module').then(m => m.ListPageModule),
-    canActivate: [ AuthOnlyGuard ]
+    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard ]
   },
   {
     path: 'verification',
@@ -32,7 +33,7 @@ const routes: Routes = [
   {
     path: 'import',
     loadChildren: './tabs/import/import.module#ImportPageModule',
-    canActivate: [ AdminOnlyGuard, AuthOnlyGuard ],
+    canActivate: [ AccountProfileValidGuard, AdminOnlyGuard, AuthOnlyGuard ],
   },
   {
     path: 'logout',

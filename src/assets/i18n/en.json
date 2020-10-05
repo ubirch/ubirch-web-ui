@@ -5,6 +5,7 @@
   "menu.main.things": "Things",
   "menu.main.verification": "Verification",
   "menu.main.import": "Import",
+  "menu.main.account-profile": "Account Profile",
   "menu.main.logout": "Logout",
 
   "home.title": "Welcome",
@@ -107,6 +108,9 @@
   "import.form.info.max-file-size": "Maximum file size is {{filesize}}kb",
 
   "file-input.info.no-files-chosen": "No file chosen",
+
+  "account-profile.title": "Profile Data of Account",
+  "toast.account.profile.update.canceled": "TRANSLATE!!Changes on account profile discarded",
 
   "label.thing": "Thing",
   "label.note": "Note",

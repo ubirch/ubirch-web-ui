@@ -11,7 +11,7 @@ const keycloakConfig: KeycloakConfig = {
   realm: 'ubirch-default-realm',
   clientId: 'ubirch-2.0-user-access',
   credentials: {
-    secret: 'KEYCLOAK-CLIENT-SECRET'
+    secret: '8198c22e-ac38-469c-85bf-7a60736d6028'
   }
 };
 
@@ -20,7 +20,8 @@ export const environment = {
   envName: 'local',
   debug: true,
   version: npm.version,
-  serverUrl: 'http://localhost:8081',
+  serverUrl: 'https://api.console.dev.ubirch.com',
+//  serverUrl: 'http://localhost:8081',
   apiPrefix: '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: 'https://key.dev.ubirch.com',
   keyServiceApiPrefix: '/api/keyService/v1/',
