@@ -46,6 +46,14 @@
         }
       }
     },
+    "bloxberg": {
+      "nodeIcon": "bloxberg_verify_right.png",
+      "explorerUrl": {
+        "testnet": {
+          "url": "https://blockexplorer.bloxberg.org/tx/"
+        }
+      }
+    },
     "regioit": {
       "nodeIcon": "GovDigital_Icon_verify_right.png",
       "explorerUrl": {
