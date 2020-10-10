@@ -16,8 +16,15 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'data',
+        redirectTo: 'data-graph',
         pathMatch: 'full',
+      },
+      {
+        path: 'data-graph',
+        loadChildren: () => import('./device-data-graph/device-data-graph.module').then(m => m.DeviceDataGraphPageModule),
+        resolve: {
+          device: DeviceDataResolverService
+        }
       },
       {
         path: 'data',

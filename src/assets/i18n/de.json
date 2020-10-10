@@ -39,7 +39,8 @@
 
   "device.details.header.created-date": "TRANSLATE!!Created",
 
-  "device.details.tabs.header.data": "TRANSLATE!!Data",
+  "device.details.tabs.header.data": "TRANSLATE!!RecentData",
+  "device.details.tabs.header.data-graph": "TRANSLATE!!RecentDataGraph",
   "device.details.tabs.header.things-settings": "TRANSLATE!!ThingsSettings",
   "device.details.tabs.header.things-state": "TRANSLATE!!ThingsState",
   "device.details.tabs.header.recent-hashes": "TRANSLATE!!RecentHashes",

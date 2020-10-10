@@ -1,6 +1,32 @@
-<ion-content>
-  <div class="info-block">{{ 'device.details.tab.data.ubirch-info' | translate }}</div>
-  <div class="iframe-wrapper" *ngIf="iframeUrl$ | async">
-    <iframe width="100%" height="100%" [src]="iframeUrl$ | async" frameborder="0"></iframe>
-  </div>
+<ion-content class="ion-padding-horizontal">
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-end padding-row">
+    </ion-row>
+  </ion-grid>
+  <ion-card class="ion-padding">
+    <ion-card-header>{{ 'device.details.tab.recent-hashes.label.last-anchored-hashes' | translate }}:</ion-card-header>
+    <ion-card-content>
+      <ion-item class="ion-margin-bottom" *ngIf="dataSets === undefined">
+        <ion-label slot="start">{{ 'loading' | translate }}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="dataSets && dataSets.length === 0">
+        <ion-label slot="start" >{{ 'device.details.tab.recent-hashes.no-hashes-found' | translate }}</ion-label>
+      </ion-item>
+      <ion-item *ngFor="let dataSet of dataSets">
+        <ion-label lines="full">
+          <ion-text *ngFor="let item of dataSet._source.data | keyvalue" class="ion-text-wrap">{{item.key}}: {{item.value}}<br></ion-text>
+          <p>{{dataSet._source.timestamp | date: 'long':undefined:CURRENT_LANG}}</p>
+        </ion-label>
+        <div class="item-note" slot="end">
+          <ion-button (click)="openVerification(dataSet)" color="secondary" class="list-item-end-button">
+            <div class="ion-align-items-center">
+              <ion-icon src="assets/app-icons/checkmark-circle-outline.svg" class="list-item-end-icon"></ion-icon>
+              {{ 'button.verify' | translate }}
+            </div>
+          </ion-button>
+        </div>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
 </ion-content>

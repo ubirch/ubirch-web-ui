@@ -1,14 +1,5 @@
 <ion-tabs class="tabs-under-header">
   <ion-tab-bar slot="top">
-    <ion-tab-button
-      id="tabs-data-tab-button"
-      tab="data"
-      layout="icon-start"
-      *ngIf="showDataTab$ | async"
-    >
-      <ion-icon name="stats"></ion-icon>
-      <ion-label>{{ 'device.details.tabs.header.data' | translate }}</ion-label>
-    </ion-tab-button>
 
     <ion-tab-button tab="settings" layout="icon-start">
       <ion-icon name="settings"></ion-icon>
@@ -18,6 +9,26 @@
     <ion-tab-button tab="state" layout="icon-start">
       <ion-icon name="pulse"></ion-icon>
       <ion-label>{{ 'device.details.tabs.header.things-state' | translate }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button
+            id="tabs-data-tab-button"
+            tab="data"
+            layout="icon-start"
+            *ngIf="showDataTab$ | async"
+    >
+      <ion-icon name="stats"></ion-icon>
+      <ion-label>{{ 'device.details.tabs.header.data' | translate }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button
+            id="tabs-data-graph-tab-button"
+            tab="data-graph"
+            layout="icon-start"
+            *ngIf="showDataTab$ | async"
+    >
+      <ion-icon name="stats"></ion-icon>
+      <ion-label>{{ 'device.details.tabs.header.data-graph' | translate }}</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="upphashes" layout="icon-start">

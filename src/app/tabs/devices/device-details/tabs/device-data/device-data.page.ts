@@ -1,60 +1,117 @@
-import { Component, OnInit, SecurityContext } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
 
-import { DeviceService } from 'src/app/services/device.service';
-import { Observable } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
-
-import { environment } from '../../../../../../environments/environment';
+import {DeviceService} from 'src/app/services/device.service';
+import {Subscription} from 'rxjs';
 import {BEDevice} from '../../../../../models/bedevice';
+import {UppHash} from '../../../../../models/upp-hash';
+import {ToastService} from '../../../../../services/toast.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-device-data',
-  templateUrl: './device-data.page.html',
-  styleUrls: ['./device-data.page.scss'],
+    selector: 'app-device-data',
+    templateUrl: './device-data.page.html',
+    styleUrls: ['./device-data.page.scss'],
 })
 export class DeviceDataPage implements OnInit {
-  private readonly url = environment.deviceData.url;
-  private readonly orgId = environment.deviceData.orgId;
-  private readonly from = environment.deviceData.from;
-  private readonly to = environment.deviceData.to;
-  private readonly panelMap = environment.deviceData.panelMap;
 
-  constructor(
-    private route: ActivatedRoute,
-    private sanitizer: DomSanitizer,
-    private deviceService: DeviceService,
-  ) {}
+    public loadedDevice: BEDevice;
+    private deviceSubsc: Subscription;
+    private x;
+    private dataSets;
+    private testResponse = [
+        {
+        _index: 'device_data_vizualizer',
+        _type: 'doc',
+        _id: 'HETj_HQBcutxaSTbrImN',
+        _version: 1,
+        _score: null,
+        _source: {
+            uuid: '55424952-30ae-a44e-4f40-30aea44e4f40',
+            msg_type: 1,
+            timestamp: '2020-10-06T07:50:10.000Z',
+            data: {
+                humidity: 40.843945,
+                temperature: 21.767498,
+                voltage: 4760
+            },
+            hash: 'Y/X1go7q/nANU35tIc7wdvZweBf5Qu/gXwxmO4m558EN3H99S6lM2fcsmCOQyCjVrwg20FDi5H2WasauQ9inhg=='
+        },
+        fields: {
+            timestamp: [
+                '2020-10-06T07:50:10.000Z'
+            ]
+        },
+        sort: [
+            1601970610000
+        ]
+    },
+        {
+            _index: 'device_data_vizualizer',
+            _type: 'doc',
+            _id: 'HETj_HQBcutxaSTbrImN',
+            _version: 1,
+            _score: null,
+            _source: {
+                uuid: '55424952-30ae-a44e-4f40-30aea44e4f40',
+                msg_type: 1,
+                timestamp: '2020-10-06T07:50:10.000Z',
+                data: {
+                    humidity: 40.843945,
+                    temperature: 21.767498,
+                    voltage: 4760
+                },
+                hash: 'Y/X1go7q/nANU35tIc7wdvZweBf5Qu/gXwxmO4m558EN3H99S6lM2fcsmCOQyCjVrwg20FDi5H2WasauQ9inhg=='
+            },
+            fields: {
+                timestamp: [
+                    '2020-10-06T07:50:10.000Z'
+                ]
+            },
+            sort: [
+                1601970610000
+            ]
+        }
+    ];
+    private currentData;
 
-  private readonly uuid = this.route.snapshot.parent.parent.parent.params.id;
+    private readonly uuid = this.route.snapshot.parent.parent.parent.params.id;
 
-  public iframeUrl$: Observable<SafeResourceUrl>;
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private sanitizer: DomSanitizer,
+        private deviceService: DeviceService,
+        private toast: ToastService,
+        private translateService: TranslateService
+    ) {
+    }
 
-  ngOnInit() {
-    this.iframeUrl$ = this.deviceService.observableCurrentDevice.pipe(
-      filter((device: BEDevice) => {
-        return device && device.hwDeviceId === this.uuid;
-      }),
-      map(device => {
-        const tag = this.deviceService.getAllowedCaimingTagsOfDevice(device) || '';
-        const panelId = this.panelMap[ tag ];
+    get CURRENT_LANG(): string {
+        return this.translateService.currentLang;
+    }
 
-        const url = this.url +
-          `?orgId=${this.orgId}` +
-          `&from=${this.from}` +
-          `&to=${this.to}` +
-          `&panelId=${panelId}` +
-          `&var-uuid=${device.hwDeviceId}`;
+    ngOnInit() {
+        this.deviceSubsc = this.deviceService.observableCurrentDevice.subscribe(
+            loadedDevice => {
+                this.loadedDevice = loadedDevice;
+            });
+        this.deviceService.getLastNHashesOfDevice(this.loadedDevice.hwDeviceId).subscribe(x => {
+            console.log(x);
+        });
+        this.dataSets = [];
+        for (let i of this.testResponse) {
+            this.dataSets.push(i);
+        }
+        console.log(this.dataSets[1]._source.data);
+    }
 
-        return this.sanitize(url);
-      }),
-    );
-  }
-
-  private sanitize(url: string): SafeResourceUrl {
-    const sanitized = this.sanitizer.sanitize(SecurityContext.URL, url);
-    return this.sanitizer.bypassSecurityTrustResourceUrl(sanitized);
-  }
+    public openVerification(item): void {
+        const navigationExtras: NavigationExtras = {
+            queryParams: {hash: item._source.hash, deviceId: this.loadedDevice.hwDeviceId}
+        };
+        this.router.navigate(['verification'], navigationExtras);
+    }
 
 }
