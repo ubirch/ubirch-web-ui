@@ -25,6 +25,7 @@ export class DeviceService {
   devicesCreateUrl = this.url + 'devices/elephants'; // URL to web api to create devices
   searchUrl = this.devicesUrl + '/search';  // URL to web api to search devices by hwDeviceId or description (substrings)
   getLastNHashesUrl = this.url + 'devices/lastNHashes'; // URL to web api to get last n hashes anchored for given device
+  getLastNDatasetsUrl = this.url + 'devices/lastSentData/'; // URL to web api to get last n Datasets send by given device
 
   private currentDevice: BEDevice;
   private behaviorSubject = new BehaviorSubject<BEDevice>(this.currentDevice);
@@ -205,6 +206,15 @@ export class DeviceService {
       .pipe(
         map((hashes: UppHash[]) => hashes.map((hash: UppHash) => new UppHash(hash)))
       );
+  }
+
+  public getLastNDatasetsOfDevice(deviceId: string, count: number = 10) {
+    const url = `${this.getLastNDatasetsUrl}/${deviceId}/${count}`;
+    console.log(url);
+    return this.http.get(url)
+        .pipe(
+            map((datasets: object[]) => datasets.map((dataset: object) => new Object(dataset)))
+        );
   }
 
   storeUnsavedChangesOfDevice(val: any): boolean {

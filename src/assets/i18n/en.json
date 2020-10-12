@@ -49,7 +49,9 @@
   "device.details.tab.data.ubirch-info": "The UBIRCH solution normally does not handle any productive data like measurements but only works on hashes of data. The feature of displaying plain data in the UBIRCH console is only available for demo purposes within this UBIRCH TestKit.",
 
   "device.details.tab.recent-hashes.label.last-anchored-hashes": "Last anchored hashes",
+  "device.details.tab.recent-hashes.label.last-anchored-datasets": "Last anchored datasets",
   "device.details.tab.recent-hashes.no-hashes-found": "No hash found for device",
+  "device.details.tab.recent-hashes.no-datasets-found": "No datasets found for device",
 
   "device.details.tab.pubkeys.label.pubkey": "PubKey",
   "device.details.tab.pubkeys.label.pubkeyid": "PubKeyId",
@@ -157,6 +159,7 @@
   "error.device.details.called-without-id": "things details url called without ID",
   "error.device.details.called.failed": "Unable to access things details with id {{deviceid}}",
   "error.device.details.recent-hashes.load.failed": "Cannot load recent hashes of device",
+  "error.device.details.recent-data.load.failed": "Cannot load recent datasets of device",
   "error.device.details.unavailable": "Things details not loaded properly",
 
   "error.be.Bad hwDeviceId": "provided hwDeviceId '{{deviceid}}' is not a valid UUID"
