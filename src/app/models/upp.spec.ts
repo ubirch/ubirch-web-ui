@@ -10,7 +10,7 @@ describe('Upp', () => {
       TestBed.configureTestingModule({
         imports: [TranslateModule],
       });
-      service = TestBed.get(TranslateService);
+      service = TestBed.inject(TranslateService);
    }
   );
 

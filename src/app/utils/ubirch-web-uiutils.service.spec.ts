@@ -6,7 +6,7 @@ describe('UbirchWebUIUtilsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: UbirchWebUIUtilsService = TestBed.get(UbirchWebUIUtilsService);
+    const service: UbirchWebUIUtilsService = TestBed.inject(UbirchWebUIUtilsService);
     expect(service).toBeTruthy();
   });
 });

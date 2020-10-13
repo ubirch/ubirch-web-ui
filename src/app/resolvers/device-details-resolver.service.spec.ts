@@ -15,8 +15,8 @@ describe('DeviceDetailsResolverService', () => {
       imports: [RouterModule.forRoot([]), HttpClientTestingModule],
     });
 
-    resolver = TestBed.get(DeviceDetailsResolverService);
-    deviceService = TestBed.get(DeviceService);
+    resolver = TestBed.inject(DeviceDetailsResolverService);
+    deviceService = TestBed.inject(DeviceService);
   });
 
   it('should be created', () => {

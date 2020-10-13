@@ -22,7 +22,7 @@ describe('DeviceImportService', () => {
     });
 
     injector = getTestBed();
-    service = TestBed.get(DeviceImportService);
+    service = TestBed.inject(DeviceImportService);
     httpMock = injector.get(HttpTestingController);
   });
 

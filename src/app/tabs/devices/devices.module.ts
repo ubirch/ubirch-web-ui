@@ -9,6 +9,7 @@ import {ComponentsModule} from '../../components/components.module';
 import {MaterialModule} from '../../components/material-components/material.module';
 import {MarkdownModule} from 'ngx-markdown';
 import {NewDevicePopupComponent} from './devices-list-page/popups/new-device-popup/new-device-popup.component';
+// tslint:disable-next-line:max-line-length
 import {ConfirmDeleteDevicePopupComponent} from './devices-list-page/popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {CreatedDevicesListPopupComponent} from './devices-list-page/popups/created-devices-list-popup/created-devices-list-popup.component';
 import {DeviceDetailsResolverService} from 'src/app/resolvers/device-details-resolver.service';
