@@ -49,7 +49,7 @@
     "keycloak-angular": "~7.2.0",
     "keycloak-js": "~6.0.1",
     "ngx-chips": "^2.1.0",
-    "ngx-markdown": "^8.1.0",
+    "ngx-markdown": "^10.1.1",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.3",
     "zone.js": "~0.10.3"
