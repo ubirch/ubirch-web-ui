@@ -45,7 +45,7 @@
     "core-js": "^2.5.4",
     "cytoscape": "^3.16.2",
     "cytoscape-automove": "^1.10.2",
-    "cytoscape-dagre": "^2.2.2",
+    "cytoscape-dagre": "^2.3.0",
     "keycloak-angular": "~8.0.1",
     "keycloak-js": "~11.0.2",
     "ngx-chips": "^2.2.0",
