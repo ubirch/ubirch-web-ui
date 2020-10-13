@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {isNumber} from 'util';
+import {isNumeric} from 'rxjs/internal-compatibility';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class UbirchWebUIUtilsService {
   }
 
   static parseNumber(value: any): number {
-    if (!isNaN(value) && isNumber(+value)) {
+    if (!isNaN(value) && isNumeric(+value)) {
       return parseFloat(value);
     }
     throw new Error(`parseNumber called with a non numerical value: ${value}`);

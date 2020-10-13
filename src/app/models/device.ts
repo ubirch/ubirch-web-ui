@@ -1,6 +1,5 @@
 import {User} from './user';
 import {Group} from './group';
-import {isArray} from 'util';
 import {environment} from '../../environments/environment';
 
 export class Device {
@@ -65,7 +64,7 @@ export class Device {
       this.ownerId = jsonDevice.ownerId;
     }
     this.groups = [];
-    if (jsonDevice.groups && isArray(jsonDevice.groups)) {
+    if (jsonDevice.groups && Array.isArray(jsonDevice.groups)) {
       jsonDevice.groups.forEach(group => this.groups.push(new Group(group)));
     }
 
@@ -84,7 +83,7 @@ export class Device {
     } else {
       this.ownerId = data.ownerId || this.ownerId;
     }
-    if (data.groups && isArray(data.groups)) {
+    if (data.groups && Array.isArray(data.groups)) {
       this.groups = [];
       this.groups.forEach(group => this.groups.push(new Group(group)));
     }

@@ -1,10 +1,19 @@
 import {IUbirchBlockhainSettings} from './iubirch-blockhain-settings';
 
-export interface IUbirchVerificationSettings {
+export class IUbirchVerificationSettings {
   ubirchIcons: {
     seal: string,
     no_seal: string
   };
-  asset_path: string;
+  assetPath: string;
   blockchainSettings: IUbirchBlockhainSettings;
+
+  constructor(props) {
+    if (props.default) {
+      Object.assign(this, props.default);
+    } else {
+      Object.assign(this, props);
+    }
+    return this;
+  }
 }
