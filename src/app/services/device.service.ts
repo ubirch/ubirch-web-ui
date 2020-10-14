@@ -26,7 +26,7 @@ export class DeviceService {
   searchUrl = this.devicesUrl + '/search';  // URL to web api to search devices by hwDeviceId or description (substrings)
   getLastNHashesUrl = this.url + 'devices/lastNHashes'; // URL to web api to get last n hashes anchored for given device
 
-  private currentDevice: BEDevice;
+  private currentDevice: BEDevice = null;
   private behaviorSubject = new BehaviorSubject<BEDevice>(this.currentDevice);
   public observableCurrentDevice: Observable<BEDevice> = this.behaviorSubject.asObservable();
 

@@ -3,7 +3,7 @@
     "seal": "ubirch_verify_right.png",
     "no_seal": "ubirch_verify_wrong.png"
   },
-  "asset_path": "assets/app-icons/",
+  "assetPath": "assets/app-icons/",
   "blockchainSettings": {
     "ethereum-classic": {
       "nodeIcon": "Ethereum-Classic_verify_right.png",
