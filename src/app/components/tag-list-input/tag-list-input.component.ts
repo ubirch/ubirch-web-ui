@@ -1,5 +1,6 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {observableToBeFn} from 'rxjs/internal/testing/TestScheduler';
 
 @Component({
   selector: 'ubirch-tag-list-input',
@@ -38,6 +39,18 @@ export class TagListInputComponent implements OnInit, ControlValueAccessor {
 
   writeValue(tags: string[]): void {
     this.tagsList = tags;
+  }
+  public removeTag(tag: string): void {
+    if (this.tagsList && this.tagsList.length > 0) {
+      const index = this.tagsList.indexOf(tag);
+      if (index >= 0) {
+        this.tagsList.splice(index, 1);
+        this.tagListChanged();
+      }
+    }
+  }
+  private tagListChanged() {
+    this.propagateChange(this.tagsList);
   }
 
 }
