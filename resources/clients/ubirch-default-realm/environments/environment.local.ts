@@ -8,10 +8,7 @@ import * as npm from '../../package.json';
 const keycloakConfig: any = {
   url: 'http://localhost:8080/auth',
   realm: 'ubirch-default-realm',
-  clientId: 'ubirch-2.0-user-access',
-  credentials: {
-    secret: '8198c22e-ac38-469c-85bf-7a60736d6028'
-  }
+  clientId: 'ubirch-2.0-user-access-local'
 };
 
 export const environment = {
