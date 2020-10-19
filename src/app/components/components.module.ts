@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HeaderComponent} from './header/header.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {FileInputComponent} from './file-input/file-input.component';
 import {VerificationHeaderComponent} from './header/verification-header/verification-header.component';
@@ -11,6 +11,7 @@ import {VerificationErrorHandlingComponent} from './verification-error-handling/
 import {VerificationQuickInfoComponent} from './verification-quick-info/verification-quick-info.component';
 import {VerificationGraphComponent} from './verification-graph/verification-graph.component';
 import {CytoscapeGraphModule} from '../cytoscape-graph/cytoscape-graph.module';
+import {TagListInputComponent} from './tag-list-input/tag-list-input.component';
 
 
 @NgModule({
@@ -21,14 +22,16 @@ import {CytoscapeGraphModule} from '../cytoscape-graph/cytoscape-graph.module';
     FileInputComponent,
     VerificationErrorHandlingComponent,
     VerificationQuickInfoComponent,
-    VerificationGraphComponent
+    VerificationGraphComponent,
+    TagListInputComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     TranslateModule,
-    CytoscapeGraphModule
+    CytoscapeGraphModule,
+    ReactiveFormsModule
   ],
   exports: [
     HeaderComponent,
@@ -37,7 +40,8 @@ import {CytoscapeGraphModule} from '../cytoscape-graph/cytoscape-graph.module';
     FileInputComponent,
     VerificationErrorHandlingComponent,
     VerificationQuickInfoComponent,
-    VerificationGraphComponent
+    VerificationGraphComponent,
+    TagListInputComponent
   ]
 })
 export class ComponentsModule {
