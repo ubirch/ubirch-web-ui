@@ -48,7 +48,6 @@
     "cytoscape-dagre": "^2.3.0",
     "keycloak-angular": "~8.0.1",
     "keycloak-js": "~11.0.2",
-    "ngx-chips": "^2.2.0",
     "ngx-markdown": "^10.1.1",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.3",

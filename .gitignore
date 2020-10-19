@@ -44,3 +44,4 @@ UserInterfaceState.xcuserstate
 /preprocess-replace-secrets.sh
 package-lock.json
 /src/assets/constants/
+/_package-lock.json
