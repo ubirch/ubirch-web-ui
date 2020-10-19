@@ -16,7 +16,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'data-graph',
+        redirectTo: 'settings',
         pathMatch: 'full',
       },
       {
