@@ -1,7 +1,6 @@
-import {KeycloakConfig} from 'keycloak-angular';
 import * as npm from '../../package.json';
 
-const keycloakConfig: KeycloakConfig = {
+const keycloakConfig: any = {
   url: 'https://<KEYCLOAK_SERVER_URL>/auth',
   realm: '<KEYCLOAK_REALM_ID>',
   clientId: '<KEYCLOAK_CLIENT_ID>',

@@ -21,7 +21,7 @@ import {ToastType} from '../../../enums/toast-type.enum';
   styleUrls: ['devices-list-page.component.scss']
 })
 export class DevicesListPage {
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   public deviceStubs: Array<DeviceStub> = [];
 
   polling = new Subscription();
