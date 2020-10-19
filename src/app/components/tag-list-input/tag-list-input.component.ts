@@ -1,5 +1,5 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {observableToBeFn} from 'rxjs/internal/testing/TestScheduler';
 
 @Component({
@@ -18,12 +18,20 @@ export class TagListInputComponent implements OnInit, ControlValueAccessor {
 
   public disabled = false;
   public tagsList: string[] = [];
+  public tagFormGroup: FormGroup;
   private propagateChange = (_: any) => {};
   private propagateTouch = (_: any) => {};
 
-  constructor() { }
+  constructor(
+    private fb: FormBuilder
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.tagFormGroup = this.fb.group({
+      item: ['']
+    });
+    this.tagFormGroup.setValue({item: ''});
+  }
 
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
@@ -49,6 +57,16 @@ export class TagListInputComponent implements OnInit, ControlValueAccessor {
       }
     }
   }
+  public addTag(event: any): void {
+    const tag = event.target.value;
+    if (!this.tagsList.includes(tag)) {
+      this.tagsList.push(tag);
+      this.tagFormGroup.setValue({item: ''});
+      this.tagListChanged();
+    }
+
+  }
+
   private tagListChanged() {
     this.propagateChange(this.tagsList);
   }

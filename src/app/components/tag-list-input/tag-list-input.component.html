@@ -1,6 +1,20 @@
-<div class="tag-list-input__list-area">
-  <ion-chip *ngFor="let tag of tagsList">
-    <ion-label>{{tag}}</ion-label>
-    <ion-icon name="close" (click)="removeTag(tag)"></ion-icon>
-  </ion-chip>
+<div class="tag-list-input">
+  <div class="tag-list-input__list-area">
+    <ion-chip *ngFor="let tag of tagsList">
+      <ion-label>{{tag}}</ion-label>
+      <ion-icon name="close" (click)="removeTag(tag)"></ion-icon>
+    </ion-chip>
+  </div>
+  <div class="tag-list-input__text-input-area">
+    <form [formGroup]="tagFormGroup">
+      <input
+        (keyup.enter)="addTag($event)"
+        autocomplete="off"
+        class="ng2-tag-input__text-input"
+        formControlName="item"
+        minlength="1" type="text"
+        placeholder="You can add a couple of tags comma separated"
+        aria-label="You can add a couple of tags comma separated">
+    </form>
+  </div>
 </div>

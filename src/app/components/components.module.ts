@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HeaderComponent} from './header/header.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {FileInputComponent} from './file-input/file-input.component';
 import {VerificationHeaderComponent} from './header/verification-header/verification-header.component';
@@ -30,7 +30,8 @@ import {TagListInputComponent} from './tag-list-input/tag-list-input.component';
     FormsModule,
     IonicModule,
     TranslateModule,
-    CytoscapeGraphModule
+    CytoscapeGraphModule,
+    ReactiveFormsModule
   ],
   exports: [
     HeaderComponent,
