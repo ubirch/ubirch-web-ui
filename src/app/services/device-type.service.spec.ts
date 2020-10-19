@@ -9,7 +9,7 @@ describe('DeviceTypeService', () => {
   }));
 
   it('should be created', () => {
-    const service: DeviceTypeService = TestBed.get(DeviceTypeService);
+    const service: DeviceTypeService = TestBed.inject(DeviceTypeService);
     expect(service).toBeTruthy();
   });
 });

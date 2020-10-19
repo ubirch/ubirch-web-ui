@@ -6,7 +6,7 @@ describe('CytoscapeGraphService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: CytoscapeGraphService = TestBed.get(CytoscapeGraphService);
+    const service: CytoscapeGraphService = TestBed.inject(CytoscapeGraphService);
     expect(service).toBeTruthy();
   });
 });

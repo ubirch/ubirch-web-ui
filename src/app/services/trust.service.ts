@@ -39,13 +39,12 @@ export class TrustService {
   }
 
   public static get BlockchainIconsPath(): string {
-    return TrustService.VerificationSettings.asset_path;
+    return TrustService.VerificationSettings.assetPath;
   }
 
   private static  get VerificationSettings(): IUbirchVerificationSettings {
     if (!TrustService.verificationSettings) {
-      TrustService.verificationSettings = VerificationSettings && VerificationSettings['default'] ?
-        VerificationSettings['default'] : VerificationSettings;
+      TrustService.verificationSettings = new IUbirchVerificationSettings(VerificationSettings);
     }
     return TrustService.verificationSettings;
   }
@@ -59,14 +58,14 @@ export class TrustService {
   /**
    * Observable of current hash
    */
-  private currHash: string;
+  private currHash: string = null;
   private bsHash = new BehaviorSubject<string>(this.currHash);
   public observableHash: Observable<string> = this.bsHash.asObservable();
 
   /**
    * Observable of current verified hash
    */
-  private currVerifiedHash: string;
+  private currVerifiedHash: string = null;
   private bsvHash = new BehaviorSubject<string>(this.currVerifiedHash);
   public observableVerifiedHash: Observable<string> = this.bsvHash.asObservable();
 
@@ -80,7 +79,7 @@ export class TrustService {
   /**
    * Observable current UPP
    */
-  private currUPP: Upp;
+  private currUPP: Upp = null;
   private bsUPP = new BehaviorSubject<Upp>(this.currUPP);
   public observableUPP: Observable<Upp> = this.bsUPP.asObservable();
 

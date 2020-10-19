@@ -1,6 +1,5 @@
 import {AnchorPathNode} from './anchor-path-node';
 import {BlockChainNode} from './block-chain-node';
-import {isArray} from 'util';
 import {CytoscapeNode} from './cytoscape-node';
 import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
 import {CytoscapeEdge} from './cytoscape-edge';
@@ -294,7 +293,7 @@ export class Upp {
   }
 
   private readArrayOfAnchorNodes(data: any, target: any[], type: string, addUnsignedUpp: boolean = false) {
-    if (data && isArray(data) && data.length > 0) {
+    if (data && Array.isArray(data) && data.length > 0) {
       switch (type) {
         case('AnchorPathNode'):
           data.forEach(path => {

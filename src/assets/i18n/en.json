@@ -64,7 +64,7 @@
   "device.details.tab.things-settings.label.id": "ID",
   "device.details.tab.things-settings.label.description": "Description",
   "device.details.tab.things-settings.label.tags": "Tags",
-  "device.details.tab.things-settings.placeholder.tags": "You can add a couple of tags comma separated",
+  "device.details.tab.things-settings.placeholder.tags": "You can add additional tags here",
   "device.details.tab.things-settings.label.api-config": "apiConfig",
   "device.details.tab.things-settings.placeholder.api-config": "NO API CONFIG AVAILABLE",
 

@@ -165,12 +165,15 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
   }
 
   private patchForm(device?: BEDevice): any {
+    const tags = new Array();
+    if (device && device.attributes && device.attributes.claiming_tags) {
+      tags.push(...device.attributes.claiming_tags);
+    }
     const val = {
       hwDeviceId: device && device.hwDeviceId ? device.hwDeviceId : '',
       description: device && device.description ? device.description : '',
       attributes: {
-        claiming_tags: device && device.attributes && device.attributes.claiming_tags ?
-          device.attributes.claiming_tags : [],
+        claiming_tags: tags,
         apiConfig: device && device.attributes && device.attributes.apiConfig && device.attributes.apiConfig.length > 0 ?
           [this.getPrettyJSON(device.attributes.apiConfig[0])] : []
       }

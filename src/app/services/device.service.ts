@@ -9,7 +9,6 @@ import {DeviceTypeService} from './device-type.service';
 import {CreateDevicesFormData, ReqType} from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
 import {DevicesListWrapper} from '../models/devices-list-wrapper';
 import {UserService} from './user.service';
-import {isArray} from 'util';
 import {DeviceState, TIME_RANGES} from '../models/device-state';
 import {BEDevice} from '../models/bedevice';
 import {UppHash} from '../models/upp-hash';
@@ -27,7 +26,7 @@ export class DeviceService {
   getLastNHashesUrl = this.url + 'devices/lastNHashes'; // URL to web api to get last n hashes anchored for given device
   getLastNDatasetsUrl = this.url + 'devices/lastSentData/'; // URL to web api to get last n Datasets send by given device
 
-  private currentDevice: BEDevice;
+  private currentDevice: BEDevice = null;
   private behaviorSubject = new BehaviorSubject<BEDevice>(this.currentDevice);
   public observableCurrentDevice: Observable<BEDevice> = this.behaviorSubject.asObservable();
 
@@ -66,7 +65,7 @@ export class DeviceService {
    * @param periode Date Object (optional) if given this is range of time, states are request for; default: 1 day
    */
   public getDeviceStates(deviceIds: string[], from?: Date, to?: Date): Observable<DeviceState[]> {
-    if (deviceIds && isArray(deviceIds) && deviceIds.length > 0) {
+    if (deviceIds && Array.isArray(deviceIds) && deviceIds.length > 0) {
       const endDate = to ? to : new Date();
       const startDate = from ? from : new Date(endDate.getTime() - TIME_RANGES.DAY);
 
@@ -149,7 +148,7 @@ export class DeviceService {
       map(jsonDevices =>
         this.extractDevicesCreationStates(jsonDevices)),
       catchError(error => {
-        if (error.error && isArray(error.error)) {
+        if (error.error && Array.isArray(error.error)) {
           return throwError(this.extractDevicesCreationStates(error.error, true));
         } else {
           // server-side error

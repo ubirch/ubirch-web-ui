@@ -4,6 +4,7 @@ import {DeviceState} from './device-state';
 import {Subscription} from 'rxjs';
 import {OnDestroy} from '@angular/core';
 
+// TODO: Add Angular decorator.
 export class DeviceStub implements OnDestroy {
     public hwDeviceId: string;
     public description: string;
@@ -11,7 +12,7 @@ export class DeviceStub implements OnDestroy {
   // tslint:disable-next-line:variable-name
     public deviceState: DeviceState;
     public canBeDeleted?: boolean;
-    private deviceTypeSubscr: Subscription;
+    private readonly deviceTypeSubscr: Subscription;
 
     constructor(jsonDevice: any) {
         if (!jsonDevice || !jsonDevice.hwDeviceId) {

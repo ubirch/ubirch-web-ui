@@ -14,7 +14,7 @@ export class UserService {
   url = environment.serverUrl + environment.apiPrefix;
   accountUrl = this.url + 'users/accountInfo';
 
-  private currentAccount: AccountInfo;
+  private currentAccount: AccountInfo = null;
   private behaviorSubItem = new BehaviorSubject<AccountInfo>(this.currentAccount);
   public observableAccountInfo: Observable<AccountInfo> = this.behaviorSubItem.asObservable();
 

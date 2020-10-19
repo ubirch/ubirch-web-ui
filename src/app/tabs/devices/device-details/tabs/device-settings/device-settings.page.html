@@ -20,10 +20,11 @@
         </ion-item>
         <ng-container [formGroup]="deviceAttributesForm">
           <ion-item class="ion-margin-bottom">
-            <ion-label slot="start">{{ 'device.details.tab.things-settings.label.tags' | translate }}:</ion-label>
-            <tag-input item-content formControlName="claiming_tags"
-                       placeholder="{{ 'device.details.tab.things-settings.placeholder.tags' | translate }}">
-            </tag-input>
+            <ion-label slot="start" class="claiming_tags__label">{{ 'device.details.tab.things-settings.label.tags' | translate }}:</ion-label>
+            <ubirch-tag-list-input
+              formControlName="claiming_tags"
+              placeholder="{{ 'device.details.tab.things-settings.placeholder.tags' | translate }}">
+            </ubirch-tag-list-input>
           </ion-item>
           <ion-item>
             <ion-label slot="start">{{ 'device.details.tab.things-settings.label.api-config' | translate }}:</ion-label>

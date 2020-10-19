@@ -30,7 +30,7 @@ describe('DeviceService', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
-    service = TestBed.get(DeviceService);
+    service = TestBed.inject(DeviceService);
     injector = getTestBed();
     httpMock = injector.get(HttpTestingController);
   });

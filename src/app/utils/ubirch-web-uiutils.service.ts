@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {isNumber} from 'util';
+import {isNumeric} from 'rxjs/internal-compatibility';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class UbirchWebUIUtilsService {
   }
 
   static parseNumber(value: any): number {
-    if (!isNaN(value) && isNumber(+value)) {
+    if (!isNaN(value) && isNumeric(+value)) {
       return parseFloat(value);
     }
     throw new Error(`parseNumber called with a non numerical value: ${value}`);
@@ -79,21 +79,6 @@ export class UbirchWebUIUtilsService {
     if (typeof tags === 'string') {
       return tags.split(',').map(tag => tag.trim());
     }
-    if (Array.isArray(tags)) {
-      return UbirchWebUIUtilsService.nxgChipObjToStringArray(tags);
-    }
-  }
-
-  public static nxgChipObjToStringArray(tagArray: any[]): string[] {
-    if (Array.isArray(tagArray) && tagArray.length > 0) {
-      return tagArray.map((e: any) => e.value !== undefined ? e.value : e);
-    } else {
-      const returnArray = [];
-      if (tagArray.length > 0) {
-        // returns a single string
-        returnArray.push(tagArray);
-      }
-      return returnArray;
-    }
+    return tags;
   }
 }
