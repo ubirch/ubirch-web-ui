@@ -61,7 +61,7 @@
   "device.details.tab.things-settings.label.id": "TRANSLATE!!ID",
   "device.details.tab.things-settings.label.description": "TRANSLATE!!Description",
   "device.details.tab.things-settings.label.tags": "TRANSLATE!!Tags",
-  "device.details.tab.things-settings.placeholder.tags": "TRANSLATE!!You can add a couple of tags comma separated",
+  "device.details.tab.things-settings.placeholder.tags": "TRANSLATE!!You can add additional tags here",
   "device.details.tab.things-settings.label.api-config": "TRANSLATE!!apiConfig",
   "device.details.tab.things-settings.placeholder.api-config": "TRANSLATE!!NO API CONFIG AVAILABLE",
 

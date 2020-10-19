@@ -1,4 +1,4 @@
-import {Component, forwardRef, OnInit} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {observableToBeFn} from 'rxjs/internal/testing/TestScheduler';
 
@@ -16,6 +16,7 @@ import {observableToBeFn} from 'rxjs/internal/testing/TestScheduler';
 })
 export class TagListInputComponent implements OnInit, ControlValueAccessor {
 
+  @Input() placeholder = 'You can add tags here';
   public disabled = false;
   public tagsList: string[] = [];
   public tagFormGroup: FormGroup;
