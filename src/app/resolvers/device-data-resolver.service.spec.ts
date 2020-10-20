@@ -53,7 +53,7 @@ describe('DeviceDataResolverService', () => {
       ]
     });
 
-    resolver = TestBed.get(DeviceDataResolverService);
+    resolver = TestBed.inject(DeviceDataResolverService);
     injector = getTestBed();
     router = injector.get(Router);
     deviceService = injector.get(DeviceService);

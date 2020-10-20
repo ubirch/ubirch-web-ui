@@ -51,11 +51,6 @@ export class BEDevice {
     return this;
   }
   public fixSpecials() {
-    if (this.attributes) {
-      if (this.attributes.claiming_tags) {
-        this.attributes.claiming_tags = UbirchWebUIUtilsService.createClaimingTagsFromFormData(this.attributes.claiming_tags);
-      }
-    }
     if (this.canBeDeleted === undefined) {
       this.canBeDeleted = false;
     }

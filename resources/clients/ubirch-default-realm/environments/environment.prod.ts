@@ -1,13 +1,9 @@
-import {KeycloakConfig} from 'keycloak-angular';
 import * as npm from '../../package.json';
 
-const keycloakConfig: KeycloakConfig = {
+const keycloakConfig: any = {
   url: '@@UBIRCH_KC_URL@@', // 'https://id.dev.ubirch.com/auth/realms/ubirch-2.0/account/',
   realm: '@@UBIRCH_TR_KC_REALM@@', // 'test-realm',
-  clientId: '@@UBIRCH_KC_CLIENTID@@', // 'ubirch-2.0-user-access',
-  credentials: {
-    secret: '@@UBIRCH_TR_KC_CRED_SECRET@@' // ''
-  }
+  clientId: '@@UBIRCH_KC_CLIENTID@@' // 'ubirch-2.0-user-access-public',
 };
 
 export const environment = {

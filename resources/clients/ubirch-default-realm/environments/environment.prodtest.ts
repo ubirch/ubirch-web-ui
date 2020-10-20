@@ -3,16 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 // Add here your keycloak setup infos
-import {KeycloakConfig} from 'keycloak-angular';
 import * as npm from '../../package.json';
 
-const keycloakConfig: KeycloakConfig = {
+const keycloakConfig: any = {
   url: 'https://id.prod.ubirch.com/auth',
   realm: 'ubirch-default-realm',
-  clientId: 'ubirch-2.0-user-access',
-  credentials: {
-    secret: 'KEYCLOAK-CLIENT-SECRET'
-  }
+  clientId: 'ubirch-2.0-user-access-public'
 };
 
 export const environment = {

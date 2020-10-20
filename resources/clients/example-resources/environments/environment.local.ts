@@ -3,10 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 // Add here your keycloak setup infos
-import {KeycloakConfig} from 'keycloak-angular';
 import * as npm from '../../package.json';
 
-const keycloakConfig: KeycloakConfig = {
+const keycloakConfig: any = {
   url: 'http://localhost:8080/auth',
   realm: '<KEYCLOAK_REALM_ID>',
   clientId: '<KEYCLOAK_CLIENT_ID>',
