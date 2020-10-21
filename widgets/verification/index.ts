@@ -254,7 +254,7 @@ class UbirchVerification {
 
     this.handleInfo(EInfo.VERIFICATION_SUCCESSFUL, hash);
 
-    const blockchainTX = resultObj.anchors;
+    const blockchainTX = resultObj.anchors.upper_blockchains;
 
     if (!blockchainTX || !blockchainTX.length) {
       return;
