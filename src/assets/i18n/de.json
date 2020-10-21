@@ -15,6 +15,8 @@
   "logout.info.really-logout-question": "TRANSLATE!!Do you really want to log out?",
 
   "devices.list.title": "TRANSLATE!!Your Things",
+  "devices.list.label.count-all": "TRANSLATE!!Total Things: ",
+  "devices.list.label.count-filtered": "TRANSLATE!!Filtered Things: ",
   "devices.list.searchbar.placeholder": "TRANSLATE!!Filter Things by description or ID",
   "devices.list.item.num-upps.last-day": "TRANSLATE!!UPPs in the last day",
   "devices.list.item.num-upps.loading": "TRANSLATE!!loading state...",
