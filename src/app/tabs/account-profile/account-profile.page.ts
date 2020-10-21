@@ -61,23 +61,23 @@ export class AccountProfilePage implements OnInit {
     }
 
     get comStreet() {
-        return this.tenantProfileForm.get(['company', 'billingAdress', 'comStreet']);
+        return this.tenantProfileForm.get(['company', 'billingAddress', 'comStreet']);
     }
 
     get comNum() {
-        return this.tenantProfileForm.get(['company', 'billingAdress', 'comNum']);
+        return this.tenantProfileForm.get(['company', 'billingAddress', 'comNum']);
     }
 
     get comZip() {
-        return this.tenantProfileForm.get(['company', 'billingAdress', 'comZip']);
+        return this.tenantProfileForm.get(['company', 'billingAddress', 'comZip']);
     }
 
     get comCity() {
-        return this.tenantProfileForm.get(['company', 'billingAdress', 'comCity']);
+        return this.tenantProfileForm.get(['company', 'billingAddress', 'comCity']);
     }
 
     get comCountry() {
-        return this.tenantProfileForm.get(['company', 'billingAdress', 'comCountry']);
+        return this.tenantProfileForm.get(['company', 'billingAddress', 'comCountry']);
     }
 
     get comVat() {
@@ -174,7 +174,7 @@ export class AccountProfilePage implements OnInit {
             }),
             company: this.fb.group({
                 comName: [null, [Validators.required]],
-                billingAdress: this.fb.group({
+                billingAddress: this.fb.group({
                     comStreet: [null, [Validators.required]],
                     comNum: [null, [Validators.required]],
                     comZip: [null, [zipPattern, Validators.required]],
@@ -224,45 +224,49 @@ export class AccountProfilePage implements OnInit {
 
     public discardChanges() {
         this.toast.openToast(ToastType.light, 'toast.account.profile.update.canceled', 4000);
-        this.tenantProfileForm.patchValue({});
+        console.log(this.profileData);
+        this.fillData(this.profileData);
     }
 
     public saveProfile() {
+        this.profileData = this.tenantProfileForm.value;
+        console.log(this.profileData);
         this.userService.updateProfileData();
     }
 
     fillData(profileData) {
-        this.mainSalut.setValue(profileData.mainContact.salutation);
-        this.mainTitle.setValue(profileData.mainContact.title);
-        this.mainGName.setValue(profileData.mainContact.givenname);
-        this.mainSName.setValue(profileData.mainContact.Surname);
-        this.mainEmail.setValue(profileData.mainContact.email);
-        this.mainPhone.setValue(profileData.mainContact.phone);
-        this.mainMobile.setValue(profileData.mainContact.mobile);
-        this.mainPos.setValue(profileData.mainContact.position);
-        this.comName.setValue(profileData.company.companyname);
-        this.comStreet.setValue(profileData.company.billingAddress.street);
-        this.comNum.setValue(profileData.company.billingAddress.number);
-        this.comZip.setValue(profileData.company.billingAddress.zipcode);
-        this.comCity.setValue(profileData.company.billingAddress.city);
-        this.comCountry.setValue(profileData.company.billingAddress.country);
-        this.comVat.setValue(profileData.company.vatid);
-        this.comTax.setValue(profileData.company.taxid);
-        this.techSalut.setValue(profileData.technicalContact.salutation);
-        this.techTitle.setValue(profileData.technicalContact.title);
-        this.techGName.setValue(profileData.technicalContact.givenname);
-        this.techSName.setValue(profileData.technicalContact.Surname);
-        this.techEmail.setValue(profileData.technicalContact.email);
-        this.techPhone.setValue(profileData.technicalContact.phone);
-        this.techMobile.setValue(profileData.technicalContact.mobile);
-        this.techPos.setValue(profileData.technicalContact.position);
-        this.finSalut.setValue(profileData.financialContact.salutation);
-        this.finTitle.setValue(profileData.financialContact.title);
-        this.finGName.setValue(profileData.financialContact.givenname);
-        this.finSName.setValue(profileData.financialContact.Surname);
-        this.finEmail.setValue(profileData.financialContact.email);
-        this.finPhone.setValue(profileData.financialContact.phone);
-        this.finMobile.setValue(profileData.financialContact.mobile);
-        this.finPos.setValue(profileData.financialContact.position);
+        console.log(profileData.company.billi)
+        this.mainSalut.setValue(profileData.mainContact.mainSalut);
+        this.mainTitle.setValue(profileData.mainContact.mainTitle);
+        this.mainGName.setValue(profileData.mainContact.mainGName);
+        this.mainSName.setValue(profileData.mainContact.mainSName);
+        this.mainEmail.setValue(profileData.mainContact.mainEmail);
+        this.mainPhone.setValue(profileData.mainContact.mainPhone);
+        this.mainMobile.setValue(profileData.mainContact.mainMobile);
+        this.mainPos.setValue(profileData.mainContact.mainPos);
+        this.comName.setValue(profileData.company.comName);
+        this.comStreet.setValue(profileData.company.billingAddress.comStreet);
+        this.comNum.setValue(profileData.company.billingAddress.comNum);
+        this.comZip.setValue(profileData.company.billingAddress.comZip);
+        this.comCity.setValue(profileData.company.billingAddress.comCity);
+        this.comCountry.setValue(profileData.company.billingAddress.comCountry);
+        this.comVat.setValue(profileData.company.comVat);
+        this.comTax.setValue(profileData.company.comTax);
+        this.techSalut.setValue(profileData.technicalContact.techSalut);
+        this.techTitle.setValue(profileData.technicalContact.techTitle);
+        this.techGName.setValue(profileData.technicalContact.techGName);
+        this.techSName.setValue(profileData.technicalContact.techSName);
+        this.techEmail.setValue(profileData.technicalContact.techEmail);
+        this.techPhone.setValue(profileData.technicalContact.techPhone);
+        this.techMobile.setValue(profileData.technicalContact.techMobile);
+        this.techPos.setValue(profileData.technicalContact.techPos);
+        this.finSalut.setValue(profileData.financialContact.finSalut);
+        this.finTitle.setValue(profileData.financialContact.finTitle);
+        this.finGName.setValue(profileData.financialContact.finGName);
+        this.finSName.setValue(profileData.financialContact.finSName);
+        this.finEmail.setValue(profileData.financialContact.finEmail);
+        this.finPhone.setValue(profileData.financialContact.finPhone);
+        this.finMobile.setValue(profileData.financialContact.finMobile);
+        this.finPos.setValue(profileData.financialContact.finPos);
     }
 }
