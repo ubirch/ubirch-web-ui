@@ -5,7 +5,7 @@
   "menu.main.things": "TRANSLATE!!Things",
   "menu.main.verification": "TRANSLATE!!Verification",
   "menu.main.import": "TRANSLATE!!Import",
-  "menu.main.account-profile": "TRANSLATE!!Account Profile",
+  "menu.main.account-profile": "TRANSLATE!!Tenant Profile",
   "menu.main.logout": "TRANSLATE!!Logout",
 
   "home.title": "TRANSLATE!!Welcome",
@@ -110,7 +110,7 @@
   "file-input.info.no-files-chosen": "TRANSLATE!!No file chosen",
 
   "account-profile.title": "Ihre Kundendaten",
-  "toast.account.profile.update.canceled": "TRANSLATE!!Changes on account profile discarded",
+  "toast.account.profile.update.canceled": "TRANSLATE!!Changes on tenant profile discarded",
 
   "label.thing": "TRANSLATE!!Thing",
   "label.note": "TRANSLATE!!Note",

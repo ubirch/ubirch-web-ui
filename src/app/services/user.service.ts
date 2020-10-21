@@ -5,6 +5,10 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 import {User} from '../models/user';
 import {AccountInfo} from '../models/account-info';
+import {ValidateFn} from "codelyzer/walkerFactory/walkerFn";
+import {Validators} from "@angular/forms";
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -76,5 +80,9 @@ export class UserService {
   public resetAccountInfo() {
     this.currentAccount = undefined;
     this.behaviorSubItem.next(this.currentAccount);
+  }
+
+  updateProfileData() {
+    // TODO
   }
 }

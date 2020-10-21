@@ -5,7 +5,7 @@
   "menu.main.things": "Things",
   "menu.main.verification": "Verification",
   "menu.main.import": "Import",
-  "menu.main.account-profile": "Account Profile",
+  "menu.main.account-profile": "Tenant Profile",
   "menu.main.logout": "Logout",
 
   "home.title": "Welcome",
@@ -109,8 +109,8 @@
 
   "file-input.info.no-files-chosen": "No file chosen",
 
-  "account-profile.title": "Profile Data of Account",
-  "toast.account.profile.update.canceled": "TRANSLATE!!Changes on account profile discarded",
+  "account-profile.title": "Tenant Profile Data",
+  "toast.account.profile.update.canceled": "TRANSLATE!!Changes on tenant profile discarded",
 
   "label.thing": "Thing",
   "label.note": "Note",

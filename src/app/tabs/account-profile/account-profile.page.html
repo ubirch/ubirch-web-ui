@@ -1,32 +1,191 @@
 <ubirch-web-ui-header
-  title="{{ 'account-profile.title' | translate }}"
-  [actionButtons]="actionButtons"
-  (buttonClicked)="handleButtonClick($event)"
+        title="{{ 'account-profile.title' | translate }}"
+        [actionButtons]="actionButtons"
+        (buttonClicked)="handleButtonClick($event)"
 ></ubirch-web-ui-header>
 
 
 <ion-content class="ion-padding-horizontal">
-  <ion-card class="ion-padding">
-    <ion-card-content>
-      <form [formGroup]="accountProfileForm">
-      </form>
-      <ion-grid>
-        <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
-          <ion-col size="6">
-            <ion-button color="success"  expand="full" *ngIf="profileHasUnsavedChanges" (click)="saveProfile()">
-              <ion-icon slot="start" name="save"></ion-icon>
-              {{ 'button.save' | translate }}
-            </ion-button>
-          </ion-col>
-        </ion-row>
-        <ion-row class="ion-align-items-center ion-justify-content-center">
-          <ion-col size="2">
-            <ion-button color="light"  expand="full" *ngIf="profileHasUnsavedChanges" (click)="discardChanges()">
-              {{ 'button.cancel' | translate }}
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+    <ion-card class="ion-padding">
+        <ion-card-content>
+            <form [formGroup]="tenantProfileForm">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="6">
+                            <div formGroupName="mainContact">
+                                <h1>Main Contact</h1>
+                                <ion-item>
+                                    <ion-label>Salutation</ion-label>
+                                    <ion-input type="text" name="mainSalut" formControlName="mainSalut"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Title</ion-label>
+                                    <ion-input type="text" name="mainTitle" formControlName="mainTitle"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Given Name</ion-label>
+                                    <ion-input type="text" name="meinGName" formControlName="mainGName"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Surname</ion-label>
+                                    <ion-input type="text" name="mainSName" formControlName="mainSName"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>E-Mail</ion-label>
+                                    <ion-input type="text" name="mainEmail" formControlName="mainEmail"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Phone</ion-label>
+                                    <ion-input type="text" name="mainPhone" formControlName="mainPhone"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Mobile</ion-label>
+                                    <ion-input type="text" name="mainMobile" formControlName="mainMobile"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Position</ion-label>
+                                    <ion-input type="text" name="mainPos" formControlName="mainPos"></ion-input>
+                                </ion-item>
+                            </div>
+                        </ion-col>
+                        <ion-col size="6">
+                            <div formGroupName="company">
+                                <h1>Company Info</h1>
+                                <ion-item>
+                                    <ion-label>Company Name</ion-label>
+                                    <ion-input type="text" name="comName" formControlName="comName"></ion-input>
+                                </ion-item>
+                                <div formGroupName="billingAdress">
+                                    <ion-item>
+                                        <ion-label>Street</ion-label>
+                                        <ion-input type="text" name="comStreet" formControlName="comStreet"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label>Number</ion-label>
+                                        <ion-input type="text" name="comNum" formControlName="comNum"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label>ZIP</ion-label>
+                                        <ion-input type="text" name="comZip" formControlName="comZip"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label>City</ion-label>
+                                        <ion-input type="text" name="comCity" formControlName="comCity"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label>Country</ion-label>
+                                        <ion-input type="text" name="comCountry"
+                                                   formControlName="comCountry"></ion-input>
+                                    </ion-item>
+                                </div>
+                                <ion-item>
+                                    <ion-label>VAT id</ion-label>
+                                    <ion-input type="text" name="comVat" formControlName="comVat"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Tax id</ion-label>
+                                    <ion-input type="text" name="comTax" formControlName="comTax"></ion-input>
+                                </ion-item>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6">
+                            <div formGroupName="technicalContact">
+                                <h1>Technical Contact (optional)</h1>
+                                <ion-item>
+                                    <ion-label>Salutation</ion-label>
+                                    <ion-input type="text" name="techSalut" formControlName="techSalut"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Title</ion-label>
+                                    <ion-input type="text" name="techTitle" formControlName="techTitle"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Given Name</ion-label>
+                                    <ion-input type="text" name="techGName" formControlName="techGName"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Surname</ion-label>
+                                    <ion-input type="text" name="techSName" formControlName="techSName"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>E-Mail</ion-label>
+                                    <ion-input type="text" name="TechEmail" formControlName="techEmail"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Phone</ion-label>
+                                    <ion-input type="text" name="techPhone" formControlName="techPhone"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Mobile</ion-label>
+                                    <ion-input type="text" name="techMobile" formControlName="techMobile"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Position</ion-label>
+                                    <ion-input type="text" name="techPos" formControlName="techPos"></ion-input>
+                                </ion-item>
+                            </div>
+                        </ion-col>
+                        <ion-col size="6">
+                            <div formGroupName="financialContact">
+                                <h1>Financial Contact (optional)</h1>
+                                <ion-item>
+                                    <ion-label>Salutation</ion-label>
+                                    <ion-input type="text" name="finSalut" formControlName="finSalut"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Title</ion-label>
+                                    <ion-input type="text" name="finTitle" formControlName="finTitle"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Given Name</ion-label>
+                                    <ion-input type="text" name="finGName" formControlName="finGName"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Surname</ion-label>
+                                    <ion-input type="text" name="finSName" formControlName="finSName"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>E-Mail</ion-label>
+                                    <ion-input type="text" name="finEmail" formControlName="finEmail"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Phone</ion-label>
+                                    <ion-input type="text" name="finPhone" formControlName="finPhone"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Mobile</ion-label>
+                                    <ion-input type="text" name="finMobile" formControlName="finMobile"></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Position</ion-label>
+                                    <ion-input type="text" name="finPos" formControlName="finPos"></ion-input>
+                                </ion-item>
+                            </div>
+                        </ion-col>
+
+                    </ion-row>
+                </ion-grid>
+            </form>
+            <ion-grid>
+                <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
+                    <ion-col size="6">
+                        <ion-button color="success" expand="full" (click)="saveProfile()"
+                                    [disabled]="!tenantProfileForm.valid">
+                            <ion-icon slot="start" name="save"></ion-icon>
+                            {{ 'button.save' | translate }}
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center ion-justify-content-center">
+                    <ion-col size="2">
+                        <ion-button color="light" expand="full" (click)="discardChanges()">
+                            {{ 'button.cancel' | translate }}
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
 </ion-content>
