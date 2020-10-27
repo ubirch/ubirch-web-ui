@@ -5,13 +5,13 @@
         <div class="result">
           <div class="vTag">
             {{ 'verification.quickinfo.label.initial-verification' | translate }}:
-          </div>
-          <div class="vTag">
             <img [ngClass]="{ 'success': verificationDisplay.iClass === 'success',
                               'notAvailable': verificationDisplay.iClass === 'notAvailable',
                                'fail': verificationDisplay.iClass === 'fail'}"
                  [alt]="verificationDisplay.iClass"
-                 src="{{verificationDisplay.iVerIconSrc}}">
+                 src="{{verificationDisplay.iVerIconSrc}}" class="vIcon">
+          </div>
+          <div class="vTag">
           </div>
         </div>
       </ion-col>
@@ -19,13 +19,13 @@
         <div class="anchors">
           <div class="vTag">
             {{ 'verification.quickinfo.label.blockchain-verification' | translate }}:
-          </div>
-          <div class="vTag">
             <img class="verification-icon" [ngClass]="{ 'success': verificationDisplay.aClass === 'success',
                               'notAvailable': verificationDisplay.aClass === 'notAvailable',
                               'fail': verificationDisplay.aClass === 'fail'}"
                  [alt]="verificationDisplay.aClass"
-                 src="{{verificationDisplay.aVerIconSrc}}">
+                 src="{{verificationDisplay.aVerIconSrc}}" class="vIcon">
+          </div>
+          <div class="aTag">
             <a *ngFor="let anchor of anchors" class="aTag" href="{{anchor.href}}">
               <img *ngIf="verificationDisplay.aClass === 'success'" alt="{{anchor.title}}" class="anchorIcon"
                    height="64px" src="{{anchor.icon}}" width="64px">
