@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, Renderer2, Inject} from '@angular/core';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 
@@ -9,11 +9,32 @@ import {ToastService} from '../../../../../services/toast.service';
 import {TranslateService} from '@ngx-translate/core';
 import {environment} from '../../../../../../environments/environment';
 import {ToastType} from '../../../../../enums/toast-type.enum';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+
 
 @Component({
     selector: 'app-device-data',
     templateUrl: './device-data.page.html',
     styleUrls: ['./device-data.page.scss'],
+    animations: [
+        trigger('smoothCollapse', [
+            state('initial', style({
+                height: '0',
+                overflow: 'hidden',
+                opacity: '0',
+                visibility: 'hidden'
+            })),
+            state('final', style({
+                overflow: 'hidden'
+            })),
+            transition('initial<=>final', animate('250ms'))
+        ]),
+        trigger('rotatedState', [
+            state('default', style({ transform: 'rotate(0)'})),
+            state('rotated', style({ transform: 'rotate(180deg)'})),
+            transition('default <=> rotated', animate('250ms'))
+        ])
+    ]
 })
 export class DeviceDataPage implements OnInit, OnDestroy {
 
@@ -186,6 +207,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             }
         }
     ];
+    showBody = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -193,7 +215,8 @@ export class DeviceDataPage implements OnInit, OnDestroy {
         private sanitizer: DomSanitizer,
         private deviceService: DeviceService,
         private toast: ToastService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private renderer2: Renderer2,
     ) {
     }
 
@@ -240,6 +263,10 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             // this.dataSets = payload;
         }
         this.toast.openToast(ToastType.danger, messageKey, 10000, undefined, params);
+    }
+
+    toggle() {
+        this.showBody = !this.showBody;
     }
 
 }
