@@ -12,6 +12,8 @@ import {UserService} from './user.service';
 import {DeviceState, TIME_RANGES} from '../models/device-state';
 import {BEDevice} from '../models/bedevice';
 import {UppHash} from '../models/upp-hash';
+import {DataSetResponse} from '../models/data-set-response';
+import {DataSet} from '../models/data-set';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,7 @@ export class DeviceService {
   devicesCreateUrl = this.url + 'devices/elephants'; // URL to web api to create devices
   searchUrl = this.devicesUrl + '/search';  // URL to web api to search devices by hwDeviceId or description (substrings)
   getLastNHashesUrl = this.url + 'devices/lastNHashes'; // URL to web api to get last n hashes anchored for given device
-  getLastNDatasetsUrl = this.url + 'devices/lastSentData/'; // URL to web api to get last n Datasets send by given device
+  getLastNDatasetsUrl = this.url + 'devices/lastSentData'; // URL to web api to get last n Datasets send by given device
 
   private currentDevice: BEDevice = null;
   private behaviorSubject = new BehaviorSubject<BEDevice>(this.currentDevice);
@@ -207,12 +209,12 @@ export class DeviceService {
       );
   }
 
-  public getLastNDatasetsOfDevice(deviceId: string, count: number = 10) {
+  public getLastNDatasetsOfDevice(deviceId: string, count: number = 10): Observable<DataSet[]> {
     const url = `${this.getLastNDatasetsUrl}/${deviceId}/${count}`;
     console.log(url);
     return this.http.get(url)
         .pipe(
-            map((datasets: object[]) => datasets.map((dataset: object) => new Object(dataset)))
+            map((datasets: DataSetResponse) => datasets.responses.map((dataset: DataSet) => new DataSet(dataset)))
         );
   }
 
