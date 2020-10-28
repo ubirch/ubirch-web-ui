@@ -51,7 +51,6 @@
             "scripts": [
               "node_modules/marked/lib/marked.js",
               "node_modules/cytoscape/dist/cytoscape.min.js",
-              "widgets/dist/verification.js"
             ]
           },
           "configurations": {

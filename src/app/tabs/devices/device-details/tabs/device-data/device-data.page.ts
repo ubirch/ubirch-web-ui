@@ -10,7 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {environment} from '../../../../../../environments/environment';
 import {ToastType} from '../../../../../enums/toast-type.enum';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import * as ubirchVerification from '../../../../../../../widgets/dist/verification';
+
+declare let UbirchFormVerification: any;
 
 @Component({
     selector: 'app-device-data',
@@ -242,7 +243,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             (_: Error) => this.handleError('error.device.details.unavailable', undefined, [])
         );
 
-        this.ubirchVerification = new ubirchVerification.UbirchFormVerification({
+        this.ubirchVerification = new UbirchFormVerification({
             algorithm: 'sha512',
             elementSelector: '#verification-widget',
             formIds: ['humidity', 'temperature', 'voltage']
