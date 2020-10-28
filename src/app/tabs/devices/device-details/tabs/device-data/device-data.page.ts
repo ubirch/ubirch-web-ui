@@ -10,7 +10,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {environment} from '../../../../../../environments/environment';
 import {ToastType} from '../../../../../enums/toast-type.enum';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-
+import * as ubirchVerification from '../../../../../../../widgets/dist/verification';
 
 @Component({
     selector: 'app-device-data',
@@ -30,8 +30,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
             transition('initial<=>final', animate('250ms'))
         ]),
         trigger('rotatedState', [
-            state('default', style({ transform: 'rotate(0)'})),
-            state('rotated', style( {transform: 'rotate(180deg)'})),
+            state('default', style({transform: 'rotate(0)'})),
+            state('rotated', style({transform: 'rotate(180deg)'})),
             transition('default <=> rotated', animate('250ms'))
         ])
     ]
@@ -208,6 +208,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
         }
     ];
     showBody = false;
+    private ubirchVerification;
 
     constructor(
         private route: ActivatedRoute,
@@ -240,6 +241,12 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             },
             (_: Error) => this.handleError('error.device.details.unavailable', undefined, [])
         );
+
+        this.ubirchVerification = new ubirchVerification.UbirchFormVerification({
+            algorithm: 'sha512',
+            elementSelector: '#verification-widget',
+            formIds: ['humidity', 'temperature', 'voltage']
+        });
     }
 
     public openVerification(item): void {
@@ -267,5 +274,16 @@ export class DeviceDataPage implements OnInit, OnDestroy {
 
     toggle() {
         this.showBody = !this.showBody;
+    }
+
+    verifyForm() {
+        try {
+            const genJson = this.ubirchVerification.getJsonFromInputs(document);
+            this.ubirchVerification.verifyJSON(genJson);
+        } catch (e) {
+            // handle the error yourself and inform user about the missing fields
+            console.log(e);
+            // end of error handling for missing fields
+        }
     }
 }
