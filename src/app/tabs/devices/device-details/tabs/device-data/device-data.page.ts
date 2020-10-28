@@ -80,12 +80,6 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             },
             (_: Error) => this.handleError('error.device.details.unavailable', undefined, [])
         );
-
-        this.ubirchVerification = new UbirchFormVerification({
-            algorithm: 'sha512',
-            elementSelector: '#verification-widget',
-            formIds: ['humidity', 'temperature', 'voltage']
-        });
     }
 
     public openVerification(item): void {
@@ -102,6 +96,18 @@ export class DeviceDataPage implements OnInit, OnDestroy {
         if (this.deviceSubsc) {
             this.deviceSubsc.unsubscribe();
         }
+    }
+
+    public toggled(visibleP: boolean): void {
+      if (visibleP) {
+        this.ubirchVerification = new UbirchFormVerification({
+          algorithm: 'sha512',
+          elementSelector: '#verification-widget',
+          formIds: ['humidity', 'temperature', 'voltage']
+        });
+      } else {
+        this.ubirchVerification = undefined;
+      }
     }
 
     private async handleError(messageKey: string, params?: any, payload?: any) {

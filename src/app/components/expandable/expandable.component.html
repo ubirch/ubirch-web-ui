@@ -5,7 +5,7 @@
         <ion-card-header>{{title}}</ion-card-header>
       </ion-label>
       <div class="item-note" slot="end">
-        <ion-icon (click)="toggle()" [src]="expanded != true ? iconPath + 'arrow-down.svg' : iconPath + 'arrow-up.svg'"
+        <ion-icon (click)="toggle()" src="{{iconPath + (expanded != true ? 'arrow-down.svg' : 'arrow-up.svg')}}"
                   class="list-item-end-button" id="arrow"></ion-icon>
       </div>
     </ion-item>

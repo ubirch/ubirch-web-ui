@@ -15,9 +15,8 @@
                         slot="start">{{ 'device.details.tab.recent-hashes.no-datasets-found' | translate }}</ion-label>
             </ion-item>
 
-            <ion-item><div id="verification-widget"></div></ion-item>
-
             <app-expandable *ngFor="let dataSet of dataSets"
+                            (toggled)="toggled($event)"
                             [title]="dataSet.timestamp | date: 'long':undefined:CURRENT_LANG">
                 <ion-item>
                     <ion-card style="width: 100%">
@@ -34,6 +33,7 @@
 
                                 <ion-col size="6">
                                     <ion-button class="ion-padding-horizontal" type="submit" style="width: 25px" color="primary">verify</ion-button>
+                                    <div id="verification-widget"></div>
                                 </ion-col>
                             </ion-row>
                         </form>

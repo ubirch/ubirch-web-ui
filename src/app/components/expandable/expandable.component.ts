@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import {TrustService} from '../../services/trust.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-expandable',
@@ -20,8 +19,8 @@ import {TrustService} from '../../services/trust.service';
       transition('initial<=>final', animate('250ms'))
     ]),
     trigger('rotatedState', [
-      state('default', style({ transform: 'rotate(0)'})),
-      state('rotated', style({ transform: 'rotate(180deg)'})),
+      state('default', style({transform: 'rotate(0)'})),
+      state('rotated', style({transform: 'rotate(180deg)'})),
       transition('default <=> rotated', animate('250ms'))
     ])
   ]
@@ -29,12 +28,16 @@ import {TrustService} from '../../services/trust.service';
 export class ExpandableComponent implements OnInit {
 
   @Input() title: string;
+  @Output() toggled = new EventEmitter<boolean>();
+
   showBody = false;
   arrowUrl = '';
-  iconPath = TrustService.BlockchainIconsPath;
+  iconPath = 'assets/app-icons/';
   expanded = false;
 
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
@@ -42,6 +45,6 @@ export class ExpandableComponent implements OnInit {
   toggle() {
     this.showBody = !this.showBody;
     this.expanded = !this.expanded;
+    this.toggled.emit(this.showBody);
   }
-
 }
