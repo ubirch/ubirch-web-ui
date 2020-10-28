@@ -18,25 +18,25 @@
             <app-expandable *ngFor="let dataSet of dataSets"
                             [title]="dataSet.timestamp | date: 'long':undefined:CURRENT_LANG">
                 <ion-item>
-                    <ion-label class="ion-padding-horizontal" lines="full">
-                        <form onsubmit="verifyForm(); return false;">
+                    <ion-card style="width: 100%">
+                        <form>
                             <ion-row>
                                 <ion-col size="6">
-                                    <div *ngFor="let item of dataSet.value | keyvalue">
+                                    <div *ngFor="let dataValue of dataSet.value | keyvalue">
                                         <ion-item>
-                                            <ion-label style="font-weight: bold">{{item.key}}</ion-label>
-                                            <ion-input value="{{item.value}}" style="text-align: end"></ion-input>
+                                            <ion-label style="font-weight: bold">{{dataValue.key}}</ion-label>
+                                            <ion-input readonly="true" value="{{dataValue.value}}" style="text-align: end"></ion-input>
                                         </ion-item>
                                     </div>
                                 </ion-col>
 
                                 <ion-col size="6">
-                                    <ion-button color="primary" type="submit">verify</ion-button>
+                                    <ion-button class="ion-padding-horizontal" style="width: 25px" color="primary">verify</ion-button>
                                     <div id="verification-widget"></div>
                                 </ion-col>
                             </ion-row>
                         </form>
-                    </ion-label>
+                    </ion-card>
                 </ion-item>
             </app-expandable>
 

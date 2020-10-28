@@ -31,7 +31,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
         ]),
         trigger('rotatedState', [
             state('default', style({ transform: 'rotate(0)'})),
-            state('rotated', style({ transform: 'rotate(180deg)'})),
+            state('rotated', style( {transform: 'rotate(180deg)'})),
             transition('default <=> rotated', animate('250ms'))
         ])
     ]
@@ -268,5 +268,4 @@ export class DeviceDataPage implements OnInit, OnDestroy {
     toggle() {
         this.showBody = !this.showBody;
     }
-
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import {TrustService} from "../../services/trust.service";
+import {TrustService} from '../../services/trust.service';
 
 @Component({
   selector: 'app-expandable',
@@ -28,7 +28,7 @@ import {TrustService} from "../../services/trust.service";
 })
 export class ExpandableComponent implements OnInit {
 
-  @Input() title: object;
+  @Input() title: string;
   showBody = false;
   arrowUrl = '';
   iconPath = TrustService.BlockchainIconsPath;
