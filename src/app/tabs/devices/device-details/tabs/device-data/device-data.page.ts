@@ -46,7 +46,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
     private dataSets;
 
     showBody = false;
-    private ubirchVerification;
+    private ubirchVerification: any[] = new Array(environment.lashHashesListLength);
 
     constructor(
         private route: ActivatedRoute,
@@ -98,15 +98,13 @@ export class DeviceDataPage implements OnInit, OnDestroy {
         }
     }
 
-    public toggled(visibleP: boolean): void {
-      if (visibleP) {
-        this.ubirchVerification = new UbirchFormVerification({
+    public toggled(visibleP: boolean, indexP: number): void {
+      if (visibleP && !this.ubirchVerification[indexP]) {
+        this.ubirchVerification[indexP] = new UbirchFormVerification({
           algorithm: 'sha512',
-          elementSelector: '#verification-widget',
-          formIds: ['humidity', 'temperature', 'voltage']
+          elementSelector: '#verification-widget_' + indexP,
+          formIds: ['humidity_' + indexP, 'temperature_' + indexP, 'voltage_' + indexP]
         });
-      } else {
-        this.ubirchVerification = undefined;
       }
     }
 
@@ -121,10 +119,10 @@ export class DeviceDataPage implements OnInit, OnDestroy {
         this.showBody = !this.showBody;
     }
 
-    public verifyForm(): void {
+    public verifyForm(indexP: number): void {
         try {
-            const genJson = this.ubirchVerification.getJsonFromInputs(document);
-            this.ubirchVerification.verifyJSON(genJson);
+            const genJson = this.ubirchVerification[indexP].getJsonFromInputs(document);
+            this.ubirchVerification[indexP].verifyJSON(genJson);
         } catch (e) {
             // handle the error yourself and inform user about the missing fields
             console.log(e);

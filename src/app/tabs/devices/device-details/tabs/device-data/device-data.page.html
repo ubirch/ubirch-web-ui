@@ -15,25 +15,25 @@
                         slot="start">{{ 'device.details.tab.recent-hashes.no-datasets-found' | translate }}</ion-label>
             </ion-item>
 
-            <app-expandable *ngFor="let dataSet of dataSets"
-                            (toggled)="toggled($event)"
+            <app-expandable *ngFor="let dataSet of dataSets; index as indexDS;"
+                            (toggled)="toggled($event, indexDS)"
                             [title]="dataSet.timestamp | date: 'long':undefined:CURRENT_LANG">
                 <ion-item>
                     <ion-card style="width: 100%">
-                        <form (ngSubmit)="verifyForm()">
+                        <form (ngSubmit)="verifyForm(indexDS)">
                             <ion-row>
                                 <ion-col size="6">
                                     <div *ngFor="let dataValue of dataSet.value | keyvalue">
                                         <ion-item>
                                             <ion-label style="font-weight: bold">{{dataValue.key}}</ion-label>
-                                            <ion-input id="{{dataValue.key}}" readonly="true" value="{{dataValue.value}}" slot="end"></ion-input>
+                                            <ion-input id="{{dataValue.key}}_{{indexDS}}" readonly="true" value="{{dataValue.value}}" slot="end"></ion-input>
                                         </ion-item>
                                     </div>
                                 </ion-col>
 
                                 <ion-col size="6">
                                     <ion-button class="ion-padding-horizontal" type="submit" style="width: 25px" color="primary">verify</ion-button>
-                                    <div id="verification-widget"></div>
+                                    <div id="verification-widget_{{indexDS}}"></div>
                                 </ion-col>
                             </ion-row>
                         </form>
