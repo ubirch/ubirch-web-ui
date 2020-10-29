@@ -273,14 +273,29 @@ class UbirchVerification {
     });
   }
 
-  private formatJSON(json: string, sort: boolean = true): string {
+  public formatJSON(json: string, sort: boolean = true): string {
     const object: object = JSON.parse(json);
-    const objectSorted: { [key: string]: any } = {};
+    const trimmedObject: object = this.sortObjectRecursive(object, sort);
 
-    const keysOrdered = sort ? Object.keys(object).sort() : Object.keys(object);
-    keysOrdered.forEach(key => objectSorted[key] = object[key]);
+    return JSON.stringify(trimmedObject);
+  }
 
-    return JSON.stringify(objectSorted);
+  private sortObjectRecursive(object: any, sort: boolean): object {
+    // recursive termination condition
+    if (typeof(object) !== 'object' ) {
+      return object;
+    } else {
+      const objectSorted: { [key: string]: any } = {};
+      const keysOrdered: { [key: string]: any } = sort ? Object.keys(object).sort() : Object.keys(object);
+
+      keysOrdered.forEach((key: string) => {
+          const subObject: object = this.sortObjectRecursive(object[key], sort);
+          objectSorted[key] = subObject;
+        }
+      );
+
+      return objectSorted;
+    }
   }
 }
 
