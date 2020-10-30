@@ -42,6 +42,13 @@
         <label for="json-input">JSON:</label>
         <textarea rows="10" cols="80" placeholder="" type="text" id="json-input"></textarea>
       </div>
+      <button id="trim-sort-json">
+        trim and sort JSON
+      </button>
+      <div class="input-field">
+        <label for="trimmed-json-input">Trimmed JSON:</label>
+        <textarea rows="10" cols="80" placeholder="" type="text" id="trimmed-json-input"></textarea>
+      </div>
       <button id="insert-test-json">
         Insert Test JSON
       </button>
@@ -153,19 +160,26 @@
             const hash = '06VMh9w0zBrfPMUmDpx2HSHYCi1EKYMRa3i5MdmaakOa9MQfgJiWMOvL2pwxWuHf4g685Nq9ymVag51craQ4fQ==';
 
           // insert JSON test data button click listener
+          document.getElementById('trim-sort-json').addEventListener('click', function() {
+            const jsonStr = document.getElementById('json-input').value;
+            const trimmedSortedJson = ubirchVerification.formatJSON(jsonStr, true);
+            document.getElementById('trimmed-json-input').value = trimmedSortedJson;
+          });
+
+          // insert JSON test data button click listener
           document.getElementById('insert-test-json').addEventListener('click', function() {
-            document.getElementById('json-input').value = json;
+            document.getElementById('trimmed-json-input').value = json;
           });
 
           // get hash from JSON button click listener
           document.getElementById('hash-from-json').addEventListener('click', function() {
-            const genHash = ubirchVerification.createHash(document.getElementById('json-input').value);
+            const genHash = ubirchVerification.createHash(document.getElementById('trimmed-json-input').value);
             document.getElementById('hash-input').value = genHash;
           });
 
           // test JSON button click listener
           document.getElementById('json-test').addEventListener('click', function() {
-            ubirchVerification.verifyJSON(document.getElementById('json-input').value);
+            ubirchVerification.verifyJSON(document.getElementById('trimmed-json-input').value);
           });
 
           // insert hash test data button click listener
