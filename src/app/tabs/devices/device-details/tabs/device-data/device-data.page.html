@@ -20,7 +20,7 @@
                             [title]="dataSet.timestamp | date: 'long':undefined:CURRENT_LANG">
                 <ion-item>
                     <ion-card style="width: 100%">
-                        <form (ngSubmit)="verifyForm(indexDS)">
+                        <form (ngSubmit)="verifyForm(indexDS, dataSet)">
                             <ion-row>
                                 <ion-col size="6">
                                     <div *ngFor="let dataValue of dataSet.value | keyvalue">

@@ -11,8 +11,9 @@ import {environment} from '../../../../../../environments/environment';
 import {ToastType} from '../../../../../enums/toast-type.enum';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {DataSet} from '../../../../../models/data-set';
+import {sha1} from '@angular/compiler/src/i18n/digest';
 
-declare let UbirchFormVerification: any;
+declare let UbirchVerification: any;
 
 @Component({
     selector: 'app-device-data',
@@ -100,10 +101,10 @@ export class DeviceDataPage implements OnInit, OnDestroy {
 
     public toggled(visibleP: boolean, indexP: number): void {
       if (visibleP && !this.ubirchVerification[indexP]) {
-        this.ubirchVerification[indexP] = new UbirchFormVerification({
-          algorithm: 'sha512',
-          elementSelector: '#verification-widget_' + indexP,
-          formIds: ['humidity_' + indexP, 'temperature_' + indexP, 'voltage_' + indexP]
+        this.ubirchVerification[indexP] = new UbirchVerification({
+            algorithm: 'sha256',
+            elementSelector: '#verification-widget_' + indexP,
+            language: 'en',
         });
       }
     }
@@ -119,10 +120,14 @@ export class DeviceDataPage implements OnInit, OnDestroy {
         this.showBody = !this.showBody;
     }
 
-    public verifyForm(indexP: number): void {
+    public verifyForm(indexP: number, dataSet): void {
         try {
-            const genJson = this.ubirchVerification[indexP].getJsonFromInputs(document);
-            this.ubirchVerification[indexP].verifyJSON(genJson);
+            console.log(dataSet);
+            const genJson = JSON.stringify(dataSet);
+            console.log('genJson:' + genJson);
+            const sortJson = this.ubirchVerification[indexP].formatJSON(genJson, true);
+            console.log('sorted Json:' + sortJson);
+            this.ubirchVerification[indexP].verifyJSON(sortJson);
         } catch (e) {
             // handle the error yourself and inform user about the missing fields
             console.log(e);
