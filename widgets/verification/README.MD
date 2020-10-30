@@ -120,7 +120,13 @@ You can verify the hashed JSON directly by
 
 Attention: use the hashing algorithm defined in the UbirchVerification constructor's <code>algorithm</code> field
 
-### Generate hash from JSON
+### Helper: Sort and trim JSON
+
+Helper function to sort (recursively) and trim JSON (for debugging or testing).
+
+Used to check which string is generated from given JSON data for hashing.
+
+### Helper: Generate hash from JSON
 
 Helper function to generate hash from JSON (for debugging or testing).
 
