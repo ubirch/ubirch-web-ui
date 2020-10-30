@@ -41,7 +41,8 @@
 
   "device.details.header.created-date": "TRANSLATE!!Created",
 
-  "device.details.tabs.header.data": "TRANSLATE!!Data",
+  "device.details.tabs.header.data": "TRANSLATE!!RecentData",
+  "device.details.tabs.header.data-graph": "TRANSLATE!!RecentDataGraph",
   "device.details.tabs.header.things-settings": "TRANSLATE!!ThingsSettings",
   "device.details.tabs.header.things-state": "TRANSLATE!!ThingsState",
   "device.details.tabs.header.recent-hashes": "TRANSLATE!!RecentHashes",
@@ -50,7 +51,9 @@
   "device.details.tab.data.ubirch-info": "TRANSLATE!!The UBIRCH solution normally does not handle any productive data like measurements but only works on hashes of data. The feature of displaying plain data in the UBIRCH console is only available for demo purposes within this UBIRCH TestKit.",
 
   "device.details.tab.recent-hashes.label.last-anchored-hashes": "TRANSLATE!!Last anchored hashes",
-  "device.details.tab.recent-hashes.no-hashes-found": "TRANSLATE!!No hash found for device",
+  "device.details.tab.recent-hashes.label.last-anchored-datasets": "TRANSLATE!Last anchored datasets",
+  "device.details.tab.recent-hashes.no-hashes-found": "TRANSLATE!No hash found for device",
+  "device.details.tab.recent-hashes.no-datasets-found": "TRANSLATE!No datasets found for device",
 
   "device.details.tab.pubkeys.label.pubkey": "TRANSLATE!!PubKey",
   "device.details.tab.pubkeys.label.pubkeyid": "TRANSLATE!!PubKeyId",
@@ -158,6 +161,7 @@
   "error.device.details.called-without-id": "TRANSLATE!!things details url called without ID",
   "error.device.details.called.failed": "TRANSLATE!!Unable to access things details with id {{deviceid}}",
   "error.device.details.recent-hashes.load.failed": "TRANSLATE!!Cannot load recent hashes of device",
+  "error.device.details.recent-data.load.failed": "TRANSLATE!!Cannot load recent datasets of device",
   "error.device.details.unavailable": "TRANSLATE!!Things details not loaded properly",
 
   "error.be.Bad hwDeviceId": "TRANSLATE!!provided hwDeviceId '{{deviceid}}' is not a valid UUID"

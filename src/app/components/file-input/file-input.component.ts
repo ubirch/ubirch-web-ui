@@ -6,7 +6,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   templateUrl: './file-input.component.html',
   styleUrls: ['./file-input.component.scss'],
   providers: [
-    { 
+    {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => FileInputComponent),
       multi: true
@@ -14,12 +14,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class FileInputComponent implements ControlValueAccessor {
-  @Input() public readonly multiple: boolean = false;
-  @Input() public readonly disabled: boolean = false;
-  @ViewChild('fileInput', { static: true }) public fileInput: ElementRef;
-  private _value: File[] = [];
-  propagateChange = (_: any) => {};
-  onTouch: () => void;
 
   get value() {
     return this._value;
@@ -31,6 +25,13 @@ export class FileInputComponent implements ControlValueAccessor {
   }
 
   constructor() { }
+  @Input() public readonly multiple: boolean = false;
+  @Input() public readonly disabled: boolean = false;
+  @ViewChild('fileInput', { static: true }) public fileInput: ElementRef;
+  // tslint:disable-next-line:variable-name
+  private _value: File[] = [];
+  onTouch: () => void;
+  propagateChange = (_: any) => {};
 
   writeValue(value: File | File[]) {
     this.value = value ? (this.multiple ? value as File[] : [value as File]) : [];
@@ -55,7 +56,6 @@ export class FileInputComponent implements ControlValueAccessor {
     if (this.disabled) {
       return;
     }
- 
     (this.fileInput.nativeElement as HTMLElement).click();
   }
 }

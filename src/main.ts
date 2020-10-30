@@ -7,6 +7,7 @@ import { environment } from './environments/environment';
 if (environment.production) {
   enableProdMode();
 }
+const stage: string = environment.envName;
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));

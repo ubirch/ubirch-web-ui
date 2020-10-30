@@ -12,6 +12,7 @@ import {VerificationQuickInfoComponent} from './verification-quick-info/verifica
 import {VerificationGraphComponent} from './verification-graph/verification-graph.component';
 import {CytoscapeGraphModule} from '../cytoscape-graph/cytoscape-graph.module';
 import {TagListInputComponent} from './tag-list-input/tag-list-input.component';
+import {ExpandableComponent} from './expandable/expandable.component';
 
 
 @NgModule({
@@ -23,7 +24,9 @@ import {TagListInputComponent} from './tag-list-input/tag-list-input.component';
     VerificationErrorHandlingComponent,
     VerificationQuickInfoComponent,
     VerificationGraphComponent,
-    TagListInputComponent
+    TagListInputComponent,
+    ExpandableComponent,
+    ExpandableComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +44,9 @@ import {TagListInputComponent} from './tag-list-input/tag-list-input.component';
     VerificationErrorHandlingComponent,
     VerificationQuickInfoComponent,
     VerificationGraphComponent,
-    TagListInputComponent
+    TagListInputComponent,
+    ExpandableComponent,
+    ExpandableComponent
   ]
 })
 export class ComponentsModule {

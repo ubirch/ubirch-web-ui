@@ -1,0 +1,20 @@
+<div class="acc-header">
+  <div class="headerTitle">
+    <ion-item>
+      <ion-label lines="full" (click)="toggle()">
+        <ion-card-header>{{title}}</ion-card-header>
+      </ion-label>
+      <div class="item-note" slot="end">
+        <ion-icon (click)="toggle()" src="{{iconPath + (expanded != true ? 'arrow-down.svg' : 'arrow-up.svg')}}"
+                  class="list-item-end-button" id="arrow"></ion-icon>
+      </div>
+    </ion-item>
+  </div>
+
+  <div [@rotatedState]="!showBody? 'default': 'rotated'" class="arrow"><i class="ion-ios-arrow-down"></i></div>
+</div>
+<div [@smoothCollapse]="!showBody? 'initial': 'final'">
+  <div class="acc-body">
+    <ng-content></ng-content>
+  </div>
+</div>

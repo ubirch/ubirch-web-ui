@@ -75,18 +75,4 @@ describe('DeviceDataPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('iframeUrl$ should be correct', () => {
-    const panelId = environment.deviceData.panelMap[CLAIMIN_TAG];
-
-    const urlToCheck = environment.deviceData.url +
-      `?orgId=${environment.deviceData.orgId}` +
-      `&from=${environment.deviceData.from}` +
-      `&to=${environment.deviceData.to}` +
-      `&panelId=${panelId}` +
-      `&var-uuid=${DEVICE_ID}`;
-
-    component.iframeUrl$.subscribe(url => {
-      expect(url).toEqual(urlToCheck);
-    });
-  });
 });
