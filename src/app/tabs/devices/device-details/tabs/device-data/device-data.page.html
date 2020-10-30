@@ -17,13 +17,13 @@
 
             <app-expandable *ngFor="let dataSet of dataSets; index as indexDS;"
                             (toggled)="toggled($event, indexDS)"
-                            [title]="dataSet.timestamp | date: 'long':undefined:CURRENT_LANG">
+                            [title]="dataSet.timestamp * 1000| date: 'long':undefined:CURRENT_LANG">
                 <ion-item>
                     <ion-card style="width: 100%">
                         <form (ngSubmit)="verifyForm(indexDS, dataSet)">
                             <ion-row>
                                 <ion-col size="6">
-                                    <div *ngFor="let dataValue of dataSet.value | keyvalue">
+                                    <div *ngFor="let dataValue of dataSet.data | keyvalue">
                                         <ion-item>
                                             <ion-label style="font-weight: bold">{{dataValue.key}}</ion-label>
                                             <ion-input id="{{dataValue.key}}_{{indexDS}}" readonly="true" value="{{dataValue.value}}" slot="end"></ion-input>
@@ -32,8 +32,11 @@
                                 </ion-col>
 
                                 <ion-col size="6">
-                                    <ion-button class="ion-padding-horizontal" type="submit" style="width: 25px" color="primary">verify</ion-button>
-                                    <div id="verification-widget_{{indexDS}}"></div>
+                                        <ion-card class="ion-padding">
+                                            <h1>Verify this Dataset</h1><br>
+                                            <ion-button type="submit"  color="primary" class="verifiyButton">verify</ion-button>
+                                            <div id="verification-widget_{{indexDS}}"></div>
+                                        </ion-card >
                                 </ion-col>
                             </ion-row>
                         </form>

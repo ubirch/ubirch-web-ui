@@ -104,7 +104,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
         this.ubirchVerification[indexP] = new UbirchVerification({
             algorithm: 'sha256',
             elementSelector: '#verification-widget_' + indexP,
-            language: 'en',
+            language: this.CURRENT_LANG,
         });
       }
     }
