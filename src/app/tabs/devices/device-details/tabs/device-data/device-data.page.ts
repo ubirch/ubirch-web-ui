@@ -122,11 +122,8 @@ export class DeviceDataPage implements OnInit, OnDestroy {
 
     public verifyForm(indexP: number, dataSet): void {
         try {
-            console.log(dataSet);
             const genJson = JSON.stringify(dataSet);
-            console.log('genJson:' + genJson);
             const sortJson = this.ubirchVerification[indexP].formatJSON(genJson, true);
-            console.log('sorted Json:' + sortJson);
             this.ubirchVerification[indexP].verifyJSON(sortJson);
         } catch (e) {
             // handle the error yourself and inform user about the missing fields
