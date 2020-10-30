@@ -37,7 +37,9 @@ export interface IUbirchFormVerificationConfig extends IUbirchVerificationConfig
 }
 
 export interface IUbirchVerificationResponse {
-    anchors: IUbirchVerificationAnchor[];
+    anchors: {
+      upper_blockchains: IUbirchVerificationAnchor[]
+    };
     prev: any; // @todo define type
     upp: string;
 }
@@ -74,7 +76,7 @@ export interface IUbirchFormError {
   missingIds: string[];
 }
 
-export interface IUbirchAnchorObject{
+export interface IUbirchAnchorObject {
   href: any;
   target: string;
   title: string;

@@ -17,6 +17,7 @@ import '../../src/assets/app-icons/Ethereum_verify_right.png';
 import '../../src/assets/app-icons/Ethereum-Classic_verify_right.png';
 import '../../src/assets/app-icons/IOTA_verify_right.png';
 import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
+import '../../src/assets/app-icons/bloxberg_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_wrong.png';
 import * as BlockchainSettings from '../../resources/blockchain-settings.json';
@@ -254,7 +255,7 @@ class UbirchVerification {
 
     this.handleInfo(EInfo.VERIFICATION_SUCCESSFUL, hash);
 
-    const blockchainTX = resultObj.anchors;
+    const blockchainTX = resultObj.anchors.upper_blockchains;
 
     if (!blockchainTX || !blockchainTX.length) {
       return;

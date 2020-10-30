@@ -505,6 +505,13 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     width: auto;
 }
 
+#kc-form .form-group .btn:hover {
+    background-color: magenta;
+    border: 1px solid magenta;
+    color: white;
+    background-image: url('http://ubirch.de/fileadmin/Icons/Doppelpfeile_Weiss.svg');
+}
+
 div#kc-info {
     margin: 2rem 0 4rem;
 }
@@ -522,12 +529,7 @@ form {
     margin-right: 0;
 }
 
-#kc-form .form-group .btn:hover {
-    background-color: magenta;
-    color: white;
-    border: none;
-    background-image: url('http://ubirch.de/fileadmin/Icons/Doppelpfeile_Black.svg');
-}
+
 
 #kc-form .form-group .dropbtn {
     background-color: transparent;
