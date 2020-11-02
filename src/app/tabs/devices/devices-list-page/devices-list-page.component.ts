@@ -211,7 +211,7 @@ export class DevicesListPage {
 
     this.stopPolling();
 
-    this.polling = interval(15000)
+    this.polling = interval(environment.POLLING_INTERVAL_MILLISECONDS)
       .pipe(
         startWith(0),
         switchMap(() => {
