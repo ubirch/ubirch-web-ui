@@ -12,20 +12,22 @@
       <ion-item *ngIf="uppHashes && uppHashes.length === 0">
         <ion-label slot="start" >{{ 'device.details.tab.recent-hashes.no-hashes-found' | translate }}</ion-label>
       </ion-item>
-      <ion-item *ngFor="let uppHash of uppHashes">
-        <ion-label lines="full">
-          <ion-text class="ion-text-wrap">{{uppHash.hash}}</ion-text>
-          <p>{{uppHash.timestamp | date: 'long':undefined:CURRENT_LANG}}</p>
-        </ion-label>
-        <div class="item-note" slot="end">
-          <ion-button (click)="openVerification(uppHash)" color="secondary" class="list-item-end-button">
-            <div class="ion-align-items-center">
-              <ion-icon src="assets/app-icons/checkmark-circle-outline.svg" class="list-item-end-icon"></ion-icon>
-              {{ 'button.verify' | translate }}
-            </div>
-          </ion-button>
-        </div>
-      </ion-item>
+      <ng-container *ngFor="let uppHash of uppHashes">
+        <ion-item *ngIf="uppHash.hash">
+          <ion-label lines="full">
+            <ion-text class="ion-text-wrap">{{uppHash.hash}}</ion-text>
+            <p>{{uppHash.timestamp | date: 'long':undefined:CURRENT_LANG}}</p>
+          </ion-label>
+          <div class="item-note" slot="end">
+            <ion-button (click)="openVerification(uppHash)" color="secondary" class="list-item-end-button">
+              <div class="ion-align-items-center">
+                <ion-icon src="assets/app-icons/checkmark-circle-outline.svg" class="list-item-end-icon"></ion-icon>
+                {{ 'button.verify' | translate }}
+              </div>
+            </ion-button>
+          </div>
+        </ion-item>
+      </ng-container>
 
     </ion-card-content>
   </ion-card>
