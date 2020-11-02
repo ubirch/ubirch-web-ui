@@ -48,6 +48,7 @@ export class DevicesListPage {
   private devideStateSubscr: Subscription;
   private deleteDeviceSubscr: Subscription;
   private createDeviceSubscr: Subscription;
+  private pageLoaded = false;
 
   constructor(
     private deviceService: DeviceService,
@@ -85,6 +86,7 @@ export class DevicesListPage {
         tap(() => this.restartPolling())
       )
       .subscribe();
+    this.pageLoaded = true;
 
   }
 
@@ -209,7 +211,7 @@ export class DevicesListPage {
 
     this.stopPolling();
 
-    this.polling = interval(environment.POLLING_INTERVAL_MILLISECONDS)
+    this.polling = interval(15000)
       .pipe(
         startWith(0),
         switchMap(() => {
@@ -219,7 +221,9 @@ export class DevicesListPage {
               this.searchStr
             );
           } else {
-            this.loading.show();
+            if (!this.pageLoaded) {
+              this.loading.show();
+            }
             return this.deviceService.reloadDeviceStubs(
               this.paginator ? this.paginator.pageIndex : 0,
               this.pageSize

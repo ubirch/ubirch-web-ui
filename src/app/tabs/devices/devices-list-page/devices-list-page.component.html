@@ -23,7 +23,7 @@
   <ng-container *ngIf="deviceStubs && deviceStubs.length > 0; else NO_LIST">
     <ion-list>
       <ion-item *ngFor="let item of deviceStubs" color="light" class="device-list-item ion-margin-bottom" lines="none">
-        <ion-label [routerLink]="['/devices','details', item.hwDeviceId]" class="devices-list-item-content">
+        <ion-label [routerLink]="['/devices','details', item.hwDeviceId]" (click)="pageLoaded = false" class="devices-list-item-content">
           <h2>{{item.description}}</h2>
           <h3>{{item.hwDeviceId}}</h3>
           <p *ngIf="item.deviceState; else STATE_NOT_AVAILABLE">
