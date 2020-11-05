@@ -9,8 +9,8 @@ export class TimestampNode extends AnchorPathNode {
     super(jsonNode);
     if (jsonNode && jsonNode.properties) {
       const language = translation ? translation.currentLang : 'en-US';
-      this.label = formatDate(jsonNode.properties.timestamp, 'shortDate', language) + '\n'
-        + formatDate(jsonNode.properties.timestamp, 'shortTime', language) + '\n'
+      this.label = formatDate(jsonNode.properties.timestamp, 'yyyy-MM-dd', language) + '\n'
+        + formatDate(jsonNode.properties.timestamp, 'hh:mm:ss', language) + '\n'
         + formatDate(jsonNode.properties.timestamp, 'z', language);
       this.refHash = jsonNode.properties.hash;
       this.hash = 'timestamp_' + jsonNode.properties.hash;
