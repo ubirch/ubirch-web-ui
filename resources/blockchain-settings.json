@@ -51,6 +51,9 @@
       "explorerUrl": {
         "testnet": {
           "url": "https://blockexplorer.bloxberg.org/tx/"
+        },
+        "mainnet": {
+          "url": "https://blockexplorer.bloxberg.org/tx/"
         }
       }
     },
