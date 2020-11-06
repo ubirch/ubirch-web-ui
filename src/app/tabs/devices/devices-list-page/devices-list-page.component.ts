@@ -129,6 +129,10 @@ export class DevicesListPage {
     this.thingsListLoaded = false;
   }
 
+  /**
+   * Load states of all things of list
+   * @param listWrapper List of loaded things
+   */
   async loadDeviceStates(listWrapper: DevicesListWrapper) {
 
     if (listWrapper && listWrapper.devices && listWrapper.devices.length > 0) {
@@ -247,20 +251,17 @@ export class DevicesListPage {
       .pipe(
         startWith(0),
         switchMap(() => {
+          if (!this.thingsListLoaded) {
+            this.loading.show();
+          }
             // if search is active -> load filtered things
           if (this.searchActive()) {
-            if (!this.thingsListLoaded) {
-              this.loading.show();
-            }
             // TODO: paginate search result
             return this.deviceService.searchDevices(
               this.searchStr
             );
             // no search given -> load full list
           } else {
-            if (!this.thingsListLoaded) {
-              this.loading.show();
-            }
             return this.deviceService.reloadDeviceStubs(
               this.paginator ? this.paginator.pageIndex : 0,
               this.pageSize
