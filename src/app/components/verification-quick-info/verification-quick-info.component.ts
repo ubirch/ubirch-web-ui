@@ -1,9 +1,10 @@
-import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IUbirchBlockchain} from 'src/app/models/iubirch-blockchain';
 import {IUbirchBlockchainNet} from 'src/app/models/iubirch-blockchain-net';
 import {IUbirchAnchorObject} from 'widgets/verification/models';
 import {TrustService} from '../../services/trust.service';
 import {Upp} from '../../models/upp';
+import {LoggingService} from '../../services/logging.service';
 
 @Component({
   selector: 'ubirch-verification-quick-info',
@@ -24,7 +25,9 @@ export class VerificationQuickInfoComponent implements OnInit {
   };
   iconPath = TrustService.BlockchainIconsPath;
 
-  constructor(private trustService: TrustService) {
+  constructor(
+    private logger: LoggingService
+    ) {
   }
 
   @Input()
@@ -57,7 +60,7 @@ export class VerificationQuickInfoComponent implements OnInit {
 
     bloxTX.forEach((item) => {
 
-      if (!item || !item) {
+      if (!item) {
         return;
       } else {
         const blockchain: string = item.blockchain;
@@ -72,15 +75,18 @@ export class VerificationQuickInfoComponent implements OnInit {
 
         const blox: IUbirchBlockchain = TrustService.BlockchainSettings[blockchain];
 
-
         if (!blox) {
+          this.logger.log(`Missing blockchain settings for ${blockchain}`);
           return;
         }
 
         const bloxTXData: IUbirchBlockchainNet = blox.explorerUrl[networkType];
         const anchor: IUbirchAnchorObject = {href: undefined, icon: '', target: '', title: ''};
 
-        if (bloxTXData.url) {
+        if (!bloxTXData) {
+          this.logger.log(`Missing blockchain explorerUrl for ${blockchain} on ${networkType}`);
+          return;
+        } else if (bloxTXData.url) {
           anchor.href = bloxTXData.url.toString() + item.txid;
         }
 
