@@ -1,4 +1,4 @@
-import {Component, OnDestroy, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {DeviceStub} from '../../../models/device-stub';
 import {DeviceService} from '../../../services/device.service';
 import {interval, Subscription} from 'rxjs';
@@ -48,7 +48,7 @@ export class DevicesListPage {
   private devideStateSubscr: Subscription;
   private deleteDeviceSubscr: Subscription;
   private createDeviceSubscr: Subscription;
-  private pageLoaded = false;
+  private thingsListLoaded = false;
 
   constructor(
     private deviceService: DeviceService,
@@ -86,18 +86,47 @@ export class DevicesListPage {
         tap(() => this.restartPolling())
       )
       .subscribe();
-    this.pageLoaded = true;
+    this.thingsListLoaded = true;
 
   }
 
+  /**
+   * search entry has changed
+   * @param event: contains the search string; if empty search has to be deactivated and full list has to be loaded
+   */
   search(event: any) {
     const searchStr = event.target.value;
     if (searchStr && searchStr.trim() !== '') {
+      // erase list only if new search string is not just an extention of the last one
+      if (!this.checkSearchIsJustRefinement(searchStr)) {
+        this.resetList();
+      }
       this.searchStr = searchStr;
     } else {
+      // search inactive
+      this.resetList();
       this.searchStr = undefined;
     }
     this.restartPolling();
+  }
+
+  /**
+   * check if search is only changed by adding or removing letters at the beginning or end of searchstring
+   * @param searchStr new search string; will be compared with stored search string
+   */
+  private checkSearchIsJustRefinement(searchStr: string): boolean {
+    if (!this.searchStr || !searchStr) {
+      return false;
+    }
+    return searchStr.includes(this.searchStr) || this.searchStr.includes(searchStr);
+  }
+
+  /**
+   * erase things list and reset spinner flag (to be shown again during loading)
+   */
+  private resetList(): void {
+    this.deviceStubs = [];
+    this.thingsListLoaded = false;
   }
 
   async loadDeviceStates(listWrapper: DevicesListWrapper) {
@@ -191,6 +220,9 @@ export class DevicesListPage {
     return device && device.canBeDeleted;
   }
 
+  /**
+   * cleanup: stop subscriptions
+   */
   ionViewWillLeave(): void {
     this.stopPolling();
     if (this.paginatorSubscr) {
@@ -215,13 +247,18 @@ export class DevicesListPage {
       .pipe(
         startWith(0),
         switchMap(() => {
+            // if search is active -> load filtered things
           if (this.searchActive()) {
-            this.loading.show();
+            if (!this.thingsListLoaded) {
+              this.loading.show();
+            }
+            // TODO: paginate search result
             return this.deviceService.searchDevices(
               this.searchStr
             );
+            // no search given -> load full list
           } else {
-            if (!this.pageLoaded) {
+            if (!this.thingsListLoaded) {
               this.loading.show();
             }
             return this.deviceService.reloadDeviceStubs(
@@ -237,11 +274,13 @@ export class DevicesListPage {
           this.numOfFilteredItems = wrapper.filteredDevicesSize || 0;
           this.deviceStubs = wrapper.devices || [];
           this.loading.hide();
+          this.thingsListLoaded = true;
           this.loaded = true;
           this.loadDeviceStates(wrapper);
         },
         error => {
           this.loading.hide();
+          this.resetList();
           this.loaded = true;
           this.toast.openToast(ToastType.danger, 'toast.error.default', 10000, error.toString());
         }
