@@ -129,6 +129,10 @@ export class DevicesListPage {
     this.thingsListLoaded = false;
   }
 
+  /**
+   * Load states of all things of list
+   * @param listWrapper List of loaded things
+   */
   async loadDeviceStates(listWrapper: DevicesListWrapper) {
 
     if (listWrapper && listWrapper.devices && listWrapper.devices.length > 0) {
