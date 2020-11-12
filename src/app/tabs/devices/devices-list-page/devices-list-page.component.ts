@@ -40,7 +40,7 @@ export class DevicesListPage {
     action: 'addDevice'
   })];
   public thingsListLoaded = false;
-  private polling = new Subscription();
+  public polling = new Subscription();
   private paginatorSubscr: Subscription;
   private devideStateSubscr: Subscription;
   private deleteDeviceSubscr: Subscription;
