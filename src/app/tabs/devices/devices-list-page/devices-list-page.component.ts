@@ -23,9 +23,6 @@ import {ToastType} from '../../../enums/toast-type.enum';
 export class DevicesListPage {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   public deviceStubs: Array<DeviceStub> = [];
-
-  polling = new Subscription();
-
   // pagination params
   numberOfDevices = 0;
   pageSize = environment.LIST_ITEMS_PER_PAGE;
@@ -34,21 +31,20 @@ export class DevicesListPage {
    */
   searchStr: string;
   numOfFilteredItems = 0;
-
   loaded = false;
   stateLoading = false;
-
   actionButtons = [new HeaderActionButton({
     color: 'success',
     labelKey: 'action-button.device.create',
     iconName: 'add-circle-outline',
     action: 'addDevice'
   })];
+  public thingsListLoaded = false;
+  private polling = new Subscription();
   private paginatorSubscr: Subscription;
   private devideStateSubscr: Subscription;
   private deleteDeviceSubscr: Subscription;
   private createDeviceSubscr: Subscription;
-  private thingsListLoaded = false;
 
   constructor(
     private deviceService: DeviceService,
@@ -108,25 +104,6 @@ export class DevicesListPage {
       this.searchStr = undefined;
     }
     this.restartPolling();
-  }
-
-  /**
-   * check if search is only changed by adding or removing letters at the beginning or end of searchstring
-   * @param searchStr new search string; will be compared with stored search string
-   */
-  private checkSearchIsJustRefinement(searchStr: string): boolean {
-    if (!this.searchStr || !searchStr) {
-      return false;
-    }
-    return searchStr.includes(this.searchStr) || this.searchStr.includes(searchStr);
-  }
-
-  /**
-   * erase things list and reset spinner flag (to be shown again during loading)
-   */
-  private resetList(): void {
-    this.deviceStubs = [];
-    this.thingsListLoaded = false;
   }
 
   /**
@@ -243,6 +220,25 @@ export class DevicesListPage {
     }
   }
 
+  /**
+   * check if search is only changed by adding or removing letters at the beginning or end of searchstring
+   * @param searchStr new search string; will be compared with stored search string
+   */
+  private checkSearchIsJustRefinement(searchStr: string): boolean {
+    if (!this.searchStr || !searchStr) {
+      return false;
+    }
+    return searchStr.includes(this.searchStr) || this.searchStr.includes(searchStr);
+  }
+
+  /**
+   * erase things list and reset spinner flag (to be shown again during loading)
+   */
+  private resetList(): void {
+    this.deviceStubs = [];
+    this.thingsListLoaded = false;
+  }
+
   private restartPolling() {
 
     this.stopPolling();
@@ -254,7 +250,7 @@ export class DevicesListPage {
           if (!this.thingsListLoaded) {
             this.loading.show();
           }
-            // if search is active -> load filtered things
+          // if search is active -> load filtered things
           if (this.searchActive()) {
             // TODO: paginate search result
             return this.deviceService.searchDevices(
