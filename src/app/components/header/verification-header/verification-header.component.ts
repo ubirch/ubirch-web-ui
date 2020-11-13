@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewChecked, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {HeaderActionButton} from '../header-action-button';
 import {BEDevice} from '../../../models/bedevice';
 
@@ -7,7 +7,7 @@ import {BEDevice} from '../../../models/bedevice';
   templateUrl: './verification-header.component.html',
   styleUrls: ['./verification-header.component.scss'],
 })
-export class VerificationHeaderComponent implements OnInit {
+export class VerificationHeaderComponent implements AfterViewChecked {
   @Input() title = 'Verification';
   @Input() currentDevice: BEDevice;
 
@@ -27,8 +27,8 @@ export class VerificationHeaderComponent implements OnInit {
   constructor() {
   }
 
-  public ngOnInit(): void {
-    this.searchbar.setFocus();
+  ngAfterViewChecked() {
+   this.searchbar.setFocus();
   }
 
   _buttonClicked(action: string) {
