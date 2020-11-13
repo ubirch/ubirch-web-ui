@@ -1,4 +1,6 @@
 import {
+  AfterContentInit,
+  AfterViewChecked,
   AfterViewInit,
   Component,
   EventEmitter,
@@ -8,14 +10,13 @@ import {
 } from '@angular/core';
 import {HeaderActionButton} from '../header-action-button';
 import {BEDevice} from '../../../models/bedevice';
-import {IonSearchbar} from '@ionic/angular';
 
 @Component({
   selector: 'ubirch-web-ui-verification-header',
   templateUrl: './verification-header.component.html',
   styleUrls: ['./verification-header.component.scss'],
 })
-export class VerificationHeaderComponent implements AfterViewInit {
+export class VerificationHeaderComponent implements AfterViewChecked {
   @Input() title = 'Verification';
   @Input() currentDevice: BEDevice;
 
