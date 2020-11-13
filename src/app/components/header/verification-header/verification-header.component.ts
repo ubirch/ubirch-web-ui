@@ -1,6 +1,4 @@
 import {
-  AfterContentInit,
-  AfterViewChecked,
   AfterViewInit,
   Component,
   EventEmitter,
@@ -10,13 +8,14 @@ import {
 } from '@angular/core';
 import {HeaderActionButton} from '../header-action-button';
 import {BEDevice} from '../../../models/bedevice';
+import {IonSearchbar} from '@ionic/angular';
 
 @Component({
   selector: 'ubirch-web-ui-verification-header',
   templateUrl: './verification-header.component.html',
   styleUrls: ['./verification-header.component.scss'],
 })
-export class VerificationHeaderComponent implements AfterViewChecked {
+export class VerificationHeaderComponent implements AfterViewInit {
   @Input() title = 'Verification';
   @Input() currentDevice: BEDevice;
 
@@ -36,8 +35,11 @@ export class VerificationHeaderComponent implements AfterViewChecked {
   constructor() {
   }
 
-  ngAfterViewChecked() {
-   this.searchbar.setFocus();
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.searchbar.setFocus();
+      console.log('focused');
+    }, 200);
   }
 
   _buttonClicked(action: string) {
