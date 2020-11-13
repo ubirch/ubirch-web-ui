@@ -16,7 +16,7 @@ import {BEDevice} from '../../../models/bedevice';
   templateUrl: './verification-header.component.html',
   styleUrls: ['./verification-header.component.scss'],
 })
-export class VerificationHeaderComponent implements AfterViewChecked {
+export class VerificationHeaderComponent implements AfterViewInit {
   @Input() title = 'Verification';
   @Input() currentDevice: BEDevice;
 
