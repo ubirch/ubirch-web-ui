@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {switchMap, take} from 'rxjs/operators';
 import {TrustService, VERIFICATION_STATE} from '../../services/trust.service';
@@ -12,7 +12,8 @@ import {BEDevice} from '../../models/bedevice';
   templateUrl: './verification.page.html',
   styleUrls: ['./verification.page.scss'],
 })
-export class VerificationPage implements OnInit, OnDestroy {
+export class VerificationPage implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('HEADER') header: any;
 
   public hash2Verify: string;
   public verifiedHash: string;
@@ -82,6 +83,10 @@ export class VerificationPage implements OnInit, OnDestroy {
     this.verifHashSubscr = this.truster.observableVerifiedHash.subscribe(hash => this.verifiedHash = hash);
     this.stateSubscr = this.truster.observableVerificationState.subscribe(state => this.hashVerificationState = state);
     // H3nM/5NZda/UEQmJckQJvMBpDYjQfdPbPV6ufKQ6wjStJY/yArQ8wTf3/+wRmHBZsrxV+yTfCUhVsrT2xsMiyQ==
+  }
+
+  ngAfterViewInit() {
+    this.header.setFocus(200);
   }
 
   ngOnDestroy() {
