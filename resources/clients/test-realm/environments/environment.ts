@@ -1,9 +1,14 @@
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+
+// Add here your keycloak setup infos
 import * as npm from '../../package.json';
 
 const keycloakConfig: any = {
-  url: 'https://<KEYCLOAK_SERVER_URL>/auth',
-  realm: '<KEYCLOAK_REALM_ID>',
-  clientId: '<KEYCLOAK_CLIENT_ID>',
+  url: 'https://id.dev.ubirch.com/auth',
+  realm: 'test-realm',
+  clientId: 'ubirch-2.0-user-access-local',
   credentials: {
     secret: 'KEYCLOAK-CLIENT-SECRET'
   }
@@ -14,17 +19,17 @@ export const environment = {
   envName: 'dev',
   debug: false,
   version: npm.version,
-  serverUrl: '<REST_API_DEV_SERVER_URI>',
+  serverUrl: 'https://api.console.dev.ubirch.com',
   apiPrefix: '/ubirch-web-ui/api/v1/',
-  keyServiceServerUrl: '<KEYSERVICE_REST_API_SERVER_URI>',
+  keyServiceServerUrl: 'https://key.dev.ubirch.com',
   keyServiceApiPrefix: '/api/keyService/v1/',
-  trustServiceServerUrl: '<TRUSTSERVICE_REST_API_SERVER_URI>',
+  trustServiceServerUrl: 'https://verify.dev.ubirch.com',
   verifyApiPrefix: '/api/upp/verify/',
-  client_logo_filename: 'logo.svg',
-  client_startpage_image_filename: 'start_img.svg',
+  client_logo_filename: 'UBIRCH_Wort_Bildmarke_white.svg',
+  client_startpage_image_filename: 'UBIRCH_Wort_Bildmarke_black.svg',
   client_description_filename: 'description.md',
   client_favicon_filename: 'favicon.ico',
-  client_name: '<CLIENT_NAME_FOR_HEADER>',
+  client_name: 'ubirch GmbH',
   add_client_name_to_logo: true,
   keycloak: keycloakConfig,
   default_device_type: 'default_type',

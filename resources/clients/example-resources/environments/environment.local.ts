@@ -8,7 +8,10 @@ import * as npm from '../../package.json';
 const keycloakConfig: any = {
   url: 'http://localhost:8080/auth',
   realm: '<KEYCLOAK_REALM_ID>',
-  clientId: '<KEYCLOAK_CLIENT_ID>'
+  clientId: '<KEYCLOAK_CLIENT_ID>',
+  credentials: {
+    secret: 'KEYCLOAK-CLIENT-SECRET'
+  }
 };
 
 export const environment = {

@@ -13,6 +13,9 @@ fi
 
 ./preprocess4client.sh $client
 
+./preprocess-replace-secrets.sh $client
+
+
 if [[ -z "$staging" ]]
 then
     echo "create verification widget on default stage (local)"
