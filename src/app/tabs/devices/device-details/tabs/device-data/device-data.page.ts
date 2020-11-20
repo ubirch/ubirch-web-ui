@@ -105,6 +105,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             algorithm: 'sha256',
             elementSelector: '#verification-widget_' + indexP,
             language: this.CURRENT_LANG,
+            OPEN_CONSOLE_IN_SAME_TARGET: true
         });
       }
     }

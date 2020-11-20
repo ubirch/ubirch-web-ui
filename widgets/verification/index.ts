@@ -108,6 +108,7 @@ class UbirchVerification {
   private view: View;
   private algorithm: UbirchHashAlgorithm;
   private elementSelector: string;
+  private openConsoleInSameTarget = false;
 
   constructor(config: IUbirchVerificationConfig = DEFAULT_CONFIG) {
     MESSAGE_STRINGS = config.language && LANGUAGE_MESSAGE_STRINGS[config.language] ?
@@ -124,7 +125,11 @@ class UbirchVerification {
     this.algorithm = config.algorithm;
     this.elementSelector = config.elementSelector;
 
-    this.view = new View(this.elementSelector);
+    if (config.OPEN_CONSOLE_IN_SAME_TARGET) {
+      this.openConsoleInSameTarget = config.OPEN_CONSOLE_IN_SAME_TARGET;
+    }
+
+    this.view = new View(this.elementSelector, this.openConsoleInSameTarget);
   }
 
   public setMessageString(key, info, headline?) {
@@ -473,12 +478,16 @@ class View {
   private sealOutput: HTMLElement = document.createElement('div');
   private resultOutput: HTMLElement = document.createElement('div');
   private errorOutput: HTMLElement = document.createElement('div');
+  private openConsoleInSameTarget = false;
 
-  constructor(private elementSelector) {
-    const host: HTMLElement = document.querySelector(this.elementSelector);
+  constructor(
+    private elementSelectorP,
+    private openConsoleInSameTargetP) {
+    const host: HTMLElement = document.querySelector(this.elementSelectorP);
+    this.openConsoleInSameTarget = openConsoleInSameTargetP;
 
     if (!host) {
-      throw new Error(`Element by selector '${this.elementSelector}' not found`);
+      throw new Error(`Element by selector '${this.elementSelectorP}' not found`);
     }
 
     this.host = host;
@@ -513,7 +522,9 @@ class View {
     const encodedHash: string = encodeURIComponent(hash);
 
     link.setAttribute('href', `${environment.console_verify_url}?hash=${encodedHash}`);
-    link.setAttribute('target', '_blank');
+    if (!this.openConsoleInSameTarget) {
+      link.setAttribute('target', '_blank');
+    }
 
     if (successful) {
       icon = this.createIconTag(environment.assets_url_prefix + BlockchainSettings.ubirchIcons.seal,
