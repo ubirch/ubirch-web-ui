@@ -5,13 +5,144 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- things state:
-  * add things state to deviceStubs and display state on things list
-  * display state on things list as spark line
-- verification tree: add action
-  * check if hash is successfully anchored in blockchain: show different upp icons depending on if anchored or not
-  * replace icons with designed ones
+- tenant profile form
+- change user account to become a pro user
+- token management
 
+## [0.8.4] - 2020-11-20
+
+### Added
+- verification widget
+    * added property OPEN_CONSOLE_IN_SAME_TARGET (needed for clean integration of widget in webUI console)
+
+### Changed
+
+### Removed
+
+## [0.8.3] - 2020-11-20
+
+### Added
+
+### Changed
+
+### Removed
+- keycloak secret is not needed any more because web frontends should always use public keycloak client for authentication
+- removed test-realm resource settings (not used any more)
+
+## [0.8.2] - 2020-11-17
+
+### Added
+- added translation branch
+
+### Changed
+- fixed: auto focus of searchbars on verification tab and things list page
+- fixed: styling hazzle with info text and quick info on verification page
+
+### Removed
+
+## [0.8.1] - 2020-11-12
+
+### Added
+- integrate verificaiton widget in accordion to ThingsData tab
+- added tenant profile
+    * added tab
+    * tab only visible for pro users
+    * if user has a pro account and didn't fill out tenant profile form she cannot access the rest of the webUI console
+    * TODO: tenant form
+- verification widget
+    * new public function formatJSON: prepares JSON (by sort and trim) for anchoring hash generation
+
+### Changed
+- optimize spinner
+- fixed: added bloxberg icon to verification widget webpack config
+- fixed: fixed timestamp format on verification tab to a science compatible format
+
+### Removed
+
+## [0.8.0] - 2020-10-19
+
+### Added
+- verification quick info
+- integration of anchoring with individual blockchain anchoring intervals into verification graph view
+- added ThingsData tab to things details, only visible for things with tag "testkit"
+- new tab for last hash (upp) with button openVerification of hash
+- display current device on verification page if set by query param in a special header
+- integrate ngx-translate
+- added spinner/loader service
+- new blockchain bloxberg integrated
+- verification widget
+    * english version
+    * Added option to highlight whole page red or green after verification
+     (integration of widget into digitales-corona-gesundheitszertifikat page)
+- keycloak
+    * initial ubirch-CI theme created
+- angular and Ionic upgrade
+    * upgrade to angular10
+    * upgrade to Ionic5 
+    * uninstall ngx-chips because incompatible with new Ionic/Angular versions
+    * create new component tag-list-input for replacement of ngx-chips
+
+### Changed
+- delete button in things list and in things details only available IF thing can be deleted (e.g. NOT for testkit devices)
+- fix menu style and ubirch brand for small screens
+- fixed: timestamps in verification graph have been displayed incorrect
+- changed gov-digital settings
+- fixed: things list polling wasn't stopped when things details has been opened
+- fixed Unit test
+- verification widget
+    * blockchain icon AND blockchain explorer settings moved from a class constant into a global settings file
+    for webUi console verification tab and verification widget
+    * form field check only of param CHECK_FORM_FILLED is set to true
+
+### Removed
+- removed secondaryIndex from BEDevice
+
+## [0.7.0] - 2020-07-27
+
+### Added
+- display device tags via ngx-chips control in creation of devices and in device settings
+- verification widget
+    * added new class UbirchFormVerification with additional functions for form handling 
+    * added test hash algorythm selection to verification page
+    * added optional parameter to set separator for params explicitly
+    
+
+### Changed
+
+### Removed
+- removed ngx-chips for tags from creation of new devices because of bad UX
+
+## [0.6.2] - 2020-06-16
+
+### Added
+
+- verification widget
+    * setup that the verification widget gets deployed during console deployment
+    * setup that the verification widget can be used from ubirch website
+    * added input fields for testing verification to widget index.html page
+
+### Changed
+
+### Removed
+
+## [0.6.1] - 2020-06-09
+
+### Added
+- Unit tests for components, models, services, ...
+- claiming process added for devices with imsi
+- file import
+- testkit support:
+    * during claiming of things tags can be defined
+    * in device details of testkit things in a new tab a grafana dashboard with data sent by this device
+- verification widget
+    * set up a webpack sub project for the verification widget
+    * generating the verification.js that can be included in other pages to handle verification of a hash
+     and display the verification result
+    * add link to verification page of the webUI console to verification result, handle hash as url parameter
+
+### Changed
+
+### Removed
 
 ## [0.5] - 2019-12-13
 

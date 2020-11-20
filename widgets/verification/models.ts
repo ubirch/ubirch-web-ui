@@ -28,6 +28,8 @@ export interface IUbirchVerificationConfig {
   elementSelector: string;
   language?: ELanguages;
   HIGHLIGHT_PAGE_AFTER_VERIFICATION?: boolean;
+  OPEN_CONSOLE_IN_SAME_TARGET?: boolean;
+
 }
 
 export interface IUbirchFormVerificationConfig extends IUbirchVerificationConfig {
