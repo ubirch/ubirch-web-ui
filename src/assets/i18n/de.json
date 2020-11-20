@@ -22,6 +22,8 @@
   "devices.list.item.num-upps.loading": "TRANSLATE!!loading state...",
   "devices.list.item.num-upps.not-available": "TRANSLATE!!state not available",
   "devices.list.info.no-items": "TRANSLATE!!You seem to have no things already.",
+  "devices.list.info.no-search-item": "TRANSLATE!!No Things matching your search were found.",
+  "device.list.search-info": "TRANSLATE!!Search results for",
   "devices.list.new-thing.heading": "TRANSLATE!!Register new Things",
   "devices.list.new-thing.id-type": "TRANSLATE!!ID type",
   "devices.list.new-thing.UUID": "TRANSLATE!!UUID",

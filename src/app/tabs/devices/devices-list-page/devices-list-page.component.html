@@ -11,7 +11,7 @@
 
 <ion-content class="ion-padding-horizontal">
   <ion-grid>
-    <ion-row class="ion-align-items-center ion-justify-content-center padding-row">
+    <ion-row class="ion-align-items-center ion-justify-content-center">
       <ion-col size="12">
         <mat-paginator #paginator
                        [ngClass]="{'invisible': searchActive()}"
@@ -22,6 +22,7 @@
     </ion-row>
   </ion-grid>
   <ng-container *ngIf="deviceStubs && deviceStubs.length > 0; else NO_LIST">
+    <ion-title *ngIf="searchActive()" style="padding-bottom: 1rem">{{'device.list.search-info' | translate}} "{{searchStr}}"</ion-title>
     <ion-list>
       <ion-item *ngFor="let item of deviceStubs" color="light" class="device-list-item ion-margin-bottom" lines="none">
         <ion-label [routerLink]="['/devices','details', item.hwDeviceId]" (click)="thingsListLoaded = false" class="devices-list-item-content">
@@ -55,7 +56,8 @@
     <ion-row *ngIf="loaded" class="ion-padding ion-align-items-center ion-justify-content-center">
       <ion-col size="6">
         <div class="ion-text-center">
-          <h1>{{ 'devices.list.info.no-items' | translate }}</h1>
+          <h1 *ngIf="thingsListLoaded && !searchActive()">{{ 'devices.list.info.no-items' | translate }}</h1>
+          <h1 *ngIf="thingsListLoaded && searchActive()">{{'devices.list.info.no-search-item' | translate}}</h1>
         </div>
       </ion-col>
     </ion-row>
