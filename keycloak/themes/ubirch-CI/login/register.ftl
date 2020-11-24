@@ -7,15 +7,15 @@
             <form id="kc-register-form" class="${properties.kcFormClass!}" action="${url.registrationAction}"
                   method="post">
                 <#if realm.registrationEmailAsUsername>
-                    <input type="text" id="firstName" name="firstName" value="-" hidden/>
-                    <input type="text" id="lastName" name="lastName" value="-" hidden/>
+                    <input class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}" type="text" id="firstName" name="firstName" value="-" hidden/>
+                    <input class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}" type="text" id="lastName" name="lastName" value="-" hidden/>
                 <#else>
                     <div class="${properties.kcFormGroupClass!} ${messagesPerField.printIfExists('firstName',properties.kcFormGroupErrorClass!)}">
                         <div class="${properties.kcLabelWrapperClass!}">
                             <label for="firstName" class="${properties.kcLabelClass!}">${msg("firstName")}</label>
                         </div>
                         <div class="${properties.kcInputWrapperClass!}">
-                            <input type="text" id="firstName" class="${properties.kcInputClass!}" name="firstName"
+                            <input class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}" type="text" id="firstName" class="${properties.kcInputClass!}" name="firstName"
                                    value="${(register.formData.firstName!'')}"/>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                             <label for="lastName" class="${properties.kcLabelClass!}">${msg("lastName")}</label>
                         </div>
                         <div class="${properties.kcInputWrapperClass!}">
-                            <input type="text" id="lastName" class="${properties.kcInputClass!}" name="lastName"
+                            <input class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}" type="text" id="lastName" class="${properties.kcInputClass!}" name="lastName"
                                    value="${(register.formData.lastName!'')}"/>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                         <label for="email" class="${properties.kcLabelClass!}">${msg("email")}</label>
                     </div>
                     <div class="${properties.kcInputWrapperClass!}">
-                        <input type="text" id="email" class="${properties.kcInputClass!}" name="email"
+                        <input class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}" type="text" id="email" class="${properties.kcInputClass!}" name="email"
                                value="${(register.formData.email!'')}" autocomplete="email"/>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                             <label for="username" class="${properties.kcLabelClass!}">${msg("username")}</label>
                         </div>
                         <div class="${properties.kcInputWrapperClass!}">
-                            <input type="text" id="username" class="${properties.kcInputClass!}" name="username"
+                            <input class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}" type="text" id="username" class="${properties.kcInputClass!}" name="username"
                                    value="${(register.formData.username!'')}" autocomplete="username"/>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                             <label for="password" class="${properties.kcLabelClass!}">${msg("password")}</label>
                         </div>
                         <div class="${properties.kcInputWrapperClass!}">
-                            <input type="password" id="password" class="${properties.kcInputClass!}" name="password"
+                            <input class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}" type="password" id="password" class="${properties.kcInputClass!}" name="password"
                                    autocomplete="new-password"/>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                                    class="${properties.kcLabelClass!}">${msg("passwordConfirm")}</label>
                         </div>
                         <div class="${properties.kcInputWrapperClass!}">
-                            <input type="password" id="password-confirm" class="${properties.kcInputClass!}"
+                            <input class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}" type="password" id="password-confirm" class="${properties.kcInputClass!}"
                                    name="password-confirm"/>
                         </div>
                     </div>
@@ -91,6 +91,7 @@
                     </div>
                     <div class="${properties.kcInputWrapperClass!}">
                         <select
+                                class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}"
                                 id="user.attributes.account_plan"
                                 class="${properties.kcInputClass!}"
                                 name="user.attributes.account_plan"
@@ -109,6 +110,7 @@
                     </div>
                     <div class="${properties.kcInputWrapperClass!}">
                         <select
+                                class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}"
                                 id="user.attributes.account_type"
                                 class="${properties.kcInputClass!}"
                                 name="user.attributes.account_type"

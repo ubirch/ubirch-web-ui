@@ -65,12 +65,13 @@
 
   <div class="login-pf-page">
       <div id="img-col">
+          <div class="ubirchHeadline">Trust, but verify - Cyber Security by UBIRCH</div>
           <h2>
-              <span class="text white">IoT Data.</span>
+              <span class="text white">MAKING.</span>
               <br>
-              <span class="text white">Secured.</span>
+              <span class="text white">DATA.</span>
               <br>
-              <span class="text blue">Forever.</span>
+              <span class="text blue">TRUSTWORTHY.</span>
           </h2>
       </div>
       <div id="form-col">
