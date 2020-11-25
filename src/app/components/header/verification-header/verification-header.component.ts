@@ -16,7 +16,7 @@ import {BEDevice} from '../../../models/bedevice';
   templateUrl: './verification-header.component.html',
   styleUrls: ['./verification-header.component.scss'],
 })
-export class VerificationHeaderComponent implements AfterViewChecked {
+export class VerificationHeaderComponent {
   @Input() title = 'Verification';
   @Input() currentDevice: BEDevice;
 
@@ -36,8 +36,10 @@ export class VerificationHeaderComponent implements AfterViewChecked {
   constructor() {
   }
 
-  ngAfterViewChecked() {
-   this.searchbar.setFocus();
+  setFocus(delay) {
+    setTimeout(() => {
+      this.searchbar.setFocus();
+    }, delay);
   }
 
   _buttonClicked(action: string) {
