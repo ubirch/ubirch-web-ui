@@ -13,21 +13,23 @@ import {VerificationGraphComponent} from './verification-graph/verification-grap
 import {CytoscapeGraphModule} from '../cytoscape-graph/cytoscape-graph.module';
 import {TagListInputComponent} from './tag-list-input/tag-list-input.component';
 import {ExpandableComponent} from './expandable/expandable.component';
+import {LanguageSelectComponent} from "./language-select/language-select.component";
 
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    VerificationHeaderComponent,
-    LoggedInUserComponent,
-    FileInputComponent,
-    VerificationErrorHandlingComponent,
-    VerificationQuickInfoComponent,
-    VerificationGraphComponent,
-    TagListInputComponent,
-    ExpandableComponent,
-    ExpandableComponent
-  ],
+    declarations: [
+        HeaderComponent,
+        VerificationHeaderComponent,
+        LoggedInUserComponent,
+        FileInputComponent,
+        VerificationErrorHandlingComponent,
+        VerificationQuickInfoComponent,
+        VerificationGraphComponent,
+        TagListInputComponent,
+        ExpandableComponent,
+        ExpandableComponent,
+        LanguageSelectComponent
+    ],
   imports: [
     CommonModule,
     FormsModule,
