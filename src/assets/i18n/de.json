@@ -26,6 +26,8 @@
 	"device.details.tab.recent-hashes.label.last-anchored-hashes": "Letzte verankerte Hashes",
 	"device.details.tab.recent-hashes.no-datasets-found": "Keine Datensätze für das Gerät gefunden",
 	"device.details.tab.recent-hashes.no-hashes-found": "Kein Hash für das Gerät gefunden",
+	"device.details.tab.recent-data.verify-data": "Diesen Datensatz verifizieren",
+	"device.details.recent-data.verify": "verifizieren",
 	"device.details.tab.things-settings.label.api-config": "apiConfig",
 	"device.details.tab.things-settings.label.description": "Beschreibung",
 	"device.details.tab.things-settings.label.id": "ID",
