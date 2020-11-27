@@ -26,6 +26,8 @@
 	"device.details.tab.recent-hashes.label.last-anchored-hashes": "Last anchored hashes",
 	"device.details.tab.recent-hashes.no-datasets-found": "No datasets found for device",
 	"device.details.tab.recent-hashes.no-hashes-found": "No hash found for device",
+	"device.details.tab.recent-data.verify-data": "Verify this Datset",
+	"device.details.recent-data.verify": "verify",
 	"device.details.tab.things-settings.label.api-config": "apiConfig",
 	"device.details.tab.things-settings.label.description": "Description",
 	"device.details.tab.things-settings.label.id": "ID",
