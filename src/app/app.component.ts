@@ -105,13 +105,8 @@ export class AppComponent {
 
     translate.use(usedLang);
 
-//    const browserLang = translate.getBrowserLang();
-//    translate.use(browserLang.match(/en|de/) ? browserLang : 'en');
-  }
-
-  // TODO: move to language change component
-  changeLang(lang) {
-    this.translate.use(lang);
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang);
   }
 
   initializeApp() {

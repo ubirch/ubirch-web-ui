@@ -14,6 +14,11 @@ export class LanguageSelectComponent implements OnInit {
 
   ngOnInit() {
     this.languages = this.translateService.getLangs();
+    const browserLang = this.translateService.getBrowserLang();
+  }
+
+  changeLang(lang) {
+    this.translateService.use(lang);
   }
 
 }
