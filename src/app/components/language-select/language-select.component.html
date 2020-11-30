@@ -1,0 +1,15 @@
+<div (mouseenter)="showLanSelect = true" (mouseleave)="showLanSelect = false" id="lanDiv">
+    <img src="assets/app-icons/globe.svg" alt="" class="lanIcon"
+         style="cursor: pointer">
+    <div [hidden]="!showLanSelect" class="lanSelect">
+        <div *ngFor="let language of languages">
+            <ion-text class="lanOption ion-text-uppercase" [ngClass]="{'active': language === translateService.currentLang}" style="cursor: pointer"
+                      (click)="translateService.use(language)">{{language}}</ion-text>
+        </div>
+    </div>
+</div>
+
+
+
+
+
