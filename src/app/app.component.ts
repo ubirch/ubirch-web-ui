@@ -105,8 +105,12 @@ export class AppComponent {
 
     translate.use(usedLang);
 
-    // const browserLang = translate.getBrowserLang();
-    // translate.use(browserLang);
+    const browserLang = translate.getBrowserLang();
+    if (translate.langs.includes(browserLang)) {
+      translate.use(browserLang);
+    } else {
+      translate.use(translate.defaultLang);
+    }
   }
 
   initializeApp() {
