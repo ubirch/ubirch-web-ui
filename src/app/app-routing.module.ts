@@ -27,6 +27,11 @@ const routes: Routes = [
     canActivate: [ AccountProfileValidGuard, AuthOnlyGuard ]
   },
   {
+    path: 'token-manager',
+    loadChildren: () => import('./tabs/token-manager/token-manager.module').then(m => m.TokenManagerPageModule),
+    canActivate: [AccountProfileValidGuard, AuthOnlyGuard]
+  },
+  {
     path: 'verification',
     loadChildren: () => import('./tabs/verification/verification.module').then(m => m.VerificationPageModule),
   },
@@ -45,6 +50,11 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'token-manager',
+    loadChildren: () => import('./tabs/token-manager/token-manager.module').then( m => m.TokenManagerPageModule)
+  },
+
 ];
 
 @NgModule({

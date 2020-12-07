@@ -1,0 +1,12 @@
+<ubirch-web-ui-header
+        #HEADER
+        title="{{ 'token.list.title' | translate }}"
+        [actionButtons]="actionButtons"
+        (buttonClicked)="createTokenPopup()"
+        addSearchBarWithPlaceholder="{{ 'devices.list.searchbar.placeholder' | translate }}"
+        (startSearch)="search($event)"
+></ubirch-web-ui-header>
+
+<ion-content>
+
+</ion-content>
