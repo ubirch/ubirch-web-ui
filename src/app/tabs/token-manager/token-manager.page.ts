@@ -8,6 +8,7 @@ import {DataSet} from '../../models/data-set';
 import {HttpClient} from '@angular/common/http';
 import {ModalController} from '@ionic/angular';
 import {NewTokenPopupComponent} from './popups/new-token-popup/new-token-popup.component';
+import {TokenService} from '../../services/token.service';
 
 @Component({
     selector: 'app-token-manager',
@@ -22,11 +23,14 @@ export class TokenManagerPage implements OnInit {
         action: 'addToken'
     })];
 
-    constructor(private userService: UserService, private http: HttpClient, public modalController: ModalController) {
+    private tokens;
+
+    constructor(private tokenService: TokenService, public modalController: ModalController) {
     }
 
     ngOnInit() {
-
+        this.getTokens();
+        console.log(this.tokens);
     }
 
     async createTokenPopup() {
@@ -38,6 +42,11 @@ export class TokenManagerPage implements OnInit {
     }
 
     search(event: any) {
+        // TODO
+    }
+
+    getTokens() {
+        // this.tokenService.getTokens();
         // TODO
     }
 

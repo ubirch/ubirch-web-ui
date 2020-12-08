@@ -29,7 +29,7 @@
             </ion-item>
             <ion-item>
                 <ion-label>Valid for Things</ion-label>
-                <ion-select id="vThings" slot="end" multiple="true" [(ngModel)]="selectedThings" formControlName="vThings">
+                <ion-select placeholder="select" id="vThings" slot="end" multiple="true" [(ngModel)]="selectedThings" formControlName="vThings">
                     <ion-select-option *ngFor="let device  of devices" value="{{device.hwDeviceId}}">{{device.description}}</ion-select-option>
                 </ion-select>
             </ion-item>

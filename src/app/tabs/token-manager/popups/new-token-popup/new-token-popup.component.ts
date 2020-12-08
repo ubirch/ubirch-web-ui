@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {DeviceService} from '../../../../services/device.service';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {TokenService} from "../../../../services/token.service";
 
 
 @Component({
@@ -11,7 +12,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class NewTokenPopupComponent implements OnInit {
 
-    constructor(public modalCtrl: ModalController, private deviceService: DeviceService, private  fb: FormBuilder) {
+    constructor(public modalCtrl: ModalController, private deviceService: DeviceService, private  fb: FormBuilder, private tokenService: TokenService) {
     }
 
     public devices;
@@ -38,7 +39,9 @@ export class NewTokenPopupComponent implements OnInit {
     }
 
     createToken() {
-
+        console.log(this.tokenDetailsForm.value);
+        this.tokenService.postToken();
+        this.modalCtrl.dismiss();
     }
 
     getDevices() {
