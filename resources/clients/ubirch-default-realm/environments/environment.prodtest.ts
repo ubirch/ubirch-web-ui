@@ -20,6 +20,8 @@ export const environment = {
   apiPrefix: '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: 'https://key.prod.ubirch.com',
   keyServiceApiPrefix: '/api/keyService/v1/',
+  tokenServiceServerUrl: 'https://token.prod.ubirch.com',
+  tokenServiceApiPrefix: '/api/tokens/v1',
   trustServiceServerUrl: 'https://verify.prod.ubirch.com',
   verifyApiPrefix: '/api/upp/verify/',
   client_logo_filename: 'UBIRCH_Wort_Bildmarke_white.svg',

@@ -7,6 +7,29 @@
         (startSearch)="search($event)"
 ></ubirch-web-ui-header>
 
-<ion-content>
+<ion-content  class="ion-padding-horizontal">
+  <ng-container *ngIf="tokens?.length > 0">
+    <ion-list>
+      <ion-item *ngFor="let token of tokens">
+        <ion-label>
+          <h2>{{token.data.purpose}}</h2>
+          <ng-container *ngIf="token.data.valid_for_all; else LIST_OF_DEVICES">
+            {{ 'token.list.data.valid_for_all' | translate }}
+          </ng-container>
+          <ng-template #LIST_OF_DEVICES>
+            <p *ngFor="let thingId of token.data.target_identities">{{thingId}}</p>
+          </ng-template>
+          <p *ngIf="token.data.nbf">
+            {{ 'token.list.data.label.not_valid_before' | translate }}:
+            {{token.data.nbf | date: 'long':undefined:CURRENT_LANG}}
+          </p>
+          <p *ngIf="token.data.exp">
+            {{ 'token.list.data.label.expires_at' | translate }}:
+            {{token.data.exp | date: 'long':undefined:CURRENT_LANG}}
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
 
 </ion-content>

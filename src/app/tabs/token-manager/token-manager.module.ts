@@ -1,23 +1,21 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from '../../components/components.module';
+import { NewTokenPopupComponent } from './popups/new-token-popup/new-token-popup.component';
 
 import { TokenManagerPage } from './token-manager.page';
-import {RouterModule, Routes} from '@angular/router';
-import {ComponentsModule} from '../../components/components.module';
-import {TranslateModule} from '@ngx-translate/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {NewTokenPopupComponent} from "./popups/new-token-popup/new-token-popup.component";
 
 const routes: Routes = [
   {
     path: '',
-    component: TokenManagerPage
-  }
+    component: TokenManagerPage,
+  },
 ];
-
 
 @NgModule({
   imports: [
@@ -29,7 +27,12 @@ const routes: Routes = [
     ComponentsModule,
     ReactiveFormsModule,
   ],
-  declarations: [TokenManagerPage, NewTokenPopupComponent],
-  entryComponents: [NewTokenPopupComponent]
+  declarations: [
+    TokenManagerPage,
+    NewTokenPopupComponent
+  ],
+  entryComponents: [
+    NewTokenPopupComponent
+  ],
 })
 export class TokenManagerPageModule {}

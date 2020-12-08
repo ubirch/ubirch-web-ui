@@ -30,6 +30,7 @@
     "@angular/platform-browser": "~10.1.5",
     "@angular/platform-browser-dynamic": "~10.1.5",
     "@angular/router": "~10.1.5",
+    "@auth0/angular-jwt": "^5.0.2",
     "@ionic-native/clipboard": "^5.15.1",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/splash-screen": "^5.0.0",
@@ -51,11 +52,12 @@
     "ngx-markdown": "^10.1.1",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.3",
+    "url-polyfill": "^1.1.12",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.801.2",
-    "@angular-devkit/build-angular": "~0.1001.6",
+    "@angular-devkit/build-angular": "^0.1100.3",
     "@angular-devkit/core": "~10.1.6",
     "@angular-devkit/schematics": "~10.1.6",
     "@angular/cli": "~10.1.6",
