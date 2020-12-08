@@ -130,6 +130,7 @@
 	"toast.device.settings.update.success": "Änderungen am Thing gespeichert",
 	"toast.error.default": "Ein Fehler ist aufgetreten",
   "toast.token.creation.canceled": "TRANSLATE!!Token creation canceled",
+  ":toast.token.creation.failed": "TRANSLATE!!Token creation failed",
   "toast.token.created.successfully": "TRANSLATE!!Token created successfully",
   "toast.token.getlist.failed": "TRANSLATE!!Something went wrong while fetching the list of all of your own Tokens!",
 	"toast.verification.blockchainexplorer-call.cannot-build-url": "Konstrukt blockChainExplorer für diesen Anbieter kann nicht geöffnet werden (explorerUrl kann nicht erstellt werden)",

@@ -9,6 +9,7 @@ import { CreateTokenFormData } from '../models/create-token-form-data';
 import { IUbirchAccountingJWT } from '../models/iubirch-accounting-jwt';
 import { IUbirchAccountingTokenList } from '../models/iubirch-accounting-token-list';
 import { UbirchAccountingToken } from '../models/ubirch-accounting-token';
+import { UbirchAccountingTokenCreationData } from '../models/ubirch-accounting-token-creation-data';
 import { LoggingService } from './logging.service';
 import { ToastService } from './toast.service';
 
@@ -44,16 +45,15 @@ export class TokenService {
 
   public createToken(data: CreateTokenFormData): Observable<UbirchAccountingToken> {
 
-    /**
-     * {
-     *   "tenantId":"d63ecc03-f5a7-4d43-91d0-a30d034d8da3",
-     *   "purpose":"King Dude - Concert",
-     *   "targetIdentities":["07104240-1892-4020-9042-0000598632c7"],
-     *   "expiration": 7918235892,
-     *   "notBefore":6311390400
-     * }
-     */
-    return of(null);
+    const url = `${this.API_URL}//verification/create`;
+
+    return this.http.post<UbirchAccountingToken>(url, this.prepareTokenDataForCreation(data)).pipe(
+      map( (newToken: any) => newToken),
+      catchError(err => {
+        this.toast.openToast(ToastType.danger, ':toast.token.creation.failed', 10000, err.message);
+        return undefined;
+      })
+    );
   }
 
   deleteToken(tokenId) {
@@ -75,5 +75,25 @@ export class TokenService {
       return undefined;
 
     }
+  }
+
+  private prepareTokenDataForCreation(tokenDataP: CreateTokenFormData): UbirchAccountingTokenCreationData {
+
+    const uatcd: UbirchAccountingTokenCreationData = new UbirchAccountingTokenCreationData(  {
+      // TODO: get userid from userinfo and use as tenantId
+      tenantId: 'd63ecc03-f5a7-4d43-91d0-a30d034d8da3',
+      purpose: tokenDataP.purpose,
+      targetIdentities: tokenDataP.validForAll ? '*' : tokenDataP.targetIdentities
+    });
+
+    if (tokenDataP.expiration) {
+      uatcd.expiration = tokenDataP.expiration;
+    }
+
+    if (tokenDataP.notBefore) {
+      uatcd.notBefore = tokenDataP.notBefore;
+    }
+
+    return uatcd;
   }
 }
