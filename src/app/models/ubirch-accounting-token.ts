@@ -13,6 +13,7 @@ export class UbirchAccountingToken {
   ) {
 
     this.prepareToken(decodedTokenP);
+    this.data = {} as IUbirchAccountingTokenData;
     Object.assign(this.data, decodedTokenP);
 
     this.expirationDate = expirationDateP;
