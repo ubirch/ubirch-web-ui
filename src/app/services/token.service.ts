@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { ToastType } from '../enums/toast-type.enum';
+import { CreateTokenFormData } from '../models/create-token-form-data';
 import { IUbirchAccountingJWT } from '../models/iubirch-accounting-jwt';
 import { IUbirchAccountingTokenList } from '../models/iubirch-accounting-token-list';
 import { UbirchAccountingToken } from '../models/ubirch-accounting-token';
@@ -41,8 +42,18 @@ export class TokenService {
     );
   }
 
-  postToken() {
-    // TODO
+  public createToken(data: CreateTokenFormData): Observable<UbirchAccountingToken> {
+
+    /**
+     * {
+     *   "tenantId":"d63ecc03-f5a7-4d43-91d0-a30d034d8da3",
+     *   "purpose":"King Dude - Concert",
+     *   "targetIdentities":["07104240-1892-4020-9042-0000598632c7"],
+     *   "expiration": 7918235892,
+     *   "notBefore":6311390400
+     * }
+     */
+    return of(null);
   }
 
   deleteToken(tokenId) {

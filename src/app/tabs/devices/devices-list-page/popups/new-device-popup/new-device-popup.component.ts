@@ -1,20 +1,20 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ModalController} from '@ionic/angular';
-import {environment} from '../../../../../../environments/environment';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {map, skip} from 'rxjs/operators';
-import {ValidatorsService} from 'src/app/validators/validators.service';
-import {UbirchWebUIUtilsService} from '../../../../../utils/ubirch-web-uiutils.service';
-import {ToastService} from '../../../../../services/toast.service';
-import {ToastType} from '../../../../../enums/toast-type.enum';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, skip } from 'rxjs/operators';
+import { ValidatorsService } from 'src/app/validators/validators.service';
+import { environment } from '../../../../../../environments/environment';
+import { ToastType } from '../../../../../enums/toast-type.enum';
+import { CreateDevicesFormData } from '../../../../../models/create-devices-form-data';
+import { ToastService } from '../../../../../services/toast.service';
 
-const ID_VALIDATORS = [Validators.required, Validators.pattern(/^ *\S{1,} *$/)];
+const ID_VALIDATORS = [ Validators.required, Validators.pattern(/^ *\S{1,} *$/) ];
 
 @Component({
   selector: 'app-new-device-popup',
   templateUrl: './new-device-popup.component.html',
-  styleUrls: ['./new-device-popup.component.scss'],
+  styleUrls: [ './new-device-popup.component.scss' ],
 })
 export class NewDevicePopupComponent implements OnInit, OnDestroy {
   deviceDetailsForm: FormGroup;
@@ -48,8 +48,12 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
 
         activeControl.updateValueAndValidity();
         inactiveControl.updateValueAndValidity();
-      }
+      },
     );
+
+  get defaultDeviceType(): string {
+    return environment.default_device_type;
+  }
 
   constructor(
     public modalCtrl: ModalController,
@@ -59,20 +63,16 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  get defaultDeviceType(): string {
-    return environment.default_device_type;
-  }
-
   ngOnInit() {
     const currentIdType = this.currentIdType$.value;
 
     this.deviceDetailsForm = this.fb.group({
-      hwDeviceId: ['', currentIdType === EIDType.UUID ? ID_VALIDATORS : null],
-      secondaryIndex: ['', currentIdType === EIDType.IMSI ? ID_VALIDATORS : null],
-      description: [''],
-      deviceType: [''],
-      tags: [''],
-      prefix: [''],
+      hwDeviceId: [ '', currentIdType === EIDType.UUID ? ID_VALIDATORS : null ],
+      secondaryIndex: [ '', currentIdType === EIDType.IMSI ? ID_VALIDATORS : null ],
+      description: [ '' ],
+      deviceType: [ '' ],
+      tags: [ '' ],
+      prefix: [ '' ],
     });
     this.deviceDetailsForm.setValue(this.patchFormValue());
   }
@@ -96,7 +96,7 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
 
     if (details) {
       this.modalCtrl.dismiss(
-        new CreateDevicesFormData(details)
+        new CreateDevicesFormData(details),
       );
     } else {
       this.toast.openToast(ToastType.danger, 'toast.device.creation.error.no-data-inserted');
@@ -150,29 +150,3 @@ export enum EIDType {
 }
 
 export type ReqType = 'creation' | 'claim';
-
-export class CreateDevicesFormData {
-  reqType: ReqType;
-  hwDeviceId: string;
-  secondaryIndex?: string;
-  description: string;
-  deviceType: string;
-  tags?: string[];
-  prefix?: string;
-
-  constructor(props) {
-    if (props.hwDeviceId) {
-      props.hwDeviceId = (props.hwDeviceId as string).trim();
-    }
-
-    if (props.secondaryIndex) {
-      props.secondaryIndex = (props.secondaryIndex as string).trim();
-    }
-
-    const tagList = props.tags ? UbirchWebUIUtilsService.createClaimingTagsFromFormData(props.tags) : [];
-    props.tags = tagList;
-
-    Object.assign(this, props);
-    return this;
-  }
-}

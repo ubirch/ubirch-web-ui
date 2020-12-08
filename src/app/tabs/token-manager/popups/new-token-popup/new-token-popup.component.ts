@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {ModalController} from '@ionic/angular';
-import {DeviceService} from '../../../../services/device.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {TokenService} from "../../../../services/token.service";
-
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
+import { CreateTokenFormData } from '../../../../models/create-token-form-data';
+import { DeviceService } from '../../../../services/device.service';
+import { LoggingService } from '../../../../services/logging.service';
+import { TokenService } from '../../../../services/token.service';
 
 @Component({
     selector: 'app-new-token-popup',
@@ -12,7 +13,13 @@ import {TokenService} from "../../../../services/token.service";
 })
 export class NewTokenPopupComponent implements OnInit {
 
-    constructor(public modalCtrl: ModalController, private deviceService: DeviceService, private  fb: FormBuilder, private tokenService: TokenService) {
+    constructor(
+      public modalCtrl: ModalController,
+      private deviceService: DeviceService,
+      private fb: FormBuilder,
+      private tokenService: TokenService,
+      private logger: LoggingService
+    ) {
     }
 
     public devices;
@@ -39,9 +46,15 @@ export class NewTokenPopupComponent implements OnInit {
     }
 
     createToken() {
-        console.log(this.tokenDetailsForm.value);
-        this.tokenService.postToken();
-        this.modalCtrl.dismiss();
+      const details = this.tokenDetailsForm.getRawValue();
+
+      if (details) {
+        this.modalCtrl.dismiss(
+          new CreateTokenFormData(details)
+        );
+      } else {
+        this.logger.warn('Token creation called without form data - submit button should be inactive!');
+      }
     }
 
     getDevices() {
