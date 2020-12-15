@@ -43,7 +43,7 @@
                             <img src="${url.resourcesPath}/img/Ubirch_Logo_weiss.svg" alt="logo"></a>
                         <ul class="mainnav">
                             <li><a href="https://ubirch.de/unternehmen" title="Unternehmen">Unternehmen</a></li>
-                            <li><a href="https://console.dev.ubirch.com" title="Console">Console</a></li>
+                            <li><a href="${client.baseUrl}" title="Console">Console</a></li>
                             <li class="noborder"><img class="langmenue" src="${url.resourcesPath}/img/Weltkugel_weiss.svg"
                                                       alt="language">
                                 <div class="langwrap">
