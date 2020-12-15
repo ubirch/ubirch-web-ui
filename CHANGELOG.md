@@ -9,6 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - change user account to become a pro user
 - token management
 
+## [0.8.6] - 2020-12-15
+
+### Added
+
+### Changed
+- internationalisation
+  * replaced icon
+- fixed missing language string if things search is empty
+- keycloak theme with dynamic console link on login template
+
+### Removed
+
+## [0.8.5] - 2020-11-30
+
+### Added
+- internationalisation
+  * added language select button to switch between English and German
+  * added German translation
+  * browser language is detected and used initially
+
+### Changed
+
+### Removed
+
 ## [0.8.4] - 2020-11-20
 
 ### Added
