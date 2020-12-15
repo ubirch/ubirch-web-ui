@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {EnterOnDashboardGuard} from './auth/enter-on-dashboard.guard';
 import { AdminOnlyGuard } from './auth/admin-only.guard';
 import { AuthOnlyGuard } from './auth/auth-only.guard';
-import {AccountProfileValidGuard} from './auth/account-profile-valid.guard';
+import { EnterOnDashboardGuard } from './auth/enter-on-dashboard.guard';
 
 const routes: Routes = [
   {
@@ -14,17 +13,19 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./tabs/home/home.module').then(m => m.HomePageModule),
-    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard ]
-  },
-  {
-    path: 'account-profile',
-    loadChildren: () => import('./tabs/account-profile/account-profile.module').then(m => m.AccountProfilePageModule),
+//    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard ]
     canActivate: [ AuthOnlyGuard ]
   },
+  // {
+  //   path: 'account-profile',
+  //   loadChildren: () => import('./tabs/account-profile/account-profile.module').then(m => m.AccountProfilePageModule),
+  //   canActivate: [ AuthOnlyGuard ]
+  // },
   {
     path: 'devices',
     loadChildren: () => import('./tabs/devices/devices.module').then(m => m.ListPageModule),
-    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard ]
+//    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard ]
+    canActivate: [ AuthOnlyGuard ]
   },
   {
     path: 'verification',
@@ -33,7 +34,8 @@ const routes: Routes = [
   {
     path: 'import',
     loadChildren: './tabs/import/import.module#ImportPageModule',
-    canActivate: [ AccountProfileValidGuard, AdminOnlyGuard, AuthOnlyGuard ],
+//    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard, AuthOnlyGuard ]
+    canActivate: [ AdminOnlyGuard, AuthOnlyGuard ],
   },
   {
     path: 'logout',
