@@ -30,7 +30,8 @@ const routes: Routes = [
   {
     path: 'token-manager',
     loadChildren: () => import('./tabs/token-manager/token-manager.module').then(m => m.TokenManagerPageModule),
-    canActivate: [AccountProfileValidGuard, AuthOnlyGuard]
+//    canActivate: [AccountProfileValidGuard, AuthOnlyGuard]
+    canActivate: [AuthOnlyGuard]
   },
   {
     path: 'verification',
