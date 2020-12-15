@@ -49,11 +49,7 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full'
-  },
-  {
-    path: 'token-manager',
-    loadChildren: () => import('./tabs/token-manager/token-manager.module').then( m => m.TokenManagerPageModule)
-  },
+  }
 
 ];
 

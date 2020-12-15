@@ -1,17 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { ToastType } from '../enums/toast-type.enum';
 import { CreateTokenFormData } from '../models/create-token-form-data';
 import { IUbirchAccountingJWT } from '../models/iubirch-accounting-jwt';
+import { IUbirchAccountingTokenCreationResponse } from '../models/iubirch-accounting-token-creation-response';
 import { IUbirchAccountingTokenList } from '../models/iubirch-accounting-token-list';
 import { UbirchAccountingToken } from '../models/ubirch-accounting-token';
 import { UbirchAccountingTokenCreationData } from '../models/ubirch-accounting-token-creation-data';
+import { User } from '../models/user';
 import { LoggingService } from './logging.service';
 import { ToastService } from './toast.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +28,7 @@ export class TokenService {
     private http: HttpClient,
     private toast: ToastService,
     private logger: LoggingService,
+    private userService: UserService,
   ) {
     this.jwtHelper = new JwtHelperService();
   }
@@ -33,7 +37,7 @@ export class TokenService {
     return this.http.get<IUbirchAccountingTokenList>(this.API_URL).pipe(
       map((listofTokens: IUbirchAccountingTokenList) => {
         return listofTokens.data
-          .map((jwt: IUbirchAccountingJWT) => this.extractUbirchAccountingTokenFromJWT(jwt))
+          .map((jwt: IUbirchAccountingJWT) => this.extractUbirchAccountingTokenFromJWT(jwt?.tokenValue))
           .filter((token: UbirchAccountingToken) => token !== undefined);
       }),
       catchError(err => {
@@ -43,30 +47,36 @@ export class TokenService {
     );
   }
 
-  public createToken(data: CreateTokenFormData): Observable<UbirchAccountingToken> {
+  public async createToken(data: CreateTokenFormData): Promise<UbirchAccountingToken> {
 
-    const url = `${this.API_URL}//verification/create`;
+    const url = `${this.API_URL}/verification/create`;
+    const creationData: UbirchAccountingTokenCreationData = await this.prepareTokenDataForCreation(data);
 
-    return this.http.post<UbirchAccountingToken>(url, this.prepareTokenDataForCreation(data)).pipe(
-      map( (newToken: any) => newToken),
-      catchError(err => {
-        this.toast.openToast(ToastType.danger, ':toast.token.creation.failed', 10000, err.message);
-        return undefined;
-      })
-    );
+    const resp: IUbirchAccountingTokenCreationResponse =
+      await this.http.post<IUbirchAccountingTokenCreationResponse>(url, creationData).toPromise()
+        .catch(err => {
+          this.toast.openToast(ToastType.danger, ':toast.token.creation.failed', 10000, err.message);
+          return undefined;
+        });
+
+    if (!resp?.data?.token) {
+      this.toast.openToast(ToastType.danger, ':toast.token.creation.failed', 10000, 'missing JWT in creation response');
+      return undefined;
+    }
+    return this.extractUbirchAccountingTokenFromJWT(resp?.data?.token);
   }
 
   deleteToken(tokenId) {
     // TODO
   }
 
-  private extractUbirchAccountingTokenFromJWT(rawTokenP: IUbirchAccountingJWT): UbirchAccountingToken {
+  private extractUbirchAccountingTokenFromJWT(tokenValue: string): UbirchAccountingToken {
 
-    if (rawTokenP?.tokenValue) {
+    if (tokenValue) {
 
-      const decodedToken: any = this.jwtHelper.decodeToken(rawTokenP.tokenValue);
-      const expirationDate: Date = this.jwtHelper.getTokenExpirationDate(rawTokenP.tokenValue);
-      const isExpired: boolean = this.jwtHelper.isTokenExpired(rawTokenP.tokenValue);
+      const decodedToken: any = this.jwtHelper.decodeToken(tokenValue);
+      const expirationDate: Date = this.jwtHelper.getTokenExpirationDate(tokenValue);
+      const isExpired: boolean = this.jwtHelper.isTokenExpired(tokenValue);
 
       return new UbirchAccountingToken(decodedToken, expirationDate, isExpired);
     } else {
@@ -77,23 +87,29 @@ export class TokenService {
     }
   }
 
-  private prepareTokenDataForCreation(tokenDataP: CreateTokenFormData): UbirchAccountingTokenCreationData {
+  private async prepareTokenDataForCreation(tokenDataP: CreateTokenFormData): Promise<UbirchAccountingTokenCreationData> {
 
-    const uatcd: UbirchAccountingTokenCreationData = new UbirchAccountingTokenCreationData(  {
-      // TODO: get userid from userinfo and use as tenantId
-      tenantId: 'd63ecc03-f5a7-4d43-91d0-a30d034d8da3',
-      purpose: tokenDataP.purpose,
-      targetIdentities: tokenDataP.validForAll ? '*' : tokenDataP.targetIdentities
-    });
+    return this.userService.getUser().toPromise().then(
+      (user: User) => {
+        const uatcd: UbirchAccountingTokenCreationData = new UbirchAccountingTokenCreationData({
+          // TODO: check for user account type:
+          //  * if user has free account use userid as tenantId
+          //  * if user has pro account use tenant id (check if tenant profile is filled out sufficiently)
+          tenantId: user.id, // use userid as tenantId
+          purpose: tokenDataP.purpose,
+          targetIdentities: tokenDataP.validForAll ? '*' : tokenDataP.targetIdentities,
+        });
 
-    if (tokenDataP.expiration) {
-      uatcd.expiration = tokenDataP.expiration;
-    }
+        if (tokenDataP.expiration) {
+          uatcd.expiration = tokenDataP.expiration;
+        }
 
-    if (tokenDataP.notBefore) {
-      uatcd.notBefore = tokenDataP.notBefore;
-    }
+        if (tokenDataP.notBefore) {
+          uatcd.notBefore = tokenDataP.notBefore;
+        }
 
-    return uatcd;
+        return uatcd;
+      },
+    );
   }
 }

@@ -2,6 +2,6 @@ import { UbirchAccountingTokenCreationData } from './ubirch-accounting-token-cre
 
 describe('IUbirchAccountingTokenCreationData', () => {
   it('should create an instance', () => {
-    expect(new UbirchAccountingTokenCreationData()).toBeTruthy();
+    expect(new UbirchAccountingTokenCreationData({})).toBeTruthy();
   });
 });
