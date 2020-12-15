@@ -56,12 +56,12 @@ export class AppComponent {
         adminOnly: true,
         withProfileOnly: true
       },
-      {
-        titleKey: 'menu.main.account-profile',
-        url: '/account-profile',
-        icon: 'person.svg',
-        authOnly: true
-      },
+      // {
+      //   titleKey: 'menu.main.account-profile',
+      //   url: '/account-profile',
+      //   icon: 'person.svg',
+      //   authOnly: true
+      // },
       {
         titleKey: 'menu.main.logout',
         url: '/logout',

@@ -49,6 +49,7 @@
 	"devices.list.delete-thing.note.text": "Wenn Sie eine Sache löschen, gehen alle gespeicherten Daten dieser Sache verloren.",
 	"devices.list.delete-thing.sub-header": "Möchten Sie das ausgewählte Thing wirklich löschen?",
 	"devices.list.info.no-items": "Sie scheinen noch keine Things zu haben.",
+  	"devices.list.info.no-search-item": "Ihre Suche passt zu keinem Ihrer Things.",
 	"devices.list.item.num-upps.last-day": "UPPs am letzten Tag",
 	"devices.list.item.num-upps.loading": "Ladezustand ...",
 	"devices.list.item.num-upps.not-available": "Zustand nicht verfügbar",
