@@ -2,7 +2,7 @@
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: 1fr 3fr 3fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 2fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
           "title      title       .           .           . "
           "things     things      issuedAt    issuedAt    qr"
@@ -79,39 +79,35 @@ ion-item{
 
 @media (max-width: 1600px)  {
   .tokenItem {
-    grid-template-columns: 3fr 3fr 3fr 1fr ;
+    grid-template-columns: 1fr 1fr 3fr 3fr 1fr ;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas:
-          "title        title       title     ."
-          "things       things      things    ."
-          "scope        scope       scope     qr"
-          "tokenId      tokenId     tokenId   qr"
-          "issuedAt     issuedAt    issuedAt  qr"
-          "validFrom    validFrom   validFrom ."
-          "validTill    validTill   validTill ."
-          "copyButton   delete      .         .";
+          "title      title      title       title     .  "
+          "things     things     things      things    .  "
+          "scope      scope      scope       scope     .  "
+          "tokenId    tokenId    tokenId     tokenId   qr "
+          "issuedAt   issuedAt   issuedAt    issuedAt  qr "
+          "validFrom  validFrom  validFrom   validFrom .  "
+          "validTill  validTill  validTill   validTill .  "
+          "copyButton delete     .            .        .  ";
   }
 }
 
 @media (max-width: 768px)  {
-  ion-content{
-    --padding-end: 0;
-    --padding-start: 0;
-  }
+
   .tokenItem{
-    grid-template-columns: 100%;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr  ;
     grid-template-areas:
-            "title"
-            "things"
-            "scope"
-            "tokenId"
-            "issuedAt"
-            "validFrom"
-            "validTill"
-            "copyButton"
-            "delete"
-            "qr";
+            "title      title     "
+            "things     things    "
+            "scope      scope     "
+            "tokenId    tokenId   "
+            "issuedAt   issuedAt  "
+            "validFrom  validFrom "
+            "validTill  validTill "
+            "copyButton delete    "
+            "qr         qr        ";
   }
 
   .qrButton{
@@ -120,12 +116,19 @@ ion-item{
   }
 
   .copyButton{
-    width: 90%;
+    width: 77.5%;
     justify-self: center;
   }
 
   .deleteButton{
     justify-self: center;
-    width: 90%;
+    width: 77.5%;
+  }
+}
+
+@media (max-width: 600px) {
+  ion-content{
+    --padding-end: 0;
+    --padding-start: 0;
   }
 }
