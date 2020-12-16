@@ -29,7 +29,7 @@ export class NewTokenPopupComponent implements OnInit {
     ngOnInit() {
         this.getDevices();
         this.tokenDetailsForm = this.fb.group({
-            purpose: ['', Validators.required],
+            purpose: ['', [Validators.required, Validators.minLength(5)]],
             scope: ['', Validators.required],
             expiration: [''],
             notBefore: [''],

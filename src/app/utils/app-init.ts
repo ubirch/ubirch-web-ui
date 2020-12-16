@@ -14,9 +14,6 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
             checkLoginIframe: false
           },
           enableBearerInterceptor: true,
-          bearerExcludedUrls: [
-            'verification'
-          ],
         });
         resolve();
       } catch (error) {
