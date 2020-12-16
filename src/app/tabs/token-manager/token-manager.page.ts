@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { error } from 'util';
 import { HeaderActionButton } from '../../components/header/header-action-button';
 import { ToastType } from '../../enums/toast-type.enum';
 import { UbirchAccountingToken } from '../../models/ubirch-accounting-token';
-import { LoggingService } from '../../services/logging.service';
 import { ToastService } from '../../services/toast.service';
 import { TokenService } from '../../services/token.service';
 import { NewTokenPopupComponent } from './popups/new-token-popup/new-token-popup.component';
@@ -25,12 +23,15 @@ export class TokenManagerPage implements OnInit {
 
   private tokens: UbirchAccountingToken[] = [];
 
+  get CURRENT_LANG(): string {
+    return this.translateService.currentLang;
+  }
+
   constructor(
     private tokenService: TokenService,
     public modalController: ModalController,
     private translateService: TranslateService,
     private toast: ToastService,
-    private logger: LoggingService
   ) {
   }
 
@@ -46,15 +47,16 @@ export class TokenManagerPage implements OnInit {
     modal.onDidDismiss().then((details: any) => {
       if (details && details.data) {
         this.tokenService.createToken(
-          details.data
+          details.data,
         ).then(
-          (_: UbirchAccountingToken) => {
-            this.toast.openToast(ToastType.success, 'toast.token.created.successfully', 4000);
-            this.getTokens();
-          }
-        ).catch(err => {
-          this.logger.log('TODO: handle error on token creation in UI');
-          // TODO: handle error on token creation in UI
+          (token: UbirchAccountingToken) => {
+            if (token) {
+              this.toast.openToast(ToastType.success, 'toast.token.created.successfully', 4000);
+              this.getTokens();
+            }
+          },
+        ).catch(_ => {
+          // nothing to do in UI on error during token creation
         });
 
       } else {
@@ -72,13 +74,8 @@ export class TokenManagerPage implements OnInit {
 
   getTokens() {
     this.tokenService.getAllTokens().toPromise().then((tokenList: UbirchAccountingToken[]) =>
-      this.tokens = tokenList
+      this.tokens = tokenList,
     );
   }
-
-  get CURRENT_LANG(): string {
-    return this.translateService.currentLang;
-  }
-
 
 }
