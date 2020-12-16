@@ -15,12 +15,12 @@
             </ion-item>
             <ion-item>
                 <ion-label>Expire Date</ion-label>
-                <ion-datetime display-format="MMM DD, YYYY HH:mm" mode="md" id="expiration" slot="end" formControlName="expiration"></ion-datetime>
+                <ion-datetime display-format="MMM DD, YYYY HH:mm" max="3000" mode="md" id="expiration" slot="end" formControlName="expiration"></ion-datetime>
                 <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
             </ion-item>
             <ion-item>
                 <ion-label>Valid from</ion-label>
-                <ion-datetime display-format="MMM DD, YYYY HH:mm" id="vFrom" slot="end" formControlName="notBefore"></ion-datetime>
+                <ion-datetime display-format="MMM DD, YYYY HH:mm" max="3000" id="vFrom" slot="end" formControlName="notBefore"></ion-datetime>
                 <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
             </ion-item>
             <ion-item>

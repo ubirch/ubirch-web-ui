@@ -4,19 +4,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {HeaderActionButton} from '../../components/header/header-action-button';
 import {ToastType} from '../../enums/toast-type.enum';
 import {UbirchAccountingToken} from '../../models/ubirch-accounting-token';
-import {LoggingService} from '../../services/logging.service';
 import {ToastService} from '../../services/toast.service';
 import {TokenService} from '../../services/token.service';
 import {NewTokenPopupComponent} from './popups/new-token-popup/new-token-popup.component';
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
-import { HeaderActionButton } from '../../components/header/header-action-button';
-import { ToastType } from '../../enums/toast-type.enum';
-import { UbirchAccountingToken } from '../../models/ubirch-accounting-token';
-import { ToastService } from '../../services/toast.service';
-import { TokenService } from '../../services/token.service';
-import { NewTokenPopupComponent } from './popups/new-token-popup/new-token-popup.component';
 
 @Component({
   selector: 'app-token-manager',
