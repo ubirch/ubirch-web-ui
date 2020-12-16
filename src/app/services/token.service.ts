@@ -55,15 +55,11 @@ export class TokenService {
 
     const resp: IUbirchAccountingTokenCreationResponse =
       await this.http.post<IUbirchAccountingTokenCreationResponse>(url, creationData).toPromise()
-        .catch(err => {
+        .catch((err: Error) => {
           this.toast.openToast(ToastType.danger, ':toast.token.creation.failed', 10000, err.message);
-          return undefined;
+          throw err;
         });
 
-    if (!resp?.data?.token) {
-      this.toast.openToast(ToastType.danger, ':toast.token.creation.failed', 10000, 'missing JWT in creation response');
-      return undefined;
-    }
     return this.extractUbirchAccountingTokenFromJWT(resp?.data?.token);
   }
 
