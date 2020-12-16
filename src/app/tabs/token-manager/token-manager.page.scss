@@ -1,0 +1,131 @@
+.tokenItem {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr 3fr 3fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 2fr;
+  grid-template-areas:
+          "title      title       .           .           . "
+          "things     things      issuedAt    issuedAt    qr"
+          "scope      scope       validFrom   validFrom   qr"
+          "tokenId    tokenId     validTill   validTill   qr"
+          "copyButton delete      .           .           . ";
+}
+
+.tokenTitle{
+  grid-area: title;
+  // background: palegreen;
+}
+
+.validFor{
+  grid-area: things;
+  // background: palegoldenrod;
+}
+
+.timeStamps{
+  grid-area: timeStamps;
+ // background: paleturquoise;
+}
+
+.validFrom{
+  grid-area: validFrom;
+}
+
+.validTill{
+  grid-area: validTill;
+}
+
+.issuedAt{
+  grid-area: issuedAt;
+}
+
+.role{
+  grid-area: scope;
+  //background: palevioletred;
+}
+
+.copyButton{
+  width: fit-content;
+  grid-area: copyButton;
+ // background: bisque;
+}
+
+.deleteButton{
+  width: fit-content;
+  grid-area: delete;
+ // background: darkkhaki;
+}
+
+.qrButton{
+  grid-area: qr;
+ // background: lavender;
+  align-self: center;
+  justify-self: center;
+  height: 70%;
+}
+
+.tokenId{
+  grid-area: tokenId;
+}
+
+ion-item{
+  --highlight-height: 0;
+}
+
+.thingAlert .alert-wrapper{
+  width: fit-content;
+}
+
+
+
+@media (max-width: 1600px)  {
+  .tokenItem {
+    grid-template-columns: 3fr 3fr 3fr 1fr ;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+          "title        title       title     ."
+          "things       things      things    ."
+          "scope        scope       scope     qr"
+          "tokenId      tokenId     tokenId   qr"
+          "issuedAt     issuedAt    issuedAt  qr"
+          "validFrom    validFrom   validFrom ."
+          "validTill    validTill   validTill ."
+          "copyButton   delete      .         .";
+  }
+}
+
+@media (max-width: 768px)  {
+  ion-content{
+    --padding-end: 0;
+    --padding-start: 0;
+  }
+  .tokenItem{
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+    grid-template-areas:
+            "title"
+            "things"
+            "scope"
+            "tokenId"
+            "issuedAt"
+            "validFrom"
+            "validTill"
+            "copyButton"
+            "delete"
+            "qr";
+  }
+
+  .qrButton{
+    width: 90%;
+    justify-self: center;
+  }
+
+  .copyButton{
+    width: 90%;
+    justify-self: center;
+  }
+
+  .deleteButton{
+    justify-self: center;
+    width: 90%;
+  }
+}

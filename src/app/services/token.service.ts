@@ -21,7 +21,8 @@ import { UserService } from './user.service';
 })
 export class TokenService {
 
-  private API_URL = environment.tokenServiceServerUrl + environment.tokenServiceApiPrefix;
+  // TODO change API_URL
+  private API_URL = 'https://token.dev.ubirch.com/api/tokens/v1';
   private jwtHelper: JwtHelperService;
 
   constructor(

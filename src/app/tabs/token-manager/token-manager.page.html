@@ -7,28 +7,60 @@
         (startSearch)="search($event)"
 ></ubirch-web-ui-header>
 
-<ion-content  class="ion-padding-horizontal">
+<ion-content class="ion-padding-horizontal">
   <ng-container *ngIf="tokens?.length > 0">
     <ion-list>
-      <ion-item *ngFor="let token of tokens">
-        <ion-label>
-          <h2>{{token.data.purpose}}</h2>
-          <ng-container *ngIf="token.data.valid_for_all; else LIST_OF_DEVICES">
-            {{ 'token.list.data.valid_for_all' | translate }}
-          </ng-container>
-          <ng-template #LIST_OF_DEVICES>
-            <p *ngFor="let thingId of token.data.target_identities">{{thingId}}</p>
-          </ng-template>
-          <p *ngIf="token.data.nbf">
-            {{ 'token.list.data.label.not_valid_before' | translate }}:
-            {{token.data.nbf | date: 'long':undefined:CURRENT_LANG}}
-          </p>
-          <p *ngIf="token.data.exp">
-            {{ 'token.list.data.label.expires_at' | translate }}:
-            {{token.data.exp | date: 'long':undefined:CURRENT_LANG}}
-          </p>
-        </ion-label>
-      </ion-item>
+      <ion-card *ngFor="let token of tokens">
+        <ion-card-content>
+          <ion-label class="tokenItem">
+            <h1 class="tokenTitle">{{token.data.purpose}}</h1>
+            <ion-item class="tokenId">
+              <ion-label style="font-weight: bold">{{'token.list.data.label.token_id' | translate}}</ion-label>
+              <ion-input readonly="true" value="{{token.data.jti}}"></ion-input>
+            </ion-item>
+
+            <div class="validFor">
+              <ng-container *ngIf="token.data.valid_for_all; else LIST_OF_DEVICES">
+                {{ 'token.list.data.valid_for_all' | translate }}
+              </ng-container>
+              <ng-template #LIST_OF_DEVICES>
+                <ion-item class="tokenId" detail="true" button (click)="presentThings(token.data.target_identities)">
+                  <ion-label style="font-weight: bold">{{'token.list.data.label.thing_id' | translate}}</ion-label>
+                  <ion-text color="medium" slot="end" style="cursor:pointer">{{'token.list.data.label.show_things' | translate}}</ion-text>
+                </ion-item>
+              </ng-template>
+            </div>
+
+            <ion-item *ngIf="token.data.nbf" class="validFrom">
+              <ion-label
+                      style="font-weight: bold">{{ 'token.list.data.label.not_valid_before' | translate }}</ion-label>
+              <ion-input readonly="true" value="{{token.data.nbf * 1000 | date: 'long':undefined:CURRENT_LANG}}"
+                         ></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="token.data.exp" class="validTill">
+              <ion-label style="font-weight: bold">{{ 'token.list.data.label.expires_at' | translate }}</ion-label>
+              <ion-input readonly="true"
+                         value="{{token.data.exp * 1000 | date: 'long':undefined:CURRENT_LANG}}"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="token.data.iat" class="issuedAt">
+              <ion-label style="font-weight: bold">{{ 'token.list.data.label.issued_at' | translate }}</ion-label>
+              <ion-input readonly="true" value="{{token.data.iat * 1000 | date: 'long':undefined:CURRENT_LANG}}" ></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="token.data.role" class="role">
+              <ion-label style="font-weight: bold">{{ 'token.list.data.label.role' | translate }}</ion-label>
+              <ion-input readonly="true" value="{{token.data.role}}" ></ion-input>
+            </ion-item>
+
+            <ion-button class="copyButton" color="success"><ion-icon name="copy"></ion-icon></ion-button>
+            <ion-button class="deleteButton" color="danger"><ion-icon src="assets/app-icons/delete.svg"></ion-icon></ion-button>
+            <ion-button class="qrButton"><ion-icon name="qr-code-sharp"></ion-icon></ion-button>
+          </ion-label>
+        </ion-card-content>
+      </ion-card>
+
     </ion-list>
   </ng-container>
 
