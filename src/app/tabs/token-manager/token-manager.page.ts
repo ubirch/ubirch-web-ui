@@ -7,6 +7,8 @@ import {UbirchAccountingToken} from '../../models/ubirch-accounting-token';
 import {ToastService} from '../../services/toast.service';
 import {TokenService} from '../../services/token.service';
 import {NewTokenPopupComponent} from './popups/new-token-popup/new-token-popup.component';
+import {UbirchWebUIUtilsService} from '../../utils/ubirch-web-uiutils.service';
+
 
 @Component({
   selector: 'app-token-manager',
@@ -90,6 +92,7 @@ export class TokenManagerPage implements OnInit {
 
     await alert.present();
   }
+
   search(event: any) {
     // TODO
   }
@@ -98,6 +101,11 @@ export class TokenManagerPage implements OnInit {
     this.tokenService.getAllTokens().toPromise().then((tokenList: UbirchAccountingToken[]) =>
       this.tokens = tokenList,
     );
+  }
+
+  copyToClipboard(val: string) {
+    UbirchWebUIUtilsService.copyToClipboard(val);
+    this.toast.openToast(ToastType.light, 'toast.token.copy', 2000);
   }
 
 }

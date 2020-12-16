@@ -135,6 +135,7 @@
   "toast.token.created.successfully": "Token created successfully",
   "toast.token.getlist.failed": "Something went wrong while fetching the list of all of your own Tokens!",
 	"toast.verification.blockchainexplorer-call.cannot-build-url": "Cannot open contruct blockChainExplorer for that provider (unable to create explorerUrl)",
+	"toast.token.copy": "Token ID copied to clipboard.",
   "token.list.data.label.expires_at": "Expires on",
   "token.list.data.label.not_valid_before": "Valid after",
   "token.list.data.valid_for_all": "Token valid for all Things",
