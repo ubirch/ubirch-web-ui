@@ -79,17 +79,17 @@ ion-item{
 
 @media (max-width: 1600px)  {
   .tokenItem {
-    grid-template-columns: 1fr 1fr 3fr 3fr 1fr ;
+    grid-template-columns: 1fr 1fr 6fr 1fr ;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas:
-          "title      title      title       title     .  "
-          "things     things     things      things    .  "
-          "scope      scope      scope       scope     .  "
-          "tokenId    tokenId    tokenId     tokenId   qr "
-          "issuedAt   issuedAt   issuedAt    issuedAt  qr "
-          "validFrom  validFrom  validFrom   validFrom .  "
-          "validTill  validTill  validTill   validTill .  "
-          "copyButton delete     .            .        .  ";
+          "title      title      title      .  "
+          "things     things     things     .  "
+          "scope      scope      scope      qr  "
+          "tokenId    tokenId    tokenId    qr "
+          "issuedAt   issuedAt   issuedAt   qr "
+          "validFrom  validFrom  validFrom  qr  "
+          "validTill  validTill  validTill  .  "
+          "copyButton delete     .          .  ";
   }
 }
 
