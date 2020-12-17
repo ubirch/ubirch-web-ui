@@ -151,6 +151,7 @@
 	"token.list.data.label.show_things": "TRANSLATE!!Show target things",
   "token.list.title": "TRANSLATE!!Your Tokens",
   "token.list.searchbar.placeholder": "TRANSLATE!!Search for Token",
+	"token.qr.title": "TRANSLATE!!Scan the QR Code to get your Token",
 	"verification.quickinfo.info.upp-not-yet-anchored": "Wir haben das entsprechende UPP erhalten und es wird im nächsten Intervall verankert.",
 	"verification.quickinfo.label.blockchain-verification": "Blockchain Verifikation",
 	"verification.quickinfo.label.initial-verification": "Erstüberprüfung",

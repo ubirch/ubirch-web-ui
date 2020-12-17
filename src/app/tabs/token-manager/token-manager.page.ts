@@ -8,6 +8,7 @@ import {ToastService} from '../../services/toast.service';
 import {TokenService} from '../../services/token.service';
 import {NewTokenPopupComponent} from './popups/new-token-popup/new-token-popup.component';
 import {UbirchWebUIUtilsService} from '../../utils/ubirch-web-uiutils.service';
+import {TokenQrCodePopupComponent} from './popups/token-qr-code-popup/token-qr-code-popup.component';
 
 
 @Component({
@@ -69,6 +70,17 @@ export class TokenManagerPage implements OnInit {
 
     return await modal.present();
 
+  }
+
+  async qrCodePopup(dataP) {
+    const modal = await this.modalController.create({
+      component: TokenQrCodePopupComponent,
+      componentProps: {
+        qrData: dataP,
+      }
+    });
+
+    return await modal.present();
   }
 
   async presentThings(things: string) {

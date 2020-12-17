@@ -56,7 +56,7 @@
 
             <ion-button (click)="copyToClipboard(token.data.jti)" class="copyButton" color="success"><ion-icon name="copy" ></ion-icon></ion-button>
             <ion-button class="deleteButton" color="danger"><ion-icon src="assets/app-icons/delete.svg"></ion-icon></ion-button>
-            <ion-button class="qrButton"><ion-icon name="qr-code-sharp"></ion-icon></ion-button>
+            <ion-button (click)="qrCodePopup(token.data.jti)" class="qrButton"><ion-icon  name="qr-code-sharp"></ion-icon></ion-button>
           </ion-label>
         </ion-card-content>
       </ion-card>

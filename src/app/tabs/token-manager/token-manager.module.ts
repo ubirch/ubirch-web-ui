@@ -9,6 +9,8 @@ import { ComponentsModule } from '../../components/components.module';
 import { NewTokenPopupComponent } from './popups/new-token-popup/new-token-popup.component';
 
 import { TokenManagerPage } from './token-manager.page';
+import {NgxQRCodeModule} from '@techiediaries/ngx-qrcode';
+import {TokenQrCodePopupComponent} from './popups/token-qr-code-popup/token-qr-code-popup.component';
 
 const routes: Routes = [
   {
@@ -18,21 +20,24 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes),
-    TranslateModule,
-    ComponentsModule,
-    ReactiveFormsModule,
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        TranslateModule,
+        ComponentsModule,
+        ReactiveFormsModule,
+        NgxQRCodeModule,
+    ],
   declarations: [
     TokenManagerPage,
-    NewTokenPopupComponent
+    NewTokenPopupComponent,
+      TokenQrCodePopupComponent
   ],
   entryComponents: [
-    NewTokenPopupComponent
+    NewTokenPopupComponent,
+      TokenQrCodePopupComponent
   ],
 })
 export class TokenManagerPageModule {}

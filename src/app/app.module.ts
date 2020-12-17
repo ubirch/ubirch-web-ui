@@ -18,6 +18,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import localeEn from '@angular/common/locales/en';
 import localeDe from '@angular/common/locales/de';
 import {registerLocaleData} from '@angular/common';
+import {NgxQRCodeModule} from '@techiediaries/ngx-qrcode';
 
 
 registerLocaleData(localeEn, 'en');
@@ -42,7 +43,8 @@ registerLocaleData(localeDe, 'de');
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+      NgxQRCodeModule
   ],
   providers: [
     StatusBar,

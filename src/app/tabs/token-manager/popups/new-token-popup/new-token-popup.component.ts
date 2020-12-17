@@ -39,8 +39,6 @@ export class NewTokenPopupComponent implements OnInit {
   public dismiss(): void {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
-    console.log(this.selectedThings);
-    console.log(this.tokenDetailsForm.value);
     this.modalCtrl.dismiss();
   }
 
