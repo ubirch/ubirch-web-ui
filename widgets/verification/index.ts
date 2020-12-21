@@ -109,6 +109,7 @@ class UbirchVerification {
   private algorithm: UbirchHashAlgorithm;
   private elementSelector: string;
   private openConsoleInSameTarget = false;
+  private noLinkToConsole = false;
 
   constructor(config: IUbirchVerificationConfig = DEFAULT_CONFIG) {
     MESSAGE_STRINGS = config.language && LANGUAGE_MESSAGE_STRINGS[config.language] ?
@@ -127,6 +128,10 @@ class UbirchVerification {
 
     if (config.OPEN_CONSOLE_IN_SAME_TARGET) {
       this.openConsoleInSameTarget = config.OPEN_CONSOLE_IN_SAME_TARGET;
+    }
+
+    if (config.NO_LINK_TO_CONSOLE !== undefined) {
+      this.noLinkToConsole = config.NO_LINK_TO_CONSOLE;
     }
 
     this.view = new View(this.elementSelector, this.openConsoleInSameTarget);
@@ -181,7 +186,7 @@ class UbirchVerification {
         this.view.addHeadlineAndInfotext(undefined);
         break;
       case EInfo.VERIFICATION_SUCCESSFUL:
-        this.view.showSeal(true, hash);
+        this.view.showSeal(true, hash, this.noLinkToConsole);
         this.view.addHeadlineAndInfotext(true);
         break;
     }
@@ -196,7 +201,7 @@ class UbirchVerification {
 
     if (showNonSeal) {
       this.view.cleanupIcons();
-      this.view.showSeal(false, hash);
+      this.view.showSeal(false, hash, this.noLinkToConsole);
       this.view.addHeadlineAndInfotext(false);
     }
 
@@ -515,16 +520,8 @@ class View {
     this.cleanAllChilds(this.sealInfoText);
   }
 
-  public showSeal(successful: boolean, hash: string): void {
-    const link: HTMLElement = document.createElement('a');
+  public showSeal(successful: boolean, hash: string, nolink: boolean = false): void {
     let icon: HTMLElement;
-
-    const encodedHash: string = encodeURIComponent(hash);
-
-    link.setAttribute('href', `${environment.console_verify_url}?hash=${encodedHash}`);
-    if (!this.openConsoleInSameTarget) {
-      link.setAttribute('target', '_blank');
-    }
 
     if (successful) {
       icon = this.createIconTag(environment.assets_url_prefix + BlockchainSettings.ubirchIcons.seal,
@@ -534,8 +531,22 @@ class View {
         'ubirch-verification-no-seal-img');
     }
 
-    link.appendChild(icon);
-    this.sealOutput.appendChild(link);
+    if (nolink) {
+      this.sealOutput.appendChild(icon);
+    } else {
+      const link: HTMLElement = document.createElement('a');
+
+      const encodedHash: string = encodeURIComponent(hash);
+
+      link.setAttribute('href', `${environment.console_verify_url}?hash=${encodedHash}`);
+      if (!this.openConsoleInSameTarget) {
+        link.setAttribute('target', '_blank');
+      }
+
+      link.appendChild(icon);
+
+      this.sealOutput.appendChild(link);
+    }
   }
 
   public showSuccess(): void {
