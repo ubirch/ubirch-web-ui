@@ -119,4 +119,8 @@ export class TokenManagerPage implements OnInit {
     this.toast.openToast(ToastType.light, 'toast.token.copy', 2000);
   }
 
+  revokeToken() {
+    this.tokenService.revokeToken();
+  }
+
 }

@@ -1,20 +1,19 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
-import { ToastType } from '../enums/toast-type.enum';
-import { CreateTokenFormData } from '../models/create-token-form-data';
-import { IUbirchAccountingJWT } from '../models/iubirch-accounting-jwt';
-import { IUbirchAccountingTokenCreationResponse } from '../models/iubirch-accounting-token-creation-response';
-import { IUbirchAccountingTokenList } from '../models/iubirch-accounting-token-list';
-import { UbirchAccountingToken } from '../models/ubirch-accounting-token';
-import { UbirchAccountingTokenCreationData } from '../models/ubirch-accounting-token-creation-data';
-import { User } from '../models/user';
-import { LoggingService } from './logging.service';
-import { ToastService } from './toast.service';
-import { UserService } from './user.service';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {Observable} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
+import {ToastType} from '../enums/toast-type.enum';
+import {CreateTokenFormData} from '../models/create-token-form-data';
+import {IUbirchAccountingJWT} from '../models/iubirch-accounting-jwt';
+import {IUbirchAccountingTokenCreationResponse} from '../models/iubirch-accounting-token-creation-response';
+import {IUbirchAccountingTokenList} from '../models/iubirch-accounting-token-list';
+import {UbirchAccountingToken} from '../models/ubirch-accounting-token';
+import {UbirchAccountingTokenCreationData} from '../models/ubirch-accounting-token-creation-data';
+import {User} from '../models/user';
+import {LoggingService} from './logging.service';
+import {ToastService} from './toast.service';
+import {UserService} from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -63,8 +62,9 @@ export class TokenService {
     return this.extractUbirchAccountingTokenFromJWT(resp?.data?.token);
   }
 
-  deleteToken(tokenId) {
+  revokeToken() {
     // TODO
+      this.toast.openToast(ToastType.danger, 'revocation is not yet implemented', 10000);
   }
 
   private extractUbirchAccountingTokenFromJWT(tokenValue: string): UbirchAccountingToken {
