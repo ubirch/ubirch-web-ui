@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
-import { CreateTokenFormData } from '../../../../models/create-token-form-data';
-import { DeviceService } from '../../../../services/device.service';
-import { LoggingService } from '../../../../services/logging.service';
-import { TokenService } from '../../../../services/token.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ModalController} from '@ionic/angular';
+import {CreateTokenFormData} from '../../../../models/create-token-form-data';
+import {DeviceService} from '../../../../services/device.service';
+import {LoggingService} from '../../../../services/logging.service';
+import {TokenService} from '../../../../services/token.service';
 
 @Component({
   selector: 'app-new-token-popup',
   templateUrl: './new-token-popup.component.html',
-  styleUrls: [ './new-token-popup.component.scss' ],
+  styleUrls: ['./new-token-popup.component.scss'],
 })
 export class NewTokenPopupComponent implements OnInit {
 
@@ -44,10 +44,16 @@ export class NewTokenPopupComponent implements OnInit {
 
   public createToken(): void {
     const details = this.tokenDetailsForm.getRawValue();
+    const currentDate = Date.now();
+    const expirationMilliSeconds = new Date(details.expiration).getTime();
+    const notBeforeMilliSeconds = new Date(details.notBefore).getTime();
+
+    details.expiration = (expirationMilliSeconds - currentDate) / 1000;
+    details.notBefore = (notBeforeMilliSeconds - currentDate) / 1000;
 
     if (details) {
       this.modalCtrl.dismiss(
-        new CreateTokenFormData(details),
+          new CreateTokenFormData(details),
       );
     } else {
       this.logger.warn('Token creation called without form data - submit button should be inactive!');
@@ -61,7 +67,6 @@ export class NewTokenPopupComponent implements OnInit {
     ).subscribe(
       wrapper => {
         this.devices = wrapper.devices || [];
-        console.log(this.devices);
       },
       error => {
         // TODO: handle error

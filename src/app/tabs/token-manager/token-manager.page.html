@@ -34,19 +34,19 @@
             <ion-item *ngIf="token.data.nbf" class="validFrom">
               <ion-label
                       style="font-weight: bold">{{ 'token.list.data.label.not_valid_before' | translate }}</ion-label>
-              <ion-input readonly="true" value="{{token.data.nbf * 1000 | date: 'long':undefined:CURRENT_LANG}}"
+              <ion-input readonly="true" value="{{token.data.nbf * 1000 | date: 'MMM d, y - H:m a z':undefined:CURRENT_LANG}}"
                          ></ion-input>
             </ion-item>
 
             <ion-item *ngIf="token.data.exp" class="validTill">
               <ion-label style="font-weight: bold">{{ 'token.list.data.label.expires_at' | translate }}</ion-label>
               <ion-input readonly="true"
-                         value="{{token.data.exp * 1000 | date: 'long':undefined:CURRENT_LANG}}"></ion-input>
+                         value="{{token.data.exp * 1000 | date: 'MMM d, y - H:m a z':undefined:CURRENT_LANG}}"></ion-input>
             </ion-item>
 
             <ion-item *ngIf="token.data.iat" class="issuedAt">
               <ion-label style="font-weight: bold">{{ 'token.list.data.label.issued_at' | translate }}</ion-label>
-              <ion-input readonly="true" value="{{token.data.iat * 1000 | date: 'long':undefined:CURRENT_LANG}}" ></ion-input>
+              <ion-input readonly="true" value="{{token.data.iat * 1000 | date: 'MMM d, y - H:m a z':undefined:CURRENT_LANG}}" ></ion-input>
             </ion-item>
 
             <ion-item *ngIf="token.data.role" class="role">

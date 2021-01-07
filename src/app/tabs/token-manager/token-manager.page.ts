@@ -84,7 +84,6 @@ export class TokenManagerPage implements OnInit {
   }
 
   async presentThings(things: string) {
-    console.log(things);
     let message: string;
     for (const thing of things) {
       if (message) {
@@ -94,7 +93,6 @@ export class TokenManagerPage implements OnInit {
       }
 
     }
-    console.log(message);
     const alert = await this.alertController.create({
       cssClass: 'thingAlert',
       header: 'Target Things for this Token',
@@ -110,8 +108,9 @@ export class TokenManagerPage implements OnInit {
   }
 
   getTokens() {
-    this.tokenService.getAllTokens().toPromise().then((tokenList: UbirchAccountingToken[]) =>
-      this.tokens = tokenList,
+    this.tokenService.getAllTokens().toPromise().then((tokenList: UbirchAccountingToken[]) => {
+          this.tokens = tokenList;
+        }
     );
   }
 
