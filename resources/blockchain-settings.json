@@ -31,10 +31,10 @@
       "nodeIcon": "IOTA_verify_right.png",
       "explorerUrl": {
         "testnet": {
-          "url": "https://comnet.thetangle.org/transaction/"
+          "url": "https://explorer.iota.org/devnet/transaction/"
         },
         "mainnet": {
-          "url": "https://thetangle.org/transaction/"
+          "url": "https://explorer.iota.org/mainnet/transaction/"
         }
       }
     },
