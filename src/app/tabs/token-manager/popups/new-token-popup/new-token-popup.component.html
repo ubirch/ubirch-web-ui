@@ -1,0 +1,35 @@
+<ion-content class="ion-padding">
+    <ion-row class="ion-justify-content-end">
+        <img src="assets/app-icons/close-outline.svg" id="close" (click)="dismiss()">
+    </ion-row>
+
+    <div class="ion-text-center">
+        <h1>{{'token.create.new_token' | translate}}</h1>
+    </div>
+
+    <form [formGroup]="tokenDetailsForm">
+        <ion-card style="padding: 20px">
+            <ion-item>
+                <ion-label>{{'token.create.description' | translate}}</ion-label>
+                <ion-input id="description" slot="end" formControlName="purpose"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>{{'token.create.expiration' | translate}}</ion-label>
+                <ion-datetime display-format="MMM DD, YYYY HH:mm" max="3000" mode="md" id="expiration" slot="end" formControlName="expiration"></ion-datetime>
+                <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
+            </ion-item>
+            <ion-item>
+                <ion-label>{{'token.create.valid_from' | translate}}</ion-label>
+                <ion-datetime display-format="MMM DD, YYYY HH:mm" max="3000" id="vFrom" slot="end" formControlName="notBefore"></ion-datetime>
+                <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
+            </ion-item>
+            <ion-item>
+                <ion-label>{{'token.create.things' | translate}}</ion-label>
+                <ion-select placeholder="{{'token.create.select' | translate}}" id="targetIdentities" slot="end" multiple="true" [(ngModel)]="selectedThings" formControlName="targetIdentities">
+                    <ion-select-option *ngFor="let device  of devices" value="{{device.hwDeviceId}}">{{device.description}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+    </form>
+    <ion-button color="success" expand="full" class="ion-margin-vertical" [disabled]="!tokenDetailsForm.valid" (click)="createToken()">Create</ion-button>
+</ion-content>

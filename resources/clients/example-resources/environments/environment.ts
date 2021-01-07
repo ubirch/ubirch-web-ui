@@ -15,6 +15,8 @@ export const environment = {
   apiPrefix: '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: '<KEYSERVICE_REST_API_SERVER_URI>',
   keyServiceApiPrefix: '/api/keyService/v1/',
+  tokenServiceServerUrl: '<TOKENSERVICE_REST_API_SERVER_URI>',
+  tokenServiceApiPrefix: '/api/tokens/v1',
   trustServiceServerUrl: '<TRUSTSERVICE_REST_API_SERVER_URI>',
   verifyApiPrefix: '/api/upp/verify/',
   client_logo_filename: 'logo.svg',

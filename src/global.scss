@@ -233,3 +233,17 @@ ion-tab-button.tab-selected {
     margin: 0 6px 0 0;
   }
 }
+
+.thingAlert .alert-wrapper{
+  min-width: fit-content;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.alert-wrapper{
+  max-width: unset !important;
+  min-width: 500px !important;
+}
+
