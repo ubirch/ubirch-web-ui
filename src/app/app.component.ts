@@ -39,7 +39,7 @@ export class AppComponent {
       {
         titleKey: 'menu.main.tokens',
         url: '/token-manager',
-        icon: 'list.svg',
+        icon: 'token.svg',
         authOnly: true,
         withProfileOnly: true
       },
