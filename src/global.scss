@@ -233,3 +233,24 @@ ion-tab-button.tab-selected {
     margin: 0 6px 0 0;
   }
 }
+
+.thingAlert .alert-wrapper{
+  min-width: fit-content;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.alert-wrapper{
+  max-width: 100% !important;
+  width: 325px !important;
+}
+
+
+@media only screen and (min-width: 768px) {
+  .picker-wrapper.sc-ion-picker-md {
+    bottom: 45%;
+  }
+}
+

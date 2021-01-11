@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
+import { CreateDevicesFormData } from '../models/create-devices-form-data';
 import {Device} from '../models/device';
+import { ReqType } from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
 import {UbirchWebUIUtilsService} from '../utils/ubirch-web-uiutils.service';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map, tap} from 'rxjs/operators';
 import {DeviceTypeService} from './device-type.service';
-import {CreateDevicesFormData, ReqType} from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
 import {DevicesListWrapper} from '../models/devices-list-wrapper';
 import {UserService} from './user.service';
 import {DeviceState, TIME_RANGES} from '../models/device-state';

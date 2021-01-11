@@ -1,0 +1,20 @@
+<ion-content class="ion-padding">
+  <ion-row class="ion-justify-content-end">
+    <img src="assets/app-icons/close-outline.svg" id="close" (click)="dismiss()">
+  </ion-row>
+
+  <div class="container">
+    <div class="ion-text-center">
+      <h1>{{'token.qr.title' | translate}}</h1>
+    </div>
+    <ngx-qrcode
+            [width]="300"
+            [elementType]="elementType"
+            [value]="qrData"
+            ></ngx-qrcode>
+  </div>
+</ion-content>
+
+
+
+

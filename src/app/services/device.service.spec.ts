@@ -2,9 +2,9 @@ import { TestBed, getTestBed, fakeAsync } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { CreateDevicesFormData } from '../models/create-devices-form-data';
 
 import { DeviceService, CreateDevicePayload } from './device.service';
-import { CreateDevicesFormData } from '../tabs/devices/devices-list-page/popups/new-device-popup/new-device-popup.component';
 import { Device } from '../models/device';
 
 import { environment } from '../../environments/environment';

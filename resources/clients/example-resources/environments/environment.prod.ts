@@ -15,6 +15,8 @@ export const environment = {
   apiPrefix: '@@UBIRCH_TR_API_PREF@@', // '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: '@@UBIRCH_TR_ENV_KEYSERVICE_SERVURL@@', // 'https://key.dev.ubirch.com',
   keyServiceApiPrefix: '@@UBIRCH_TR_API_KEYSERVICE_PREF@@', // '/api/keyService/v1/',
+  tokenServiceServerUrl: '@@UBIRCH_TR_ENV_TOKENSERVICE_SERVURL@@', // 'https://token.dev.ubirch.com',
+  tokenServiceApiPrefix: '@@UBIRCH_TR_API_TOKENSERVICE_PREF@@', // '/api/tokens/v1/',
   trustServiceServerUrl: '@@UBIRCH_TR_ENV_TRUSTSERVICE_SERVURL@@', // 'https://verify.prod.ubirch.com',
   verifyApiPrefix: '@@UBIRCH_TR_API_VERIFY_PREF@@', // '/api/verify/',
   client_logo_filename: 'logo.svg',

@@ -206,7 +206,7 @@ Enter the root directory and call the run-local script:
 
 without parameter the app is started with access to the keycloak on id.dev.ubirch.com with the ubirch-default-realm tenant configuration.
 
-ATTENTION! If you start the app the first time you need to set the keycloak-secrect, see section "Keycloak Secrets"!
+(you do not need to set the keycloak-secrects any more)
 
 ```
     ./run-local.sh
@@ -226,6 +226,10 @@ If you want to use a local keycloak, you can add the "local" as second parameter
 ```
     ./run-local.sh ubirch-default-realm local
 ```
+
+Open in a web browser:
+
+    http://localhost:9101
 
 
 ### Test on Mobile Device

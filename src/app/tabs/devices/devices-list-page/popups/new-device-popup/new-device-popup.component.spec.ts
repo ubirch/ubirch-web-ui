@@ -3,8 +3,9 @@ import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testi
 import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { By } from '@angular/platform-browser';
+import { CreateDevicesFormData } from '../../../../../models/create-devices-form-data';
 
-import { NewDevicePopupComponent, CreateDevicesFormData, EIDType } from './new-device-popup.component';
+import { NewDevicePopupComponent, EIDType } from './new-device-popup.component';
 import { environment } from '../../../../../../environments/environment';
 
 const testUUID = '000000000000';
