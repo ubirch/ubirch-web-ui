@@ -243,7 +243,14 @@ ion-tab-button.tab-selected {
 }
 
 .alert-wrapper{
-  max-width: unset !important;
-  min-width: 500px !important;
+  max-width: 100% !important;
+  min-width: fit-content !important;
+}
+
+
+@media only screen and (min-width: 768px) {
+  .picker-wrapper.sc-ion-picker-md {
+    bottom: 45%;
+  }
 }
 
