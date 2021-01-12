@@ -1,4 +1,8 @@
-<ubirch-verification-quick-info slot="fixed" [upp]="verifiedUpp"  [hashState]="verificationState" *ngIf="verificationState != VERIFICATION_STATE.Pending && verificationState != VERIFICATION_STATE.NO_HASH"></ubirch-verification-quick-info>
+<ubirch-verification-quick-info *ngIf="verificationState != VERIFICATION_STATE.PENDING && verificationState != VERIFICATION_STATE.NO_HASH"
+                                [upp]="verifiedUpp"
+                                [hashState]="verificationState"
+                                slot="fixed">
+</ubirch-verification-quick-info>
 
 <ion-content>
 
