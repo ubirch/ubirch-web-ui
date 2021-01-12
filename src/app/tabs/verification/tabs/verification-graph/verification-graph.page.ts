@@ -36,11 +36,7 @@ export class VerificationGraphPage implements OnInit, OnDestroy {
       state => this.verificationState = state
     );
     this.observableUPPSubsc = this.truster.observableUPP.subscribe(
-      upp => {
-        if (upp) {
-          this.verifiedUpp = upp;
-        }
-      }
+      upp => this.verifiedUpp = upp
     );
   }
 
