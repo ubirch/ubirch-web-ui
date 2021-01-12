@@ -8,6 +8,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tenant profile form
 - change user account to become a pro user
 - token management
+  * token revocation
+- token handling in verification widget
+- verify signature in verification widget
+
+## [0.8.8] - 2021-01-12
+
+### Added
+- verification widget
+  * added flag NO_LINK_TO_CONSOLE to avoid opening the ubrich web ui from widget on mobile devices
+
+### Changed
+- token management
+  * adjusted datepicker for Desktop use
+- fixed alert size
+
+### Removed
+
+## [0.8.7] - 2020-12-17
+
+### Added
+- token management
+  * added token area, opened from main menu
+  * create new token
+  * list of all tokens
+  * every token in the list is displayed with:
+    + button to copy token id to clipboard
+    + button to open Token QRCode Popup
+
+### Changed
+- fixed: link to console of stage in keycloak login header
+
+### Removed
+- Deactivate Tenant Profile temporarily
 
 ## [0.8.6] - 2020-12-15
 
