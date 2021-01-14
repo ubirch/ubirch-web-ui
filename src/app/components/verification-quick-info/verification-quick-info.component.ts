@@ -33,28 +33,25 @@ export class VerificationQuickInfoComponent implements OnInit {
   @Input()
   public set hashState(state: string) {
     this.verificationState = state;
-    console.log(this.verificationState);
+    this.setIIcon();
+    this.setAIcon();
   }
 
   @Input()
   public set upp(upp: Upp) {
     if (upp) {
       this.blockchains = upp.anchors.upperBlockChains;
-      console.log(upp);
+      this.showAnchors(this.blockchains);
     }
   }
 
   ngOnInit() {
-    this.showAnchors(this.blockchains);
-    this.setIIcon();
-    this.setAIcon();
-
-
   }
 
   showAnchors(bloxTX) {
-    if (!bloxTX) {
+    this.anchors = [];
 
+    if (!bloxTX) {
       return;
     }
 
@@ -65,9 +62,7 @@ export class VerificationQuickInfoComponent implements OnInit {
       } else {
         const blockchain: string = item.blockchain;
 
-
         const networkType: string = item.networkType;
-
 
         if (!blockchain || !networkType) {
           return;
