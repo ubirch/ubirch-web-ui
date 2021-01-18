@@ -39,6 +39,14 @@
                                         </ion-card >
                                 </ion-col>
                             </ion-row>
+                            <ion-row>
+                                <ion-card class="ion-padding">
+                                    <ion-text style="font-weight: bold">Original JSON message</ion-text>
+                                    <br>    
+                                    <ion-text>{{getStringFromJson(dataSet.data)}}</ion-text>
+                                </ion-card>
+
+                            </ion-row>
                         </form>
                     </ion-card>
                 </ion-item>

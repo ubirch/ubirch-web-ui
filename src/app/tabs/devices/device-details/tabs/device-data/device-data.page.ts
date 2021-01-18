@@ -90,6 +90,10 @@ export class DeviceDataPage implements OnInit, OnDestroy {
         this.router.navigate(['verification'], navigationExtras);
     }
 
+    public getStringFromJson(json) {
+        return JSON.stringify(json);
+    }
+
     ngOnDestroy(): void {
         if (this.dataSubsc) {
             this.dataSubsc.unsubscribe();
