@@ -437,7 +437,7 @@ class UbirchFormVerification extends UbirchVerification {
     let certJson = '{';
     labels.forEach((label, index) => {
       certJson += index > 0 ? ',' : '';
-      certJson += '"' + label + '":"' + this.getInputStr(label, documentRef) + '"';
+      certJson += '"' + label + '":' + this.getInputStr(label, documentRef);
     });
     certJson += '}';
 
@@ -447,15 +447,44 @@ class UbirchFormVerification extends UbirchVerification {
   }
 
   private getInputStr(inputId, documentRef) {
-    if (documentRef.getElementById(inputId) +
-      documentRef.getElementById(inputId).value) {
-      const doc = new
-      DOMParser().parseFromString(documentRef.getElementById(inputId).value,
-        'text/html');
-      return doc.documentElement.textContent;
+    if (documentRef.getElementById(inputId) && documentRef.getElementById(inputId).value) {
+      return this.extractElementValue(inputId, documentRef);
     } else {
-      console.warn('Missing documentElement with id ' + inputId);
-      return '';
+      const probablyAnArray = this.getInputArray(inputId, documentRef);
+      if (probablyAnArray !== undefined) {
+        return probablyAnArray;
+      } else {
+        console.warn('Missing documentElement with id ' + inputId);
+        return '';
+      }
+    }
+  }
+
+  private extractElementValue(inputId, documentRef) {
+    const doc = new
+    DOMParser().parseFromString(documentRef.getElementById(inputId).value,
+      'text/html');
+    return `"${doc.documentElement.textContent}"`;
+  }
+
+  private getInputArray(inputId, documentRef) {
+    let arrayContent = '[';
+    let index = 0;
+    let arrayElementId = `${inputId}_${index}`;
+    while (documentRef.getElementById(arrayElementId)) {
+      if (index > 0) {
+        arrayContent += ',';
+      }
+      arrayContent += this.extractElementValue(arrayElementId, documentRef);
+      index++;
+      arrayElementId = `${inputId}_${index}`;
+    }
+    if (index > 0) {
+      arrayContent += ']';
+      return arrayContent;
+    } else {
+      // no array found -> id is missing
+      return undefined;
     }
   }
 
