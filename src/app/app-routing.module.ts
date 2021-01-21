@@ -27,12 +27,12 @@ const routes: Routes = [
 //    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard ]
     canActivate: [ AuthOnlyGuard ]
   },
-  {
-    path: 'token-manager',
-    loadChildren: () => import('./tabs/token-manager/token-manager.module').then(m => m.TokenManagerPageModule),
-//    canActivate: [AccountProfileValidGuard, AuthOnlyGuard]
-    canActivate: [AuthOnlyGuard]
-  },
+//  {
+//     path: 'token-manager',
+//     loadChildren: () => import('./tabs/token-manager/token-manager.module').then(m => m.TokenManagerPageModule),
+// //    canActivate: [AccountProfileValidGuard, AuthOnlyGuard]
+//     canActivate: [AuthOnlyGuard]
+//   },
   {
     path: 'verification',
     loadChildren: () => import('./tabs/verification/verification.module').then(m => m.VerificationPageModule),

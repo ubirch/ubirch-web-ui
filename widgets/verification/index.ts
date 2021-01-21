@@ -1,5 +1,5 @@
-import {sha256} from 'js-sha256';
-import {sha512} from 'js-sha512';
+import { sha256 } from 'js-sha256';
+import { sha512 } from 'js-sha512';
 import {
   EError,
   EInfo,
@@ -8,7 +8,7 @@ import {
   IUbirchVerificationAnchorProperties,
   IUbirchVerificationConfig,
   IUbirchVerificationResponse,
-  UbirchHashAlgorithm
+  UbirchHashAlgorithm,
 } from './models';
 import environment from './environment.dev';
 // assets
@@ -21,74 +21,74 @@ import '../../src/assets/app-icons/bloxberg_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_wrong.png';
 import * as BlockchainSettings from '../../resources/blockchain-settings.json';
-import {IUbirchBlockchain} from '../../src/app/models/iubirch-blockchain';
-import {IUbirchBlockchainNet} from '../../src/app/models/iubirch-blockchain-net';
+import { IUbirchBlockchain } from '../../src/app/models/iubirch-blockchain';
+import { IUbirchBlockchainNet } from '../../src/app/models/iubirch-blockchain-net';
 
 const LANGUAGE_MESSAGE_STRINGS = {
   de: {
     PENDING: {
-      info: '...Verifikation wird durchgeführt....'
+      info: '...Verifikation wird durchgeführt....',
     },
     SUCCESS: {
       headline: 'Verifikation erfolgreich!',
       info: 'Für zusätzliche Informationen zur Verankerung klicken Sie auf das ubirch Icon um die Details der Verifikation in der ' +
-        'ubirch Konsole anzuzeigen oder auf die Blockchain Icons um den jeweiligen Blockchain-Explorer zu öffnen'
+        'ubirch Konsole anzuzeigen oder auf die Blockchain Icons um den jeweiligen Blockchain-Explorer zu öffnen',
     },
     FAIL: {
       headline: 'Verifikation fehlgeschlagen!',
-      info: 'Zu den eingegebenen Daten gibt es keine Blockchain-Verankerung'
+      info: 'Zu den eingegebenen Daten gibt es keine Blockchain-Verankerung',
     },
     CERTIFICATE_DATA_MISSING: {
-      info: 'Zertifikatsdaten fehlen - bitte füllen Sie das Formular aus oder scannen Sie Ihren QR-Code!!!'
+      info: 'Zertifikatsdaten fehlen - bitte füllen Sie das Formular aus oder scannen Sie Ihren QR-Code!!!',
     },
     VERIFICATION_FAILED: {
-      info: 'Verifikation fehlgeschlagen!'
+      info: 'Verifikation fehlgeschlagen!',
     },
     CERTIFICATE_ID_CANNOT_BE_FOUND: {
-      info: 'Zertifikat konnte nicht gefunden werden!!!!!'
+      info: 'Zertifikat konnte nicht gefunden werden!!!!!',
     },
     VERIFICATION_FAILED_EMPTY_RESPONSE: {
-      info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel'
+      info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel',
     },
     VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE: {
-      info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel'
+      info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel',
     },
     UNKNOWN_ERROR: {
-      info: 'Problem!!! Ein unerwarteter Fehler ist aufgetreten....!'
-    }
+      info: 'Problem!!! Ein unerwarteter Fehler ist aufgetreten....!',
+    },
   },
   en: {
     PENDING: {
-      info: '...verification pending....'
+      info: '...verification pending....',
     },
     SUCCESS: {
       headline: 'Verification Successful!',
       info: 'For more information about anchoring click the ubirch icon to open verification details in ubirch console ' +
-        'or click the blockchain icons to open corresponding blockchain explorer'
+        'or click the blockchain icons to open corresponding blockchain explorer',
     },
     FAIL: {
       headline: 'Verification Failed!',
-      info: 'No blockchain anchor for given data'
+      info: 'No blockchain anchor for given data',
     },
     CERTIFICATE_DATA_MISSING: {
-      info: 'Missing data - please fill out form completely or scan your QR code!!!'
+      info: 'Missing data - please fill out form completely or scan your QR code!!!',
     },
     VERIFICATION_FAILED: {
-      info: 'Verification Failed!'
+      info: 'Verification Failed!',
     },
     CERTIFICATE_ID_CANNOT_BE_FOUND: {
-      info: 'Cannot find certificate!!!!!'
+      info: 'Cannot find certificate!!!!!',
     },
     VERIFICATION_FAILED_EMPTY_RESPONSE: {
-      info: 'Verification Failed!! Empty certificate or missing seal'
+      info: 'Verification Failed!! Empty certificate or missing seal',
     },
     VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE: {
-      info: 'Verification Failed!! Empty certificate or missing seal'
+      info: 'Verification Failed!! Empty certificate or missing seal',
     },
     UNKNOWN_ERROR: {
-      info: 'An unexpected error occurred....!'
-    }
-  }
+      info: 'An unexpected error occurred....!',
+    },
+  },
 };
 
 const DEFAULT_CONFIG: IUbirchVerificationConfig = {
@@ -98,7 +98,7 @@ const DEFAULT_CONFIG: IUbirchVerificationConfig = {
 const DEFAULT_FORM_CONFIG: IUbirchFormVerificationConfig = {
   algorithm: 'sha512',
   elementSelector: null,
-  formIds: ['created', 'name', 'workshop'],
+  formIds: [ 'created', 'name', 'workshop' ],
 };
 let MESSAGE_STRINGS: any;
 let HIGHLIGHT_PAGE_AFTER_VERIFICATION = false;
@@ -112,8 +112,8 @@ class UbirchVerification {
   private noLinkToConsole = false;
 
   constructor(config: IUbirchVerificationConfig = DEFAULT_CONFIG) {
-    MESSAGE_STRINGS = config.language && LANGUAGE_MESSAGE_STRINGS[config.language] ?
-      LANGUAGE_MESSAGE_STRINGS[config.language] : LANGUAGE_MESSAGE_STRINGS.de;
+    MESSAGE_STRINGS = config.language && LANGUAGE_MESSAGE_STRINGS[ config.language ] ?
+      LANGUAGE_MESSAGE_STRINGS[ config.language ] : LANGUAGE_MESSAGE_STRINGS.de;
 
     if (config.HIGHLIGHT_PAGE_AFTER_VERIFICATION !== undefined) {
       HIGHLIGHT_PAGE_AFTER_VERIFICATION = config.HIGHLIGHT_PAGE_AFTER_VERIFICATION;
@@ -138,12 +138,12 @@ class UbirchVerification {
   }
 
   public setMessageString(key, info, headline?) {
-    if (!MESSAGE_STRINGS[key]) {
+    if (!MESSAGE_STRINGS[ key ]) {
       console.warn('Tried to set non existing message string with key ' + key);
     } else {
-      MESSAGE_STRINGS[key].info = info;
+      MESSAGE_STRINGS[ key ].info = info;
       if (headline) {
-        MESSAGE_STRINGS[key].headline = headline;
+        MESSAGE_STRINGS[ key ].headline = headline;
       }
     }
   }
@@ -176,6 +176,13 @@ class UbirchVerification {
     const transId: string = btoa(new Uint8Array(transIdAB).reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
     return transId;
+  }
+
+  public formatJSON(json: string, sort: boolean = true): string {
+    const object: object = JSON.parse(json);
+    const trimmedObject: object = this.sortObjectRecursive(object, sort);
+
+    return JSON.stringify(trimmedObject);
   }
 
   private handleInfo(info: EInfo, hash?: string): void {
@@ -284,25 +291,18 @@ class UbirchVerification {
     });
   }
 
-  public formatJSON(json: string, sort: boolean = true): string {
-    const object: object = JSON.parse(json);
-    const trimmedObject: object = this.sortObjectRecursive(object, sort);
-
-    return JSON.stringify(trimmedObject);
-  }
-
   private sortObjectRecursive(object: any, sort: boolean): object {
     // recursive termination condition
-    if (typeof(object) !== 'object' ) {
+    if (typeof (object) !== 'object' || Array.isArray(object)) {
       return object;
     } else {
-      const objectSorted: { [key: string]: any } = {};
-      const keysOrdered: { [key: string]: any } = sort ? Object.keys(object).sort() : Object.keys(object);
+      const objectSorted: { [ key: string ]: any } = {};
+      const keysOrdered: { [ key: string ]: any } = sort ? Object.keys(object).sort() : Object.keys(object);
 
       keysOrdered.forEach((key: string) => {
-          const subObject: object = this.sortObjectRecursive(object[key], sort);
-          objectSorted[key] = subObject;
-        }
+          const subObject: object = this.sortObjectRecursive(object[ key ], sort);
+          objectSorted[ key ] = subObject;
+        },
       );
 
       return objectSorted;
@@ -360,16 +360,23 @@ class UbirchFormVerification extends UbirchVerification {
    * @param separatorP optional param to define paramString separator e.g. when params are read from fragment;
    * the whole string is searched in the paramStr, so you can e.g. define "%SEP%" as the separator between params;
    * default is "&" which is the normal separator for query params
+   * @param arraySeparatorP optional param to define custom separator to divide array ellements given in the url query or fragment;
+   * default is "," but this can lead into problems if normal text - possibly containing commas - has been anchored
    */
-  public setDataIntoForm(dataP, documentRef, separatorP?) {
+  public setDataIntoForm(dataP, documentRef, separatorP?, arraySeparatorP?) {
+
     const separator = separatorP || '&';
-    const allParams = dataP.split(separator).map((value: string) => {
-      const data = value.split('=');
+    const arraySeparator = arraySeparatorP || ',';
+
+    const allParams = dataP.split(separator).map((dataset: string) => {
+      const data = dataset.split('=');
+
       return {
-        key: data[0],
-        value: decodeURIComponent(data[1])
+        key: data[ 0 ],
+        value: this.handleUrlParamValue(data[ 1 ], arraySeparator),
       };
     });
+
     allParams.forEach(param => {
       if (param.key) {
         let key = param.key;
@@ -378,11 +385,20 @@ class UbirchFormVerification extends UbirchVerification {
           if (idIndex < 0) {
             console.warn('No mapping defined for ' + key);
           } else {
-            key = this.formIds[idIndex];
+            key = this.formIds[ idIndex ];
           }
         }
-        if (documentRef.getElementById(key) && documentRef.getElementById(key) !== null) {
-          documentRef.getElementById(key).value = param.value;
+        if (Array.isArray(param.value)) {
+          param.value.forEach((value, index) => {
+            const keyStr = `${key}_${index}`;
+            if (documentRef.getElementById(keyStr) && documentRef.getElementById(keyStr) !== null) {
+              documentRef.getElementById(keyStr).value = value;
+            }
+          });
+        } else {
+          if (documentRef.getElementById(key) && documentRef.getElementById(key) !== null) {
+            documentRef.getElementById(key).value = param.value;
+          }
         }
       }
     });
@@ -406,7 +422,7 @@ class UbirchFormVerification extends UbirchVerification {
     if (formFilled.length > 0) {
       const err: IUbirchFormError = {
         msg: 'form fields not set',
-        missingIds: formFilled
+        missingIds: formFilled,
       };
       throw err;
     } else {
@@ -443,10 +459,19 @@ class UbirchFormVerification extends UbirchVerification {
     }
   }
 
+  private handleUrlParamValue(val: string, arraySeparator: string): any {
+    if (val.includes(arraySeparator)) {
+      const arrayVal = val.split(arraySeparator).map(item => decodeURIComponent(item));
+      return arrayVal;
+    } else {
+      return decodeURIComponent(val);
+    }
+  }
+
   // helper to check that ubirchVerification instance is initialized and required input field are set
   private check(index, documentRef) {
     if (this.formIds && this.formIds.length > index) {
-      const elemId = this.formIds[index];
+      const elemId = this.formIds[ index ];
       if (documentRef.getElementById(elemId).value !== undefined &&
         documentRef.getElementById(elemId).value !== '') {
         return true;
@@ -571,15 +596,14 @@ class View {
     }
 
     const blox: IUbirchBlockchain =
-      BlockchainSettings.blockchainSettings ? BlockchainSettings.blockchainSettings[blockchain] : undefined;
+      BlockchainSettings.blockchainSettings ? BlockchainSettings.blockchainSettings[ blockchain ] : undefined;
 
     if (!blox || !bloxTX.txid) {
       return;
     }
 
     const bloxTXData: IUbirchBlockchainNet =
-      blox.explorerUrl[networkType];
-
+      blox.explorerUrl[ networkType ];
 
     const linkTag: HTMLElement = document.createElement('a');
 
@@ -654,7 +678,7 @@ class View {
   private highlightPage(successful: boolean) {
     if (HIGHLIGHT_PAGE_AFTER_VERIFICATION) {
       const highlightClass = successful ? 'flashgreen' : 'flashred';
-      const mainElement = document.getElementsByTagName('main')[0];
+      const mainElement = document.getElementsByTagName('main')[ 0 ];
       setTimeout(_ => {
         mainElement.classList.toggle(highlightClass);
       }, 100);
@@ -670,5 +694,5 @@ function logError(errorStr: string): void {
   console.log(errorStr);
 }
 
-window['UbirchVerification'] = UbirchVerification;
-window['UbirchFormVerification'] = UbirchFormVerification;
+window[ 'UbirchVerification' ] = UbirchVerification;
+window[ 'UbirchFormVerification' ] = UbirchFormVerification;

@@ -36,13 +36,13 @@ export class AppComponent {
         authOnly: true,
         withProfileOnly: true
       },
-      {
-        titleKey: 'menu.main.tokens',
-        url: '/token-manager',
-        icon: 'token.svg',
-        authOnly: true,
-        withProfileOnly: true
-      },
+      // {
+      //   titleKey: 'menu.main.tokens',
+      //   url: '/token-manager',
+      //   icon: 'token.svg',
+      //   authOnly: true,
+      //   withProfileOnly: true
+      // },
       {
         titleKey: 'menu.main.verification',
         url: '/verification',

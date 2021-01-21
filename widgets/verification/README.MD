@@ -264,6 +264,11 @@ Default is "&" which is the normal separator for query params.
     const paramStr = "pid=9ceb5551-d006-4648-8cf7-c7b1a1ddccb1;tid=FGXC-CL11-KDKC-P9XC-74MM;td=2020-06-12;tt=11:00:00;tr=negativ";
     ubirchFormVerification.setDataIntoForm(paramStr, document, ';');
 
+In addition if your call contains normal text - possibly containing commas -
+please set the second optional parameter to define a custom separator to divide array elements given in the url query or fragment;
+default is "," but this can lead into problems if normal text - possibly containing commas - has been anchored
+
+    ubirchFormVerification.setDataIntoForm(paramStr, document, ';', '%NXT%');
 
 ### Generate JSON from input fields
 
