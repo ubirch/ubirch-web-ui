@@ -436,8 +436,11 @@ class UbirchFormVerification extends UbirchVerification {
   public createJsonFromInputs(labels, documentRef) {
     let certJson = '{';
     labels.forEach((label, index) => {
-      certJson += index > 0 ? ',' : '';
-      certJson += '"' + label + '":' + this.getInputStr(label, documentRef);
+      const valueStr = this.getInputStr(label, documentRef);
+      if (valueStr) {
+        certJson += certJson.length > 1 ? ',' : '';
+        certJson += '"' + label + '":' + valueStr;
+      }
     });
     certJson += '}';
 
@@ -455,7 +458,7 @@ class UbirchFormVerification extends UbirchVerification {
         return probablyAnArray;
       } else {
         console.warn('Missing documentElement with id ' + inputId);
-        return '';
+        return undefined;
       }
     }
   }
