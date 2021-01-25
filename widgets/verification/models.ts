@@ -31,6 +31,7 @@ export interface IUbirchVerificationConfig {
   HIGHLIGHT_PAGE_AFTER_VERIFICATION?: boolean;
   OPEN_CONSOLE_IN_SAME_TARGET?: boolean;
   NO_LINK_TO_CONSOLE?: boolean;
+  debug?: boolean;
 }
 
 export interface IUbirchFormVerificationConfig extends IUbirchVerificationConfig {
