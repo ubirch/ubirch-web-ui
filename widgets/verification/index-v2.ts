@@ -253,7 +253,7 @@ class UbirchVerification {
 
     xhttp.open('POST', verificationUrl, true);
     xhttp.setRequestHeader('Content-type', 'text/plain');
-    xhttp.setRequestHeader('authorization', this.accessToken);
+    xhttp.setRequestHeader('authorization', 'bearer ' + this.accessToken);
     xhttp.send(hash);
   }
 
