@@ -456,8 +456,6 @@ class UbirchFormVerification extends UbirchVerification {
     });
     certJson += '}';
 
-    console.log('certificate: ' + certJson);
-
     return certJson;
   }
 
