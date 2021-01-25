@@ -9,7 +9,8 @@ module.exports = function(env) {
 
     return {
         entry: {
-            verification: './verification/index.ts'
+          verification: './verification/index.ts',
+          "verification-v2": './verification/index-v2.ts'
         },
         output: {
             path: path.resolve(__dirname, 'dist'),

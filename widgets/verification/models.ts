@@ -26,6 +26,7 @@ export enum ELanguages {
 export interface IUbirchVerificationConfig {
   algorithm: UbirchHashAlgorithm;
   elementSelector: string;
+  accessToken?: string;
   language?: ELanguages;
   HIGHLIGHT_PAGE_AFTER_VERIFICATION?: boolean;
   OPEN_CONSOLE_IN_SAME_TARGET?: boolean;

@@ -93,6 +93,7 @@ const LANGUAGE_MESSAGE_STRINGS = {
 
 const DEFAULT_CONFIG: IUbirchVerificationConfig = {
   algorithm: 'sha512',
+  accessToken: null,
   elementSelector: null,
 };
 const DEFAULT_FORM_CONFIG: IUbirchFormVerificationConfig = {
@@ -100,7 +101,7 @@ const DEFAULT_FORM_CONFIG: IUbirchFormVerificationConfig = {
   elementSelector: null,
   formIds: [ 'created', 'name', 'workshop' ],
 };
-const VERSION = ''; // no prefix for v1
+const VERSION = 'v2/';
 
 let MESSAGE_STRINGS: any;
 let HIGHLIGHT_PAGE_AFTER_VERIFICATION = false;
@@ -109,6 +110,7 @@ class UbirchVerification {
   private responseHandler: ResponseHandler = new ResponseHandler();
   private view: View;
   private algorithm: UbirchHashAlgorithm;
+  private accessToken: string;
   private elementSelector: string;
   private openConsoleInSameTarget = false;
   private noLinkToConsole = false;
@@ -125,6 +127,11 @@ class UbirchVerification {
       throw new Error('Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance');
     }
 
+    if (!config.accessToken) {
+      throw new Error('You need to provide an accessToken to verify data');
+    }
+
+    this.accessToken = config.accessToken;
     this.algorithm = config.algorithm;
     this.elementSelector = config.elementSelector;
 
@@ -246,6 +253,7 @@ class UbirchVerification {
 
     xhttp.open('POST', verificationUrl, true);
     xhttp.setRequestHeader('Content-type', 'text/plain');
+    xhttp.setRequestHeader('authorization', this.accessToken);
     xhttp.send(hash);
   }
 
