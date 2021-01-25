@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Observable} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 import {ToastType} from '../enums/toast-type.enum';
 import {CreateTokenFormData} from '../models/create-token-form-data';
 import {IUbirchAccountingJWT} from '../models/iubirch-accounting-jwt';
@@ -20,8 +21,7 @@ import {UserService} from './user.service';
 })
 export class TokenService {
 
-  // TODO change API_URL
-  private API_URL = 'https://token.dev.ubirch.com/api/tokens/v1';
+  private API_URL = environment.tokenServiceServerUrl + environment.tokenServiceApiPrefix;
   private jwtHelper: JwtHelperService;
 
   constructor(

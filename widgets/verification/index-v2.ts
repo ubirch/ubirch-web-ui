@@ -98,6 +98,7 @@ const DEFAULT_CONFIG: IUbirchVerificationConfig = {
 };
 const DEFAULT_FORM_CONFIG: IUbirchFormVerificationConfig = {
   algorithm: 'sha512',
+  accessToken: null,
   elementSelector: null,
   formIds: [ 'created', 'name', 'workshop' ],
 };
@@ -114,6 +115,7 @@ class UbirchVerification {
   private elementSelector: string;
   private openConsoleInSameTarget = false;
   private noLinkToConsole = false;
+  protected debug = false;
 
   constructor(config: IUbirchVerificationConfig = DEFAULT_CONFIG) {
     MESSAGE_STRINGS = config.language && LANGUAGE_MESSAGE_STRINGS[ config.language ] ?
@@ -141,6 +143,9 @@ class UbirchVerification {
 
     if (config.NO_LINK_TO_CONSOLE !== undefined) {
       this.noLinkToConsole = config.NO_LINK_TO_CONSOLE;
+    }
+    if (config.debug) {
+      this.debug = config.debug;
     }
 
     this.view = new View(this.elementSelector, this.openConsoleInSameTarget);
@@ -456,7 +461,9 @@ class UbirchFormVerification extends UbirchVerification {
     });
     certJson += '}';
 
-    console.log('certificate: ' + certJson);
+    if (this.debug) {
+      console.log('certificate: ' + certJson);
+    }
 
     return certJson;
   }
