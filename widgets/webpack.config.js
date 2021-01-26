@@ -21,7 +21,7 @@ module.exports = function(env) {
                 { test: /\.ts?$/, use: 'ts-loader', exclude: /node_modules/ },
                 { test: /\.s[ac]ss$/i, use: ['style-loader', 'css-loader', 'sass-loader'] },
                 {
-                  test: /\.(png|jpe?g|gif)$/i,
+                  test: /\.(png|jpe?g|gif|svg)$/i,
                   use: [
                     {
                       loader: 'file-loader',

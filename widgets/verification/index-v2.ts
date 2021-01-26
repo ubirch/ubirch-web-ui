@@ -1,28 +1,29 @@
 import { sha256 } from 'js-sha256';
 import { sha512 } from 'js-sha512';
+import * as BlockchainSettings from '../../resources/blockchain-settings.json';
+import { IUbirchBlockchain } from '../../src/app/models/iubirch-blockchain';
+import { IUbirchBlockchainNet } from '../../src/app/models/iubirch-blockchain-net';
+import '../../src/assets/app-icons/bloxberg_verify_right.png';
+import '../../src/assets/app-icons/Ethereum-Classic_verify_right.png';
+import '../../src/assets/app-icons/Ethereum_verify_right.png';
+import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
+import '../../src/assets/app-icons/IOTA_verify_right.png';
+import '../../src/assets/app-icons/ubirch_verify_right.png';
+import '../../src/assets/app-icons/ubirch_verify_wrong.png';
+import '../../src/assets/app-icons/alert-circle-red.svg';
+import environment from './environment.dev';
 import {
   EError,
-  EInfo,
+  EInfo, IUbirchError,
   IUbirchFormError,
   IUbirchFormVerificationConfig,
   IUbirchVerificationAnchorProperties,
   IUbirchVerificationConfig,
   IUbirchVerificationResponse,
   UbirchHashAlgorithm,
-} from './models';
-import environment from './environment.dev';
+} from './models-v2';
 // assets
 import './style.scss';
-import '../../src/assets/app-icons/Ethereum_verify_right.png';
-import '../../src/assets/app-icons/Ethereum-Classic_verify_right.png';
-import '../../src/assets/app-icons/IOTA_verify_right.png';
-import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
-import '../../src/assets/app-icons/bloxberg_verify_right.png';
-import '../../src/assets/app-icons/ubirch_verify_right.png';
-import '../../src/assets/app-icons/ubirch_verify_wrong.png';
-import * as BlockchainSettings from '../../resources/blockchain-settings.json';
-import { IUbirchBlockchain } from '../../src/app/models/iubirch-blockchain';
-import { IUbirchBlockchainNet } from '../../src/app/models/iubirch-blockchain-net';
 
 const LANGUAGE_MESSAGE_STRINGS = {
   de: {
@@ -108,6 +109,7 @@ let MESSAGE_STRINGS: any;
 let HIGHLIGHT_PAGE_AFTER_VERIFICATION = false;
 
 class UbirchVerification {
+  protected debug = false;
   private responseHandler: ResponseHandler = new ResponseHandler();
   private view: View;
   private algorithm: UbirchHashAlgorithm;
@@ -115,7 +117,6 @@ class UbirchVerification {
   private elementSelector: string;
   private openConsoleInSameTarget = false;
   private noLinkToConsole = false;
-  protected debug = false;
 
   constructor(config: IUbirchVerificationConfig = DEFAULT_CONFIG) {
     MESSAGE_STRINGS = config.language && LANGUAGE_MESSAGE_STRINGS[ config.language ] ?
@@ -126,11 +127,19 @@ class UbirchVerification {
     }
 
     if (!config.elementSelector) {
-      throw new Error('Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance');
+      const err: IUbirchError = {
+        message: 'Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance',
+        code: EError.MISSING_PROPERTY_IN_UBRICH_VERIFICATION_INSTANCIATION,
+      };
+      this.handlePreparationError(err);
     }
 
     if (!config.accessToken) {
-      throw new Error('You need to provide an accessToken to verify data');
+      const err: IUbirchError = {
+        message: 'You need to provide an accessToken to verify data',
+        code: EError.MISSING_ACCESS_TOKEN,
+      };
+      this.handlePreparationError(err);
     }
 
     this.accessToken = config.accessToken;
@@ -193,10 +202,18 @@ class UbirchVerification {
   }
 
   public formatJSON(json: string, sort: boolean = true): string {
-    const object: object = JSON.parse(json);
-    const trimmedObject: object = this.sortObjectRecursive(object, sort);
+    try {
+      const object: object = JSON.parse(json);
+      const trimmedObject: object = this.sortObjectRecursive(object, sort);
 
-    return JSON.stringify(trimmedObject);
+      return JSON.stringify(trimmedObject);
+    } catch (e) {
+      const err: IUbirchFormError = {
+        message: 'JSON malformed',
+        code: EError.JSON_MALFORMED,
+      };
+      this.handlePreparationError(err);
+    }
   }
 
   private handleInfo(info: EInfo, hash?: string): void {
@@ -213,10 +230,18 @@ class UbirchVerification {
     }
   }
 
-  private handleError(error: EError, hash: string): void {
+  public handlePreparationError(err: IUbirchError): void {
+    this.view.cleanupIcons();
+    this.view.showError(err.message);
+
+    logError(err.message);
+    throw err;
+  }
+
+  private handleVerificationError(errorCode: EError, hash: string): void {
     let showNonSeal = true;
 
-    if (error === EError.NO_ERROR) {
+    if (errorCode === EError.NO_ERROR) {
       showNonSeal = false;
     }
 
@@ -226,7 +251,13 @@ class UbirchVerification {
       this.view.addHeadlineAndInfotext(false);
     }
 
-    logError(this.responseHandler.handleError(error));
+    const err: IUbirchFormError = {
+      message: this.responseHandler.handleError(errorCode),
+      code: errorCode,
+    };
+
+    logError(err.message);
+    throw err;
   }
 
   private sendVerificationRequest(hash: string): void {
@@ -243,11 +274,11 @@ class UbirchVerification {
             break;
           }
           case 404: {
-            self.handleError(EError.CERTIFICATE_ID_CANNOT_BE_FOUND, hash);
+            self.handleVerificationError(EError.CERTIFICATE_ID_CANNOT_BE_FOUND, hash);
             break;
           }
           default: {
-            self.handleError(EError.UNKNOWN_ERROR, hash);
+            self.handleVerificationError(EError.UNKNOWN_ERROR, hash);
             break;
           }
         }
@@ -331,12 +362,16 @@ class UbirchVerification {
  * special class for widget which is filled by a form
  */
 class UbirchFormVerification extends UbirchVerification {
+
   private formIds: string[];
   private paramsFormIdsMapping: string[];
-  private CHECK_FORM_FILLED = true;
+  private optionalFormFieldIds: string[];
+  private allowedCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&\'()*+,;=%';
 
   constructor(config: IUbirchFormVerificationConfig = DEFAULT_FORM_CONFIG) {
+
     super(config);
+
     if (!config.formIds) {
       throw new Error('Please, provide a string array with param ids');
     }
@@ -347,9 +382,11 @@ class UbirchFormVerification extends UbirchVerification {
       }
       this.paramsFormIdsMapping = config.paramsFormIdsMapping;
     }
-    if (config.CHECK_FORM_FILLED !== undefined) {
-      this.CHECK_FORM_FILLED = config.CHECK_FORM_FILLED;
+    if (config.CHECK_FORM_FILLED !== undefined && !config.CHECK_FORM_FILLED) {
+      // all fields are optional if the form should not be checked
+      this.optionalFormFieldIds = this.formIds;
     }
+    this.optionalFormFieldIds = config.optionalFormFieldIds || [];
   }
 
   /**
@@ -357,16 +394,10 @@ class UbirchFormVerification extends UbirchVerification {
    * @param windowRef Reference to window
    */
   public getFormParamsFromUrl(windowRef): string {
-    const hash = windowRef.location.hash;
-    if (hash) {
-      return hash.slice(1);
-    }
-    const query = windowRef.location.search;
-    if (query.length > 0) {
-      return query.substr(1);
-    }
 
-    return undefined;
+    const hash = this.handleFragment(windowRef);
+
+    return hash ? hash : this.handleQuery(windowRef);
   }
 
   /**
@@ -382,43 +413,51 @@ class UbirchFormVerification extends UbirchVerification {
    */
   public setDataIntoForm(dataP, documentRef, separatorP?, arraySeparatorP?) {
 
-    const separator = separatorP || '&';
-    const arraySeparator = arraySeparatorP || ',';
+    try {
+      const separator = separatorP || '&';
+      const arraySeparator = arraySeparatorP || ',';
 
-    const allParams = dataP.split(separator).map((dataset: string) => {
-      const data = dataset.split('=');
+      const allParams = dataP.split(separator).map((dataset: string) => {
+        const data = dataset.split('=');
 
-      return {
-        key: data[ 0 ],
-        value: this.handleUrlParamValue(data[ 1 ], arraySeparator),
-      };
-    });
+        return {
+          key: data[ 0 ],
+          value: this.handleUrlParamValue(data[ 1 ], arraySeparator),
+        };
+      });
 
-    allParams.forEach(param => {
-      if (param.key) {
-        let key = param.key;
-        if (this.paramsFormIdsMapping && this.paramsFormIdsMapping.length > 0) {
-          const idIndex = this.paramsFormIdsMapping.indexOf(key);
-          if (idIndex < 0) {
-            console.warn('No mapping defined for ' + key);
-          } else {
-            key = this.formIds[ idIndex ];
-          }
-        }
-        if (Array.isArray(param.value)) {
-          param.value.forEach((value, index) => {
-            const keyStr = `${key}_${index}`;
-            if (documentRef.getElementById(keyStr) && documentRef.getElementById(keyStr) !== null) {
-              documentRef.getElementById(keyStr).value = value;
+      allParams.forEach(param => {
+        if (param.key) {
+          let key = param.key;
+          if (this.paramsFormIdsMapping && this.paramsFormIdsMapping.length > 0) {
+            const idIndex = this.paramsFormIdsMapping.indexOf(key);
+            if (idIndex < 0) {
+              console.warn('No mapping defined for ' + key);
+            } else {
+              key = this.formIds[ idIndex ];
             }
-          });
-        } else {
-          if (documentRef.getElementById(key) && documentRef.getElementById(key) !== null) {
-            documentRef.getElementById(key).value = param.value;
+          }
+          if (Array.isArray(param.value)) {
+            param.value.forEach((value, index) => {
+              const keyStr = `${key}_${index}`;
+              if (documentRef.getElementById(keyStr) && documentRef.getElementById(keyStr) !== null) {
+                documentRef.getElementById(keyStr).value = value;
+              }
+            });
+          } else {
+            if (documentRef.getElementById(key) && documentRef.getElementById(key) !== null) {
+              documentRef.getElementById(key).value = param.value;
+            }
           }
         }
-      }
-    });
+      });
+    } catch (e) {
+      const err: IUbirchFormError = {
+        message: e.message,
+        code: EError.FILLING_FORM_WITH_PARAMS_FAILED,
+      };
+      throw err;
+    }
   }
 
   /**
@@ -426,46 +465,111 @@ class UbirchFormVerification extends UbirchVerification {
    * @param documentRef Reference to document
    */
   public getJsonFromInputs(documentRef): string {
-    const formFilled = [];
+    try {
+      const idsOfMissingFormFieldValues = [];
 
-    if (this.CHECK_FORM_FILLED) {
       this.formIds.forEach((formId, index) => {
         if (!this.check(index, documentRef)) {
-          formFilled.push(formId);
+          idsOfMissingFormFieldValues.push(formId);
         }
       });
-    }
 
-    if (formFilled.length > 0) {
-      const err: IUbirchFormError = {
-        msg: 'form fields not set',
-        missingIds: formFilled,
-      };
-      throw err;
-    } else {
+      if (idsOfMissingFormFieldValues.length > 0) {
+        const err: IUbirchFormError = {
+          message: 'mandatory form fields not set',
+          code: EError.MANDATORY_FIELD_MISSING,
+          missingIds: idsOfMissingFormFieldValues,
+        };
+        this.handlePreparationError(err);
+      }
+
       // helper to generate correct JSON from input fields
       // attention: ids of input fields have to be same as field names in anchored JSON
       const genJson = this.createJsonFromInputs(this.formIds, documentRef);
       return genJson;
+    } catch (e) {
+      const err: IUbirchFormError = {
+        message: e.message,
+        code: EError.FILLING_FORM_WITH_PARAMS_FAILED,
+      };
+      this.handlePreparationError(err);
     }
   }
 
   public createJsonFromInputs(labels, documentRef) {
-    let certJson = '{';
-    labels.forEach((label, index) => {
-      const valueStr = this.getInputStr(label, documentRef);
-      if (valueStr) {
-        certJson += certJson.length > 1 ? ',' : '';
-        certJson += '"' + label + '":' + valueStr;
-      }
-    });
-    certJson += '}';
+    try {
+      let certJson = '{';
+      labels.forEach((label, index) => {
+        const valueStr = this.getInputStr(label, documentRef);
+        if (valueStr) {
+          certJson += certJson.length > 1 ? ',' : '';
+          certJson += '"' + label + '":' + valueStr;
+        }
+      });
+      certJson += '}';
 
-    if (this.debug) {
-      console.log('certificate: ' + certJson);
+      if (this.debug) {
+        console.log('certificate: ' + certJson);
+      }
+
+      return certJson;
+    } catch (e) {
+      if (e.code === EError.CANNOT_ACCESS_FORM_FIELD) {
+        throw e;
+      }
+      const err: IUbirchFormError = {
+        message: 'Building JSON from input fields failed',
+        code: EError.JSON_MALFORMED,
+      };
+      this.handlePreparationError(err);
+    }
+  }
+
+  public sanitizeUrlAndQuery(urlStr: string) {
+
+    const foundNotAllowedChars: string[] = [ ...urlStr ].filter(char => !this.allowedCharacters.includes(char));
+    const uniqueFoundNotAllowedChars = [...new Set(foundNotAllowedChars)];
+
+    if (uniqueFoundNotAllowedChars.length > 0) {
+      const err: IUbirchFormError = {
+        message: 'Corrrupt URL paramters found',
+        code: EError.URL_PARAMS_CORRUPT,
+        notAllowedChars: uniqueFoundNotAllowedChars,
+      };
+      this.handlePreparationError(err);
     }
 
-    return certJson;
+    return urlStr;
+  }
+
+  private handleFragment(windowRef): string {
+    let hash;
+    try {
+      hash = windowRef.location.hash;
+    } catch (e) {
+      const err: IUbirchFormError = {
+        message: e.message,
+        code: EError.LOCATION_MALFORMED,
+      };
+      throw err;
+    }
+
+    return hash ? this.sanitizeUrlAndQuery(hash.slice(1)) : undefined;
+  }
+
+  private handleQuery(windowRef): string {
+    let query;
+    try {
+      query = windowRef.location.search;
+    } catch (e) {
+      const err: IUbirchFormError = {
+        message: e.message,
+        code: EError.LOCATION_MALFORMED,
+      };
+      throw err;
+    }
+
+    return query.length > 0 ? this.sanitizeUrlAndQuery(query.substr(1)) : undefined;
   }
 
   private getInputStr(inputId, documentRef) {
@@ -483,10 +587,19 @@ class UbirchFormVerification extends UbirchVerification {
   }
 
   private extractElementValue(inputId, documentRef) {
-    const doc = new
-    DOMParser().parseFromString(documentRef.getElementById(inputId).value,
-      'text/html');
-    return `"${doc.documentElement.textContent}"`;
+    try {
+      const doc = new DOMParser()
+        .parseFromString(
+          documentRef.getElementById(inputId).value,
+          'text/html');
+      return `"${doc.documentElement.textContent}"`;
+    } catch (e) {
+      const err: IUbirchFormError = {
+        message: 'Unable to access input with id ' + inputId,
+        code: EError.CANNOT_ACCESS_FORM_FIELD,
+      };
+      throw err;
+    }
   }
 
   private getInputArray(inputId, documentRef) {
@@ -511,20 +624,41 @@ class UbirchFormVerification extends UbirchVerification {
   }
 
   private handleUrlParamValue(val: string, arraySeparator: string): any {
-    if (val.includes(arraySeparator)) {
-      const arrayVal = val.split(arraySeparator).map(item => decodeURIComponent(item));
-      return arrayVal;
-    } else {
-      return decodeURIComponent(val);
+    try {
+      if (val.includes(arraySeparator)) {
+        const arrayVal = val.split(arraySeparator).map(item => decodeURIComponent(item));
+        return arrayVal;
+      } else {
+        return decodeURIComponent(val);
+      }
+    } catch (e) {
+      const err: IUbirchFormError = {
+        message: 'Decoding URL parameters failed',
+        code: EError.URL_PARAMS_CORRUPT,
+      };
+      throw err;
     }
   }
 
   // helper to check that ubirchVerification instance is initialized and required input field are set
   private check(index, documentRef) {
     if (this.formIds && this.formIds.length > index) {
+
       const elemId = this.formIds[ index ];
-      if (documentRef.getElementById(elemId).value !== undefined &&
+
+      // optional parameter?
+      if (this.optionalFormFieldIds.includes(elemId)) {
+        return true;
+      }
+
+      if (documentRef.getElementById(elemId)?.value !== undefined &&
         documentRef.getElementById(elemId).value !== '') {
+        return true;
+      }
+
+      // is Array? check for existence of first element
+      const arrayId = elemId + '_0';
+      if (documentRef.getElementById(arrayId)?.value !== undefined) {
         return true;
       }
     }
@@ -585,8 +719,13 @@ class View {
   }
 
   public showError(error: any): void {
-    this.errorOutput.innerHTML = '';
-    this.resultOutput.innerHTML = error;
+    this.errorOutput.innerHTML = error;
+    this.resultOutput.innerHTML = '';
+
+    const icon: HTMLElement = this.createIconTag(environment.assets_url_prefix + BlockchainSettings.failIcons.error,
+        'ubirch-verification-seal-img');
+
+    this.sealOutput.appendChild(icon);
   }
 
   public cleanupIcons(): void {
@@ -742,7 +881,7 @@ class View {
 }
 
 function logError(errorStr: string): void {
-  console.log(errorStr);
+    console.log(errorStr);
 }
 
 window[ 'UbirchVerification' ] = UbirchVerification;

@@ -9,9 +9,19 @@ export enum EError {
   NO_ERROR = 0,
   CERTIFICATE_DATA_MISSING = 1,
   CERTIFICATE_ID_CANNOT_BE_FOUND = 2,
-  VERIFICATION_FAILED_EMPTY_RESPONSE = 3,
-  VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE = 4,
-  VERIFICATION_FAILED = 5,
+  VERIFICATION_FAILED_EMPTY_RESPONSE = 10,
+  VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE = 11,
+  VERIFICATION_FAILED = 12,
+  VERIFICATION_CURRENTLY_UNAVAILABLE = 13,
+  URL_PARAMS_CORRUPT = 20,
+  LOCATION_MALFORMED = 21,
+  MANDATORY_FIELD_MISSING = 25,
+  FILLING_FORM_WITH_PARAMS_FAILED = 26,
+  JSON_PARSE_FAILED = 30,
+  JSON_MALFORMED = 31,
+  CANNOT_ACCESS_FORM_FIELD = 40,
+  MISSING_PROPERTY_IN_UBRICH_VERIFICATION_INSTANCIATION = 50,
+  MISSING_ACCESS_TOKEN = 51,
   UNKNOWN_ERROR = 99
 }
 
@@ -23,15 +33,18 @@ export enum ELanguages {
 export interface IUbirchVerificationConfig {
   algorithm: UbirchHashAlgorithm;
   elementSelector: string;
+  accessToken: string;
   language?: ELanguages;
   HIGHLIGHT_PAGE_AFTER_VERIFICATION?: boolean;
   OPEN_CONSOLE_IN_SAME_TARGET?: boolean;
   NO_LINK_TO_CONSOLE?: boolean;
+  debug?: boolean;
 }
 
 export interface IUbirchFormVerificationConfig extends IUbirchVerificationConfig {
   formIds: string[];
   paramsFormIdsMapping?: string[];
+  optionalFormFieldIds?: string[];
   CHECK_FORM_FILLED?: boolean;
 }
 
@@ -70,9 +83,14 @@ export interface IUbirchVerificationEnvConfig {
   assets_url_prefix: string;
 }
 
-export interface IUbirchFormError {
-  msg: string;
-  missingIds: string[];
+export interface IUbirchError {
+  message: string;
+  code: EError;
+}
+
+export interface IUbirchFormError extends IUbirchError {
+  missingIds?: string[];
+  notAllowedChars?: string[];
 }
 
 export interface IUbirchAnchorObject {
