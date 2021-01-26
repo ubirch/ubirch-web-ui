@@ -1,4 +1,7 @@
 {
+  "failIcons": {
+    "error": "alert-circle-red.svg"
+  },
   "ubirchIcons": {
     "seal": "ubirch_verify_right.png",
     "no_seal": "ubirch_verify_wrong.png"
