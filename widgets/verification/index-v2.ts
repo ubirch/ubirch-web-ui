@@ -588,11 +588,7 @@ class UbirchFormVerification extends UbirchVerification {
 
   private extractElementValue(inputId, documentRef) {
     try {
-      const doc = new DOMParser()
-        .parseFromString(
-          documentRef.getElementById(inputId).value,
-          'text/html');
-      return `"${doc.documentElement.textContent}"`;
+      return `"${documentRef.getElementById(inputId).value}"`;
     } catch (e) {
       const err: IUbirchFormError = {
         message: 'Unable to access input with id ' + inputId,
