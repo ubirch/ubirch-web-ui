@@ -21,7 +21,7 @@ import {
   IUbirchVerificationConfig,
   IUbirchVerificationResponse,
   UbirchHashAlgorithm,
-} from './models-v2';
+} from './models';
 // assets
 import './style.scss';
 
@@ -110,41 +110,23 @@ let HIGHLIGHT_PAGE_AFTER_VERIFICATION = false;
 
 class UbirchVerification {
   protected debug = false;
-  private responseHandler: ResponseHandler = new ResponseHandler();
-  private view: View;
+  protected responseHandler: ResponseHandler = new ResponseHandler();
+  protected view: View;
+  protected elementSelector: string;
   private algorithm: UbirchHashAlgorithm;
   private accessToken: string;
-  private elementSelector: string;
   private openConsoleInSameTarget = false;
   private noLinkToConsole = false;
 
   constructor(config: IUbirchVerificationConfig = DEFAULT_CONFIG) {
+    this.algorithm = config.algorithm;
+
     MESSAGE_STRINGS = config.language && LANGUAGE_MESSAGE_STRINGS[ config.language ] ?
       LANGUAGE_MESSAGE_STRINGS[ config.language ] : LANGUAGE_MESSAGE_STRINGS.de;
 
     if (config.HIGHLIGHT_PAGE_AFTER_VERIFICATION !== undefined) {
       HIGHLIGHT_PAGE_AFTER_VERIFICATION = config.HIGHLIGHT_PAGE_AFTER_VERIFICATION;
     }
-
-    if (!config.elementSelector) {
-      const err: IUbirchError = {
-        message: 'Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance',
-        code: EError.MISSING_PROPERTY_IN_UBRICH_VERIFICATION_INSTANCIATION,
-      };
-      this.handlePreparationError(err);
-    }
-
-    if (!config.accessToken) {
-      const err: IUbirchError = {
-        message: 'You need to provide an accessToken to verify data',
-        code: EError.MISSING_ACCESS_TOKEN,
-      };
-      this.handlePreparationError(err);
-    }
-
-    this.accessToken = config.accessToken;
-    this.algorithm = config.algorithm;
-    this.elementSelector = config.elementSelector;
 
     if (config.OPEN_CONSOLE_IN_SAME_TARGET) {
       this.openConsoleInSameTarget = config.OPEN_CONSOLE_IN_SAME_TARGET;
@@ -157,7 +139,26 @@ class UbirchVerification {
       this.debug = config.debug;
     }
 
+    if (!config.elementSelector) {
+      const err: IUbirchError = {
+        message: 'Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance',
+        code: EError.MISSING_PROPERTY_IN_UBRICH_VERIFICATION_INSTANCIATION,
+      };
+      this.handlePreparationError(err);
+    }
+    this.elementSelector = config.elementSelector;
+
     this.view = new View(this.elementSelector, this.openConsoleInSameTarget);
+
+    if (!config.accessToken) {
+      const err: IUbirchError = {
+        message: 'You need to provide an accessToken to verify data',
+        code: EError.MISSING_ACCESS_TOKEN,
+      };
+      this.handlePreparationError(err);
+    }
+
+    this.accessToken = config.accessToken;
   }
 
   public setMessageString(key, info, headline?) {
@@ -204,9 +205,7 @@ class UbirchVerification {
   public formatJSON(json: string, sort: boolean = true): string {
     try {
       const object: object = JSON.parse(json);
-      const trimmedObject: object = this.sortObjectRecursive(object, sort);
-
-      return JSON.stringify(trimmedObject);
+      return JSON.stringify(sort ? this.sortObjectRecursive(object, sort) : object);
     } catch (e) {
       const err: IUbirchFormError = {
         message: 'JSON malformed',
@@ -231,10 +230,12 @@ class UbirchVerification {
   }
 
   public handlePreparationError(err: IUbirchError): void {
-    this.view.cleanupIcons();
-    this.view.showError(err.message);
+    if (this.view) {
+      this.view.cleanupIcons();
+      this.view.showError(err.message);
+    }
 
-    logError(err.message);
+    this.logError(err.message);
     throw err;
   }
 
@@ -256,8 +257,12 @@ class UbirchVerification {
       code: errorCode,
     };
 
-    logError(err.message);
+    this.logError(err.message);
     throw err;
+  }
+
+  private logError(errorStr: string): void {
+    console.log(errorStr);
   }
 
   private sendVerificationRequest(hash: string): void {
@@ -339,7 +344,7 @@ class UbirchVerification {
     });
   }
 
-  private sortObjectRecursive(object: any, sort: boolean): object {
+  protected sortObjectRecursive(object: any, sort: boolean): object {
     // recursive termination condition
     if (typeof (object) !== 'object' || Array.isArray(object)) {
       return object;
@@ -498,15 +503,15 @@ class UbirchFormVerification extends UbirchVerification {
 
   public createJsonFromInputs(labels, documentRef) {
     try {
-      let certJson = '{';
+      const objectFromInputFields: any = {};
       labels.forEach((label, index) => {
-        const valueStr = this.getInputStr(label, documentRef);
-        if (valueStr) {
-          certJson += certJson.length > 1 ? ',' : '';
-          certJson += '"' + label + '":' + valueStr;
+        const strOrArrayValue = this.getObjectFromInputFields(label, documentRef);
+        if (strOrArrayValue) {
+          objectFromInputFields[label] = strOrArrayValue;
         }
       });
-      certJson += '}';
+
+      const certJson = JSON.stringify(this.sortObjectRecursive(objectFromInputFields, true));
 
       if (this.debug) {
         console.log('certificate: ' + certJson);
@@ -572,7 +577,7 @@ class UbirchFormVerification extends UbirchVerification {
     return query.length > 0 ? this.sanitizeUrlAndQuery(query.substr(1)) : undefined;
   }
 
-  private getInputStr(inputId, documentRef) {
+  private getObjectFromInputFields(inputId, documentRef): string | string[] {
     if (documentRef.getElementById(inputId) && documentRef.getElementById(inputId).value) {
       return this.extractElementValue(inputId, documentRef);
     } else {
@@ -588,11 +593,7 @@ class UbirchFormVerification extends UbirchVerification {
 
   private extractElementValue(inputId, documentRef) {
     try {
-      const doc = new DOMParser()
-        .parseFromString(
-          documentRef.getElementById(inputId).value,
-          'text/html');
-      return `"${doc.documentElement.textContent}"`;
+      return documentRef.getElementById(inputId).value;
     } catch (e) {
       const err: IUbirchFormError = {
         message: 'Unable to access input with id ' + inputId,
@@ -602,21 +603,17 @@ class UbirchFormVerification extends UbirchVerification {
     }
   }
 
-  private getInputArray(inputId, documentRef) {
-    let arrayContent = '[';
+  private getInputArray(inputId, documentRef): string[] {
+    const inputArray = [];
     let index = 0;
     let arrayElementId = `${inputId}_${index}`;
     while (documentRef.getElementById(arrayElementId)) {
-      if (index > 0) {
-        arrayContent += ',';
-      }
-      arrayContent += this.extractElementValue(arrayElementId, documentRef);
+      inputArray.push(this.extractElementValue(arrayElementId, documentRef));
       index++;
       arrayElementId = `${inputId}_${index}`;
     }
     if (index > 0) {
-      arrayContent += ']';
-      return arrayContent;
+      return inputArray;
     } else {
       // no array found -> id is missing
       return undefined;
@@ -878,10 +875,6 @@ class View {
 
     }
   }
-}
-
-function logError(errorStr: string): void {
-    console.log(errorStr);
 }
 
 window[ 'UbirchVerification' ] = UbirchVerification;
