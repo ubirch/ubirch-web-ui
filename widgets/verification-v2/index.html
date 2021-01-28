@@ -36,7 +36,48 @@
   </style>
 </head>
 <body>
-<h1>Ubirch Verification Test Page</h1>
+<h1>Ubirch Verification Widget Version 2.0 (Token Support) - Example</h1>
+<div class="example">
+  Reset:<br>
+  <a href="index.html">
+    http(s)://&lt;SERVER:PORT&gt;/index.html
+  </a>
+</div>
+<div class="example">
+  <label for="f" class="formLabel">Name</label>
+  <input type="text" id="f" class="formInput" readonly>
+
+  <label for="g" class="formLabel">Vorname</label>
+  <input type="text" id="g" class="formInput" readonly>
+
+  <label for="b" class="formLabel">Geburtsdatum</label>
+  <input type="text" id="b" class="formInput" readonly>
+
+  <label for="p" class="formLabel">Ausweis-Nr.</label>
+  <input type="text" id="p" class="formInput" readonly>
+
+  <label for="i" class="formLabel">ImpfZentrum-Nr</label>
+  <input type="text" id="i" class="formInput" readonly>
+
+  <label for="d_0" class="formLabel">Datum Impfung 1</label>
+  <input type="text" id="d_0" class="formInput" readonly>
+
+  <label for="d_1" class="formLabel">Datum Impfung 2</label>
+  <input type="text" id="d_1" class="formInput" readonly>
+
+  <label for="t" class="formLabel">Typ</label>
+  <input type="text" id="t" class="formInput" readonly>
+
+  <label for="r" class="formLabel">Impfstoff</label>
+  <input type="text" id="r" class="formInput" readonly>
+
+  <label for="r" class="formLabel">Secret</label>
+  <input type="text" id="s" class="formInput" readonly>
+
+  <br>
+  <button id="get-json-from-inputs">
+    get JSON from Inputs</button>
+</div>
 <div class="example">
   <div class="input-field">
     <label for="json-input">JSON:</label>
@@ -108,16 +149,40 @@
   let selectedHashAlgo = hashAlgo.sha512;
   document.addEventListener("DOMContentLoaded", function() {
     // create UbirchVerification instance
-    ubirchVerification = new UbirchVerification({
+    ubirchVerification = new UbirchFormVerification({
       algorithm: selectedHashAlgo,
-      elementSelector: '#verification-widget'
+      elementSelector: '#verification-widget',
+      formIds: ["f", "g", "b", "p", "i", "d", "t", "r", "s"],
+      accessToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rva2VuLmRldi51YmlyY2guY29tIiwic3ViIjoiNTlkZWY2NmEtNWM3OS00ZmFiLTkwZDctMzEwNmZmODRiZDI4IiwiYXVkIjoiaHR0cHM6Ly92ZXJpZnkuZGV2LnViaXJjaC5jb20iLCJleHAiOjE3Mzc4MjQ0MTgsIm5iZiI6MTYxMTU5MDQxOSwiaWF0IjoxNjExNTk0MDU0LCJqdGkiOiI0MjI0MTY2NS1iN2M0LTQzMzAtOWIwMC0xNzNkMjk0ZDQxYjYiLCJwdXJwb3NlIjoiY2VydGlmeSIsInRhcmdldF9pZGVudGl0aWVzIjpbIjAzZWJkNTE4LThiMDktNDVlYy1hMDM5LTYwNGZjOGE5ZTY4NyIsImNmOTNmOWVlLThiZjQtNGNjMS1iNzE1LTdiZjQxZDg4ZTYxNiJdLCJyb2xlIjoidmVyaWZpZXIiLCJzY29wZSI6InZlciJ9.4dmXGuyIGT2IgEaMXJRnKORCXsf8OH1KoC9-6NvUtqvuh04a7DBZSC-r-dZ3jpL5RPq2IUfMg_hUqrM1tQscAw"
     });
+
+    var paramStr = ubirchVerification.getFormParamsFromUrl(window);
+    if (paramStr) {
+      ubirchVerification.setDataIntoForm(paramStr, document, ";");
+    }
 
     // test json
     const json = `{"pid":"9ceb5551-d006-4648-8cf7-c7b1a1ddccb1", "tid":"FGXC-CL11-KDKC-P9XC-74MM", "td":"2020-06-12", "tt":"11:00:00", "tr":"negativ"}`;
 
     // test hash
     const hash = '06VMh9w0zBrfPMUmDpx2HSHYCi1EKYMRa3i5MdmaakOa9MQfgJiWMOvL2pwxWuHf4g685Nq9ymVag51craQ4fQ==';
+
+    // get JSON from input fields button click listener
+    document.getElementById('get-json-from-inputs').addEventListener('click', function() {
+      try {
+        const genJson = ubirchVerification.getJsonFromInputs(document);
+        document.getElementById('json-input').value = genJson;
+      } catch (e) {
+        msg = "Please fill out form completely!\n";
+        if (e.missingIds && e.missingIds.length > 0) {
+          e.missingIds.forEach(field =>
+            msg += missingFieldErrorMessages && missingFieldErrorMessages[field] ?
+              "\n" + missingFieldErrorMessages[field] : ''
+          );
+        }
+        window.alert(msg);
+      }
+    });
 
     // insert JSON test data button click listener
     document.getElementById('trim-sort-json').addEventListener('click', function() {

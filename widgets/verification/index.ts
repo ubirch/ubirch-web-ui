@@ -468,10 +468,7 @@ class UbirchFormVerification extends UbirchVerification {
   }
 
   private extractElementValue(inputId, documentRef) {
-    const doc = new
-    DOMParser().parseFromString(documentRef.getElementById(inputId).value,
-      'text/html');
-    return `"${doc.documentElement.textContent}"`;
+    return `"${documentRef.getElementById(inputId).value}"`;
   }
 
   private getInputArray(inputId, documentRef) {
