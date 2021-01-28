@@ -12,6 +12,8 @@ import '../../src/assets/app-icons/ubirch_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_wrong.png';
 import '../../src/assets/app-icons/alert-circle-red.svg';
 import environment from './environment.dev';
+import { MESSAGES_DE } from './messages.de';
+import { MESSAGES_EN } from './messages.en';
 import {
   EError,
   EInfo, IUbirchError,
@@ -26,70 +28,8 @@ import {
 import './style.scss';
 
 const LANGUAGE_MESSAGE_STRINGS = {
-  de: {
-    PENDING: {
-      info: '...Verifikation wird durchgeführt....',
-    },
-    SUCCESS: {
-      headline: 'Verifikation erfolgreich!',
-      info: 'Für zusätzliche Informationen zur Verankerung klicken Sie auf das ubirch Icon um die Details der Verifikation in der ' +
-        'ubirch Konsole anzuzeigen oder auf die Blockchain Icons um den jeweiligen Blockchain-Explorer zu öffnen',
-    },
-    FAIL: {
-      headline: 'Verifikation fehlgeschlagen!',
-      info: 'Zu den eingegebenen Daten gibt es keine Blockchain-Verankerung',
-    },
-    CERTIFICATE_DATA_MISSING: {
-      info: 'Zertifikatsdaten fehlen - bitte füllen Sie das Formular aus oder scannen Sie Ihren QR-Code!!!',
-    },
-    VERIFICATION_FAILED: {
-      info: 'Verifikation fehlgeschlagen!',
-    },
-    CERTIFICATE_ID_CANNOT_BE_FOUND: {
-      info: 'Zertifikat konnte nicht gefunden werden!!!!!',
-    },
-    VERIFICATION_FAILED_EMPTY_RESPONSE: {
-      info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel',
-    },
-    VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE: {
-      info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel',
-    },
-    UNKNOWN_ERROR: {
-      info: 'Problem!!! Ein unerwarteter Fehler ist aufgetreten....!',
-    },
-  },
-  en: {
-    PENDING: {
-      info: '...verification pending....',
-    },
-    SUCCESS: {
-      headline: 'Verification Successful!',
-      info: 'For more information about anchoring click the ubirch icon to open verification details in ubirch console ' +
-        'or click the blockchain icons to open corresponding blockchain explorer',
-    },
-    FAIL: {
-      headline: 'Verification Failed!',
-      info: 'No blockchain anchor for given data',
-    },
-    CERTIFICATE_DATA_MISSING: {
-      info: 'Missing data - please fill out form completely or scan your QR code!!!',
-    },
-    VERIFICATION_FAILED: {
-      info: 'Verification Failed!',
-    },
-    CERTIFICATE_ID_CANNOT_BE_FOUND: {
-      info: 'Cannot find certificate!!!!!',
-    },
-    VERIFICATION_FAILED_EMPTY_RESPONSE: {
-      info: 'Verification Failed!! Empty certificate or missing seal',
-    },
-    VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE: {
-      info: 'Verification Failed!! Empty certificate or missing seal',
-    },
-    UNKNOWN_ERROR: {
-      info: 'An unexpected error occurred....!',
-    },
-  },
+  de: MESSAGES_DE,
+  en: MESSAGES_EN,
 };
 
 const DEFAULT_CONFIG: IUbirchVerificationConfig = {
@@ -230,13 +170,7 @@ class UbirchVerification {
   }
 
   public handlePreparationError(err: IUbirchError): void {
-    if (this.view) {
-      this.view.cleanupIcons();
-      this.view.showError(err.message);
-    }
-
-    this.logError(err.message);
-    throw err;
+    this.handleVerificationError();
   }
 
   private handleVerificationError(errorCode: EError, hash: string): void {
@@ -246,7 +180,7 @@ class UbirchVerification {
       showNonSeal = false;
     }
 
-    if (showNonSeal) {
+    if (this.view && showNonSeal) {
       this.view.cleanupIcons();
       this.view.showSeal(false, hash, this.noLinkToConsole);
       this.view.addHeadlineAndInfotext(false);
@@ -713,16 +647,6 @@ class View {
     this.host.appendChild(this.sealOutput);
     this.host.appendChild(this.resultOutput);
     this.host.appendChild(this.errorOutput);
-  }
-
-  public showError(error: any): void {
-    this.errorOutput.innerHTML = error;
-    this.resultOutput.innerHTML = '';
-
-    const icon: HTMLElement = this.createIconTag(environment.assets_url_prefix + BlockchainSettings.failIcons.error,
-        'ubirch-verification-seal-img');
-
-    this.sealOutput.appendChild(icon);
   }
 
   public cleanupIcons(): void {
