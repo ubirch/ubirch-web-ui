@@ -36,6 +36,8 @@ sed -i \
 	-e "s%@@UBIRCH_CONSOLE_VERIFICATION_URL@@%${UBIRCH_CONSOLE_VERIFICATION_URL}%" \
 	-e "s%@@UBIRCH_WIDGET_ASSETS_PREFIX@@%${UBIRCH_WIDGET_ASSETS_PREFIX}%" \
 	widgets/verification/environment.prod.ts
+	-e "s%@@UBIRCH_WIDGET_ASSETS_PREFIX@@%${UBIRCH_WIDGET_ASSETS_PREFIX}%" \
+	widgets/verification-v2/environment.prod.ts
 
 echo "creating widgets/verification-v2/environment.prod.ts"
 sed -i \

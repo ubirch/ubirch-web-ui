@@ -27,7 +27,7 @@ export const environment = {
   add_client_name_to_logo: true,
   keycloak: keycloakConfig,
   default_device_type: '@@UBIRCH_TR_DEFAULT_DEVICE_TYPE@@', // ' unknownDeviceType',
-  POLLING_INTERVAL_MILLISECONDS: 15000,
+  POLLING_INTERVAL_MILLISECONDS: 30000,
   LIST_ITEMS_PER_PAGE: 10,
 
 

@@ -12,6 +12,8 @@ import '../../src/assets/app-icons/ubirch_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_wrong.png';
 import '../../src/assets/app-icons/alert-circle-red.svg';
 import environment from './environment.dev';
+import { MESSAGES_DE } from './messages.de';
+import { MESSAGES_EN } from './messages.en';
 import {
   EError,
   EInfo, IUbirchError,
@@ -26,70 +28,8 @@ import {
 import './style.scss';
 
 const LANGUAGE_MESSAGE_STRINGS = {
-  de: {
-    PENDING: {
-      info: '...Verifikation wird durchgeführt....',
-    },
-    SUCCESS: {
-      headline: 'Verifikation erfolgreich!',
-      info: 'Für zusätzliche Informationen zur Verankerung klicken Sie auf das ubirch Icon um die Details der Verifikation in der ' +
-        'ubirch Konsole anzuzeigen oder auf die Blockchain Icons um den jeweiligen Blockchain-Explorer zu öffnen',
-    },
-    FAIL: {
-      headline: 'Verifikation fehlgeschlagen!',
-      info: 'Zu den eingegebenen Daten gibt es keine Blockchain-Verankerung',
-    },
-    CERTIFICATE_DATA_MISSING: {
-      info: 'Zertifikatsdaten fehlen - bitte füllen Sie das Formular aus oder scannen Sie Ihren QR-Code!!!',
-    },
-    VERIFICATION_FAILED: {
-      info: 'Verifikation fehlgeschlagen!',
-    },
-    CERTIFICATE_ID_CANNOT_BE_FOUND: {
-      info: 'Zertifikat konnte nicht gefunden werden!!!!!',
-    },
-    VERIFICATION_FAILED_EMPTY_RESPONSE: {
-      info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel',
-    },
-    VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE: {
-      info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel',
-    },
-    UNKNOWN_ERROR: {
-      info: 'Problem!!! Ein unerwarteter Fehler ist aufgetreten....!',
-    },
-  },
-  en: {
-    PENDING: {
-      info: '...verification pending....',
-    },
-    SUCCESS: {
-      headline: 'Verification Successful!',
-      info: 'For more information about anchoring click the ubirch icon to open verification details in ubirch console ' +
-        'or click the blockchain icons to open corresponding blockchain explorer',
-    },
-    FAIL: {
-      headline: 'Verification Failed!',
-      info: 'No blockchain anchor for given data',
-    },
-    CERTIFICATE_DATA_MISSING: {
-      info: 'Missing data - please fill out form completely or scan your QR code!!!',
-    },
-    VERIFICATION_FAILED: {
-      info: 'Verification Failed!',
-    },
-    CERTIFICATE_ID_CANNOT_BE_FOUND: {
-      info: 'Cannot find certificate!!!!!',
-    },
-    VERIFICATION_FAILED_EMPTY_RESPONSE: {
-      info: 'Verification Failed!! Empty certificate or missing seal',
-    },
-    VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE: {
-      info: 'Verification Failed!! Empty certificate or missing seal',
-    },
-    UNKNOWN_ERROR: {
-      info: 'An unexpected error occurred....!',
-    },
-  },
+  de: MESSAGES_DE,
+  en: MESSAGES_EN,
 };
 
 const DEFAULT_CONFIG: IUbirchVerificationConfig = {
@@ -140,22 +80,14 @@ class UbirchVerification {
     }
 
     if (!config.elementSelector) {
-      const err: IUbirchError = {
-        message: 'Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance',
-        code: EError.MISSING_PROPERTY_IN_UBRICH_VERIFICATION_INSTANCIATION,
-      };
-      this.handlePreparationError(err);
+      this.handleError(EError.MISSING_PROPERTY_IN_UBRICH_VERIFICATION_INSTANCIATION);
     }
     this.elementSelector = config.elementSelector;
 
     this.view = new View(this.elementSelector, this.openConsoleInSameTarget);
 
     if (!config.accessToken) {
-      const err: IUbirchError = {
-        message: 'You need to provide an accessToken to verify data',
-        code: EError.MISSING_ACCESS_TOKEN,
-      };
-      this.handlePreparationError(err);
+      this.handleError(EError.MISSING_ACCESS_TOKEN);
     }
 
     this.accessToken = config.accessToken;
@@ -207,11 +139,7 @@ class UbirchVerification {
       const object: object = JSON.parse(json);
       return JSON.stringify(sort ? this.sortObjectRecursive(object, sort) : object);
     } catch (e) {
-      const err: IUbirchFormError = {
-        message: 'JSON malformed',
-        code: EError.JSON_MALFORMED,
-      };
-      this.handlePreparationError(err);
+      this.handleError(EError.JSON_MALFORMED);
     }
   }
 
@@ -229,32 +157,29 @@ class UbirchVerification {
     }
   }
 
-  public handlePreparationError(err: IUbirchError): void {
-    if (this.view) {
-      this.view.cleanupIcons();
-      this.view.showError(err.message);
-    }
+  protected handleError(errorCode: EError, hash?: string, additionalErrorAttributes: any = {}): void {
 
-    this.logError(err.message);
-    throw err;
-  }
+    const errorMsg: string = this.responseHandler.getErrorMessageToCode(errorCode);
 
-  private handleVerificationError(errorCode: EError, hash: string): void {
     let showNonSeal = true;
 
     if (errorCode === EError.NO_ERROR) {
       showNonSeal = false;
     }
 
-    if (showNonSeal) {
+    if (this.view && showNonSeal) {
       this.view.cleanupIcons();
       this.view.showSeal(false, hash, this.noLinkToConsole);
-      this.view.addHeadlineAndInfotext(false);
+      this.view.addHeadlineAndInfotext(
+        false,
+        hash ? MESSAGE_STRINGS.FAIL.info : MESSAGE_STRINGS.VERIFICATION_NOT_POSSIBLE.info,
+        errorMsg);
     }
 
     const err: IUbirchFormError = {
-      message: this.responseHandler.handleError(errorCode),
+      message: errorMsg,
       code: errorCode,
+      ...additionalErrorAttributes
     };
 
     this.logError(err.message);
@@ -279,11 +204,11 @@ class UbirchVerification {
             break;
           }
           case 404: {
-            self.handleVerificationError(EError.CERTIFICATE_ID_CANNOT_BE_FOUND, hash);
+            self.handleError(EError.CERTIFICATE_ID_CANNOT_BE_FOUND, hash);
             break;
           }
           default: {
-            self.handleVerificationError(EError.UNKNOWN_ERROR, hash);
+            self.handleError(EError.UNKNOWN_ERROR, hash);
             break;
           }
         }
@@ -305,21 +230,21 @@ class UbirchVerification {
     // 2. Key Seal != ''
 
     if (!result) {
-      this.view.showError(EError.VERIFICATION_FAILED_EMPTY_RESPONSE);
+      this.handleError(EError.VERIFICATION_FAILED_EMPTY_RESPONSE, hash);
       return;
     }
 
     const resultObj: IUbirchVerificationResponse = JSON.parse(result);
 
     if (!resultObj) {
-      this.view.showError(EError.VERIFICATION_FAILED_EMPTY_RESPONSE);
+      this.handleError(EError.VERIFICATION_FAILED_EMPTY_RESPONSE, hash);
       return;
     }
 
     const seal = resultObj.upp;
 
     if (!seal || !seal.length) {
-      this.view.showError(EError.VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE);
+      this.handleError(EError.VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE, hash);
       return;
     }
 
@@ -480,12 +405,10 @@ class UbirchFormVerification extends UbirchVerification {
       });
 
       if (idsOfMissingFormFieldValues.length > 0) {
-        const err: IUbirchFormError = {
-          message: 'mandatory form fields not set',
-          code: EError.MANDATORY_FIELD_MISSING,
+        const errAttributes: any = {
           missingIds: idsOfMissingFormFieldValues,
         };
-        this.handlePreparationError(err);
+        this.handleError(EError.MANDATORY_FIELD_MISSING, undefined, errAttributes);
       }
 
       // helper to generate correct JSON from input fields
@@ -493,11 +416,10 @@ class UbirchFormVerification extends UbirchVerification {
       const genJson = this.createJsonFromInputs(this.formIds, documentRef);
       return genJson;
     } catch (e) {
-      const err: IUbirchFormError = {
-        message: e.message,
-        code: EError.FILLING_FORM_WITH_PARAMS_FAILED,
-      };
-      this.handlePreparationError(err);
+      if ( e.code === EError.MANDATORY_FIELD_MISSING ) {
+        throw e;
+      }
+      this.handleError(EError.FILLING_FORM_WITH_PARAMS_FAILED);
     }
   }
 
@@ -522,11 +444,7 @@ class UbirchFormVerification extends UbirchVerification {
       if (e.code === EError.CANNOT_ACCESS_FORM_FIELD) {
         throw e;
       }
-      const err: IUbirchFormError = {
-        message: 'Building JSON from input fields failed',
-        code: EError.JSON_MALFORMED,
-      };
-      this.handlePreparationError(err);
+      this.handleError(EError.JSON_MALFORMED);
     }
   }
 
@@ -536,12 +454,10 @@ class UbirchFormVerification extends UbirchVerification {
     const uniqueFoundNotAllowedChars = [...new Set(foundNotAllowedChars)];
 
     if (uniqueFoundNotAllowedChars.length > 0) {
-      const err: IUbirchFormError = {
-        message: 'Corrrupt URL paramters found',
-        code: EError.URL_PARAMS_CORRUPT,
+      const errAttributes: any = {
         notAllowedChars: uniqueFoundNotAllowedChars,
       };
-      this.handlePreparationError(err);
+      this.handleError(EError.URL_PARAMS_CORRUPT, undefined, errAttributes);
     }
 
     return urlStr;
@@ -552,11 +468,7 @@ class UbirchFormVerification extends UbirchVerification {
     try {
       hash = windowRef.location.hash;
     } catch (e) {
-      const err: IUbirchFormError = {
-        message: e.message,
-        code: EError.LOCATION_MALFORMED,
-      };
-      throw err;
+      this.handleError(EError.LOCATION_MALFORMED);
     }
 
     return hash ? this.sanitizeUrlAndQuery(hash.slice(1)) : undefined;
@@ -567,11 +479,7 @@ class UbirchFormVerification extends UbirchVerification {
     try {
       query = windowRef.location.search;
     } catch (e) {
-      const err: IUbirchFormError = {
-        message: e.message,
-        code: EError.LOCATION_MALFORMED,
-      };
-      throw err;
+      this.handleError(EError.LOCATION_MALFORMED);
     }
 
     return query.length > 0 ? this.sanitizeUrlAndQuery(query.substr(1)) : undefined;
@@ -665,23 +573,9 @@ class UbirchFormVerification extends UbirchVerification {
 }
 
 class ResponseHandler {
-  handleError(error: EError): string {
-    switch (error) {
-      case EError.CERTIFICATE_DATA_MISSING:
-        return MESSAGE_STRINGS.CERTIFICATE_DATA_MISSING.info;
-      case EError.VERIFICATION_FAILED:
-        return MESSAGE_STRINGS.VERIFICATION_FAILED.info;
-      case EError.CERTIFICATE_ID_CANNOT_BE_FOUND:
-        return MESSAGE_STRINGS.CERTIFICATE_ID_CANNOT_BE_FOUND.info;
-      case EError.VERIFICATION_FAILED_EMPTY_RESPONSE:
-        return MESSAGE_STRINGS.VERIFICATION_FAILED_EMPTY_RESPONSE.info;
-      case EError.VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE:
-        return MESSAGE_STRINGS.VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE.info;
-      case EError.UNKNOWN_ERROR:
-      default:
-        return MESSAGE_STRINGS.UNKNOWN_ERROR.info;
+  getErrorMessageToCode(errorCode: EError): string {
+    return MESSAGE_STRINGS[errorCode]?.info || MESSAGE_STRINGS.UNKNOWN_ERROR.info;
     }
-  }
 }
 
 class View {
@@ -713,16 +607,6 @@ class View {
     this.host.appendChild(this.sealOutput);
     this.host.appendChild(this.resultOutput);
     this.host.appendChild(this.errorOutput);
-  }
-
-  public showError(error: any): void {
-    this.errorOutput.innerHTML = error;
-    this.resultOutput.innerHTML = '';
-
-    const icon: HTMLElement = this.createIconTag(environment.assets_url_prefix + BlockchainSettings.failIcons.error,
-        'ubirch-verification-seal-img');
-
-    this.sealOutput.appendChild(icon);
   }
 
   public cleanupIcons(): void {
@@ -815,7 +699,7 @@ class View {
     this.resultOutput.appendChild(linkTag);
   }
 
-  public addHeadlineAndInfotext(successful: true | false | undefined): void {
+  public addHeadlineAndInfotext(successful: true | false | undefined, info?: string, errorMsg?: string): void {
     if (successful === undefined) {
       this.resultOutput.appendChild(this.createTxtTag(MESSAGE_STRINGS.PENDING.info, 'ubirch-verification-info'));
     } else {
@@ -825,8 +709,12 @@ class View {
       } else {
         this.sealInfoText.appendChild(this.createTxtTag(MESSAGE_STRINGS.FAIL.headline,
           'ubirch-verification-fail ubirch-verification-headline'));
-        this.resultOutput.appendChild(this.createTxtTag(MESSAGE_STRINGS.FAIL.info,
+        this.resultOutput.appendChild(this.createTxtTag(info ? info : MESSAGE_STRINGS.FAIL.info,
           'ubirch-verification-fail'));
+        if (errorMsg) {
+          this.errorOutput.appendChild(this.createTxtTag(errorMsg,
+            'ubirch-error-output'));
+        }
       }
       // if HIGHLIGHT_PAGE_AFTER_VERIFICATION is set the whole page is flashed in green, if verification returned successful,
       // or red, if verification failed
