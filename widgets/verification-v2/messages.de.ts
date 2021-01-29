@@ -9,7 +9,10 @@ export const MESSAGES_DE = {
   },
   FAIL: {
     headline: 'Verifikation fehlgeschlagen!',
-      info: 'Zu den eingegebenen Daten gibt es keine Blockchain-Verankerung',
+    info: 'Zu den eingegebenen Daten gibt es keine Blockchain-Verankerung',
+  },
+  VERIFICATION_NOT_POSSIBLE: {
+    info: 'Die eingegebenen Daten sind fehlerhaft und konnten nicht verifiziert werden',
   },
   CERTIFICATE_DATA_MISSING: {
     info: 'Zertifikatsdaten fehlen - bitte füllen Sie das Formular aus oder scannen Sie Ihren QR-Code!!!',
@@ -38,7 +41,7 @@ export const MESSAGES_DE = {
   },
   MANDATORY_FIELD_MISSING: {
     // tslint:disable-next-line:max-line-length
-    info: 'Pflichtfelder nicht gesetzt - Füllen Sie das Formular aus? Dann geben Sie bitte alle Pflichtfelder an. Falls Sie einen älteren QRCode gescannt haben, haben sich evtl. die Anforderungen geändert.',
+    info: 'Nicht alle Pflichtfelder wurden ausgefüllt - Falls Sie einen QRCode gescannt haben, ist dieser fehlerhaft',
   },
   FILLING_FORM_WITH_PARAMS_FAILED: {
     info: 'Das Formular konnte nicht mit den Werten aus dem Aufruf gefüllt werden',
@@ -47,16 +50,17 @@ export const MESSAGES_DE = {
     info: 'Das interne JSON Datenformat enthält einen Fehler und konnte nicht gelesen werden',
   },
   JSON_MALFORMED: {
-    info: 'Das Erzeugen des internen JSON Datenformats aus den Eingabefeldern ist ',
+    info: 'Das Erzeugen des internen JSON Datenformats aus den Eingabefeldern ist fehlgeschlagen',
   },
   CANNOT_ACCESS_FORM_FIELD: {
-    info: 'Unable to access input field',
+    info: 'Eingabefeld konnte nicht ausgelesen werden',
   },
   MISSING_PROPERTY_IN_UBRICH_VERIFICATION_INSTANCIATION: {
-    info: 'Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance',
+    info: 'Fehler beim Erstellen der Ubirch(Form)Verification Instanz auf der Seite: das Attribut `elementSelector` wurde nicht gesetzt',
   },
   MISSING_ACCESS_TOKEN: {
-    info: 'You need to provide an accessToken to verify data',
+    // tslint:disable-next-line:max-line-length
+    info: 'Fehler beim Erstellen der Ubirch(Form)Verification Instanz auf der Seite: es wurde kein `accessToken` zum Verifizieren der Daten angegeben',
   },
   UNKNOWN_ERROR: {
     info: 'Problem!!! Ein unerwarteter Fehler ist aufgetreten....!',

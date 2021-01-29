@@ -1,5 +1,6 @@
 $success-color: #53af32;
 $fail-color: #e40146;
+$error-msg-color: #aaaaaa;
 
 .ubirch {
     &-verification {
@@ -14,4 +15,9 @@ $fail-color: #e40146;
             color: $fail-color;
         }
     }
+  &-error-output {
+    padding: 0.5em 0;
+    font-size: smaller;
+    color: $error-msg-color;
+  }
 }

@@ -11,6 +11,9 @@ export const MESSAGES_EN = {
     headline: 'Verification Failed!',
     info: 'No blockchain anchor for given data',
   },
+  VERIFICATION_NOT_POSSIBLE: {
+    info: 'Errors in given data found - verification not possible',
+  },
   CERTIFICATE_DATA_MISSING: {
     info: 'Missing data - please fill out form completely or scan your QR code!!!',
   },
@@ -37,7 +40,7 @@ export const MESSAGES_EN = {
   },
   MANDATORY_FIELD_MISSING: {
     // tslint:disable-next-line:max-line-length
-    info: 'mandatory form fields not set - You filled out a form manually? Please fill out all mandatory fields; You scanned an old QRCode? Sorry, probably some requirements changed',
+    info: 'mandatory form fields not set - if you scanned a QRCode it seems to be incorrect',
   },
   FILLING_FORM_WITH_PARAMS_FAILED: {
     info: 'Unable to fill the form with the given parameters from called URL',
