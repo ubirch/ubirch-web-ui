@@ -146,7 +146,7 @@
   "token.list.data.label.expires_at": "Expires on",
   "token.list.data.label.not_valid_before": "Valid after",
   "token.list.data.valid_for_all": "Token valid for all Things",
-	"token.list.data.label.token_id": "Token ID",
+	"token.list.data.label.token_jwt": "Token",
 	"token.list.data.label.thing_id": "Things",
 	"token.list.data.label.issued_at": "Created on",
 	"token.list.data.label.role": "Token Type",

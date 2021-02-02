@@ -149,7 +149,7 @@
 	"token.list.data.label.role": "Token-Typ",
 	"token.list.data.label.show_things": "Zeige Ziel Things",
 	"token.list.data.label.thing_id": "Things",
-	"token.list.data.label.token_id": "Token ID",
+	"token.list.data.label.token_jwt": "Token",
 	"token.list.data.valid_for_all": "Token gültig für alle Things",
 	"token.list.searchbar.placeholder": "Suche nach Token",
 	"token.list.title": "Deine Token",
