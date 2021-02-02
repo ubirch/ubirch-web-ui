@@ -1,96 +1,77 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-toolbar>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6">
-        <div class="ion-text-left page-title">
-          {{title}}
+<ion-header id="header">
+    <ion-toolbar id="toolbar">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+    <div id="title" class="page-title">
+        {{title}}
+    </div>
+    <app-language-select id="language"></app-language-select>
+    <div id="sessionInfo">
+        <ubirch-web-ui-logged-in-user id="user"></ubirch-web-ui-logged-in-user>
+        <div id="currentDevice" class="ion-align-items-center" *ngIf="currentDevice">
+            <ion-label class="header-right-label">
+                {{ 'label.thing' | translate }}:
+            </ion-label>
+            <br>
+            <span>{{currentDevice.description}}</span>
         </div>
-      </ion-col>
-      <ion-col size="6">
-        <div class="ion-text-right">
-          <ion-grid>
-            <app-language-select></app-language-select>
-            <ubirch-web-ui-logged-in-user></ubirch-web-ui-logged-in-user>
-            <ion-row class="ion-justify-content-end max-content-height" *ngIf="currentDevice">
-              <ion-col size="8" class="ion-align-items-center">
-                <ion-label class="header-right-label">
-                  {{ 'label.thing' | translate }}:
-                </ion-label>
-                <span>{{currentDevice.description}}</span>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="6">
-        <div class="ion-justify-content-start">
-          <ng-container *ngFor="let but of actionButtons">
-            <ion-back-button *ngIf="but.isBackButton; else normalButton" text="{{ but.labelKey | translate }}" default-href="devices">
+    </div>
+    <div id="actionButton">
+        <ng-container *ngFor="let but of actionButtons">
+            <ion-back-button *ngIf="but.isBackButton; else normalButton" text="{{ but.labelKey | translate }}"
+                             default-href="devices">
             </ion-back-button>
             <ng-template #normalButton>
-              <ion-button [color]="but.color" (click)="_buttonClicked(but.action)">
-                <ion-icon *ngIf="but.iconPath; else buttonWithIcon" slot="start" [src]="but.iconPath"></ion-icon>
-                {{ but.labelKey  | translate }}
-              </ion-button>
+                <ion-button [color]="but.color" (click)="_buttonClicked(but.action)">
+                    <ion-icon *ngIf="but.iconPath; else buttonWithIcon" slot="start"
+                              [src]="but.iconPath"></ion-icon>
+                    {{ but.labelKey  | translate }}
+                </ion-button>
             </ng-template>
             <ng-template #buttonWithIcon>
-              <ion-icon *ngIf="but.iconName" slot="start" [name]="but.iconName"></ion-icon>
+                <ion-icon *ngIf="but.iconName" slot="start" [name]="but.iconName"></ion-icon>
             </ng-template>
-          </ng-container>
-        </div>
-      </ion-col>
-      <ion-col size="6">
-        <ng-container [ngTemplateOutlet]="SEARCH" *ngIf="!fullWidthSearch"></ng-container>
-      </ion-col>
-    </ion-row>
-<!--    <ion-row class="ion-justify-content-end max-content-height" *ngIf="headerFullWidthValue">
-      <ion-col size="12" class="ion-align-items-center">
-        <ion-label class="header-right-label">
-          {{headerFullWidthLabel}}
-        </ion-label>
-        <span>{{headerFullWidthValue}}</span>
-      </ion-col>
-    </ion-row>
--->
-    <ion-row *ngIf="fullWidthSearch">
-      <ion-col size="12">
-        <ng-container [ngTemplateOutlet]="SEARCH"></ng-container>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        </ng-container>
+    </div>
+    <ng-container [ngTemplateOutlet]="SEARCH" *ngIf="!fullWidthSearch"></ng-container>
+    <!--    <ion-row class="ion-justify-content-end max-content-height" *ngIf="headerFullWidthValue">
+          <ion-col size="12" class="ion-align-items-center">
+            <ion-label class="header-right-label">
+              {{headerFullWidthLabel}}
+            </ion-label>
+            <span>{{headerFullWidthValue}}</span>
+          </ion-col>
+        </ion-row>
+    -->
+    <ng-container *ngIf="fullWidthSearch" [ngTemplateOutlet]="SEARCH"></ng-container>
 </ion-header>
 
 <ng-template #SEARCH>
-  <div class="ion-justify-content-end">
-    <ng-container *ngIf="addSearchBarWithPlaceholder">
-      <ng-container *ngIf="searchOnEnter; else SEARCH_ON_DEBOUNCE">
-        <ion-searchbar #SEARCHBAR
-                       color="light"
-                       [showCancelButton]="showSearchCancelButton"
-                       [placeholder]="addSearchBarWithPlaceholder"
-                       [value]="searchInput"
-                       (keyup.enter)="_startSearch($event)"
-                       debounce="500"
-                       (ionChange)="_saveSearchString($event)">
-        </ion-searchbar>
-      </ng-container>
-      <ng-template #SEARCH_ON_DEBOUNCE>
-        <ion-searchbar #SEARCHBAR
-                       color="light"
-                       [showCancelButton]="showSearchCancelButton"
-                       [placeholder]="addSearchBarWithPlaceholder"
-                       [value]="searchInput"
-                       debounce="500"
-                       (ionChange)="_startSearch($event)">
-        </ion-searchbar>
-      </ng-template>
-    </ng-container>
-  </div>
+    <div class="ion-justify-content-end" id="search">
+        <ng-container *ngIf="addSearchBarWithPlaceholder">
+            <ng-container *ngIf="searchOnEnter; else SEARCH_ON_DEBOUNCE">
+                <ion-searchbar #SEARCHBAR
+                               color="light"
+                               [showCancelButton]="showSearchCancelButton"
+                               [placeholder]="addSearchBarWithPlaceholder"
+                               [value]="searchInput"
+                               (keyup.enter)="_startSearch($event)"
+                               debounce="500"
+                               (ionChange)="_saveSearchString($event)">
+                </ion-searchbar>
+            </ng-container>
+            <ng-template #SEARCH_ON_DEBOUNCE>
+                <ion-searchbar #SEARCHBAR
+                               color="light"
+                               [showCancelButton]="showSearchCancelButton"
+                               [placeholder]="addSearchBarWithPlaceholder"
+                               [value]="searchInput"
+                               debounce="500"
+                               (ionChange)="_startSearch($event)">
+                </ion-searchbar>
+            </ng-template>
+        </ng-container>
+    </div>
 </ng-template>
