@@ -4,13 +4,17 @@ export class UbirchAccountingToken {
 
   public expirationDate: Date;
   public isExpired: boolean;
+  public jwt: string;
   public data: IUbirchAccountingTokenData;
 
   constructor(
+    jwtP: string,
     decodedTokenP: any,
     expirationDateP: Date,
     isExpiredP: boolean
   ) {
+
+    this.jwt = jwtP;
 
     this.prepareToken(decodedTokenP);
     this.data = {} as IUbirchAccountingTokenData;

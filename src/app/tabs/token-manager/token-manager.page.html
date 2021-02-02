@@ -15,8 +15,8 @@
           <ion-label class="tokenItem">
             <h1 class="tokenTitle">{{token.data.purpose}}</h1>
             <ion-item class="tokenId">
-              <ion-label style="font-weight: bold">{{'token.list.data.label.token_id' | translate}}</ion-label>
-              <ion-input readonly="true" value="{{token.data.jti}}"></ion-input>
+              <ion-label style="font-weight: bold">{{'token.list.data.label.token_jwt' | translate}}</ion-label>
+              <ion-textarea readonly="true" value="{{token.jwt}}"></ion-textarea>
             </ion-item>
 
             <div class="validFor">
@@ -54,9 +54,9 @@
               <ion-input readonly="true" value="{{token.data.role}}" ></ion-input>
             </ion-item>
 
-            <ion-button (click)="copyToClipboard(token.data.jti)" class="copyButton" color="success"><ion-icon name="copy" ></ion-icon></ion-button>
+            <ion-button (click)="copyToClipboard(token.jwt)" class="copyButton" color="success"><ion-icon name="copy" ></ion-icon></ion-button>
             <ion-button class="deleteButton" color="danger" (click)="revokeToken()"><ion-icon src="assets/app-icons/revoke.svg"></ion-icon></ion-button>
-            <ion-button (click)="qrCodePopup(token.data.jti)" class="qrButton"><ion-icon  name="qr-code-sharp"></ion-icon></ion-button>
+            <ion-button (click)="qrCodePopup(token.jwt)" class="qrButton"><ion-icon  name="qr-code-sharp"></ion-icon></ion-button>
           </ion-label>
         </ion-card-content>
       </ion-card>

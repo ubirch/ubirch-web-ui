@@ -75,7 +75,7 @@ export class TokenService {
       const expirationDate: Date = this.jwtHelper.getTokenExpirationDate(tokenValue);
       const isExpired: boolean = this.jwtHelper.isTokenExpired(tokenValue);
 
-      return new UbirchAccountingToken(decodedToken, expirationDate, isExpired);
+      return new UbirchAccountingToken(tokenValue, decodedToken, expirationDate, isExpired);
     } else {
 
       this.logger.warn('Got token without tokenValue! Will be removed from list...');
