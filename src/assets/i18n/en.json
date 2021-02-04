@@ -141,6 +141,7 @@
 	"token.create.expiration.placeholder": "choose a date",
 	"token.create.valid_from": "Valid from",
 	"token.create.valid_from.placeholder": "choose a date",
+  "token.create.valid_for_all_things": "Valid for all things",
 	"token.create.things": "Target Things",
 	"token.create.select": "select",
   "token.list.data.label.expires_at": "Expires on",

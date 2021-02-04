@@ -8,6 +8,13 @@ export class CreateTokenFormData {
 
   constructor(props) {
     Object.assign(this, props);
+    this.cleanupTargetIdentitiesIfValidForAllSelected();
     return this;
+  }
+
+  private cleanupTargetIdentitiesIfValidForAllSelected(): void {
+    if (this.validForAll) {
+      this.targetIdentities = undefined;
+    }
   }
 }

@@ -140,6 +140,7 @@
 	"token.create.expiration.placeholder": "wähle ein Datum",
 	"token.create.new_token": "Neues Token erstellen",
 	"token.create.select": "auswählen",
+  "token.create.valid_for_all_things": "Gültig für beliebige Things",
 	"token.create.things": "Ziel Things",
 	"token.create.valid_from": "Gültig ab",
 	"token.create.valid_from.placeholder": "wähle ein Datum",

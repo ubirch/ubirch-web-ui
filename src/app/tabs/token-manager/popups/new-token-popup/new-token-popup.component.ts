@@ -1,21 +1,26 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import {CreateTokenFormData} from '../../../../models/create-token-form-data';
 import {DeviceService} from '../../../../services/device.service';
 import {LoggingService} from '../../../../services/logging.service';
 import {TokenService} from '../../../../services/token.service';
+import { UbirchWebUIUtilsService } from '../../../../utils/ubirch-web-uiutils.service';
+import { targetIdentitiesValidator } from '../../../../validators/target-identities.validator';
 
 @Component({
   selector: 'app-new-token-popup',
   templateUrl: './new-token-popup.component.html',
   styleUrls: ['./new-token-popup.component.scss'],
 })
-export class NewTokenPopupComponent implements OnInit {
+export class NewTokenPopupComponent implements OnInit, OnDestroy {
 
   public devices;
-  public selectedThings;
   public tokenDetailsForm: FormGroup;
+  public selectTargetIdentities = true;
+
+  private toggleSubscr: Subscription;
 
   constructor(
     private modalCtrl: ModalController,
@@ -23,6 +28,7 @@ export class NewTokenPopupComponent implements OnInit {
     private fb: FormBuilder,
     private tokenService: TokenService,
     private logger: LoggingService,
+    private utils: UbirchWebUIUtilsService
   ) {
   }
 
@@ -32,7 +38,12 @@ export class NewTokenPopupComponent implements OnInit {
       purpose: [ '', [ Validators.required, Validators.minLength(5) ]],
       expiration: [ '' ],
       notBefore: [ '' ],
-      targetIdentities: [ '', Validators.required ],
+      validForAll: [ false ],
+      targetIdentities: [ '' ],
+    }, {validator: targetIdentitiesValidator});
+
+    this.toggleSubscr = this.tokenDetailsForm.get('validForAll').valueChanges.subscribe(val => {
+      this.selectTargetIdentities = !val;
     });
   }
 
@@ -64,14 +75,18 @@ export class NewTokenPopupComponent implements OnInit {
     this.deviceService.reloadDeviceStubs(
       0,
       1000,
-    ).subscribe(
+    ).toPromise().then(
       wrapper => {
         this.devices = wrapper.devices || [];
-      },
-      error => {
+      }
+    ).catch(error => {
         // TODO: handle error
-      },
+      }
     );
+  }
+
+  public ngOnDestroy(): void {
+    this.utils.safeUnsubscribe(this.toggleSubscr);
   }
 
 }
