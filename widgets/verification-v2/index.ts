@@ -3,6 +3,7 @@ import { sha512 } from 'js-sha512';
 import * as BlockchainSettings from '../../resources/blockchain-settings.json';
 import { IUbirchBlockchain } from '../../src/app/models/iubirch-blockchain';
 import { IUbirchBlockchainNet } from '../../src/app/models/iubirch-blockchain-net';
+import '../../src/assets/app-icons/alert-circle-red.svg';
 import '../../src/assets/app-icons/bloxberg_verify_right.png';
 import '../../src/assets/app-icons/Ethereum-Classic_verify_right.png';
 import '../../src/assets/app-icons/Ethereum_verify_right.png';
@@ -10,13 +11,12 @@ import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
 import '../../src/assets/app-icons/IOTA_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_wrong.png';
-import '../../src/assets/app-icons/alert-circle-red.svg';
 import environment from './environment.dev';
 import { MESSAGES_DE } from './messages.de';
 import { MESSAGES_EN } from './messages.en';
 import {
   EError,
-  EInfo, IUbirchError,
+  EInfo,
   IUbirchFormError,
   IUbirchFormVerificationConfig,
   IUbirchVerificationAnchorProperties,
@@ -84,7 +84,15 @@ class UbirchVerification {
     }
     this.elementSelector = config.elementSelector;
 
-    this.view = new View(this.elementSelector, this.openConsoleInSameTarget);
+    try {
+      this.view = new View(this.elementSelector, this.openConsoleInSameTarget);
+    } catch (e) {
+      if (e.message === EError.ELEMENT_FOR_WIDGET_SELECTOR_NOT_FOUND) {
+        this.handleError(EError.ELEMENT_FOR_WIDGET_SELECTOR_NOT_FOUND);
+      } else {
+        throw e;
+      }
+    }
 
     if (!config.accessToken) {
       this.handleError(EError.MISSING_ACCESS_TOKEN);
@@ -303,12 +311,12 @@ class UbirchFormVerification extends UbirchVerification {
     super(config);
 
     if (!config.formIds) {
-      throw new Error('Please, provide a string array with param ids');
+      this.handleError(EError.MISSING_PARAM_IDS);
     }
     this.formIds = config.formIds;
     if (config.paramsFormIdsMapping) {
       if (config.paramsFormIdsMapping.length !== this.formIds.length) {
-        throw new Error('If you provide paramsFormIdsMapping define a mapping for each formId; they need to be in the same order');
+        this.handleError(EError.PARAM_ID_MAPPING_MISSMATCH);
       }
       this.paramsFormIdsMapping = config.paramsFormIdsMapping;
     }
@@ -537,11 +545,7 @@ class UbirchFormVerification extends UbirchVerification {
         return decodeURIComponent(val);
       }
     } catch (e) {
-      const err: IUbirchFormError = {
-        message: 'Decoding URL parameters failed',
-        code: EError.URL_PARAMS_CORRUPT,
-      };
-      throw err;
+      this.handleError(EError.URL_PARAMS_CORRUPT);
     }
   }
 
@@ -593,7 +597,7 @@ class View {
     this.openConsoleInSameTarget = openConsoleInSameTargetP;
 
     if (!host) {
-      throw new Error(`Element by selector '${this.elementSelectorP}' not found`);
+      throw new Error(EError.ELEMENT_FOR_WIDGET_SELECTOR_NOT_FOUND);
     }
 
     this.host = host;

@@ -57,6 +57,15 @@ export const MESSAGES_EN = {
   MISSING_PROPERTY_IN_UBRICH_VERIFICATION_INSTANCIATION: {
     info: 'Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance',
   },
+  ELEMENT_FOR_WIDGET_SELECTOR_NOT_FOUND: {
+    info: `Element for widget selector not found`,
+  },
+  MISSING_PARAM_IDS: {
+    info: 'Please, provide a string array with param ids'
+  },
+  PARAM_ID_MAPPING_MISSMATCH: {
+    info: 'If you provide paramsFormIdsMapping define a mapping for each formId; they need to be in the same order'
+  },
   MISSING_ACCESS_TOKEN: {
     info: 'You need to provide an accessToken to verify data',
   },

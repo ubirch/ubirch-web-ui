@@ -55,12 +55,6 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
 
   public createToken(): void {
     const details = this.tokenDetailsForm.getRawValue();
-    const currentDate = Date.now();
-    const expirationMilliSeconds = new Date(details.expiration).getTime();
-    const notBeforeMilliSeconds = new Date(details.notBefore).getTime();
-
-    details.expiration = (expirationMilliSeconds - currentDate) / 1000;
-    details.notBefore = (notBeforeMilliSeconds - currentDate) / 1000;
 
     if (details) {
       this.modalCtrl.dismiss(
