@@ -1,42 +1,56 @@
 <ion-item>
-  <ion-label>
-    <ion-row>
-      <ion-col size="4">
+    <ion-label id="quickInfo">
+
         <div class="result">
-          <div class="vTag">
             {{ 'verification.quickinfo.label.initial-verification' | translate }}:
             <img [ngClass]="{ 'success': verificationDisplay.iClass === 'success',
                               'notAvailable': verificationDisplay.iClass === 'notAvailable',
                                'fail': verificationDisplay.iClass === 'fail'}"
                  [alt]="verificationDisplay.iClass"
                  src="{{verificationDisplay.iVerIconSrc}}" class="vIcon">
-          </div>
-          <div class="vTag">
-          </div>
         </div>
-      </ion-col>
-      <ion-col size="8">
-        <div class="anchors">
-          <div class="vTag">
-            {{ 'verification.quickinfo.label.blockchain-verification' | translate }}:
-            <img class="verification-icon" [ngClass]="{ 'success': verificationDisplay.aClass === 'success',
+
+        <div id="anchors">
+            <div id="anchorLabel">
+                {{ 'verification.quickinfo.label.blockchain-verification' | translate }}:
+                <img class="verification-icon" [ngClass]="{ 'success': verificationDisplay.aClass === 'success',
                               'notAvailable': verificationDisplay.aClass === 'notAvailable',
                               'fail': verificationDisplay.aClass === 'fail'}"
-                 [alt]="verificationDisplay.aClass"
-                 src="{{verificationDisplay.aVerIconSrc}}" class="vIcon">
-          </div>
-          <div class="aTag">
-            <a *ngFor="let anchor of anchors" class="aTag" href="{{anchor.href}}">
-              <img *ngIf="verificationDisplay.aClass === 'success'" alt="{{anchor.title}}" class="anchorIcon"
-                   height="64px" src="{{anchor.icon}}" width="64px">
-              <p *ngIf="!anchor.icon">{{anchor.title}}</p>
-            </a>
-            <ion-text *ngIf="verificationDisplay.aClass === 'notAvailable'">
-              {{ 'verification.quickinfo.info.upp-not-yet-anchored' | translate }}
-            </ion-text>
-          </div>
+                     [alt]="verificationDisplay.aClass"
+                     src="{{verificationDisplay.aVerIconSrc}}" class="vIcon">
+            </div>
+            <div id="anchorIcons" class="aTag">
+                <a *ngFor="let anchor of anchors" class="aTag" href="{{anchor.href}}">
+                    <img *ngIf="verificationDisplay.aClass === 'success'" alt="{{anchor.title}}" class="anchorIcon"
+                         height="64px" src="{{anchor.icon}}" width="64px">
+                    <p *ngIf="!anchor.icon">{{anchor.title}}</p>
+                </a>
+                <ion-text *ngIf="verificationDisplay.aClass === 'notAvailable'">
+                    {{ 'verification.quickinfo.info.upp-not-yet-anchored' | translate }}
+                </ion-text>
+            </div>
         </div>
-      </ion-col>
-    </ion-row>
-  </ion-label>
+    </ion-label>
+    <ion-label id="quickInfoMobile">
+        <div id="initialResultMobile" [ngClass]="{ 'successMobile': verificationDisplay.iClass === 'success',
+                              'notAvailableMobile': verificationDisplay.iClass === 'notAvailable',
+                               'failMobile': verificationDisplay.iClass === 'fail'}">
+            <ion-text>{{ 'verification.quickinfo.label.initial-verification' | translate }}</ion-text>
+        </div>
+        <div id="blockchainResultMobile" [ngClass]="{ 'successMobile': verificationDisplay.aClass === 'success',
+                              'notAvailableMobile': verificationDisplay.aClass === 'notAvailable',
+                               'failMobile': verificationDisplay.aClass === 'fail'}">
+            <ion-text>{{ 'verification.quickinfo.label.blockchain-verification' | translate }}</ion-text>
+        </div>
+        <div id="anchorIconsMobile">
+            <a *ngFor="let anchor of anchors" class="aTag" href="{{anchor.href}}">
+                <img *ngIf="verificationDisplay.aClass === 'success'" alt="{{anchor.title}}" class="anchorIcon"
+                     height="64px" src="{{anchor.icon}}" width="64px">
+                <p *ngIf="!anchor.icon">{{anchor.title}}</p>
+            </a>
+            <ion-text *ngIf="verificationDisplay.aClass === 'notAvailable'" class="ion-text-wrap" id="notAvailableInfo">
+                {{ 'verification.quickinfo.info.upp-not-yet-anchored' | translate }}
+            </ion-text>
+        </div>
+    </ion-label>
 </ion-item>

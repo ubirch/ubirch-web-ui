@@ -1,12 +1,11 @@
-<ion-row
+<div
   id="header-user-data-row"
-  class="ion-justify-content-end"
   *ngIf="isLoggedIn"
 >
-  <ion-col size="8" class="ion-align-items-center">
-    <ion-label  class="header-right-label">
+  <ion-label  class="header-right-label">
       {{ 'header.label:logged-in-as' | translate }}:
     </ion-label>
+    <br>
     <span>{{username}}</span>
-  </ion-col>
-</ion-row>
+
+</div>
