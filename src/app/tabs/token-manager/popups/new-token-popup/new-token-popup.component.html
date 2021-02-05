@@ -15,20 +15,24 @@
             </ion-item>
             <ion-item>
                 <ion-label>{{'token.create.valid_from' | translate}}</ion-label>
-                <ion-datetime placeholder="{{'token.create.valid_from.placeholder' | translate}}" display-format="MMM DD, YYYY HH:mm" max="3000" id="vFrom" slot="end" formControlName="notBefore"></ion-datetime>
+                <ion-date placeholder="{{'token.create.valid_from.placeholder' | translate}}" display-format="MMM DD, YYYY HH:mm" max="3000" id="vFrom" slot="end" formControlName="notBefore"></ion-date>
                 <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
             </ion-item>
             <ion-item>
                 <ion-label>{{'token.create.expiration' | translate}}</ion-label>
-                <ion-datetime placeholder="{{'token.create.expiration.placeholder' | translate}}" display-format="MMM DD, YYYY HH:mm" max="3000" mode="md" id="expiration" slot="end" formControlName="expiration"></ion-datetime>
+                <ion-date placeholder="{{'token.create.expiration.placeholder' | translate}}" display-format="MMM DD, YYYY HH:mm" max="3000" mode="md" id="expiration" slot="end" formControlName="expiration"></ion-date>
                 <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
             </ion-item>
-            <ion-item>
-                <ion-label>{{'token.create.things' | translate}}</ion-label>
-                <ion-select placeholder="{{'token.create.select' | translate}}" id="targetIdentities" slot="end" multiple="true" [(ngModel)]="selectedThings" formControlName="targetIdentities">
-                    <ion-select-option *ngFor="let device  of devices" value="{{device.hwDeviceId}}">{{device.description}}</ion-select-option>
-                </ion-select>
-            </ion-item>
+          <ion-item>
+            <ion-label>{{'token.create.valid_for_all_things' | translate}}</ion-label>
+            <ion-toggle formControlName="validForAll"></ion-toggle>
+          </ion-item>
+          <ion-item *ngIf="selectTargetIdentities">
+            <ion-label>{{'token.create.things' | translate}}</ion-label>
+            <ion-select placeholder="{{'token.create.select' | translate}}" id="targetIdentities" slot="end" multiple="true" formControlName="targetIdentities">
+              <ion-select-option *ngFor="let device  of devices" value="{{device.hwDeviceId}}">{{device.description}}</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-card>
     </form>
     <ion-button color="success" expand="full" class="ion-margin-vertical" [disabled]="!tokenDetailsForm.valid" (click)="createToken()">Create</ion-button>

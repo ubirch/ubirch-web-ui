@@ -8,6 +8,25 @@ export class CreateTokenFormData {
 
   constructor(props) {
     Object.assign(this, props);
+
+    this.expiration = this.convertDateToInterval(this.expiration);
+    this.notBefore = this.convertDateToInterval(this.notBefore);
+
+    this.cleanupTargetIdentitiesIfValidForAllSelected();
+
     return this;
+  }
+
+  private cleanupTargetIdentitiesIfValidForAllSelected(): void {
+    if (this.validForAll) {
+      this.targetIdentities = undefined;
+    }
+  }
+
+  private convertDateToInterval(dateP: number): number {
+    if (!dateP) {
+      return undefined;
+    }
+    return (new Date(dateP).getTime() - Date.now()) / 1000;
   }
 }

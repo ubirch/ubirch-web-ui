@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {isNumeric} from 'rxjs/internal-compatibility';
 
 @Injectable({
@@ -80,5 +81,15 @@ export class UbirchWebUIUtilsService {
       return tags.split(',').map(tag => tag.trim());
     }
     return tags;
+  }
+
+  /**
+   * Helper to unsubscribe with check if subcription exists
+   * @param subscr Subscription which should be unsubscribed
+   */
+  public safeUnsubscribe(subscr: Subscription): void {
+    if (subscr) {
+      subscr.unsubscribe();
+    }
   }
 }
