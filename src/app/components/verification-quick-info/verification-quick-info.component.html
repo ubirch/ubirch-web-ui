@@ -30,7 +30,30 @@
                 </ion-text>
             </div>
         </div>
+    </ion-label>
 
 
+
+    <ion-label id="quickInfoMobile">
+        <div id="initialResultMobile" [ngClass]="{ 'successMobile': verificationDisplay.iClass === 'success',
+                              'notAvailableMobile': verificationDisplay.iClass === 'notAvailable',
+                               'failMobile': verificationDisplay.iClass === 'fail'}">
+            <ion-text>{{ 'verification.quickinfo.label.initial-verification' | translate }}</ion-text>
+        </div>
+        <div id="blockchainResultMobile" [ngClass]="{ 'successMobile': verificationDisplay.aClass === 'success',
+                              'notAvailableMobile': verificationDisplay.aClass === 'notAvailable',
+                               'failMobile': verificationDisplay.aClass === 'fail'}">
+            <ion-text>{{ 'verification.quickinfo.label.blockchain-verification' | translate }}</ion-text>
+        </div>
+        <div id="anchorIconsMobile">
+            <a *ngFor="let anchor of anchors" class="aTag" href="{{anchor.href}}">
+                <img *ngIf="verificationDisplay.aClass === 'success'" alt="{{anchor.title}}" class="anchorIcon"
+                     height="64px" src="{{anchor.icon}}" width="64px">
+                <p *ngIf="!anchor.icon">{{anchor.title}}</p>
+            </a>
+            <ion-text *ngIf="verificationDisplay.aClass === 'notAvailable'" class="ion-text-wrap" id="notAvailableInfo">
+                {{ 'verification.quickinfo.info.upp-not-yet-anchored' | translate }}
+            </ion-text>
+        </div>
     </ion-label>
 </ion-item>

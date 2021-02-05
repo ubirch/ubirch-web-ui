@@ -2,6 +2,10 @@
  max-height: 100px;
 }
 
+ion-item{
+  --padding-start: 0;
+}
+
 .vIcon {
   margin-left: 1rem;
 }
@@ -10,10 +14,14 @@
   padding: 0.5rem;
   padding-right: 1rem;
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 3fr;
   grid-template-rows: 100%;
   grid-template-areas:
               "result anchor";
+}
+
+#quickInfoMobile{
+  display: none;
 }
 
 .result {
@@ -45,6 +53,7 @@
 
 #anchorIcons{
   grid-area: anchorIcons;
+  padding-right: 1rem;
 }
 
 .success {
@@ -57,11 +66,19 @@
   min-width: 45px;
 }
 
+.successMobile{
+  background-color: var(--ion-color-success);
+}
+
 .fail {
   width: 45px;
   height: 45px;
   padding: 10px;
   min-width: 45px;
+  background-color: var(--ion-color-danger);
+}
+
+.failMobile{
   background-color: var(--ion-color-danger);
 }
 
@@ -71,6 +88,10 @@
   padding: 10px;
   background-color: var(--ion-color-warning);
   min-width: 45px;
+}
+
+.notAvailableMobile{
+  background-color: var(--ion-color-warning);
 }
 
 .anchorIcon {
@@ -108,6 +129,7 @@
     grid-template-areas:
                 "result"
                 "anchor";
+    display: none;
   }
 
   #anchors{
@@ -131,6 +153,53 @@
     display: grid;
     grid-template-rows: 100%;
     grid-template-columns: 1fr 1fr;
+  }
+
+  ion-item{
+    --padding-end: 0;
+    --ion-safe-area-right: 0;
+  }
+
+  #quickInfoMobile{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+              "initial blockchain"
+              "anchors anchors";
+  }
+
+  #initialResultMobile{
+    grid-area: initial;
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  #blockchainResultMobile{
+    grid-area: blockchain;
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  #anchorIconsMobile{
+    padding-top: 1rem;
+    max-width: 100%;
+    grid-area: anchors;
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+  }
+
+  #notAvailableInfo{
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
