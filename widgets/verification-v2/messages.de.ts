@@ -23,6 +23,9 @@ export const MESSAGES_DE = {
   CERTIFICATE_ID_CANNOT_BE_FOUND: {
     info: 'Zertifikat konnte nicht gefunden werden!!!!!',
   },
+  CERTIFICATE_ANCHORED_BY_NOT_AUTHORIZED_DEVICE: {
+    info: '403 - nicht authorisiert',
+  },
   VERIFICATION_FAILED_EMPTY_RESPONSE: {
     info: 'Verifikation fehlgeschlagen!! Zertifikat ist leer oder enthält kein Siegel',
   },

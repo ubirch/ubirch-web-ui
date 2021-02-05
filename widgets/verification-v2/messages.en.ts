@@ -23,6 +23,9 @@ export const MESSAGES_EN = {
   CERTIFICATE_ID_CANNOT_BE_FOUND: {
     info: 'Cannot find certificate!!!!!',
   },
+  CERTIFICATE_ANCHORED_BY_NOT_AUTHORIZED_DEVICE: {
+    info: '403 - unauthorized',
+  },
   VERIFICATION_FAILED_EMPTY_RESPONSE: {
     info: 'Verification Failed!! Empty certificate or missing seal',
   },
