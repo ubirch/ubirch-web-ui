@@ -29,11 +29,7 @@ $color-background-grafana: #212124;
 $color-text-grafana: #eee;
 
 body {
-  background-color: #484848;
-}
-
-ion-menu{
-  background: url(/assets/app-images/ubirch_grey_bg.png) no-repeat center/cover fixed !important;
+  background: url(/assets/app-images/ubirch_grey_bg.png) no-repeat center/cover fixed;
 }
 
 a {
@@ -47,7 +43,12 @@ ion-header {
 }
 
 ion-menu ion-header {
-  background: transparent !important;
+  background: transparent;
+}
+
+ion-menu ion-footer{
+ margin-bottom: 0 !important;
+  padding-bottom: 1rem;
 }
 
 ion-header ion-grid {
@@ -255,6 +256,17 @@ ion-tab-button.tab-selected {
 @media only screen and (min-width: 768px) {
   .picker-wrapper.sc-ion-picker-md {
     bottom: 45%;
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    background: none;
+    background-color: #484848;
+  }
+
+  ion-menu{
+    background: url(/assets/app-images/ubirch_grey_bg.png) no-repeat center/cover fixed !important;
   }
 }
 
