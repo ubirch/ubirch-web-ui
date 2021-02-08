@@ -2,22 +2,58 @@
  max-height: 100px;
 }
 
+ion-item{
+  --padding-start: 0;
+}
+
 .vIcon {
   margin-left: 1rem;
 }
 
+#quickInfo{
+  padding: 0.5rem;
+  padding-right: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 100%;
+  grid-template-areas:
+              "result anchor";
+}
+
+#quickInfoMobile{
+  display: none;
+}
 
 .result {
   display: flex;
   flex-direction: row;
-
-  justify-content: space-around;
+  justify-self: center;
+  justify-items: center;
+  align-items: center;
+  grid-area: result;
 }
 
-.anchors {
+#anchors{
+  grid-area: anchor;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+                "anchorLabel anchorIcons";
+}
+
+#anchorLabel{
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-around;
+  justify-items: center;
+  align-items: center;
+  grid-area: anchorLabel;
+  justify-self: center;
+  margin-right: 1rem;
+}
+
+#anchorIcons{
+  grid-area: anchorIcons;
+  padding-right: 1rem;
 }
 
 .success {
@@ -30,11 +66,19 @@
   min-width: 45px;
 }
 
+.successMobile{
+  background-color: var(--ion-color-success);
+}
+
 .fail {
   width: 45px;
   height: 45px;
   padding: 10px;
   min-width: 45px;
+  background-color: var(--ion-color-danger);
+}
+
+.failMobile{
   background-color: var(--ion-color-danger);
 }
 
@@ -46,6 +90,10 @@
   min-width: 45px;
 }
 
+.notAvailableMobile{
+  background-color: var(--ion-color-warning);
+}
+
 .anchorIcon {
   border-radius: 15px;
   padding: 4px;
@@ -53,7 +101,6 @@
   height: auto;
   min-width: 50px;
 }
-
 
 .vTag {
   display: flex;
@@ -65,12 +112,93 @@
 .aTag {
   max-height: 100px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
 .anchorIcon:hover {
   box-shadow: 0 0 6px 1px var(--ion-color-dark);
   background-color: var(--ion-color-dark)
+}
+
+@media (max-width: 700px) {
+  #quickInfo{
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 2fr;
+    grid-template-areas:
+                "result"
+                "anchor";
+    display: none;
+  }
+
+  #anchors{
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+                "anchorLabel"
+                "anchorIcons";
+  }
+
+  .result {
+    width: 100%;
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #anchorLabel{
+    margin-right: 0;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  ion-item{
+    --padding-end: 0;
+    --ion-safe-area-right: 0;
+  }
+
+  #quickInfoMobile{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+              "initial blockchain"
+              "anchors anchors";
+  }
+
+  #initialResultMobile{
+    grid-area: initial;
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  #blockchainResultMobile{
+    grid-area: blockchain;
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  #anchorIconsMobile{
+    padding-top: 1rem;
+    max-width: 100%;
+    grid-area: anchors;
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+  }
+
+  #notAvailableInfo{
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 

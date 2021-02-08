@@ -211,6 +211,10 @@ class UbirchVerification {
             self.checkResponse(this.responseText, hash);
             break;
           }
+          case 403: {
+            self.handleError(EError.CERTIFICATE_ANCHORED_BY_NOT_AUTHORIZED_DEVICE, hash);
+            break;
+          }
           case 404: {
             self.handleError(EError.CERTIFICATE_ID_CANNOT_BE_FOUND, hash);
             break;
