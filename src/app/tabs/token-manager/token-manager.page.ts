@@ -9,6 +9,8 @@ import {TokenService} from '../../services/token.service';
 import {NewTokenPopupComponent} from './popups/new-token-popup/new-token-popup.component';
 import {UbirchWebUIUtilsService} from '../../utils/ubirch-web-uiutils.service';
 import {TokenQrCodePopupComponent} from './popups/token-qr-code-popup/token-qr-code-popup.component';
+import {TokenIdPopupComponent} from "./popups/token-id-popup/token-id-popup.component";
+import {DeviceService} from "../../services/device.service";
 
 
 @Component({
@@ -25,22 +27,25 @@ export class TokenManagerPage implements OnInit {
   }) ];
 
   private tokens: UbirchAccountingToken[] = [];
+  private devices;
 
   get CURRENT_LANG(): string {
     return this.translateService.currentLang;
   }
 
   constructor(
-    private tokenService: TokenService,
-    public modalController: ModalController,
-    public alertController: AlertController,
-    private translateService: TranslateService,
-    private toast: ToastService,
+      private tokenService: TokenService,
+      public modalController: ModalController,
+      public alertController: AlertController,
+      private translateService: TranslateService,
+      private toast: ToastService,
+      private deviceService: DeviceService,
   ) {
   }
 
   ngOnInit() {
     this.getTokens();
+    this.getDevices();
   }
 
   async createTokenPopup() {
@@ -83,13 +88,27 @@ export class TokenManagerPage implements OnInit {
     return await modal.present();
   }
 
+  async tokenIdPopup(tokenIdP) {
+    const modal = await this.modalController.create({
+      component: TokenIdPopupComponent,
+      componentProps: {
+        tokenId: tokenIdP
+      }
+    });
+    return await modal.present();
+  }
+
   async presentThings(things: string) {
     let message: string;
     for (const thing of things) {
-      if (message) {
-        message = message + thing + '<br>';
-      } else {
-        message = thing + '<br>' + '<hr>';
+      for (const device of this.devices) {
+        if (thing === device.hwDeviceId) {
+          if (message) {
+            message = message + '<br>' + device.description;
+          } else {
+            message = device.description;
+          }
+        }
       }
 
     }
@@ -101,6 +120,20 @@ export class TokenManagerPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  private getDevices(): void {
+    this.deviceService.reloadDeviceStubs(
+        0,
+        1000,
+    ).toPromise().then(
+        wrapper => {
+          this.devices = wrapper.devices || [];
+        }
+    ).catch(error => {
+          // TODO: handle error
+        }
+    );
   }
 
   search(event: any) {

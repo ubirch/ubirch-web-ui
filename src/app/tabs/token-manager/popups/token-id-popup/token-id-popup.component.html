@@ -1,0 +1,15 @@
+<ion-content class="ion-padding">
+  <ion-row class="ion-justify-content-end">
+    <img src="assets/app-icons/close-outline.svg" id="close" (click)="dismiss()">
+  </ion-row>
+
+  <div class="ion-text-center">
+    <h1>Token ID</h1>
+  </div>
+
+  <ion-card class="ion-padding">
+    <ion-text>{{tokenId}}</ion-text>
+  </ion-card>
+
+  <ion-button color="success" expand="full" class="ion-margin-vertical">copy</ion-button>
+</ion-content>
