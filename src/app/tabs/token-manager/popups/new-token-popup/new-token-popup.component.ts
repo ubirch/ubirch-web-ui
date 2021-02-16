@@ -7,7 +7,7 @@ import {DeviceService} from '../../../../services/device.service';
 import {LoggingService} from '../../../../services/logging.service';
 import {TokenService} from '../../../../services/token.service';
 import { UbirchWebUIUtilsService } from '../../../../utils/ubirch-web-uiutils.service';
-import { targetIdentitiesValidator } from '../../../../validators/target-identities.validator';
+import {targetIdentitiesValidator} from '../../../../validators/target-identities.validator';
 
 @Component({
   selector: 'app-new-token-popup',

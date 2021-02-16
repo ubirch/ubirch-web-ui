@@ -34,15 +34,16 @@ export class AppComponent {
         url: '/devices',
         icon: 'list.svg',
         authOnly: true,
+        adminOnly: true,
         withProfileOnly: true
       },
-      // {
-      //   titleKey: 'menu.main.tokens',
-      //   url: '/token-manager',
-      //   icon: 'token.svg',
-      //   authOnly: true,
-      //   withProfileOnly: true
-      // },
+       {
+         titleKey: 'menu.main.tokens',
+        url: '/token-manager',
+         icon: 'token.svg',
+         authOnly: true,
+         withProfileOnly: true
+       },
       {
         titleKey: 'menu.main.verification',
         url: '/verification',

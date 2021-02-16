@@ -14,9 +14,10 @@
         <ion-card-content>
           <ion-label class="tokenItem">
             <h1 class="tokenTitle">{{token.data.purpose}}</h1>
-            <ion-item class="tokenId">
+
+            <ion-item detail="true" class="tokenId" button (click)="tokenIdPopup(token.jwt)">
               <ion-label style="font-weight: bold">{{'token.list.data.label.token_jwt' | translate}}</ion-label>
-              <ion-textarea readonly="true" value="{{token.jwt}}"></ion-textarea>
+              <ion-input type="button" color="medium" slot="end" style="width:fit-content !important; cursor:pointer !important; text-align: right" readonly="true" id="tokenIdInput" value="{{'token.list.data.label.show_Token' | translate}}"></ion-input>
             </ion-item>
 
             <div class="validFor">
@@ -26,7 +27,7 @@
               <ng-template #LIST_OF_DEVICES>
                 <ion-item class="tokenId" detail="true" button (click)="presentThings(token.data.target_identities)">
                   <ion-label style="font-weight: bold">{{'token.list.data.label.thing_id' | translate}}</ion-label>
-                  <ion-text color="medium" slot="end" style="cursor:pointer">{{'token.list.data.label.show_things' | translate}}</ion-text>
+                  <ion-input type="button" color="medium" slot="end" style="cursor:pointer !important; text-align: right" value="{{'token.list.data.label.show_things' | translate}}"></ion-input>
                 </ion-item>
               </ng-template>
             </div>
