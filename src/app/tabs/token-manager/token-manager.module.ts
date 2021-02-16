@@ -11,6 +11,7 @@ import { NewTokenPopupComponent } from './popups/new-token-popup/new-token-popup
 import { TokenManagerPage } from './token-manager.page';
 import {NgxQRCodeModule} from '@techiediaries/ngx-qrcode';
 import {TokenQrCodePopupComponent} from './popups/token-qr-code-popup/token-qr-code-popup.component';
+import {TokenIdPopupComponent} from "./popups/token-id-popup/token-id-popup.component";
 
 const routes: Routes = [
   {
@@ -33,7 +34,8 @@ const routes: Routes = [
   declarations: [
     TokenManagerPage,
     NewTokenPopupComponent,
-      TokenQrCodePopupComponent
+      TokenQrCodePopupComponent,
+      TokenIdPopupComponent
   ],
   entryComponents: [
     NewTokenPopupComponent,
