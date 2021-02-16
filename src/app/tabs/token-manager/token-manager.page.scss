@@ -5,9 +5,9 @@
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
           "title      title       .           .           . "
-          "things     things      issuedAt    issuedAt    qr"
+          "things     things      validTill    validTill    qr"
           "scope      scope       validFrom   validFrom   qr"
-          "tokenId    tokenId     validTill   validTill   qr"
+          "tokenId    tokenId     issuedAt   issuedAt   qr"
           "copyButton delete      .           .           . ";
 }
 
@@ -85,9 +85,9 @@ ion-item{
           "things     things     things     .  "
           "scope      scope      scope      qr  "
           "tokenId    tokenId    tokenId    qr "
-          "issuedAt   issuedAt   issuedAt   qr "
+          "validTill   validTill   validTill   qr "
           "validFrom  validFrom  validFrom  qr  "
-          "validTill  validTill  validTill  .  "
+          "issuedAt  issuedAt  issuedAt  .  "
           "copyButton delete     .          .  ";
   }
 }
@@ -102,9 +102,9 @@ ion-item{
             "things     things    "
             "scope      scope     "
             "tokenId    tokenId   "
-            "issuedAt   issuedAt  "
+            "validTill   validTill  "
             "validFrom  validFrom "
-            "validTill  validTill "
+            "issuedAt  issuedAt "
             "copyButton delete    "
             "qr         qr        ";
   }

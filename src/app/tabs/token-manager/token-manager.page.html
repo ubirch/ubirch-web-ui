@@ -22,7 +22,10 @@
 
             <div class="validFor">
               <ng-container *ngIf="token.data.valid_for_all; else LIST_OF_DEVICES">
-                {{ 'token.list.data.valid_for_all' | translate }}
+                <ion-item class="tokenId">
+                  <ion-label style="font-weight: bold">{{'token.list.data.label.thing_id' | translate}}</ion-label>
+                  <ion-input value="{{ 'token.list.data.valid_for_all' | translate }}"></ion-input>
+                </ion-item>
               </ng-container>
               <ng-template #LIST_OF_DEVICES>
                 <ion-item class="tokenId" detail="true" button (click)="presentThings(token.data.target_identities)">
