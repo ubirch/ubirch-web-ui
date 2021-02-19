@@ -62,7 +62,7 @@ form {
     align-self: center;
     background-color: rgba(255,255,255,0.75);
     width: 40rem;
-    height: 18rem;
+    height: fit-content;
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -474,7 +474,23 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     margin-top: 5px;
 }
 
+#kc-register-form .form-group input {
+    font-size: 16px;
+    border: 1px solid;
+    background-color: transparent;
+    border-color: transparent;
+    border-bottom-color: black;
+    width: 100%;
+    margin-bottom: 15px;
+    margin-top: 5px;
+}
+
 #kc-form .form-group .input-field {
+    font-weight: bold;
+    width: 100%;
+}
+
+#kc-register-form .form-group .input-field {
     font-weight: bold;
     width: 100%;
 }
@@ -483,7 +499,15 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     outline: none;
 }
 
+#kc-register-form .form-group input:focus {
+    outline: none;
+}
+
 #kc-form .form-group select:focus {
+    outline: none;
+}
+
+#kc-register-form .form-group input:focus {
     outline: none;
 }
 
@@ -498,7 +522,40 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     margin-top: 5px;
 }
 
+#kc-register-form .form-group select {
+    font-size: 16px;
+    border: 1px solid;
+    background-color: transparent;
+    border-color: transparent;
+    border-bottom-color: black;
+    width: 100%;
+    margin-bottom: 15px;
+    margin-top: 5px;
+}
+
 #kc-form .form-group .btn {
+    -webkit-transition: background-color 90ms linear, color 90ms linear;
+    -moz-transition: background-color 90ms linear, color 90ms linear;
+    -o-transition: background-color 90ms linear, color 90ms linear;
+    transition: background-color 90ms linear, color 90ms linear;
+    background-color: rgba(255, 255, 255, 1);
+    background-image: url('http://ubirch.de/fileadmin/Icons/Doppelpfeile_Magenta.svg');
+    background-position: right 10px center;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-repeat: no-repeat;
+    box-shadow: none;
+    color: rgba(0, 0, 0, 0.9);
+    font-family: MuseoSansRounded-900, calibri, sans-serif;
+    font-weight: bold;
+    height: 36px;
+    line-height: 32px;
+    padding-left: 16px;
+    padding-right: 35px;
+    text-transform: uppercase;
+    width: auto;
+}
+
+#kc-register-form .form-group .btn {
     -webkit-transition: background-color 90ms linear, color 90ms linear;
     -moz-transition: background-color 90ms linear, color 90ms linear;
     -o-transition: background-color 90ms linear, color 90ms linear;
@@ -532,16 +589,31 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     cursor: pointer;
 }
 
+#kc-register-form .form-group .btn:hover {
+    -webkit-transition: background-color 90ms linear, color 90ms linear;
+    -moz-transition: background-color 90ms linear, color 90ms linear;
+    -o-transition: background-color 90ms linear, color 90ms linear;
+    transition: background-color 90ms linear, color 90ms linear;
+    background-color: magenta;
+    border: 1px solid magenta;
+    color: white;
+    background-image: url('https://ubirch.de/fileadmin/Icons/Doppelpfeile_weiss.svg');
+    cursor: pointer;
+}
+
 div#kc-info {
-    margin: 2rem 0 4rem;
+    margin-bottom: 1rem;
 }
 
 #kc-form .form-group #resend {
     margin-bottom: 15px;
 }
 
+#kc-register-form .form-group #resend {
+    margin-bottom: 15px;
+}
+
 .form-horizontal .form-group {
-    margin-left: -20px;
     margin-right: 0;
 }
 
@@ -556,11 +628,21 @@ div#kc-info {
     cursor: pointer;
 }
 
+#kc-register-form .form-group .dropbtn {
+    background-color: transparent;
+    color: black;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+
 @media (max-width: 1920px){
     #form-col{
         padding: 0;
         width: 35rem ;
-        height: 20rem;
+        height: fit-content;
     }
 }
 
