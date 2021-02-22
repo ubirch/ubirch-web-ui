@@ -83,46 +83,7 @@
                         </div>
                     </div>
                 </#if>
-
-                <div class="${properties.kcFormGroupClass!} ${messagesPerField.printIfExists('account_plan',properties.kcFormGroupErrorClass!)}">
-                    <div class="${properties.kcLabelWrapperClass!}">
-                        <label for="user.attributes.account_plan"
-                               class="${properties.kcLabelClass!}">${msg("accountPlan")}</label>
-                    </div>
-                    <div class="${properties.kcInputWrapperClass!}">
-                        <select
-                                class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}"
-                                id="user.attributes.account_plan"
-                                class="${properties.kcInputClass!}"
-                                name="user.attributes.account_plan"
-                                value="${(register.formData['user.attributes.account_plan']!'')}"
-                        >
-                            <option value="free" selected>${msg("freeAccount")}</option>
-                            <option value="pro">${msg("proAccount")}</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="${properties.kcFormGroupClass!} ${messagesPerField.printIfExists('account_type',properties.kcFormGroupErrorClass!)}">
-                    <div class="${properties.kcLabelWrapperClass!}">
-                        <label for="user.attributes.account_type"
-                               class="${properties.kcLabelClass!}">${msg("accountType")}</label>
-                    </div>
-                    <div class="${properties.kcInputWrapperClass!}">
-                        <select
-                                class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}"
-                                id="user.attributes.account_type"
-                                class="${properties.kcInputClass!}"
-                                name="user.attributes.account_type"
-                                value="${(register.formData['user.attributes.account_type']!'')}"
-                        >
-                            <option value="free">${msg("freeAccount")}</option>
-                            <option value="verifier">${msg("proAccountForVerifier")}</option>
-                            <option value="anchorer">${msg("proAccountForAnchorer")}</option>
-                        </select>
-                    </div>
-                </div>
-
+                
                 <div class="${properties.kcFormGroupClass!}">
                     <div id="kc-form-options" class="${properties.kcFormOptionsClass!}">
                         <div class="${properties.kcFormOptionsWrapperClass!}">
