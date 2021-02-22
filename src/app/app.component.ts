@@ -42,6 +42,7 @@ export class AppComponent {
         url: '/token-manager',
          icon: 'token.svg',
          authOnly: true,
+         adminOnly: true,
          withProfileOnly: true
        },
       {
