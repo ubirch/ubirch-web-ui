@@ -34,7 +34,6 @@ export class AppComponent {
         url: '/devices',
         icon: 'list.svg',
         authOnly: true,
-        adminOnly: true,
         withProfileOnly: true
       },
        {
