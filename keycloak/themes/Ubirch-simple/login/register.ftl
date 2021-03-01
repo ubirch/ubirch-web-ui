@@ -6,10 +6,6 @@
         <div id="kc-form">
             <form id="kc-register-form" class="${properties.kcFormClass!}" action="${url.registrationAction}"
                   method="post">
-                <#if realm.registrationEmailAsUsername>
-                    <input class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}" type="text" id="firstName" name="firstName" value="-" hidden/>
-                    <input class="${properties.bottomBorderOnly!} ${properties.hoverBottomBorderOnly!}" type="text" id="lastName" name="lastName" value="-" hidden/>
-                <#else>
                     <div class="${properties.kcFormGroupClass!} ${messagesPerField.printIfExists('firstName',properties.kcFormGroupErrorClass!)}">
                         <div class="${properties.kcLabelWrapperClass!}">
                             <label for="firstName" class="${properties.kcLabelClass!}">${msg("firstName")}</label>
@@ -29,8 +25,6 @@
                                    value="${(register.formData.lastName!'')}"/>
                         </div>
                     </div>
-                </#if>
-
                 <div class="${properties.kcFormGroupClass!} ${messagesPerField.printIfExists('email',properties.kcFormGroupErrorClass!)}">
                     <div class="${properties.kcLabelWrapperClass!}">
                         <label for="email" class="${properties.kcLabelClass!}">${msg("email")}</label>
