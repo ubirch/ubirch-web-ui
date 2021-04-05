@@ -46,10 +46,22 @@ export class TokenService {
       }),
     );
   }
+  
+  public getAvailableScopes(): Observable<any>{
+      return this.http.get<any>(this.API_URL + '/scopes').pipe(
+          map((listOfScopes) => {
+              return listOfScopes.data;
+          }),
+          catchError( err => {
+              this.toast.openToast(ToastType.danger, 'toast.token.getlist.failed', 10000, err.message);
+              return [];
+          })
+      );
+  }
 
   public async createToken(data: CreateTokenFormData): Promise<UbirchAccountingToken> {
 
-    const url = `${this.API_URL}/verification/create`;
+    const url = `${this.API_URL}/create`;
     const creationData: UbirchAccountingTokenCreationData = await this.prepareTokenDataForCreation(data);
 
     const resp: IUbirchAccountingTokenCreationResponse =
@@ -94,7 +106,9 @@ export class TokenService {
           //  * if user has pro account use tenant id (check if tenant profile is filled out sufficiently)
           tenantId: user.id, // use userid as tenantId
           purpose: tokenDataP.purpose,
-          targetIdentities: tokenDataP.validForAll ? '*' : tokenDataP.targetIdentities,
+          targetIdentities: tokenDataP.targetIdentities,
+            scopes: [tokenDataP.scopes],
+            originDomains: [tokenDataP.originDomains]
         });
 
         if (tokenDataP.expiration) {
@@ -105,6 +119,7 @@ export class TokenService {
           uatcd.notBefore = tokenDataP.notBefore;
         }
 
+          console.log(uatcd);
         return uatcd;
       },
     );

@@ -33,6 +33,19 @@
               <ion-select-option *ngFor="let device  of devices" value="{{device.hwDeviceId}}">{{device.description}}</ion-select-option>
             </ion-select>
           </ion-item>
+            <ion-item>
+                <ion-label>Scopes</ion-label>
+                <ion-select formControlName="scopes">
+                    <ion-select-option *ngFor="let scope of scopes" value="{{scope}}">{{scope}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+                <ion-item>
+                    <ion-label>
+                        Domains
+                    </ion-label>
+                    <ion-input slot="end" formControlName="originDomains">
+                    </ion-input>
+                </ion-item>
         </ion-card>
     </form>
     <ion-button color="success" expand="full" class="ion-margin-vertical" [disabled]="!tokenDetailsForm.valid" (click)="createToken()">Create</ion-button>

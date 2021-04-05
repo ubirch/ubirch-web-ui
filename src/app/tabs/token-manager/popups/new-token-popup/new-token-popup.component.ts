@@ -17,6 +17,7 @@ import {targetIdentitiesValidator} from '../../../../validators/target-identitie
 export class NewTokenPopupComponent implements OnInit, OnDestroy {
 
   public devices;
+  public scopes;
   public tokenDetailsForm: FormGroup;
   public selectTargetIdentities = true;
 
@@ -28,18 +29,22 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private tokenService: TokenService,
     private logger: LoggingService,
-    private utils: UbirchWebUIUtilsService
+    private utils: UbirchWebUIUtilsService,
+    public modalController: ModalController,
   ) {
   }
 
   public ngOnInit(): void {
+    this.getScopes()
     this.getDevices();
     this.tokenDetailsForm = this.fb.group({
       purpose: [ '', [ Validators.required, Validators.minLength(5) ]],
       expiration: [ '' ],
+      validForAll: [false],
       notBefore: [ '' ],
-      validForAll: [ false ],
       targetIdentities: [ '' ],
+      scopes: ['', Validators.required],
+      originDomains: ['', Validators.required]
     }, {validator: targetIdentitiesValidator});
 
     this.toggleSubscr = this.tokenDetailsForm.get('validForAll').valueChanges.subscribe(val => {
@@ -63,6 +68,12 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
     } else {
       this.logger.warn('Token creation called without form data - submit button should be inactive!');
     }
+  }
+
+  private getScopes() {
+    this.tokenService.getAvailableScopes().subscribe(scopes => {
+      this.scopes = scopes;
+    })
   }
 
   private getDevices(): void {

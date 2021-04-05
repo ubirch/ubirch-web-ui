@@ -55,6 +55,7 @@ export class TokenManagerPage implements OnInit {
 
     modal.onDidDismiss().then((details: any) => {
       if (details && details.data) {
+        console.log(details.data);
         this.tokenService.createToken(
           details.data,
         ).then(
