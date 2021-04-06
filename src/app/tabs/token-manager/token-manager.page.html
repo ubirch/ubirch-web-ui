@@ -13,7 +13,7 @@
       <ion-card *ngFor="let token of tokens">
         <ion-card-content>
           <ion-label class="tokenItem">
-            <h1 class="tokenTitle">{{token.data.purpose}}</h1>
+            <h1 class="tokenTitle">{{token.data.pur}}</h1>
 
             <ion-item detail="true" class="tokenId" button (click)="tokenIdPopup(token.jwt)">
               <ion-label style="font-weight: bold">{{'token.list.data.label.token_jwt' | translate}}</ion-label>
@@ -21,14 +21,14 @@
             </ion-item>
 
             <div class="validFor">
-              <ng-container *ngIf="token.data.valid_for_all; else LIST_OF_DEVICES">
+              <ng-container *ngIf='iswildcard(token); else LIST_OF_DEVICES'>
                 <ion-item class="tokenId">
                   <ion-label style="font-weight: bold">{{'token.list.data.label.thing_id' | translate}}</ion-label>
                   <ion-input value="{{ 'token.list.data.valid_for_all' | translate }}"></ion-input>
                 </ion-item>
               </ng-container>
               <ng-template #LIST_OF_DEVICES>
-                <ion-item class="tokenId" detail="true" button (click)="presentThings(token.data.target_identities)">
+                <ion-item class="tokenId" detail="true" button (click)="presentThings(token, 'things')">
                   <ion-label style="font-weight: bold">{{'token.list.data.label.thing_id' | translate}}</ion-label>
                   <ion-input type="button" color="medium" slot="end" style="cursor:pointer !important; text-align: right" value="{{'token.list.data.label.show_things' | translate}}"></ion-input>
                 </ion-item>
@@ -53,13 +53,23 @@
               <ion-input readonly="true" value="{{token.data.iat * 1000 | date: 'MMM d, y - H:m a z':undefined:CURRENT_LANG}}" ></ion-input>
             </ion-item>
 
-            <ion-item *ngIf="token.data.role" class="role">
+            <ion-item *ngIf="token.data.scp" class="role">
               <ion-label style="font-weight: bold">{{ 'token.list.data.label.role' | translate }}</ion-label>
-              <ion-input readonly="true" value="{{token.data.role}}" ></ion-input>
+              <ion-input readonly="true" value="{{token.data.scp}}" ></ion-input>
+            </ion-item>
+
+            <ion-item button detail="true" *ngIf="token.data.ord" class="originDomain" (click)="presentThings(token, 'originDomains')">
+              <ion-label style="font-weight: bold">{{ 'token.list.data.label.originDomain' | translate }}</ion-label>
+              <ion-input type="button" color="medium" slot="end" style="cursor:pointer !important; text-align: right" value="{{'token.list.data.label.show_originDomains' | translate}}" ></ion-input>
+            </ion-item>
+
+            <ion-item button detail="true" *ngIf="token.data.tgp.length >= 1" class="targetGroup" (click)="presentThings(token, 'groups')">
+              <ion-label style="font-weight: bold">{{ 'token.list.data.label.targetGroup' | translate }}</ion-label>
+              <ion-input type="button" color="medium" slot="end" style="cursor:pointer !important; text-align: right" value="{{'token.list.data.label.show_targetGroups' | translate}}" ></ion-input>
             </ion-item>
 
             <ion-button (click)="copyToClipboard(token.jwt)" class="copyButton" color="success"><ion-icon name="copy" ></ion-icon></ion-button>
-            <ion-button class="deleteButton" color="danger" (click)="revokeToken()"><ion-icon src="assets/app-icons/revoke.svg"></ion-icon></ion-button>
+            <ion-button class="deleteButton" color="danger" (click)="revokeToken(token.data.jti)"><ion-icon src="assets/app-icons/revoke.svg"></ion-icon></ion-button>
             <ion-button (click)="qrCodePopup(token.jwt)" class="qrButton"><ion-icon  name="qr-code-sharp"></ion-icon></ion-button>
           </ion-label>
         </ion-card-content>

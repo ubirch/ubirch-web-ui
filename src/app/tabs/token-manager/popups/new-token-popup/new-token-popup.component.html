@@ -34,18 +34,34 @@
             </ion-select>
           </ion-item>
             <ion-item>
-                <ion-label>Scopes</ion-label>
+                <ion-label>{{'token.create.scopes' | translate}}</ion-label>
                 <ion-select formControlName="scopes">
-                    <ion-select-option *ngFor="let scope of scopes" value="{{scope}}">{{scope}}</ion-select-option>
+                    <ion-select-option *ngFor="let scope of availableScopes"
+                                       value="{{scope}}">{{scope}}</ion-select-option>
                 </ion-select>
             </ion-item>
-                <ion-item>
-                    <ion-label>
-                        Domains
-                    </ion-label>
-                    <ion-input slot="end" formControlName="originDomains">
-                    </ion-input>
-                </ion-item>
+
+            <ion-item *ngIf="isAdmin() === true">
+                <ion-label>{{'token.create.origin-domains' | translate}}</ion-label>
+                <ion-input #group slot="end">
+                </ion-input>
+                <ion-button [disabled]="!validGroup(group.value)" class="addButton" (click)="appendGroup(group.value)">+</ion-button>
+            </ion-item>
+            <ion-chip color="primary" outline="true" *ngFor="let group of enteredGroups">
+                <ion-label>{{group}}</ion-label>
+                <ion-icon name="close" (click)="removeGroup(group)"></ion-icon>
+            </ion-chip>
+
+            <ion-item>
+                <ion-label>{{'token.create.origin-domains' | translate}}</ion-label>
+                <ion-input #domains slot="end">
+                </ion-input>
+                <ion-button [disabled]="!validURL(domains.value)" class="addButton" (click)="appendDomain(domains.value)">+</ion-button>
+            </ion-item>
+                <ion-chip color="primary" outline="true" *ngFor="let domain of enteredDomains">
+                    <ion-label>{{domain}}</ion-label>
+                    <ion-icon name="close" (click)="removeDomain(domain)"></ion-icon>
+                </ion-chip>
         </ion-card>
     </form>
     <ion-button color="success" expand="full" class="ion-margin-vertical" [disabled]="!tokenDetailsForm.valid" (click)="createToken()">Create</ion-button>

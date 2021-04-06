@@ -63,6 +63,7 @@ export class TokenService {
 
     const url = `${this.API_URL}/create`;
     const creationData: UbirchAccountingTokenCreationData = await this.prepareTokenDataForCreation(data);
+    console.log('creationData', creationData);
 
     const resp: IUbirchAccountingTokenCreationResponse =
       await this.http.post<IUbirchAccountingTokenCreationResponse>(url, creationData).toPromise()
@@ -74,8 +75,13 @@ export class TokenService {
     return this.extractUbirchAccountingTokenFromJWT(resp?.data?.token);
   }
 
-  revokeToken() {
-    // TODO
+  async revokeToken(tokenP) {
+      // TODO
+      const url = `${this.API_URL}/`;
+      await this.http.delete(url + tokenP).toPromise()
+          .catch((err: Error) => {
+              console.log('token deletion failed');
+          });
       this.toast.openToast(ToastType.danger, 'revocation is not yet implemented', 10000);
   }
 
@@ -108,7 +114,7 @@ export class TokenService {
           purpose: tokenDataP.purpose,
           targetIdentities: tokenDataP.targetIdentities,
             scopes: [tokenDataP.scopes],
-            originDomains: [tokenDataP.originDomains]
+            originDomains: tokenDataP.originDomains
         });
 
         if (tokenDataP.expiration) {
@@ -119,7 +125,11 @@ export class TokenService {
           uatcd.notBefore = tokenDataP.notBefore;
         }
 
-          console.log(uatcd);
+        if (tokenDataP.targetGroups) {
+            uatcd.targetGroups = tokenDataP.targetGroups;
+        }
+
+        console.log(uatcd);
         return uatcd;
       },
     );

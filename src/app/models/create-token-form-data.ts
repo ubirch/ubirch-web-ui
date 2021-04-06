@@ -4,6 +4,7 @@ export class CreateTokenFormData {
   public targetIdentities: string[];
   public expiration?: number;
   public notBefore?: number;
+  public targetGroups?: string[];
   public scopes: string[];
   public originDomains: string[];
 

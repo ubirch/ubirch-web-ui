@@ -7,6 +7,8 @@ export class UbirchAccountingTokenCreationData {
   public notBefore?: number;
   public scopes: string[];
   public originDomains: string[];
+  public targetGroups?: string[];
+
 
   constructor(props) {
     Object.assign(this, props);
