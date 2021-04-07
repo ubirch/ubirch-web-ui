@@ -42,7 +42,7 @@
             </ion-item>
 
             <ion-item *ngIf="isAdmin() === true">
-                <ion-label>{{'token.create.origin-domains' | translate}}</ion-label>
+                <ion-label>{{'token.create.targetGroups' | translate}}</ion-label>
                 <ion-input #group slot="end">
                 </ion-input>
                 <ion-button [disabled]="!validGroup(group.value)" class="addButton" (click)="appendGroup(group.value)">+</ion-button>
@@ -65,4 +65,15 @@
         </ion-card>
     </form>
     <ion-button color="success" expand="full" class="ion-margin-vertical" [disabled]="!tokenDetailsForm.valid" (click)="createToken()">Create</ion-button>
+
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{'token.create.info.header' | translate}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-text>{{'token.create.info.wildcard' | translate}}</ion-text>
+            <ion-text>{{'token.create.info.groups' | translate}}</ion-text>
+            <ion-text>{{'token.create.info.domains' | translate}}</ion-text>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

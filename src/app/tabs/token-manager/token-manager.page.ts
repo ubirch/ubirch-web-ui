@@ -191,8 +191,11 @@ export class TokenManagerPage implements OnInit {
     this.toast.openToast(ToastType.light, 'toast.token.copy', 2000);
   }
 
-  revokeToken(tokenP) {
-    this.tokenService.revokeToken(tokenP);
+  deleteToken(tokenP) {
+    this.tokenService.deleteToken(tokenP).then(result => {
+      this.toast.openToast(ToastType.success, 'toast.token.deletion.successfully', 4000);
+      this.getTokens();
+    });
   }
 
   iswildcard(tokenP) {

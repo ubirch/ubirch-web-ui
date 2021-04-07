@@ -146,7 +146,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   }
 
   public validURL(urlP): boolean {
-    const regexp: RegExp = new RegExp('((https?://)([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?)');
+    const regexp: RegExp = new RegExp('((https://)([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?)');
     if (regexp.test(urlP)) {
       return true;
     }

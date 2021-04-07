@@ -75,14 +75,14 @@ export class TokenService {
     return this.extractUbirchAccountingTokenFromJWT(resp?.data?.token);
   }
 
-  async revokeToken(tokenP) {
+  async deleteToken(tokenP) {
       // TODO
       const url = `${this.API_URL}/`;
       await this.http.delete(url + tokenP).toPromise()
           .catch((err: Error) => {
               console.log('token deletion failed');
+              this.toast.openToast(ToastType.danger, 'toast.token.deletion.failed', 10000);
           });
-      this.toast.openToast(ToastType.danger, 'revocation is not yet implemented', 10000);
   }
 
   private extractUbirchAccountingTokenFromJWT(tokenValue: string): UbirchAccountingToken {
