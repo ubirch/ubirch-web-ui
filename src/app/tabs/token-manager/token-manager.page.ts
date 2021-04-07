@@ -199,13 +199,7 @@ export class TokenManagerPage implements OnInit {
   }
 
   iswildcard(tokenP) {
-    if (tokenP.data.tid === '*') {
-      return true;
-    } else {
-      if (tokenP.data.tid[0] === '*') {
-        return true;
-      }
-    }
+    return tokenP?.data?.tid && (tokenP.data.tid === '*' || (Array.isArray(tokenP.data.tid) && tokenP.data.tid[0] === '*'));
   }
 
 }

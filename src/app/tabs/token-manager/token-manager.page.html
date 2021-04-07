@@ -11,7 +11,7 @@
   <ng-container *ngIf="tokens?.length > 0">
     <ion-list>
       <ion-card *ngFor="let token of tokens">
-        <ion-card-content>
+        <ion-card-content *ngIf="token?.data">
           <ion-label class="tokenItem">
             <h1 class="tokenTitle">{{token.data.pur}}</h1>
 
@@ -63,7 +63,7 @@
               <ion-input type="button" color="medium" slot="end" style="cursor:pointer !important; text-align: right" value="{{'token.list.data.label.show_originDomains' | translate}}" ></ion-input>
             </ion-item>
 
-            <ion-item button detail="true" *ngIf="token.data.tgp.length >= 1" class="targetGroup" (click)="presentThings(token, 'groups')">
+            <ion-item button detail="true" *ngIf="token.data.tgp?.length >= 1" class="targetGroup" (click)="presentThings(token, 'groups')">
               <ion-label style="font-weight: bold">{{ 'token.list.data.label.targetGroup' | translate }}</ion-label>
               <ion-input type="button" color="medium" slot="end" style="cursor:pointer !important; text-align: right" value="{{'token.list.data.label.show_targetGroups' | translate}}" ></ion-input>
             </ion-item>
