@@ -1,20 +1,20 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import {Observable} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import {ToastType} from '../enums/toast-type.enum';
-import {CreateTokenFormData} from '../models/create-token-form-data';
-import {IUbirchAccountingJWT} from '../models/iubirch-accounting-jwt';
-import {IUbirchAccountingTokenCreationResponse} from '../models/iubirch-accounting-token-creation-response';
-import {IUbirchAccountingTokenList} from '../models/iubirch-accounting-token-list';
-import {UbirchAccountingToken} from '../models/ubirch-accounting-token';
-import {UbirchAccountingTokenCreationData} from '../models/ubirch-accounting-token-creation-data';
-import {User} from '../models/user';
-import {LoggingService} from './logging.service';
-import {ToastService} from './toast.service';
-import {UserService} from './user.service';
+import { ToastType } from '../enums/toast-type.enum';
+import { CreateTokenFormData } from '../models/create-token-form-data';
+import { IUbirchAccountingJWT } from '../models/iubirch-accounting-jwt';
+import { IUbirchAccountingTokenCreationResponse } from '../models/iubirch-accounting-token-creation-response';
+import { IUbirchAccountingTokenList } from '../models/iubirch-accounting-token-list';
+import { UbirchAccountingToken } from '../models/ubirch-accounting-token';
+import { UbirchAccountingTokenCreationData } from '../models/ubirch-accounting-token-creation-data';
+import { User } from '../models/user';
+import { LoggingService } from './logging.service';
+import { ToastService } from './toast.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -46,17 +46,17 @@ export class TokenService {
       }),
     );
   }
-  
-  public getAvailableScopes(): Observable<any>{
-      return this.http.get<any>(this.API_URL + '/scopes').pipe(
-          map((listOfScopes) => {
-              return listOfScopes.data;
-          }),
-          catchError( err => {
-              this.toast.openToast(ToastType.danger, 'toast.token.getlist.failed', 10000, err.message);
-              return [];
-          })
-      );
+
+  public getAvailableScopes(): Observable<any> {
+    return this.http.get<any>(this.API_URL + '/scopes').pipe(
+      map((listOfScopes) => {
+        return listOfScopes.data;
+      }),
+      catchError(err => {
+        this.toast.openToast(ToastType.danger, 'toast.token.getlist.failed', 10000, err.message);
+        return [];
+      }),
+    );
   }
 
   public async createToken(data: CreateTokenFormData): Promise<UbirchAccountingToken> {
@@ -76,13 +76,13 @@ export class TokenService {
   }
 
   async deleteToken(tokenP) {
-      // TODO
-      const url = `${this.API_URL}/`;
-      await this.http.delete(url + tokenP).toPromise()
-          .catch((err: Error) => {
-              console.log('token deletion failed');
-              this.toast.openToast(ToastType.danger, 'toast.token.deletion.failed', 10000);
-          });
+    // TODO
+    const url = `${this.API_URL}/`;
+    await this.http.delete(url + tokenP).toPromise()
+      .catch((err: Error) => {
+        console.log('token deletion failed');
+        this.toast.openToast(ToastType.danger, 'toast.token.deletion.failed', 10000);
+      });
   }
 
   private extractUbirchAccountingTokenFromJWT(tokenValue: string): UbirchAccountingToken {
@@ -112,9 +112,9 @@ export class TokenService {
           //  * if user has pro account use tenant id (check if tenant profile is filled out sufficiently)
           tenantId: user.id, // use userid as tenantId
           purpose: tokenDataP.purpose,
-          targetIdentities: tokenDataP.targetIdentities,
-            scopes: [tokenDataP.scopes],
-            originDomains: tokenDataP.originDomains
+          targetIdentities: tokenDataP.targetIdentities || [],
+          scopes: [ tokenDataP.scopes ],
+          originDomains: tokenDataP.originDomains,
         });
 
         if (tokenDataP.expiration) {
@@ -126,7 +126,7 @@ export class TokenService {
         }
 
         if (tokenDataP.targetGroups) {
-            uatcd.targetGroups = tokenDataP.targetGroups;
+          uatcd.targetGroups = tokenDataP.targetGroups;
         }
 
         console.log(uatcd);
