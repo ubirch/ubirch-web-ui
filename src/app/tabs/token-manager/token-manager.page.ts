@@ -9,8 +9,8 @@ import {TokenService} from '../../services/token.service';
 import {NewTokenPopupComponent} from './popups/new-token-popup/new-token-popup.component';
 import {UbirchWebUIUtilsService} from '../../utils/ubirch-web-uiutils.service';
 import {TokenQrCodePopupComponent} from './popups/token-qr-code-popup/token-qr-code-popup.component';
-import {TokenIdPopupComponent} from './popups/token-id-popup/token-id-popup.component';
 import {DeviceService} from '../../services/device.service';
+import {TokenIdPopupComponent} from './popups/token-id-popup/token-id-popup.component';
 
 
 @Component({
@@ -199,8 +199,12 @@ export class TokenManagerPage implements OnInit {
   }
 
   iswildcard(tokenP) {
-    if (tokenP.data.tid[0] === '*') {
+    if (tokenP.data.tid === '*') {
       return true;
+    } else {
+      if (tokenP.data.tid[0] === '*') {
+        return true;
+      }
     }
   }
 
