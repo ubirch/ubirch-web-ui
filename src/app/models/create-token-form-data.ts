@@ -2,9 +2,11 @@ export class CreateTokenFormData {
 
   public purpose: string;
   public targetIdentities: string[];
-  public validForAll: boolean;
   public expiration?: number;
   public notBefore?: number;
+  public targetGroups?: string[];
+  public scopes: string[];
+  public originDomains: string[];
 
   constructor(props) {
     Object.assign(this, props);
@@ -12,15 +14,7 @@ export class CreateTokenFormData {
     this.expiration = this.convertDateToInterval(this.expiration);
     this.notBefore = this.convertDateToInterval(this.notBefore);
 
-    this.cleanupTargetIdentitiesIfValidForAllSelected();
-
     return this;
-  }
-
-  private cleanupTargetIdentitiesIfValidForAllSelected(): void {
-    if (this.validForAll) {
-      this.targetIdentities = undefined;
-    }
   }
 
   private convertDateToInterval(dateP: number): number {

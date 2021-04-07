@@ -46,11 +46,24 @@ export class TokenService {
       }),
     );
   }
+  
+  public getAvailableScopes(): Observable<any>{
+      return this.http.get<any>(this.API_URL + '/scopes').pipe(
+          map((listOfScopes) => {
+              return listOfScopes.data;
+          }),
+          catchError( err => {
+              this.toast.openToast(ToastType.danger, 'toast.token.getlist.failed', 10000, err.message);
+              return [];
+          })
+      );
+  }
 
   public async createToken(data: CreateTokenFormData): Promise<UbirchAccountingToken> {
 
-    const url = `${this.API_URL}/verification/create`;
+    const url = `${this.API_URL}/create`;
     const creationData: UbirchAccountingTokenCreationData = await this.prepareTokenDataForCreation(data);
+    console.log('creationData', creationData);
 
     const resp: IUbirchAccountingTokenCreationResponse =
       await this.http.post<IUbirchAccountingTokenCreationResponse>(url, creationData).toPromise()
@@ -62,9 +75,14 @@ export class TokenService {
     return this.extractUbirchAccountingTokenFromJWT(resp?.data?.token);
   }
 
-  revokeToken() {
-    // TODO
-      this.toast.openToast(ToastType.danger, 'revocation is not yet implemented', 10000);
+  async deleteToken(tokenP) {
+      // TODO
+      const url = `${this.API_URL}/`;
+      await this.http.delete(url + tokenP).toPromise()
+          .catch((err: Error) => {
+              console.log('token deletion failed');
+              this.toast.openToast(ToastType.danger, 'toast.token.deletion.failed', 10000);
+          });
   }
 
   private extractUbirchAccountingTokenFromJWT(tokenValue: string): UbirchAccountingToken {
@@ -94,7 +112,9 @@ export class TokenService {
           //  * if user has pro account use tenant id (check if tenant profile is filled out sufficiently)
           tenantId: user.id, // use userid as tenantId
           purpose: tokenDataP.purpose,
-          targetIdentities: tokenDataP.validForAll ? '*' : tokenDataP.targetIdentities,
+          targetIdentities: tokenDataP.targetIdentities,
+            scopes: [tokenDataP.scopes],
+            originDomains: tokenDataP.originDomains
         });
 
         if (tokenDataP.expiration) {
@@ -105,6 +125,11 @@ export class TokenService {
           uatcd.notBefore = tokenDataP.notBefore;
         }
 
+        if (tokenDataP.targetGroups) {
+            uatcd.targetGroups = tokenDataP.targetGroups;
+        }
+
+        console.log(uatcd);
         return uatcd;
       },
     );

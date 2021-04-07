@@ -46,6 +46,7 @@ export class TokenManagerPage implements OnInit {
   ngOnInit() {
     this.getTokens();
     this.getDevices();
+
   }
 
   async createTokenPopup() {
@@ -55,6 +56,7 @@ export class TokenManagerPage implements OnInit {
 
     modal.onDidDismiss().then((details: any) => {
       if (details && details.data) {
+        console.log(details.data);
         this.tokenService.createToken(
           details.data,
         ).then(
@@ -98,23 +100,59 @@ export class TokenManagerPage implements OnInit {
     return await modal.present();
   }
 
-  async presentThings(things: string) {
+  async presentThings(token: UbirchAccountingToken, presentID: string) {
     let message: string;
-    for (const thing of things) {
-      for (const device of this.devices) {
-        if (thing === device.hwDeviceId) {
+    let headerKey: string;
+    switch (presentID) {
+      case 'things' : {
+        const things = token.data.tid;
+        headerKey = 'token.list.data.label.thing_id_popup_header';
+        for (const thing of things) {
+          for (const device of this.devices) {
+            if (thing === device.hwDeviceId) {
+              if (message) {
+                message = message + '<br>' + device.description;
+              } else {
+                message = device.description;
+              }
+            }
+          }
+
+        }
+        break;
+      }
+      case 'groups' : {
+        headerKey = 'token.list.data.label.thing_id_popup_header';
+        const groups = token.data.tgp;
+        for (const group of groups) {
           if (message) {
-            message = message + '<br>' + device.description;
+            message = message + '<br>' +  group;
           } else {
-            message = device.description;
+            message = group;
           }
         }
+        break;
       }
-
+      case 'originDomains': {
+        headerKey = 'token.list.data.label.originDomain_popup_header';
+        const domains = token.data.ord;
+        for (const domain of domains) {
+          if (message) {
+            message = message + '<br>' +  domains;
+          } else {
+            message = domain;
+          }
+        }
+        break;
+      }
+      default: {
+        headerKey = 'test';
+      }
     }
+
     const alert = await this.alertController.create({
       cssClass: 'thingAlert',
-      header: 'Target Things for this Token',
+      header: this.translateService.instant(headerKey),
       message,
       buttons: ['OK']
     });
@@ -143,6 +181,7 @@ export class TokenManagerPage implements OnInit {
   getTokens() {
     this.tokenService.getAllTokens().toPromise().then((tokenList: UbirchAccountingToken[]) => {
           this.tokens = tokenList;
+          console.log(this.tokens);
         }
     );
   }
@@ -152,8 +191,17 @@ export class TokenManagerPage implements OnInit {
     this.toast.openToast(ToastType.light, 'toast.token.copy', 2000);
   }
 
-  revokeToken() {
-    this.tokenService.revokeToken();
+  deleteToken(tokenP) {
+    this.tokenService.deleteToken(tokenP).then(result => {
+      this.toast.openToast(ToastType.success, 'toast.token.deletion.successfully', 4000);
+      this.getTokens();
+    });
+  }
+
+  iswildcard(tokenP) {
+    if (tokenP.data.tid[0] === '*') {
+      return true;
+    }
   }
 
 }
