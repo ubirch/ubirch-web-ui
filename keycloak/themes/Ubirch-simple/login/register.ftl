@@ -77,6 +77,10 @@
                         </div>
                     </div>
                 </#if>
+
+                <div id="passwordPolicyDiv">
+                    ${msg("passwordPolicyInfo")}
+                </div>
                 
                 <div class="${properties.kcFormGroupClass!}">
                     <div id="kc-form-options" class="${properties.kcFormOptionsClass!}">
