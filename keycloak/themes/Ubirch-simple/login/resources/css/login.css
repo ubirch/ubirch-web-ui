@@ -11,6 +11,10 @@
     height: 100%;
 }
 
+#passwordPolicyDiv{
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+}
 
 
 .ubirchHeadline{
@@ -574,7 +578,7 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     -o-transition: background-color 90ms linear, color 90ms linear;
     transition: background-color 90ms linear, color 90ms linear;
     background-color: rgba(255, 255, 255, 1);
-    background-image: url('http://ubirch.de/fileadmin/Icons/Doppelpfeile_Magenta.svg');
+    background-image: url('../img/Doppelpfeile_Magenta.svg');
     background-position: right 10px center;
     border: 1px solid rgba(0, 0, 0, 0.5);
     background-repeat: no-repeat;
@@ -595,7 +599,7 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     -o-transition: background-color 90ms linear, color 90ms linear;
     transition: background-color 90ms linear, color 90ms linear;
     background-color: rgba(255, 255, 255, 1);
-    background-image: url('http://ubirch.de/fileadmin/Icons/Doppelpfeile_Magenta.svg');
+    background-image: url('../img/Doppelpfeile_Magenta.svg');
     background-position: right 10px center;
     border: 1px solid rgba(0, 0, 0, 0.5);
     background-repeat: no-repeat;
@@ -617,7 +621,7 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     -o-transition: background-color 90ms linear, color 90ms linear;
     transition: background-color 90ms linear, color 90ms linear;
     background-color: rgba(255, 255, 255, 1);
-    background-image: url('http://ubirch.de/fileadmin/Icons/Doppelpfeile_Magenta.svg');
+    background-image: url('../img/Doppelpfeile_Magenta.svg');
     background-position: right 10px center;
     border: 1px solid rgba(0, 0, 0, 0.5);
     background-repeat: no-repeat;
@@ -641,7 +645,7 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     background-color: magenta;
     border: 1px solid magenta;
     color: white;
-    background-image: url('https://ubirch.de/fileadmin/Icons/Doppelpfeile_weiss.svg');
+    background-image: url('../img/Doppelpfeile_weiss.svg');
     cursor: pointer;
 }
 
@@ -653,7 +657,7 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     background-color: magenta;
     border: 1px solid magenta;
     color: white;
-    background-image: url('https://ubirch.de/fileadmin/Icons/Doppelpfeile_weiss.svg');
+    background-image: url('../img/Doppelpfeile_weiss.svg');
     cursor: pointer;
 }
 
@@ -665,7 +669,7 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     background-color: magenta;
     border: 1px solid magenta;
     color: white;
-    background-image: url('https://ubirch.de/fileadmin/Icons/Doppelpfeile_weiss.svg');
+    background-image: url('../img/Doppelpfeile_weiss.svg');
     cursor: pointer;
 }
 
