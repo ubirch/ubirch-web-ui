@@ -37,7 +37,7 @@
                 <ion-label>{{'token.create.scopes' | translate}}</ion-label>
                 <ion-select formControlName="scopes">
                     <ion-select-option *ngFor="let scope of availableScopes"
-                                       value="{{scope}}">{{scope}}</ion-select-option>
+                                       value="{{scope}}">{{scope | translate}}</ion-select-option>
                 </ion-select>
             </ion-item>
 
