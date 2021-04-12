@@ -190,5 +190,11 @@
 	"verification.state.SERVICE_CURRENTLY_UNAVAILABLE.info": "Bitte versuchen Sie es später noch einmal ....",
 	"verification.tabs.header.graph": "als Graph",
 	"verification.tabs.header.json": "als JSON Responcese",
-	"verification.title": "Verifikation"
+	"verification.title": "Verifikation",
+	"upp:anchor": "TRANSLATE!!Anchor UPPs",
+	"upp:verify": "TRANSLATE!!Verify UPPs",
+	"thing:create": "TRANSLATE!!Create Things",
+	"thing:getinfo": "TRANSLATE!!Get Info of Things",
+	"thing:bootstrap": "TRANSLATE!!Bootstrap Things",
+	"user:getinfo": "TRANSLATE!!Get Info of User"
 }
