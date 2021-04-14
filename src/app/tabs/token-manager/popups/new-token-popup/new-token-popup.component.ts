@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
 import {CreateTokenFormData} from '../../../../models/create-token-form-data';
 import {DeviceService} from '../../../../services/device.service';
@@ -26,6 +27,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   public selectTargetIdentities = true;
 
   private toggleSubscr: Subscription;
+  private errorKeyPrefix = 'token.create.error.';
 
   constructor(
       private modalCtrl: ModalController,
@@ -36,6 +38,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
       private utils: UbirchWebUIUtilsService,
       public modalController: ModalController,
       public userService: UserService,
+      protected translate: TranslateService,
   ) {
   }
 
@@ -50,7 +53,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
       targetIdentities: [ '' ],
       targetGroups: [''],
       scopes: ['', Validators.required],
-      originDomains: ['', Validators.required]
+      originDomains: ['']
     }, {validator: targetIdentitiesValidator});
 
     this.toggleSubscr = this.tokenDetailsForm.get('validForAll').valueChanges.subscribe(val => {
@@ -83,10 +86,16 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
     }
   }
 
+  public get formErrors(): string[] {
+    return this.tokenDetailsForm?.errors && this.tokenDetailsForm.touched ?
+      Object.keys(this.tokenDetailsForm.errors).map(e => this.translate.instant(this.errorKeyPrefix + e))
+      : null;
+  }
+
   private getScopes() {
     this.tokenService.getAvailableScopes().subscribe(scopes => {
       this.availableScopes = scopes;
-    })
+    });
   }
 
   private getDevices(): void {
@@ -136,7 +145,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.utils.safeUnsubscribe(this.toggleSubscr);
   }
-  
+
   public isAdmin(): boolean {
     let isAdmin = false;
     this.userService.getAccountInfo().subscribe(info => {
