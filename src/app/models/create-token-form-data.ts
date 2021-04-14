@@ -9,12 +9,29 @@ export class CreateTokenFormData {
   public originDomains: string[];
 
   constructor(props) {
-    Object.assign(this, props);
+    this.purpose = props.purpose;
 
+    if (props.validForAll === true) {
+      this.targetIdentities = ['*'];
+    } else {
+      this.targetIdentities = this.extractArray(props.targetIdentities);
+    }
     this.expiration = this.convertDateToInterval(this.expiration);
     this.notBefore = this.convertDateToInterval(this.notBefore);
-
+    this.targetGroups = this.extractArray(props.targetGroups);
+    this.scopes = props.scopes;
+    this.originDomains = this.extractArray(props.originDomains);
     return this;
+  }
+
+  private extractArray(data: string|string[]): string[] {
+    if (!data) {
+      return [];
+    }
+    if (!Array.isArray(data)) {
+      return [data];
+    }
+    return data;
   }
 
   private convertDateToInterval(dateP: number): number {
