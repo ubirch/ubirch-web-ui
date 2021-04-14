@@ -191,10 +191,10 @@
 	"verification.tabs.header.graph": "als Graph",
 	"verification.tabs.header.json": "als JSON Responcese",
 	"verification.title": "Verifikation",
-	"upp:anchor": "TRANSLATE!!Anchor UPPs",
-	"upp:verify": "TRANSLATE!!Verify UPPs",
-	"thing:create": "TRANSLATE!!Create Things",
-	"thing:getinfo": "TRANSLATE!!Get Info of Things",
-	"thing:bootstrap": "TRANSLATE!!Bootstrap Things",
-	"user:getinfo": "TRANSLATE!!Get Info of User"
+	"upp:anchor": "Verankern von UPPs",
+	"upp:verify": "Verifizieren von UPPs",
+	"thing:create": "Things erstellen",
+	"thing:getinfo": "Informationen über Things erhalten",
+	"thing:bootstrap": "Things bootstrapen",
+	"user:getinfo": "Nutzerinformationen erhalten"
 }
