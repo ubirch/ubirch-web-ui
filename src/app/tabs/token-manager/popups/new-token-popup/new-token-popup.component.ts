@@ -69,14 +69,6 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
 
   public createToken(): void {
     const details = this.tokenDetailsForm.getRawValue();
-
-    if (details.validForAll === true) {
-      details.targetIdentities = ['*'];
-      delete details.validForAll;
-    } else {
-      delete details.validForAll;
-    }
-
     if (details) {
       this.modalCtrl.dismiss(
           new CreateTokenFormData(details),
