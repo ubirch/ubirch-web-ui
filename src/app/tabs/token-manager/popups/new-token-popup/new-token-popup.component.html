@@ -7,7 +7,11 @@
         <h1>{{'token.create.new_token' | translate}}</h1>
     </div>
 
-    <form [formGroup]="tokenDetailsForm">
+  <ul class="errors">
+    <li *ngFor="let item of formErrors">{{ item }}</li>
+  </ul>
+
+  <form [formGroup]="tokenDetailsForm">
         <ion-card style="padding: 20px">
             <ion-item>
                 <ion-label>{{'token.create.description' | translate}}</ion-label>
@@ -37,7 +41,7 @@
                 <ion-label>{{'token.create.scopes' | translate}}</ion-label>
                 <ion-select formControlName="scopes">
                     <ion-select-option *ngFor="let scope of availableScopes"
-                                       value="{{scope}}">{{scope}}</ion-select-option>
+                                       value="{{scope}}">{{scope | translate}}</ion-select-option>
                 </ion-select>
             </ion-item>
 

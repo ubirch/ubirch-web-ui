@@ -55,7 +55,7 @@
 
             <ion-item *ngIf="token.data.scp" class="role">
               <ion-label style="font-weight: bold">{{ 'token.list.data.label.role' | translate }}</ion-label>
-              <ion-input readonly="true" value="{{token.data.scp}}" ></ion-input>
+              <ion-input readonly="true" value="{{token.data.scp[0] | translate}}" ></ion-input>
             </ion-item>
 
             <ion-item button detail="true" *ngIf="token.data.ord" class="originDomain" (click)="presentThings(token, 'originDomains')">
