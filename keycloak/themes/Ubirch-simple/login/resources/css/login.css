@@ -673,6 +673,52 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
     cursor: pointer;
 }
 
+#kc-totp-settings-form .btn{
+    -webkit-transition: background-color 90ms linear, color 90ms linear;
+    -moz-transition: background-color 90ms linear, color 90ms linear;
+    -o-transition: background-color 90ms linear, color 90ms linear;
+    transition: background-color 90ms linear, color 90ms linear;
+    background-color: rgba(255, 255, 255, 1);
+    background-image: url('../img/Doppelpfeile_Magenta.svg');
+    background-position: right 10px center;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-repeat: no-repeat;
+    box-shadow: none;
+    color: rgba(0, 0, 0, 0.9);
+    font-family: MuseoSansRounded-900, calibri, sans-serif;
+    font-weight: bold;
+    height: 36px;
+    line-height: 32px;
+    padding-left: 16px;
+    padding-right: 35px;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    width: auto;
+}
+
+#kc-totp-settings-form .btn:hover{
+    -webkit-transition: background-color 90ms linear, color 90ms linear;
+    -moz-transition: background-color 90ms linear, color 90ms linear;
+    -o-transition: background-color 90ms linear, color 90ms linear;
+    transition: background-color 90ms linear, color 90ms linear;
+    background-color: magenta;
+    border: 1px solid magenta;
+    color: white;
+    background-image: url('../img/Doppelpfeile_weiss.svg');
+    cursor: pointer;
+}
+
+input[type="text" i] {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+#kc-otp-login-form{
+    display: flex;
+    flex-direction: row;
+}
+
 div#kc-info {
     margin-bottom: 1rem;
 }
