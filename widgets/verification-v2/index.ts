@@ -283,15 +283,17 @@ class UbirchVerification {
 
   protected sortObjectRecursive(object: any, sort: boolean): object {
     // recursive termination condition
-    if (typeof (object) !== 'object' || Array.isArray(object)) {
+    if (typeof (object) !== 'object') {
       return object;
+    } else if (Array.isArray(object)) {
+      return object.map(arrayItem => this.sortObjectRecursive(arrayItem, sort));
     } else {
-      const objectSorted: { [ key: string ]: any } = {};
-      const keysOrdered: { [ key: string ]: any } = sort ? Object.keys(object).sort() : Object.keys(object);
+      const objectSorted: { [key: string]: any } = {};
+      const keysOrdered: { [key: string]: any } = sort ? Object.keys(object).sort() : Object.keys(object);
 
       keysOrdered.forEach((key: string) => {
-          const subObject: object = this.sortObjectRecursive(object[ key ], sort);
-          objectSorted[ key ] = subObject;
+          const subObject: object = this.sortObjectRecursive(object[key], sort);
+          objectSorted[key] = subObject;
         },
       );
 
