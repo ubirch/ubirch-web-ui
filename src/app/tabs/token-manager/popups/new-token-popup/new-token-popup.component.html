@@ -13,48 +13,50 @@
 
   <form [formGroup]="tokenDetailsForm">
         <ion-card style="padding: 20px">
-            <ion-item>
-                <ion-label>{{'token.create.description' | translate}}</ion-label>
-                <ion-input id="description" slot="end" formControlName="purpose"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label>{{'token.create.valid_from' | translate}}</ion-label>
-                <ion-datetime placeholder="{{'token.create.valid_from.placeholder' | translate}}" display-format="DD MMM, YYYY" max="3000" id="vFrom" slot="end" formControlName="notBefore"></ion-datetime>
-                <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
-            </ion-item>
-            <ion-item>
-                <ion-label>{{'token.create.expiration' | translate}}</ion-label>
-                <ion-datetime placeholder="{{'token.create.expiration.placeholder' | translate}}" display-format="DD MMM, YYYY" max="3000" mode="md" id="expiration" slot="end" formControlName="expiration"></ion-datetime>
-                <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
-            </ion-item>
+          <ion-item>
+              <ion-label>{{'token.create.description' | translate}}</ion-label>
+              <ion-input id="description" slot="end" formControlName="purpose"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label>{{'token.create.valid_from' | translate}}</ion-label>
+              <ion-datetime placeholder="{{'token.create.valid_from.placeholder' | translate}}" display-format="DD MMM, YYYY" max="3000" id="vFrom" slot="end" formControlName="notBefore"></ion-datetime>
+              <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
+          </ion-item>
+          <ion-item>
+              <ion-label>{{'token.create.expiration' | translate}}</ion-label>
+              <ion-datetime placeholder="{{'token.create.expiration.placeholder' | translate}}" display-format="DD MMM, YYYY" max="3000" mode="md" id="expiration" slot="end" formControlName="expiration"></ion-datetime>
+              <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
+          </ion-item>
           <ion-item>
             <ion-label>{{'token.create.valid_for_all_things' | translate}}</ion-label>
             <ion-toggle formControlName="validForAll"></ion-toggle>
           </ion-item>
           <ion-item *ngIf="selectTargetIdentities">
             <ion-label>{{'token.create.things' | translate}}</ion-label>
-            <ion-select placeholder="{{'token.create.select' | translate}}" id="targetIdentities" slot="end" multiple="true" formControlName="targetIdentities">
-              <ion-select-option *ngFor="let device  of devices" value="{{device.hwDeviceId}}">{{device.description}}</ion-select-option>
+            <ion-select placeholder="{{'token.create.select' | translate}}" id="targetIdentities" slot="end"
+                        multiple="true" formControlName="targetIdentities">
+              <ion-select-option *ngFor="let device  of devices"
+                                 value="{{device.hwDeviceId}}">{{device.description}}</ion-select-option>
             </ion-select>
           </ion-item>
-            <ion-item>
-                <ion-label>{{'token.create.scopes' | translate}}</ion-label>
-                <ion-select formControlName="scopes">
-                    <ion-select-option *ngFor="let scope of availableScopes"
-                                       value="{{scope}}">{{scope | translate}}</ion-select-option>
-                </ion-select>
-            </ion-item>
+          <ion-item>
+            <ion-label>{{'token.create.scopes' | translate}}</ion-label>
+            <ion-select placeholder="{{'token.create.select' | translate}}" multiple="true" formControlName="scopes">
+                <ion-select-option *ngFor="let scope of availableScopes"
+                                   value="{{scope}}">{{scope | translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
 
-            <ion-item *ngIf="isAdmin() === true">
-                <ion-label>{{'token.create.targetGroups' | translate}}</ion-label>
-                <ion-input #group slot="end">
-                </ion-input>
-                <ion-button [disabled]="!validGroup(group.value)" class="addButton" (click)="appendGroup(group.value)">+</ion-button>
-            </ion-item>
-            <ion-chip color="primary" outline="true" *ngFor="let group of enteredGroups">
-                <ion-label>{{group}}</ion-label>
-                <ion-icon name="close" (click)="removeGroup(group)"></ion-icon>
-            </ion-chip>
+          <ion-item *ngIf="isAdmin() === true">
+              <ion-label>{{'token.create.targetGroups' | translate}}</ion-label>
+              <ion-input #group slot="end">
+              </ion-input>
+              <ion-button [disabled]="!validGroup(group.value)" class="addButton" (click)="appendGroup(group.value)">+</ion-button>
+          </ion-item>
+          <ion-chip color="primary" outline="true" *ngFor="let group of enteredGroups">
+              <ion-label>{{group}}</ion-label>
+              <ion-icon name="close" (click)="removeGroup(group)"></ion-icon>
+          </ion-chip>
 
             <ion-item>
                 <ion-label>{{'token.create.origin-domains' | translate}}</ion-label>

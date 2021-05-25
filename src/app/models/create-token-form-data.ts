@@ -19,7 +19,7 @@ export class CreateTokenFormData {
     this.expiration = this.convertDateToInterval(props.expiration);
     this.notBefore = this.convertDateToInterval(props.notBefore);
     this.targetGroups = this.extractArray(props.targetGroups);
-    this.scopes = props.scopes;
+    this.scopes = this.extractArray(props.scopes);
     this.originDomains = this.extractArray(props.originDomains);
     return this;
   }

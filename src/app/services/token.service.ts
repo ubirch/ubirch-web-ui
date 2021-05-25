@@ -113,7 +113,7 @@ export class TokenService {
           tenantId: user.id, // use userid as tenantId
           purpose: tokenDataP.purpose,
           targetIdentities: tokenDataP.targetIdentities || [],
-          scopes: [ tokenDataP.scopes ],
+          scopes: tokenDataP.scopes,
           originDomains: tokenDataP.originDomains,
         });
 
