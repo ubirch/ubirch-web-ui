@@ -11,6 +11,7 @@ import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
 import '../../src/assets/app-icons/IOTA_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_right.png';
 import '../../src/assets/app-icons/ubirch_verify_wrong.png';
+import '../../src/assets/app-icons/ubirch_verify_notyet.png';
 import environment from './environment.dev';
 import { MESSAGES_DE } from './messages.de';
 import { MESSAGES_EN } from './messages.en';
