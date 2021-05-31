@@ -40,8 +40,6 @@
     <body class="${properties.kcBodyClass!}">
 
     <div class="header">
-        <a class="logo" href="https://ubirch.de">
-            <img src="${url.resourcesPath}/img/Ubirch_Logo_weiss.svg" alt="logo"></a>
         <div id="kc-header-wrapper"
              class="${properties.kcHeaderWrapperClass!}">${kcSanitize(msg("loginTitleHtml",(realm.displayNameHtml!'')))?no_esc}</div>
     </div>
