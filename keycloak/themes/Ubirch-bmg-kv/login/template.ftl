@@ -40,6 +40,7 @@
     <body class="${properties.kcBodyClass!}">
 
     <div class="header">
+        <img src="${url.resourcesPath}/img/logo_kbv.png" alt="KV-Logo">
         <div id="kc-header-wrapper"
              class="${properties.kcHeaderWrapperClass!}">${kcSanitize(msg("loginTitleHtml",(realm.displayNameHtml!'')))?no_esc}</div>
     </div>
