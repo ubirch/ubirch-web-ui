@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {HeaderActionButton} from './header-action-button';
 
 @Component({
@@ -6,7 +6,7 @@ import {HeaderActionButton} from './header-action-button';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent{
+export class HeaderComponent {
   @Input() title = '';
   @Input() actionButtons: HeaderActionButton[] = [];
   @Input() headerRightLabel = '';
@@ -25,6 +25,7 @@ export class HeaderComponent{
 
   constructor() {
   }
+
   // function to set focus on the searchbar, delay is needed in some cases when view isn't ready yet
   setFocus(delay) {
     setTimeout(() => {

@@ -15,6 +15,7 @@
 	"button.upload": "Upload",
 	"button.verify": "Verify",
 	"device.details.header.created-date": "Created",
+	"device.details.header": "Thing Details",
 	"device.details.tab.data.ubirch-info": "The UBIRCH solution normally does not handle any productive data like measurements but only works on hashes of data. The feature of displaying plain data in the UBIRCH console is only available for demo purposes within this UBIRCH TestKit.",
 	"device.details.tab.pubkeys.info.no-pubkeys-for-thing": "There seems to be no public keys available for this thing...",
 	"device.details.tab.pubkeys.label.algorithm": "Algorithm",
