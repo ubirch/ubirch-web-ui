@@ -31,7 +31,7 @@
                 "currentDevice user";
 }
 
-#currentDevice{
+#rightLabel{
   grid-area: currentDevice;
 }
 
@@ -52,6 +52,10 @@
 
 #search{
   grid-area: search;
+}
+
+#search ion-searchbar{
+  padding: 0;
 }
 
 @media (max-width: 600px) {

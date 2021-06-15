@@ -14,6 +14,7 @@
 	"button.to-things-overview": "Gehen Sie zur Things Übersicht",
 	"button.upload": "Hochladen",
 	"button.verify": "Überprüfen",
+	"device.details.header": "Thing Details",
 	"device.details.header.created-date": "Erstellt",
 	"device.details.recent-data.verify": "verifizieren",
 	"device.details.tab.data.ubirch-info": "Die UBIRCH-Lösung verarbeitet normalerweise keine produktiven Daten wie Messungen, sondern arbeitet nur mit Datenhashes. Die Funktion, einfache Daten in der UBIRCH-Konsole anzuzeigen, steht in diesem UBIRCH-Testkit nur für Demozwecke zur Verfügung.",

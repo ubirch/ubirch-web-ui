@@ -36,7 +36,7 @@ export class DeviceDetailsPage implements OnDestroy {
   }
 
   get title(): string {
-    return this.loadedDevice ? this.loadedDevice.description : '';
+    return this.loadedDevice?.description.length < 35 ? this.loadedDevice.description : this.translateService.instant('device.details.header');
   }
 
   get CURRENT_LANG(): string {
