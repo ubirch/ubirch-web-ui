@@ -1,3 +1,107 @@
-.header-right-label {
-  font-weight: 600;
+#header{
+  width: 100%;
+  display: grid;
+  padding: 2rem;
+  padding-top: 0;
+  grid-template-rows: auto 5fr auto;
+  grid-template-columns: auto auto 2rem;
+  grid-template-areas:
+              "toolbar        toolbar       ."
+              "title          sessionInfo   language"
+              "actionButton   search             search";
+}
+
+#toolbar{
+  grid-area: toolbar;
+}
+
+#title{
+  grid-area: title;
+}
+
+#sessionInfo{
+  width: 100%;
+  grid-area: sessionInfo;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-end;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  text-align: right;
+  gap: 0.5rem;
+}
+
+#sessionInfo ion-label{
+  font-weight: bold;
+}
+
+#rightLabel{
+  grid-area: rightLabel;
+}
+
+#user{
+  grid-area: user;
+}
+
+#language{
+  grid-area: language;
+  position: relative;
+  min-width: 32px;
+  max-height: 32px;
+}
+
+.actionButton{
+  grid-area: actionButton;
+}
+
+#search{
+  grid-area: search;
+}
+
+#search ion-searchbar{
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  #header {
+    grid-gap: 0;
+    padding: 0.5rem;
+    padding-bottom: 1rem;
+    grid-template-rows:  auto 5fr 6fr auto;
+    grid-template-columns: 1fr 8fr 1fr;
+    grid-template-areas:
+            "toolbar title language"
+            "sessionInfo sessionInfo sessionInfo"
+            "actionButton actionButton actionButton"
+            "search search search"
+  }
+
+  #sessionInfo {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    flex-direction: row;
+    text-align: unset;
+    justify-content: space-between;
+  }
+
+  #rightLabel{
+    align-self: center;
+  }
+
+  ubirch-web-ui-logged-in-user{
+    align-self: center;
+  }
+
+  #language{
+    margin-top: 0.75rem;
+  }
+
+  #title {
+    margin-bottom: 0;
+  }
+
+  .actionButton{
+    padding: 0.25rem;
+  }
 }
