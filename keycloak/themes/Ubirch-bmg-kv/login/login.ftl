@@ -9,7 +9,7 @@
                 <select id="socialSelect">
                     <#list social.providers as p>
                             <option value="${p.loginUrl}">
-                                ${p.alias}
+                                ${p.displayName}
                             </option>
                     </#list>
                     <input id="loginButton" type="button" onclick="location = getSocialUrl()" value="LOGIN">
