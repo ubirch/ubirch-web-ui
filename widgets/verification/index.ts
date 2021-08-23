@@ -1,5 +1,16 @@
 import { sha256 } from 'js-sha256';
 import { sha512 } from 'js-sha512';
+import * as BlockchainSettings from '../../resources/blockchain-settings.json';
+import { IUbirchBlockchain } from '../../src/app/models/iubirch-blockchain';
+import { IUbirchBlockchainNet } from '../../src/app/models/iubirch-blockchain-net';
+import '../../src/assets/app-icons/bloxberg_verify_right.png';
+import '../../src/assets/app-icons/Ethereum-Classic_verify_right.png';
+import '../../src/assets/app-icons/Ethereum_verify_right.png';
+import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
+import '../../src/assets/app-icons/IOTA_verify_right.png';
+import '../../src/assets/app-icons/ubirch_verify_right.png';
+import '../../src/assets/app-icons/ubirch_verify_wrong.png';
+import environment from './environment.dev';
 import {
   EError,
   EInfo,
@@ -10,22 +21,16 @@ import {
   IUbirchVerificationResponse,
   UbirchHashAlgorithm,
 } from './models';
-import environment from './environment.dev';
 // assets
 import './style.scss';
-import '../../src/assets/app-icons/Ethereum_verify_right.png';
-import '../../src/assets/app-icons/Ethereum-Classic_verify_right.png';
-import '../../src/assets/app-icons/IOTA_verify_right.png';
-import '../../src/assets/app-icons/GovDigital_Icon_verify_right.png';
-import '../../src/assets/app-icons/bloxberg_verify_right.png';
-import '../../src/assets/app-icons/ubirch_verify_right.png';
-import '../../src/assets/app-icons/ubirch_verify_wrong.png';
-import * as BlockchainSettings from '../../resources/blockchain-settings.json';
-import { IUbirchBlockchain } from '../../src/app/models/iubirch-blockchain';
-import { IUbirchBlockchainNet } from '../../src/app/models/iubirch-blockchain-net';
 
 const LANGUAGE_MESSAGE_STRINGS = {
   de: {
+    DEACTIVATED: {
+      headline: 'Verifikation kann nicht durchgeführt werden!',
+      info: 'ACHTUNG!!! Dieses Modul ist nicht mehr verfügbar. Bitte informieren Sie den Administrator dieser Seite oder App darüber, ' +
+        'stattdessen das npm package ubirch-verification-js zu verwenden. (https://www.npmjs.com/package/@ubirch/ubirch-verification-js)',
+    },
     PENDING: {
       info: '...Verifikation wird durchgeführt....',
     },
@@ -58,6 +63,11 @@ const LANGUAGE_MESSAGE_STRINGS = {
     },
   },
   en: {
+    DEACTIVATED: {
+      headline: 'Verification cannot be processed!',
+      info: 'ATTENTION!!! This module is no longer provided. Please tell the administrator of this website of app to use the npm package' +
+        'ubirch-verification-js instead. (https://www.npmjs.com/package/@ubirch/ubirch-verification-js)',
+    },
     PENDING: {
       info: '...verification pending....',
     },
@@ -103,7 +113,7 @@ const DEFAULT_FORM_CONFIG: IUbirchFormVerificationConfig = {
 const VERSION = ''; // no prefix for v1
 
 let MESSAGE_STRINGS: any;
-let HIGHLIGHT_PAGE_AFTER_VERIFICATION = false;
+const HIGHLIGHT_PAGE_AFTER_VERIFICATION = false;
 
 class UbirchVerification {
   private responseHandler: ResponseHandler = new ResponseHandler();
@@ -111,54 +121,30 @@ class UbirchVerification {
   private algorithm: UbirchHashAlgorithm;
   private elementSelector: string;
   private openConsoleInSameTarget = false;
-  private noLinkToConsole = false;
+  private noLinkToConsole = true;
 
   constructor(config: IUbirchVerificationConfig = DEFAULT_CONFIG) {
     MESSAGE_STRINGS = config.language && LANGUAGE_MESSAGE_STRINGS[ config.language ] ?
       LANGUAGE_MESSAGE_STRINGS[ config.language ] : LANGUAGE_MESSAGE_STRINGS.de;
 
-    if (config.HIGHLIGHT_PAGE_AFTER_VERIFICATION !== undefined) {
-      HIGHLIGHT_PAGE_AFTER_VERIFICATION = config.HIGHLIGHT_PAGE_AFTER_VERIFICATION;
-    }
-
     if (!config.elementSelector) {
-      throw new Error('Please, provide the `elementSelector` to UbirchVerification or UbirchFormVerification instance');
+      throw new Error(MESSAGE_STRINGS.DEACTIVATED.info);
     }
 
-    this.algorithm = config.algorithm;
     this.elementSelector = config.elementSelector;
 
-    if (config.OPEN_CONSOLE_IN_SAME_TARGET) {
-      this.openConsoleInSameTarget = config.OPEN_CONSOLE_IN_SAME_TARGET;
-    }
-
-    if (config.NO_LINK_TO_CONSOLE !== undefined) {
-      this.noLinkToConsole = config.NO_LINK_TO_CONSOLE;
-    }
-
     this.view = new View(this.elementSelector, this.openConsoleInSameTarget);
-  }
 
-  public setMessageString(key, info, headline?) {
-    if (!MESSAGE_STRINGS[ key ]) {
-      console.warn('Tried to set non existing message string with key ' + key);
-    } else {
-      MESSAGE_STRINGS[ key ].info = info;
-      if (headline) {
-        MESSAGE_STRINGS[ key ].headline = headline;
-      }
-    }
-  }
-
-  public verifyJSON(json: string, sort: boolean = true): void {
-    const formattedJSON = this.formatJSON(json, sort);
-    const hash = this.createHash(formattedJSON);
-
-    this.verifyHash(hash);
+    this.showDeactivatedInfo();
   }
 
   public verifyHash(hash: string): void {
-    this.sendVerificationRequest(hash);
+    this.showDeactivatedInfo();
+  }
+
+  private showDeactivatedInfo(): void {
+    this.handleDeactivated();
+    alert(MESSAGE_STRINGS.DEACTIVATED.info);
   }
 
   public createHash(json: string): string {
@@ -201,7 +187,15 @@ class UbirchVerification {
     }
   }
 
-  private handleError(error: EError, hash: string): void {
+  private handleDeactivated(): void {
+    this.view.cleanupIcons();
+    this.view.showDeactivated();
+    this.view.addDeactivatedHeadlineAndInfotext();
+
+    logError(this.responseHandler.handleError(EError.DEACTIVATED));
+  }
+
+  private handleError(error: EError, hash?: string): void {
     let showNonSeal = true;
 
     if (error === EError.NO_ERROR) {
@@ -528,6 +522,8 @@ class ResponseHandler {
         return MESSAGE_STRINGS.VERIFICATION_FAILED_EMPTY_RESPONSE.info;
       case EError.VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE:
         return MESSAGE_STRINGS.VERIFICATION_FAILED_MISSING_SEAL_IN_RESPONSE.info;
+      case EError.DEACTIVATED:
+        return MESSAGE_STRINGS.DEACTIVATED.info;
       case EError.UNKNOWN_ERROR:
       default:
         return MESSAGE_STRINGS.UNKNOWN_ERROR.info;
@@ -578,7 +574,14 @@ class View {
     this.cleanAllChilds(this.sealInfoText);
   }
 
-  public showSeal(successful: boolean, hash: string, nolink: boolean = false): void {
+  public showDeactivated(): void {
+    let icon: HTMLElement;
+    icon = this.createIconTag(environment.assets_url_prefix + BlockchainSettings.ubirchIcons.no_seal,
+      'ubirch-verification-no-seal-img');
+    this.sealOutput.appendChild(icon);
+  }
+
+  public showSeal(successful: boolean, hash?: string, nolink: boolean = false): void {
     let icon: HTMLElement;
 
     if (successful) {
@@ -596,7 +599,8 @@ class View {
 
       const encodedHash: string = encodeURIComponent(hash);
 
-      link.setAttribute('href', `${environment.console_verify_url}?hash=${encodedHash}`);
+      const verificationLink = environment.console_verify_url + (hash ? '?hash=' + encodedHash : '');
+      link.setAttribute('href', verificationLink);
       if (!this.openConsoleInSameTarget) {
         link.setAttribute('target', '_blank');
       }
@@ -659,6 +663,13 @@ class View {
     }
 
     this.resultOutput.appendChild(linkTag);
+  }
+
+  public addDeactivatedHeadlineAndInfotext(): void {
+    this.sealInfoText.appendChild(this.createTxtTag(MESSAGE_STRINGS.DEACTIVATED.headline,
+      'ubirch-verification-fail ubirch-verification-headline'));
+    this.resultOutput.appendChild(this.createTxtTag(MESSAGE_STRINGS.DEACTIVATED.info,
+      'ubirch-verification-fail'));
   }
 
   public addHeadlineAndInfotext(successful: true | false | undefined): void {
