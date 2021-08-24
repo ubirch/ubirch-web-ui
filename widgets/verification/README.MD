@@ -1,4 +1,4 @@
-# Ubirch Verification Widget
+# Ubirch Verification Widget - DEACTIVATED!!!!
 
 ## Example
 
