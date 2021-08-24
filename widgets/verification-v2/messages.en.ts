@@ -72,6 +72,11 @@ export const MESSAGES_EN = {
   MISSING_ACCESS_TOKEN: {
     info: 'You need to provide an accessToken to verify data',
   },
+  DEACTIVATED: {
+    headline: 'Verification cannot be processed!',
+    info: 'ATTENTION!!! This module is no longer provided. Please tell the administrator of this website of app to use the npm package' +
+      'ubirch-verification-js instead. (https://www.npmjs.com/package/@ubirch/ubirch-verification-js)',
+  },
   UNKNOWN_ERROR: {
     info: 'An unexpected error occurred....!',
   },

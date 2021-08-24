@@ -73,6 +73,11 @@ export const MESSAGES_DE = {
     // tslint:disable-next-line:max-line-length
     info: 'Fehler beim Erstellen der Ubirch(Form)Verification Instanz auf der Seite: es wurde kein `accessToken` zum Verifizieren der Daten angegeben',
   },
+  DEACTIVATED: {
+    headline: 'Verifikation kann nicht durchgeführt werden!',
+    info: 'ACHTUNG!!! Dieses Modul ist nicht mehr verfügbar. Bitte informieren Sie den Administrator dieser Seite oder App darüber, ' +
+      'stattdessen das npm package ubirch-verification-js zu verwenden. (https://www.npmjs.com/package/@ubirch/ubirch-verification-js)',
+  },
   UNKNOWN_ERROR: {
     info: 'Problem!!! Ein unerwarteter Fehler ist aufgetreten....!',
   },
