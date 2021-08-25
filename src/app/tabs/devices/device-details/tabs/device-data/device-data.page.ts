@@ -125,7 +125,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
         this.ubirchVerificationWidget[indexP] = new UbirchVerificationWidget({
           // @ts-ignore
           elementSelector: '#verification-widget_' + indexP,
-          messenger: window['UbirchMessenger$'],
+          messenger: this.ubirchVerification[indexP].messenger(),
           OPEN_CONSOLE_IN_SAME_TARGET: true
         })
       }
