@@ -58,6 +58,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
 
     showBody = false;
     private ubirchVerification: any[] = new Array(environment.lashHashesListLength);
+    private ubirchVerificationWidget: any[] = new Array(environment.lashHashesListLength);
 
     constructor(
         private route: ActivatedRoute,
@@ -117,8 +118,16 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             // @ts-ignore
             stage: this.stage,
             accessToken: this.verificationToken,
-            OPEN_CONSOLE_IN_SAME_TARGET: true
+            OPEN_CONSOLE_IN_SAME_TARGET: true,
+            // @ts-ignore
+            language: this.CURRENT_LANG === 'de' || this.CURRENT_LANG === 'en' ?  this.CURRENT_LANG : 'en'
         });
+        this.ubirchVerificationWidget[indexP] = new UbirchVerificationWidget({
+          // @ts-ignore
+          elementSelector: '#verification-widget_' + indexP,
+          messenger: window['UbirchMessenger$'],
+          OPEN_CONSOLE_IN_SAME_TARGET: true
+        })
       }
     }
 
