@@ -11,9 +11,11 @@ import {environment} from '../../../../../../environments/environment';
 import {ToastType} from '../../../../../enums/toast-type.enum';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {DataSet} from '../../../../../models/data-set';
-import {sha1} from '@angular/compiler/src/i18n/digest';
-
-declare let UbirchVerification: any;
+import {
+  UbirchVerification,
+  UbirchVerificationWidget,
+  UbirchFormUtils,
+} from 'node_modules/@ubirch/ubirch-verification-js/dist';
 
 @Component({
     selector: 'app-device-data',
@@ -40,6 +42,14 @@ declare let UbirchVerification: any;
     ]
 })
 export class DeviceDataPage implements OnInit, OnDestroy {
+
+    public verificationToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rva2VuLmRldi51YmlyY2guY29tIiwic3ViIjoiNWQ0ZjUwOWUtMTRmZi00ZDE4LWE3ODEtY2M5YTlkMGRmZTMxIiwiYXVkIjoiaHR0cHM6Ly92ZXJpZnkuZGV2LnViaXJjaC5jb20iLCJleHAiOjE2NDA5NTAyNDUsImlhdCI6MTYyOTg4NzUyNiwianRpIjoiOTYwY2M2MjctOWViNS00ZTYzLWIxNjgtZjdlMjhhMjYzZTI5Iiwic2NwIjpbInVwcDp2ZXJpZnkiXSwicHVyIjoiQ29uc29sZSBUZXN0a2l0IFZlcmlmeSBUZXN0IFRva2VuIiwidGdwIjpbXSwidGlkIjpbIioiXSwib3JkIjpbImh0dHBzOi8vY29uc29sZS5kZXYudWJpcmNoLmNvbS8iXX0.iwhS3HuE2_FEBIGqDmIQUhMWjoa4c_P3Q3tbfxrIwPVC2vIKMf3Qp2pyD0DqX1e6Py83EX3UjUR8ykN75tKZvA';
+    private hashAlgo = {
+      sha256: 'sha256',
+      sha512: 'sha512'
+    };
+    public selectedHashAlgo = this.hashAlgo.sha256;
+    public stage = 'dev';
 
     public loadedDevice: BEDevice;
     private deviceSubsc: Subscription;
@@ -102,9 +112,11 @@ export class DeviceDataPage implements OnInit, OnDestroy {
     public toggled(visibleP: boolean, indexP: number): void {
       if (visibleP && !this.ubirchVerification[indexP]) {
         this.ubirchVerification[indexP] = new UbirchVerification({
-            algorithm: 'sha256',
-            elementSelector: '#verification-widget_' + indexP,
-            language: this.CURRENT_LANG,
+            // @ts-ignore
+            algorithm: this.selectedHashAlgo,
+            // @ts-ignore
+            stage: this.stage,
+            accessToken: this.verificationToken,
             OPEN_CONSOLE_IN_SAME_TARGET: true
         });
       }
@@ -124,8 +136,8 @@ export class DeviceDataPage implements OnInit, OnDestroy {
     public verifyForm(indexP: number, dataSet): void {
         try {
             const genJson = JSON.stringify(dataSet);
-            const sortJson = this.ubirchVerification[indexP].formatJSON(genJson, true);
-            this.ubirchVerification[indexP].verifyJSON(sortJson);
+          const hash = this.ubirchVerification[indexP].createHash(genJson);
+          this.ubirchVerification[indexP].verifyHash(hash);
         } catch (e) {
             // handle the error yourself and inform user about the missing fields
             console.log(e);
