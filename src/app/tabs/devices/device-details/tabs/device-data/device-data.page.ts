@@ -122,11 +122,12 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             // @ts-ignore
             language: this.CURRENT_LANG === 'de' || this.CURRENT_LANG === 'en' ?  this.CURRENT_LANG : 'en'
         });
+        const elem = document.querySelector(`#verification-widget_${indexP}`);
+        console.log(`ElementID: ${indexP} `, elem);
         this.ubirchVerificationWidget[indexP] = new UbirchVerificationWidget({
           // @ts-ignore
-          elementSelector: '#verification-widget_' + indexP,
-          messenger: this.ubirchVerification[indexP].messenger(),
-          OPEN_CONSOLE_IN_SAME_TARGET: true
+          hostSelector: `#verification-widget_${indexP}`,
+          messenger: this.ubirchVerification[indexP].messenger
         })
       }
     }
