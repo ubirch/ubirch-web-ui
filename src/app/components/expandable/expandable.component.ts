@@ -45,6 +45,8 @@ export class ExpandableComponent implements OnInit {
   toggle() {
     this.showBody = !this.showBody;
     this.expanded = !this.expanded;
+  }
+  emitToggle() {
     this.toggled.emit(this.showBody);
   }
 }

@@ -13,7 +13,7 @@
 
   <div [@rotatedState]="!showBody? 'default': 'rotated'" class="arrow"><i class="ion-ios-arrow-down"></i></div>
 </div>
-<div [@smoothCollapse]="!showBody? 'initial': 'final'">
+<div (@smoothCollapse.done)="emitToggle()" [@smoothCollapse]="!showBody? 'initial': 'final'">
   <div class="acc-body">
     <ng-content></ng-content>
   </div>
