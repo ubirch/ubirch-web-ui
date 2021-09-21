@@ -1,21 +1,17 @@
-import {Component, OnInit, OnDestroy, Renderer2, Inject} from '@angular/core';
-import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
-import {DomSanitizer} from '@angular/platform-browser';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { UbirchVerification } from 'node_modules/@ubirch/ubirch-verification-js/dist';
+import { Subscription } from 'rxjs';
 
-import {DeviceService} from 'src/app/services/device.service';
-import {Subscription} from 'rxjs';
-import {BEDevice} from '../../../../../models/bedevice';
-import {ToastService} from '../../../../../services/toast.service';
-import {TranslateService} from '@ngx-translate/core';
-import {environment} from '../../../../../../environments/environment';
-import {ToastType} from '../../../../../enums/toast-type.enum';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {DataSet} from '../../../../../models/data-set';
-import {
-  UbirchVerification,
-  UbirchVerificationWidget,
-  UbirchFormUtils,
-} from 'node_modules/@ubirch/ubirch-verification-js/dist';
+import { DeviceService } from 'src/app/services/device.service';
+import { environment } from '../../../../../../environments/environment';
+import { ToastType } from '../../../../../enums/toast-type.enum';
+import { BEDevice } from '../../../../../models/bedevice';
+import { DataSet } from '../../../../../models/data-set';
+import { ToastService } from '../../../../../services/toast.service';
 
 @Component({
     selector: 'app-device-data',
@@ -43,7 +39,7 @@ import {
 })
 export class DeviceDataPage implements OnInit, OnDestroy {
 
-    public verificationToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rva2VuLmRldi51YmlyY2guY29tIiwic3ViIjoiNWQ0ZjUwOWUtMTRmZi00ZDE4LWE3ODEtY2M5YTlkMGRmZTMxIiwiYXVkIjoiaHR0cHM6Ly92ZXJpZnkuZGV2LnViaXJjaC5jb20iLCJleHAiOjE2NDA5NjM5MTQsImlhdCI6MTYyOTkwMTE3MiwianRpIjoiMjE1MGFmYzAtZjViMS00ZmU3LWJlMjgtOWZlMTk4MjQwNWJmIiwic2NwIjpbInVwcDp2ZXJpZnkiXSwicHVyIjoiQ29uc29sZSBUZXN0a2l0IFZlcmlmeSBUZXN0IFRva2VuIiwidGdwIjpbXSwidGlkIjpbIioiXSwib3JkIjpbImh0dHBzOi8vY29uc29sZS5kZXYudWJpcmNoLmNvbSJdfQ.99emMNlSOffdHmcuNBloyRHSPXAKNMK9_efgCeCaHXiEwTrIWsA1HSsZNks_RmHo3sfH5pqXOqmy2UKrsS0k6g';
+    public verificationToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rva2VuLmRldi51YmlyY2guY29tIiwic3ViIjoiYzBiNTc3ZmItMWNlZi00YzZmLThjNTAtOGQzYTFlNmVhNzUzIiwiYXVkIjoiaHR0cHM6Ly92ZXJpZnkuZGV2LnViaXJjaC5jb20iLCJleHAiOjE2NDA5Njg3MjIsImlhdCI6MTYzMjIzODc4NiwianRpIjoiMjNiODkxYTItMmIxYy00ZmU0LThmNTAtY2I5MTBhZTBjMGUxIiwic2NwIjpbInVwcDp2ZXJpZnkiXSwicHVyIjoiV2lsZGNhcmQgQ09OU09MRSBWZXJpZmljYXRpb24gVG9rZW4iLCJ0Z3AiOltdLCJ0aWQiOlsiKiJdLCJvcmQiOlsiaHR0cHM6Ly9jb25zb2xlLmRldi51YmlyY2guY29tIl19.MMAapnmXY9Dz-3GMDLn51GivV1tfFURptPXZfZ0Il2KzMIKUMvDXxWiXtlZTvR8n1uu0nCEkyBo6FI5tCRg7Cg';
     private hashAlgo = {
       sha256: 'sha256',
       sha512: 'sha512'
@@ -57,7 +53,6 @@ export class DeviceDataPage implements OnInit, OnDestroy {
     private dataSets;
 
     showBody = false;
-    private ubirchVerification: any[] = new Array(environment.lashHashesListLength);
     private ubirchVerificationWidget: any[] = new Array(environment.lashHashesListLength);
 
     constructor(
@@ -111,8 +106,10 @@ export class DeviceDataPage implements OnInit, OnDestroy {
     }
 
     public toggled(visibleP: boolean, indexP: number): void {
-      if (visibleP && !this.ubirchVerification[indexP]) {
-        this.ubirchVerification[indexP] = new UbirchVerification({
+      if (visibleP && !this.ubirchVerificationWidget[indexP]) {
+        const elem = document.querySelector(`#verification-widget_${indexP}`);
+        console.log(`ElementID: ${indexP} `, elem);
+        this.ubirchVerificationWidget[indexP] = new UbirchVerification({
             // @ts-ignore
             algorithm: this.selectedHashAlgo,
             // @ts-ignore
@@ -120,15 +117,9 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             accessToken: this.verificationToken,
             OPEN_CONSOLE_IN_SAME_TARGET: true,
             // @ts-ignore
-            language: this.CURRENT_LANG === 'de' || this.CURRENT_LANG === 'en' ?  this.CURRENT_LANG : 'en'
+            language: this.CURRENT_LANG === 'de' || this.CURRENT_LANG === 'en' ?  this.CURRENT_LANG : 'en',
+            hostSelector: `#verification-widget_${indexP}`,
         });
-        const elem = document.querySelector(`#verification-widget_${indexP}`);
-        console.log(`ElementID: ${indexP} `, elem);
-        this.ubirchVerificationWidget[indexP] = new UbirchVerificationWidget({
-          // @ts-ignore
-          hostSelector: `#verification-widget_${indexP}`,
-          messenger: this.ubirchVerification[indexP].messenger
-        })
       }
     }
 
@@ -146,8 +137,8 @@ export class DeviceDataPage implements OnInit, OnDestroy {
     public verifyForm(indexP: number, dataSet): void {
         try {
             const genJson = JSON.stringify(dataSet);
-          const hash = this.ubirchVerification[indexP].createHash(genJson);
-          this.ubirchVerification[indexP].verifyHash(hash);
+          const hash = this.ubirchVerificationWidget[indexP].createHash(genJson);
+          this.ubirchVerificationWidget[indexP].verifyHash(hash);
         } catch (e) {
             // handle the error yourself and inform user about the missing fields
             console.log(e);
