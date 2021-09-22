@@ -19,6 +19,7 @@ export const environment = {
   tokenServiceApiPrefix: '@@UBIRCH_TR_API_TOKENSERVICE_PREF@@', // '/api/tokens/v1/',
   trustServiceServerUrl: '@@UBIRCH_TR_ENV_TRUSTSERVICE_SERVURL@@', // 'https://verify.prod.ubirch.com',
   verifyApiPrefix: '@@UBIRCH_TR_API_VERIFY_PREF@@', // '/api/verify/',
+  verificationToken: '@@UBIRCH_VERIFICATION_TOKEN@@', // wildcard verification token for dev/demo/qa/prod origin
   client_logo_filename: 'logo.svg',
   client_startpage_image_filename: 'start_img.svg',
   client_description_filename: 'description.md',
