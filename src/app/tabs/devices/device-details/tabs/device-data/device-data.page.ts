@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { UbirchVerification } from 'node_modules/@ubirch/ubirch-verification-js/dist';
+import { UbirchVerificationWidget } from 'node_modules/@ubirch/ubirch-verification-js/dist';
 import { Subscription } from 'rxjs';
 
 import { DeviceService } from 'src/app/services/device.service';
@@ -39,7 +39,7 @@ import { ToastService } from '../../../../../services/toast.service';
 })
 export class DeviceDataPage implements OnInit, OnDestroy {
 
-    public verificationToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rva2VuLmRldi51YmlyY2guY29tIiwic3ViIjoiYzBiNTc3ZmItMWNlZi00YzZmLThjNTAtOGQzYTFlNmVhNzUzIiwiYXVkIjoiaHR0cHM6Ly92ZXJpZnkuZGV2LnViaXJjaC5jb20iLCJleHAiOjE2NDA5Njg3MjIsImlhdCI6MTYzMjIzODc4NiwianRpIjoiMjNiODkxYTItMmIxYy00ZmU0LThmNTAtY2I5MTBhZTBjMGUxIiwic2NwIjpbInVwcDp2ZXJpZnkiXSwicHVyIjoiV2lsZGNhcmQgQ09OU09MRSBWZXJpZmljYXRpb24gVG9rZW4iLCJ0Z3AiOltdLCJ0aWQiOlsiKiJdLCJvcmQiOlsiaHR0cHM6Ly9jb25zb2xlLmRldi51YmlyY2guY29tIl19.MMAapnmXY9Dz-3GMDLn51GivV1tfFURptPXZfZ0Il2KzMIKUMvDXxWiXtlZTvR8n1uu0nCEkyBo6FI5tCRg7Cg';
+    public verificationToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rva2VuLmRldi51YmlyY2guY29tIiwic3ViIjoiYzBiNTc3ZmItMWNlZi00YzZmLThjNTAtOGQzYTFlNmVhNzUzIiwiYXVkIjoiaHR0cHM6Ly92ZXJpZnkuZGV2LnViaXJjaC5jb20iLCJleHAiOjE2NDA5Mzk2OTYsImlhdCI6MTYzMjI5NjEyMiwianRpIjoiNzkzMGQ0MWQtNTVmNi00ODgyLWE2ZjItMGRkOWI2NDUwMjA2Iiwic2NwIjpbInVwcDp2ZXJpZnkiXSwicHVyIjoiV2lsZGNhcmQgQ09OU09MRSBWZXJpZmljYXRpb24gVG9rZW4gKExPQ0FMSE9TVCkiLCJ0Z3AiOltdLCJ0aWQiOlsiKiJdLCJvcmQiOltdfQ.MUzGibZZ6DU91RBxaDYm9D7-TsF1QFappn2MjTUFEylXjkDAzHG-e-cuPjSvYEx2ugjS2ftsC9QLI-BZBn3yDw';
     private hashAlgo = {
       sha256: 'sha256',
       sha512: 'sha512'
@@ -109,7 +109,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
       if (visibleP && !this.ubirchVerificationWidget[indexP]) {
         const elem = document.querySelector(`#verification-widget_${indexP}`);
         console.log(`ElementID: ${indexP} `, elem);
-        this.ubirchVerificationWidget[indexP] = new UbirchVerification({
+        this.ubirchVerificationWidget[indexP] = new UbirchVerificationWidget({
             // @ts-ignore
             algorithm: this.selectedHashAlgo,
             // @ts-ignore

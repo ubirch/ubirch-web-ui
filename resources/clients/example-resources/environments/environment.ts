@@ -19,6 +19,7 @@ export const environment = {
   tokenServiceApiPrefix: '/api/tokens/v1',
   trustServiceServerUrl: '<TRUSTSERVICE_REST_API_SERVER_URI>',
   verifyApiPrefix: '/api/upp/verify/',
+  verificationToken: '<WILDCARD_VERIFICATION_TOKEN>', // wildcard verification token for dev/demo/qa/prod origin
   client_logo_filename: 'logo.svg',
   client_startpage_image_filename: 'start_img.svg',
   client_description_filename: 'description.md',
