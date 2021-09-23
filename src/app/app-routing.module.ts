@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AdminOnlyGuard } from './auth/admin-only.guard';
 import { AuthOnlyGuard } from './auth/auth-only.guard';
 import { EnterOnDashboardGuard } from './auth/enter-on-dashboard.guard';
 
@@ -31,8 +30,10 @@ const routes: Routes = [
     path: 'token-manager',
     loadChildren: () => import('./tabs/token-manager/token-manager.module').then(m => m.TokenManagerPageModule),
 //    canActivate: [AccountProfileValidGuard, AuthOnlyGuard]
-    // TODO: remove AdminOnlyGuard if tokens are created in the new way
-    canActivate: [ AdminOnlyGuard, AuthOnlyGuard ]
+    canActivate: [ AuthOnlyGuard ],
+    data: {
+      requiredRoles: ['console_tokens_read']
+    }
   },
   {
     path: 'verification',
@@ -41,8 +42,11 @@ const routes: Routes = [
   {
     path: 'import',
     loadChildren: './tabs/import/import.module#ImportPageModule',
-//    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard, AuthOnlyGuard ]
-    canActivate: [ AdminOnlyGuard, AuthOnlyGuard ],
+//    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard ]
+    canActivate: [ AuthOnlyGuard ],
+    data: {
+      requiredRoles: ['console_import_usim']
+    }
   },
   {
     path: 'logout',

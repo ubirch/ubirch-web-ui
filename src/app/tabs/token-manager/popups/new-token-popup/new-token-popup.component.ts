@@ -138,14 +138,6 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
     this.utils.safeUnsubscribe(this.toggleSubscr);
   }
 
-  public isAdmin(): boolean {
-    let isAdmin = false;
-    this.userService.getAccountInfo().subscribe(info => {
-      isAdmin =  info.isAdmin;
-    });
-    return isAdmin;
-  }
-
   public validURL(urlP): boolean {
     const regexp: RegExp = new RegExp('((http[s]?://)([\\da-z.-]+)((\\.([a-z.]{2,6})[/\\w .-]*)|:([0-9.]{3,6})[/\\w .-]*)/?)');
     if (regexp.test(urlP)) {

@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {environment} from '../environments/environment';
-import { combineLatest, from } from 'rxjs';
+import { from, combineLatest } from 'rxjs/';
 import { map } from 'rxjs/operators';
 import { UserService } from './services/user.service';
 import { AccountInfo } from './models/account-info';
@@ -21,74 +21,82 @@ export class AppComponent {
     from(this.keycloackService.isLoggedIn()),
     this.userService.observableAccountInfo,
   ).pipe(map(([isLoggedIn, account]: [boolean, AccountInfo]) => {
-    const items = [
-      {
-        titleKey: 'menu.main.home',
-        url: '/home',
-        icon: 'home.svg',
-        authOnly: true,
-        withProfileOnly: true
-      },
-      {
-        titleKey: 'menu.main.things',
-        url: '/devices',
-        icon: 'list.svg',
-        authOnly: true,
-        withProfileOnly: true
-      },
-       {
-         titleKey: 'menu.main.tokens',
-        url: '/token-manager',
-         icon: 'token.svg',
-         authOnly: true,
-         adminOnly: true,
-         withProfileOnly: true
-       },
-      {
-        titleKey: 'menu.main.verification',
-        url: '/verification',
-        icon: 'checkmark-circle-outline.svg'
-      },
-      {
-        titleKey: 'menu.main.import',
-        url: '/import',
-        icon: 'push.svg',
-        authOnly: true,
-        adminOnly: true,
-        withProfileOnly: true
-      },
-      // {
-      //   titleKey: 'menu.main.account-profile',
-      //   url: '/account-profile',
-      //   icon: 'person.svg',
-      //   authOnly: true
-      // },
-      {
-        titleKey: 'menu.main.logout',
-        url: '/logout',
-        icon: 'logout.svg',
-        authOnly: true
-      }
-    ];
+    if (account) {
+      const items = [
+        {
+          titleKey: 'menu.main.home',
+          url: '/home',
+          icon: 'home.svg',
+          authOnly: true,
+          withProfileOnly: true
+        },
+        {
+          titleKey: 'menu.main.things',
+          url: '/devices',
+          icon: 'list.svg',
+          authOnly: true,
+          withProfileOnly: true
+        },
+        {
+          titleKey: 'menu.main.tokens',
+          url: '/token-manager',
+          icon: 'token.svg',
+          authOnly: true,
+          requiredRoles: ['console_tokens_read'],
+          withProfileOnly: true
+        },
+        {
+          titleKey: 'menu.main.verification',
+          url: '/verification',
+          icon: 'checkmark-circle-outline.svg'
+        },
+        {
+          titleKey: 'menu.main.import',
+          url: '/import',
+          icon: 'push.svg',
+          authOnly: true,
+          requiredRoles: ['console_import_usim'],
+          withProfileOnly: true
+        },
+        // {
+        //   titleKey: 'menu.main.account-profile',
+        //   url: '/account-profile',
+        //   icon: 'person.svg',
+        //   authOnly: true
+        // },
+        {
+          titleKey: 'menu.main.logout',
+          url: '/logout',
+          icon: 'logout.svg',
+          authOnly: true
+        }
+      ];
 
-    return items.filter(link => {
-      // NOT logged in? Only show menu items to free areas (like verification)
-      if (!isLoggedIn && link.authOnly) {
-        return false;
-      }
+      return items.filter(link => {
+        // NOT logged in? Only show menu items to free areas (like verification)
+        if (!isLoggedIn && link.authOnly) {
+          return false;
+        }
 
-      // show menu items to admin areas only for admins
-      if ((!account || !account.isAdmin) && link.adminOnly) {
-        return false;
-      }
+        // show menu items only if user has one of the required roles assigned
+        if (link.requiredRoles?.length > 0) {
+          if (!account?.roles) {
+            return false;
+          }
+          // if user has not a least one of the required roles assigned, this menu item shall not be displayed
+          if (link.requiredRoles.filter((role: string) => account.roles.includes(role)).length === 0) {
+            return false;
+          }
+        }
 
-      // show menu items only if user profile is set sufficiently
-      if ((!account || (account.profileSettingsRequired && !account.profileSettingsSufficient)) && link.withProfileOnly) {
-        return false;
-      }
+        // show menu items only if user profile is set sufficiently
+        if ((!account || (account.profileSettingsRequired && !account.profileSettingsSufficient)) && link.withProfileOnly) {
+          return false;
+        }
 
-      return true;
-    });
+        return true;
+      });
+    }
   }));
 
   clientName = environment.client_name || 'Mandant';
