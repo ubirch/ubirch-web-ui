@@ -14,6 +14,8 @@
 	"button.to-things-overview": "Go to Things Overview",
 	"button.upload": "Upload",
 	"button.verify": "Verify",
+	"button.copy": "Copy ID",
+	"deviceID.copy": "Device ID was copied to clipboard",
 	"device.details.header.created-date": "Created",
 	"device.details.header": "Thing Details",
 	"device.details.tab.data.ubirch-info": "The UBIRCH solution normally does not handle any productive data like measurements but only works on hashes of data. The feature of displaying plain data in the UBIRCH console is only available for demo purposes within this UBIRCH TestKit.",

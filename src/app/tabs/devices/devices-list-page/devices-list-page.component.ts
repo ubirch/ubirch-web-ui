@@ -14,6 +14,7 @@ import {DevicesListWrapper} from '../../../models/devices-list-wrapper';
 import {LoaderService} from '../../../services/loader.service';
 import {ToastService} from '../../../services/toast.service';
 import {ToastType} from '../../../enums/toast-type.enum';
+import {UbirchWebUIUtilsService} from '../../../utils/ubirch-web-uiutils.service';
 
 @Component({
     selector: 'app-list',
@@ -290,6 +291,11 @@ export class DevicesListPage {
         if (this.polling) {
             this.polling.unsubscribe();
         }
+    }
+
+    copyId(item: DeviceStub){
+            UbirchWebUIUtilsService.copyToClipboard(item.hwDeviceId);
+            this.toast.openToast(ToastType.light, 'deviceID.copy', 1000 )
     }
 
 }

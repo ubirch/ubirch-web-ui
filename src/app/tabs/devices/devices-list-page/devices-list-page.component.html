@@ -28,7 +28,7 @@
         <ion-label [routerLink]="['/devices','details', item.hwDeviceId]" (click)="thingsListLoaded = false" class="devices-list-item-content">
           <h2>{{item.description}}</h2>
           <h3>{{item.hwDeviceId}}</h3>
-          <p *ngIf="item.deviceState; else STATE_NOT_AVAILABLE">
+          <p *ngIf="item.deviceState; else STATE_NOT_AVAILABLE" style="display: flex; align-items: center;">
             <ion-badge [color]="item.deviceState.getStateColor()">
               {{ 'devices.list.item.num-upps.last-day' | translate }}: {{item.deviceState.numberUPPs}}
             </ion-badge>
@@ -41,6 +41,12 @@
 
         </ion-label>
         <div class="item-note" slot="end">
+          <ion-button color="primary" class="list-item-end-button" (click)="copyId(item)">
+            <div class="ion-align-items-center">
+              <ion-icon name="copy" class="list-item-end-icon"></ion-icon>
+              {{ 'button.copy' | translate }}
+            </div>
+          </ion-button>
           <ion-button (click)="confirmDeviceDelete(item)" color="danger" class="list-item-end-button"
                       *ngIf="thingCanBeDeleted(item)">
             <div class="ion-align-items-center">
