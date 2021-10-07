@@ -21,6 +21,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   @ViewChild('domains') domains: any;
   public devices;
   public availableScopes;
+  public userCanCreateRiskyTokens = false;
   public roles: string[] = [];
   public enteredDomains = [];
   public enteredGroups = [];
@@ -46,6 +47,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getScopes();
     this.getDevices();
+    this.getRoles();
     this.tokenDetailsForm = this.fb.group({
       purpose: [ '', [ Validators.required, Validators.minLength(5) ]],
       expiration: [ '' ],
@@ -88,6 +90,13 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   private getScopes() {
     this.tokenService.getAvailableScopes().subscribe(scopes => {
       this.availableScopes = scopes;
+    });
+  }
+
+  private getRoles() {
+    this.userService.getAccountInfo().toPromise().then(info => {
+      this.roles = info? info.roles : [];
+      this.userCanCreateRiskyTokens = this.userHasRole('console_risky_tokens_write');
     });
   }
 
