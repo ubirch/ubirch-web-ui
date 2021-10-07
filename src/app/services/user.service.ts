@@ -45,7 +45,11 @@ export class UserService {
     } else {
       return this.http.get<any>(this.accountUrl).pipe(
           tap(jsonAccount => {
-            this.currentAccount = jsonAccount ? new AccountInfo([...jsonAccount, {roles: this.keycloak.getUserRoles()} ]) : undefined;
+            this.currentAccount = jsonAccount ?
+              new AccountInfo({
+                user: new User(jsonAccount.user),
+                numberOfDevices: jsonAccount.numberOfDevices,
+                roles: this.keycloak.getUserRoles()}) : undefined;
             this.behaviorSubItem.next(this.currentAccount);
             this.userEntered();
           }),

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthOnlyGuard } from './auth/auth-only.guard';
-import { EnterOnDashboardGuard } from './auth/enter-on-dashboard.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +14,8 @@ const routes: Routes = [
 //    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard ]
     canActivate: [ AuthOnlyGuard ]
   },
-  // {
+
+// {
   //   path: 'account-profile',
   //   loadChildren: () => import('./tabs/account-profile/account-profile.module').then(m => m.AccountProfilePageModule),
   //   canActivate: [ AuthOnlyGuard ]
@@ -50,7 +50,7 @@ const routes: Routes = [
   },
   {
     path: 'logout',
-    canActivate: [ EnterOnDashboardGuard ],
+    canActivate: [ AuthOnlyGuard ],
     loadChildren: () => import('./tabs/logout/logout.module').then(m => m.LogoutPageModule)
   },
   {
