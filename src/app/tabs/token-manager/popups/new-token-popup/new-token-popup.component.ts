@@ -21,6 +21,8 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   @ViewChild('domains') domains: any;
   public devices;
   public availableScopes;
+  public userCanCreateRiskyTokens = false;
+  public roles: string[] = [];
   public enteredDomains = [];
   public enteredGroups = [];
   public tokenDetailsForm: FormGroup;
@@ -45,6 +47,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getScopes();
     this.getDevices();
+    this.getRoles();
     this.tokenDetailsForm = this.fb.group({
       purpose: [ '', [ Validators.required, Validators.minLength(5) ]],
       expiration: [ '' ],
@@ -87,6 +90,13 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   private getScopes() {
     this.tokenService.getAvailableScopes().subscribe(scopes => {
       this.availableScopes = scopes;
+    });
+  }
+
+  private getRoles() {
+    this.userService.getAccountInfo().toPromise().then(info => {
+      this.roles = info? info.roles : [];
+      this.userCanCreateRiskyTokens = this.userHasRole('console_risky_tokens_write');
     });
   }
 
@@ -138,14 +148,6 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
     this.utils.safeUnsubscribe(this.toggleSubscr);
   }
 
-  public isAdmin(): boolean {
-    let isAdmin = false;
-    this.userService.getAccountInfo().subscribe(info => {
-      isAdmin =  info.isAdmin;
-    });
-    return isAdmin;
-  }
-
   public validURL(urlP): boolean {
     const regexp: RegExp = new RegExp('((http[s]?://)([\\da-z.-]+)((\\.([a-z.]{2,6})[/\\w .-]*)|:([0-9.]{3,6})[/\\w .-]*)/?)');
     if (regexp.test(urlP)) {
@@ -166,4 +168,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
     }
   }
 
+  public userHasRole(role: string): boolean {
+    return this.roles.includes(role);
+  }
 }

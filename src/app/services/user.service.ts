@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of} from 'rxjs';
@@ -19,7 +20,8 @@ export class UserService {
   public observableAccountInfo: Observable<AccountInfo> = this.behaviorSubItem.asObservable();
 
   constructor(
-      private http: HttpClient
+      private http: HttpClient,
+      private keycloak: KeycloakService
   ) {}
 
   public getUser(): Observable<User> {
@@ -32,7 +34,7 @@ export class UserService {
                   new AccountInfo({
                     user: new User(jsonAccount.user),
                     numberOfDevices: jsonAccount.numberOfDevices,
-                    isAdmin: jsonAccount.isAdmin}) : undefined ),
+                    roles: this.keycloak.getUserRoles()}) : undefined ),
           map(_ => this.currentAccount ? this.currentAccount.user : undefined));
     }
   }
@@ -43,7 +45,11 @@ export class UserService {
     } else {
       return this.http.get<any>(this.accountUrl).pipe(
           tap(jsonAccount => {
-            this.currentAccount = jsonAccount ? new AccountInfo(jsonAccount) : undefined;
+            this.currentAccount = jsonAccount ?
+              new AccountInfo({
+                user: new User(jsonAccount.user),
+                numberOfDevices: jsonAccount.numberOfDevices,
+                roles: this.keycloak.getUserRoles()}) : undefined;
             this.behaviorSubItem.next(this.currentAccount);
             this.userEntered();
           }),

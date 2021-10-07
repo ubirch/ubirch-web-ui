@@ -26,7 +26,7 @@ export class EnterOnDashboardGuard implements CanActivate {
     if (this.userService.hasUserEntered()) { return true; }
 
     // Navigate to the dashboard initially
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
     return false;
   }
 }

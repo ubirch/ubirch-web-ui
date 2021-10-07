@@ -3,7 +3,7 @@ import {User} from './user';
 export class AccountInfo {
   public user: User;
   public numberOfDevices: number;
-  public isAdmin: boolean;
+  public roles: string[];
   public accountType?: string;
   public accountPlan?: string;
   public personalityCheckRequired?: boolean;
@@ -20,7 +20,7 @@ export class AccountInfo {
         this.user = new User(jsonAccount.user);
       }
       this.numberOfDevices = jsonAccount.numberOfDevices || 0;
-      this.isAdmin = jsonAccount.isAdmin;
+      this.roles = jsonAccount.roles;
 
       this.accountType = jsonAccount.account_plan;
       this.accountPlan = jsonAccount.account_type;

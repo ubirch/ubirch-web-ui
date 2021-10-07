@@ -27,7 +27,7 @@
               <ion-datetime placeholder="{{'token.create.expiration.placeholder' | translate}}" display-format="DD MMM, YYYY" max="3000" mode="md" id="expiration" slot="end" formControlName="expiration"></ion-datetime>
               <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
           </ion-item>
-          <ion-item>
+          <ion-item *ngIf="userCanCreateRiskyTokens">
             <ion-label>{{'token.create.valid_for_all_things' | translate}}</ion-label>
             <ion-toggle formControlName="validForAll"></ion-toggle>
           </ion-item>
@@ -47,7 +47,7 @@
             </ion-select>
           </ion-item>
 
-          <ion-item *ngIf="isAdmin() === true">
+          <ion-item>
               <ion-label>{{'token.create.targetGroups' | translate}}</ion-label>
               <ion-input #group slot="end">
               </ion-input>
