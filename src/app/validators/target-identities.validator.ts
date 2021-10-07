@@ -9,6 +9,7 @@ export const targetIdentitiesValidator: ValidatorFn = (control: FormGroup): Vali
   } else {
     const targetIdentities: string[] = control.get('targetIdentities').value;
     const targetGroups: string[] = control.get('targetGroups').value;
-    return targetIdentities?.length > 0 || targetGroups?.length > 0 ? null : { targetItentitiesOrGroupNotSelected: true };
+    return targetIdentities?.length > 0 || targetGroups?.length > 0 ? null :
+      { targetItentitiesOrGroupNotSelected: true, activateWildcardToken: true};
   }
 };

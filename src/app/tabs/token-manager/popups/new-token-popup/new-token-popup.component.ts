@@ -21,6 +21,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   @ViewChild('domains') domains: any;
   public devices;
   public availableScopes;
+  public roles: string[] = [];
   public enteredDomains = [];
   public enteredGroups = [];
   public tokenDetailsForm: FormGroup;
@@ -158,4 +159,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
     }
   }
 
+  public userHasRole(role: string): boolean {
+    return this.roles.includes(role);
+  }
 }
