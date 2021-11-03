@@ -8,7 +8,7 @@ const keycloakConfig: any = {
 
 export const environment = {
   production: true,
-  envName: 'prod',
+  envName: '@@DEPLOYMENT_STAGE@@', // 'dev', 'demo' or 'prod'
   debug: false,
   version: npm.version,
   serverUrl: '@@UBIRCH_TR_ENV_SERVURL@@', // 'http://localhost:8081',
