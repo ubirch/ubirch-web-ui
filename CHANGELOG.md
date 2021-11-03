@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - token handling in verification widget
 - verify signature in verification widget
 
+## [0.9.0] - 2021-11-03
+
+### Added
+
+### Changed
+- UNG-3487 - fixed: verification via widget for testkits was broken on demo and prod (stage was hard coded set to 'dev')
+
+### Removed
+
 ## [0.8.8] - 2021-01-12
 
 ### Added
