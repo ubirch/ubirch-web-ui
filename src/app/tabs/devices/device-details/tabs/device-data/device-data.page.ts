@@ -119,6 +119,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             // @ts-ignore
             language: this.CURRENT_LANG === 'de' || this.CURRENT_LANG === 'en' ?  this.CURRENT_LANG : 'en',
             hostSelector: `#verification-widget_${indexP}`,
+            linkToConsole: true
         });
       }
     }
