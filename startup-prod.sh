@@ -9,6 +9,7 @@ bash preprocess4client.sh "${UBIRCH_TR_KC_REALM}"
 
 echo "creating src/environments/environment.ts"
 sed \
+	-e "s%@@DEPLOYMENT_STAGE@@%${DEPLOYMENT_STAGE}%" \
 	-e "s%@@UBIRCH_KC_URL@@%${UBIRCH_KC_URL}%" \
 	-e "s%@@UBIRCH_TR_KC_REALM@@%${UBIRCH_TR_KC_REALM}%" \
 	-e "s%@@UBIRCH_KC_CLIENTID@@%${UBIRCH_KC_CLIENTID}%" \

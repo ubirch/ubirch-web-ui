@@ -45,7 +45,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
       sha512: 'sha512'
     };
     public selectedHashAlgo = this.hashAlgo.sha256;
-    public stage = 'dev';
+    public stage = environment.envName;
 
     public loadedDevice: BEDevice;
     private deviceSubsc: Subscription;
@@ -113,7 +113,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             // @ts-ignore
             algorithm: this.selectedHashAlgo,
             // @ts-ignore
-            stage: this.stage,
+            stage: this.stage || 'prod',
             accessToken: this.verificationToken,
             OPEN_CONSOLE_IN_SAME_TARGET: true,
             // @ts-ignore
