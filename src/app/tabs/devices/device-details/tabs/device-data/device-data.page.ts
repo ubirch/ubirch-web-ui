@@ -39,13 +39,14 @@ import { ToastService } from '../../../../../services/toast.service';
 })
 export class DeviceDataPage implements OnInit, OnDestroy {
 
-    public verificationToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rva2VuLmRldi51YmlyY2guY29tIiwic3ViIjoiYzBiNTc3ZmItMWNlZi00YzZmLThjNTAtOGQzYTFlNmVhNzUzIiwiYXVkIjoiaHR0cHM6Ly92ZXJpZnkuZGV2LnViaXJjaC5jb20iLCJleHAiOjE2NDA5Mzk2OTYsImlhdCI6MTYzMjI5NjEyMiwianRpIjoiNzkzMGQ0MWQtNTVmNi00ODgyLWE2ZjItMGRkOWI2NDUwMjA2Iiwic2NwIjpbInVwcDp2ZXJpZnkiXSwicHVyIjoiV2lsZGNhcmQgQ09OU09MRSBWZXJpZmljYXRpb24gVG9rZW4gKExPQ0FMSE9TVCkiLCJ0Z3AiOltdLCJ0aWQiOlsiKiJdLCJvcmQiOltdfQ.MUzGibZZ6DU91RBxaDYm9D7-TsF1QFappn2MjTUFEylXjkDAzHG-e-cuPjSvYEx2ugjS2ftsC9QLI-BZBn3yDw';
+    public stage = environment.envName;
+    public verificationToken = environment.verificationToken;
+
     private hashAlgo = {
       sha256: 'sha256',
       sha512: 'sha512'
     };
     public selectedHashAlgo = this.hashAlgo.sha256;
-    public stage = environment.envName;
 
     public loadedDevice: BEDevice;
     private deviceSubsc: Subscription;
