@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { UbirchVerificationWidget } from 'node_modules/@ubirch/ubirch-verification-js/dist';
+import { UbirchVerificationWidget } from '@ubirch/ubirch-verification-js';
 import { Subscription } from 'rxjs';
 
 import { DeviceService } from 'src/app/services/device.service';
