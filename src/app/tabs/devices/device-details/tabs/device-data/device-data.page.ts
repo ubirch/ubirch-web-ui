@@ -116,7 +116,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             // @ts-ignore
             stage: this.stage || 'prod',
             accessToken: this.verificationToken,
-            OPEN_CONSOLE_IN_SAME_TARGET: true,
+            openConsoleInSameTarget: true,
             // @ts-ignore
             language: this.CURRENT_LANG === 'de' || this.CURRENT_LANG === 'en' ?  this.CURRENT_LANG : 'en',
             hostSelector: `#verification-widget_${indexP}`,
