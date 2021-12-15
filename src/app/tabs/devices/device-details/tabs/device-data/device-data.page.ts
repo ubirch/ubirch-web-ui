@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { UbirchVerificationWidget } from 'node_modules/@ubirch/ubirch-verification-js/dist';
+import { UbirchVerificationWidget } from '@ubirch/ubirch-verification-js';
 import { Subscription } from 'rxjs';
 
 import { DeviceService } from 'src/app/services/device.service';
@@ -116,7 +116,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
             // @ts-ignore
             stage: this.stage || 'prod',
             accessToken: this.verificationToken,
-            OPEN_CONSOLE_IN_SAME_TARGET: true,
+            openConsoleInSameTarget: true,
             // @ts-ignore
             language: this.CURRENT_LANG === 'de' || this.CURRENT_LANG === 'en' ?  this.CURRENT_LANG : 'en',
             hostSelector: `#verification-widget_${indexP}`,
