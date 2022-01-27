@@ -3,8 +3,6 @@
 // The list of file replacements can be found in `angular.json`.
 
 // Add here your keycloak setup infos
-import * as npm from '../../package.json';
-
 const keycloakConfig: any = {
   url: 'https://id.dev.ubirch.com/auth',
   realm: 'ubirch-default-realm',
@@ -15,7 +13,7 @@ export const environment = {
   production: false,
   envName: 'dev',
   debug: false,
-  version: npm.version,
+  version: '0.9.1',
   serverUrl: 'https://api.console.dev.ubirch.com',
   apiPrefix: '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: 'https://key.dev.ubirch.com',
