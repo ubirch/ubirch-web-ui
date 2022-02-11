@@ -44,6 +44,7 @@ export const environment = {
     orgId: '@@UBIRCH_TR_GRAFANA_ORG_ID@@',
     from: 'now-3h',
     to: 'now',
+    graphDataSource: '@@UBIRCH_TR_GRAFANA_DATASOURCE@@',
     panelMap: JSON.parse('@@UBIRCH_TR_GRAFANA_PANEL_MAP@@')
   },
   lashHashesListLength: 30

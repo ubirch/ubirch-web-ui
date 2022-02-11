@@ -43,7 +43,7 @@ export const environment = {
     }
   },
   deviceData: {
-    url: 'https://dashboard.dev.ubirch.com/d-solo/qfa7xZhWz/simple-data-service',
+    url: 'https://grafana.tools.ubirch.com/d/iCrlVzxnk/simple-data-service',
     orgId: 1,
     from: 'now-3h',
     to: 'now',
@@ -51,7 +51,8 @@ export const environment = {
       pysense: 1,
       pytrack: 2,
       testkit: 3,
-    }
+    },
+    graphDataSource: 'prod',
   },
   lashHashesListLength: 30
 };
