@@ -20,7 +20,7 @@ export class DeviceDataGraphPage implements OnInit {
     private readonly from = environment.deviceData.from;
     private readonly to = environment.deviceData.to;
     private readonly panelMap = environment.deviceData.panelMap;
-    private readonly datasource = environment.deviceData.graphDataSource
+    private readonly datasource = environment.deviceData.graphDataSource;
 
     constructor(
         private route: ActivatedRoute,
