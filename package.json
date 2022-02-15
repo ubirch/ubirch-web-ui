@@ -10,7 +10,7 @@
   "homepage": "https://github.com/ubirch/ubirch-web-ui",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "./run-local.sh",
     "prod": "ng serve --host 0.0.0.0 --port 80 --disable-host-check",
     "prodtest": "ng serve --host 0.0.0.0 --port 80 --disable-host-check",
     "local": "ng serve --configuration=local",
@@ -54,6 +54,7 @@
     "js-sha512": "^0.8.0",
     "keycloak-angular": "^9.1.0",
     "keycloak-js": "^15.1.1",
+    "marked": "^4.0.12",
     "ngx-markdown": "^13.1.0-beta.0",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.3",
