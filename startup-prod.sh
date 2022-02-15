@@ -27,6 +27,7 @@ sed \
 	-e "s%@@UBIRCH_TR_GRAFANA_URL@@%${UBIRCH_TR_GRAFANA_URL}%" \
 	-e "s%@@UBIRCH_TR_GRAFANA_ORG_ID@@%${UBIRCH_TR_GRAFANA_ORG_ID}%" \
 	-e "s%@@UBIRCH_TR_GRAFANA_PANEL_MAP@@%${UBIRCH_TR_GRAFANA_PANEL_MAP}%" \
+	-e "s%@@UBIRCH_TR_GRAFANA_DATASOURCE@@%${UBIRCH_TR_GRAFANA_DATASOURCE}%" \
 	src/environments/environment.prod.ts > src/environments/environment.ts
 
 echo "creating widgets/verification/environment.prod.ts"
