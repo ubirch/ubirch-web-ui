@@ -2,9 +2,10 @@ import {DeviceType} from './device-type';
 import {DeviceTypeService} from '../services/device-type.service';
 import {DeviceState} from './device-state';
 import {Subscription} from 'rxjs';
-import {OnDestroy} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 
 // TODO: Add Angular decorator.
+@Injectable()
 export class DeviceStub implements OnDestroy {
     public hwDeviceId: string;
     public description: string;

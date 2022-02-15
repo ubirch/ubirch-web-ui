@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 // Add here your keycloak setup infos
+
 const keycloakConfig: any = {
   url: 'https://id.dev.ubirch.com/auth',
   realm: 'ubirch-default-realm',

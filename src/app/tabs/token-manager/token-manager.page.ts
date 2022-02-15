@@ -26,7 +26,7 @@ export class TokenManagerPage implements OnInit {
     action: 'addToken',
   }) ];
 
-  private tokens: UbirchAccountingToken[] = [];
+  public tokens: UbirchAccountingToken[] = [];
   private devices;
 
   get CURRENT_LANG(): string {
