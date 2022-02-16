@@ -49,3 +49,4 @@ package-lock.json
 /keycloak/compare-realms/
 /keycloak/realm-templates/20210531-ubirch-certify.json
 /test.json
+/.angular/
