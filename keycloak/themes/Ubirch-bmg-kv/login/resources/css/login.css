@@ -142,10 +142,10 @@ div.kc-logo-text span {
 
 #socialSelect {
     align-self: center;
-    width: 10rem;
+    width: 15rem;
     border: 1px solid black;
     border-radius: 2px;
-    margin: 1rem 0;;
+    margin: 1.7rem 0;;
     padding: 0.25rem;
 }
 
@@ -497,7 +497,7 @@ label {
     margin-right: auto;
     margin-bottom: 200px;
     padding: 0 20px;
-    max-width: 500px;
+    /* max-width: 500px; */
     border-top: 0;
     box-shadow: 0 0 0;
 }
