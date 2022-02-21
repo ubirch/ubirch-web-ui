@@ -422,12 +422,30 @@ a.zocial {
 
 /*ubirch adjustments*/
 
-label{
-    margin-bottom: -1rem;
-    margin-left: 1rem;
+.pf-c-form__label{
+    margin-bottom: -0.6rem;
+    margin-left: 0.5rem;
     background: white;
     padding: 0 0.5rem;
     color: #065fc4;
+    position: relative;
+    font-weight: 700;
+}
+
+.pf-c-form-control {
+    border: 2px solid #065fc4;
+    border-radius: 6px;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.pf-c-form-control:hover {
+    border-color: grey;
+}
+
+.pf-c-form-control:focus {
+    border-color: grey;
+    box-shadow: none;
 }
 
 #kc-form-buttons{
@@ -503,7 +521,8 @@ label{
 }
 
 a{
-    color: darkblue;
+    color: #065fc4;
+    font-weight: 700;
 }
 
 h1 {
