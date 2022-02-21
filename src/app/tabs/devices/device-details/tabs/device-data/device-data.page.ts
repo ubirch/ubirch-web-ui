@@ -51,7 +51,7 @@ export class DeviceDataPage implements OnInit, OnDestroy {
     public loadedDevice: BEDevice;
     private deviceSubsc: Subscription;
     private dataSubsc: Subscription;
-    private dataSets;
+    public dataSets;
 
     showBody = false;
     private ubirchVerificationWidget: any[] = new Array(environment.lashHashesListLength);

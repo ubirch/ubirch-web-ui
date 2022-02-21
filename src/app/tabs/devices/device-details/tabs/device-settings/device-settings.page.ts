@@ -21,7 +21,7 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
   deviceAttributesForm: FormGroup;
   loadedDevice: BEDevice;
 
-  private deviceHasUnsavedChanges = false;
+  public deviceHasUnsavedChanges = false;
   private deviceSubsc: Subscription;
   private valueChangesSubscr: Subscription;
   private updateDeviceSubscr: Subscription;

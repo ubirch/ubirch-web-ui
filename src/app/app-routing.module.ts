@@ -41,7 +41,8 @@ const routes: Routes = [
   },
   {
     path: 'import',
-    loadChildren: './tabs/import/import.module#ImportPageModule',
+    // loadChildren: './tabs/import/import.module#ImportPageModule',
+    loadChildren: () => import('./tabs/import/import.module').then(m => m.ImportPageModule),
 //    canActivate: [ AccountProfileValidGuard, AuthOnlyGuard ]
     canActivate: [ AuthOnlyGuard ],
     data: {
