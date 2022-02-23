@@ -42,14 +42,14 @@
                         <a class="logo" href="https://ubirch.de">
                             <img src="${url.resourcesPath}/img/Ubirch_Logo_weiss.svg" alt="logo"></a>
                         <ul class="mainnav">
-                            <li><a href="https://ubirch.de/unternehmen" title="Unternehmen">${msg("companyStr")}</a></li>
+                            <li><a href="https://ubirch.de/unternehmen" title="Unternehmen">Unternehmen</a></li>
                             <li>
                               <#if (client.baseUrl)?has_content>
-                                <a href="${client.baseUrl}" title="Console">${msg("Console")}</a>
+                                <a href="${client.baseUrl}" title="Console">Console</a>
                               <#elseif pageRedirectUri?has_content>
-                                <a href="${pageRedirectUri}" title="Console">${msg("Console")}</a>
+                                  <a href="${pageRedirectUri}" title="Console">Console</a>
                               <#else>
-                                <a href="https://console.prod.ubirch.com" title="Console">${msg("Console")}</a>
+                                <a href="https://console.prod.ubirch.com" title="Console">Console</a>
                               </#if>
                             </li>
                             <li class="noborder"><img class="langmenue" src="${url.resourcesPath}/img/Weltkugel_weiss.svg"
