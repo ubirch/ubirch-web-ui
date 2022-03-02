@@ -43,9 +43,7 @@ UserInterfaceState.xcuserstate
 /keycloak/realm-templates/*-import.json
 /*-import.json
 /preprocess-replace-secrets.sh
-package-lock.json
 /src/assets/constants/
-/_package-lock.json
 /keycloak/compare-realms/
 /keycloak/realm-templates/20210531-ubirch-certify.json
 /test.json
