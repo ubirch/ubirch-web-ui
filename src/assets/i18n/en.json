@@ -8,6 +8,7 @@
 	"button.cancel": "Cancel",
 	"button.delete": "Delete",
 	"button.logout": "Logout",
+	"button.login": "Login",
 	"button.new-thing.cancel-creation": "Cancel",
 	"button.new-thing.register": "Register",
 	"button.save": "Save",
