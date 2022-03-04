@@ -19,6 +19,7 @@ import localeEn from '@angular/common/locales/en';
 import localeDe from '@angular/common/locales/de';
 import {registerLocaleData} from '@angular/common';
 import {NgxQRCodeModule} from '@techiediaries/ngx-qrcode';
+import { sessionExpiredInterceptorProvider } from './interceptors/session-expired.interceptor';
 
 
 registerLocaleData(localeEn, 'en');
@@ -55,7 +56,8 @@ registerLocaleData(localeDe, 'de');
       useFactory: initializer,
       multi: true,
       deps: [KeycloakService]
-    }
+    },
+    sessionExpiredInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })

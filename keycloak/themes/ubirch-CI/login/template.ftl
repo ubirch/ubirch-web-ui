@@ -44,24 +44,30 @@
                         <ul class="mainnav">
                             <li><a href="https://ubirch.de/unternehmen" title="Unternehmen">${msg("companyStr")}</a></li>
                             <li>
-                              <#if (client.baseUrl)?has_content>
-                                <a href="${client.baseUrl}" title="Console">${msg("Console")}</a>
-                              <#elseif pageRedirectUri?has_content>
-                                <a href="${pageRedirectUri}" title="Console">${msg("Console")}</a>
-                              <#else>
-                                <a href="https://console.prod.ubirch.com" title="Console">${msg("Console")}</a>
-                              </#if>
+                                <#if (client.baseUrl)?has_content>
+                                  <a href="${client.baseUrl}" title="Console">${msg("Console")}</a>
+                                <#elseif pageRedirectUri?has_content>
+                                  <a href="${pageRedirectUri}" title="Console">${msg("Console")}</a>
+                                <#else>
+                                  <a href="https://console.prod.ubirch.com" title="Console">${msg("Console")}</a>
+                                </#if>
                             </li>
+                            <#if realm.internationalizationEnabled  && locale.supported?size gt 1>
                             <li class="noborder"><img class="langmenue" src="${url.resourcesPath}/img/Weltkugel_weiss.svg"
                                                       alt="language">
                                 <div class="langwrap">
                                     <div class="arrowup"></div>
                                     <div class="langmenuebox">
-                                        <span class="active"><a href="/">DE</a></span>|<span><a
-                                                    href="/en/">EN</a></span>
+                                      <span class="active"><a href="#">${locale.current}</a></span>
+                                        <#list locale.supported as l>
+                                          <#if l.label != locale.current>
+                                          |<span><a href="${l.url}">${l.label}</a></span>
+                                          </#if>
+                                        </#list>
                                     </div>
                                 </div>
                             </li>
+                            </#if>
                         </ul>
                     </div>
                 </div>
@@ -86,21 +92,6 @@
           <div id="kc-content">
             <div id="kc-content-wrapper">
 
-
-                    <#if realm.internationalizationEnabled  && locale.supported?size gt 1>
-                        <div id="kc-locale">
-                            <div id="kc-locale-wrapper" class="${properties.kcLocaleWrapperClass!}">
-                                <div class="kc-dropdown" id="kc-locale-dropdown">
-                                    <a href="#" id="kc-current-locale-link">${locale.current}</a>
-                                    <ul>
-                                        <#list locale.supported as l>
-                                            <li class="kc-dropdown-item"><a href="${l.url}">${l.label}</a></li>
-                                        </#list>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </#if>
                 <div>
                     <h1 id="kc-page-title"><#nested "header"></h1>
                 </div>
