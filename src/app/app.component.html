@@ -3,10 +3,7 @@
     <ion-menu type="overlay" contentId="main-content">
       <ion-header no-border>
         <ion-item class="small-header">
-          <ion-icon
-            [src]="clientLogoPath"
-            class="ion-float-start ubirch-brand"
-          ></ion-icon>
+          <ion-icon [src]="clientLogoPath" class="ubirch-brand"></ion-icon>
           <ion-label class="ion-float-left">
             <h4 *ngIf="addClientNameToLogo">{{ clientName }}</h4>
           </ion-label>
@@ -56,15 +53,16 @@
             auto-hide="false"
             *ngIf="(isLoggedIn$ | async) === true"
           >
-            <div class="ion-justify-content-center">
-              <ion-button color="primary" (click)="doLogin()">
-                <ion-icon
-                  slot="start"
-                  src="assets/app-icons/log-in.svg"
-                ></ion-icon>
+            <ion-item (click)="doLogin()" lines="none" button="true">
+              <ion-icon
+                class="ion-float-left"
+                slot="start"
+                src="assets/app-icons/log-in.svg"
+              ></ion-icon>
+              <ion-label class="ion-text-left">
                 {{ "button.login" | translate }}
-              </ion-button>
-            </div>
+              </ion-label>
+            </ion-item>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
