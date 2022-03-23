@@ -49,7 +49,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
     this.getDevices();
     this.getRoles();
     this.tokenDetailsForm = this.fb.group({
-      purpose: [ '', [ Validators.required, Validators.minLength(5) ]],
+      purpose: [ '', [ Validators.required, Validators.minLength(6) ]],
       expiration: [ '' ],
       validForAll: [false],
       notBefore: [ '' ],
