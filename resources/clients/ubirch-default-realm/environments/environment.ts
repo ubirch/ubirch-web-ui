@@ -1,7 +1,7 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
+import version from '../../package.json';
 // Add here your keycloak setup infos
 
 const keycloakConfig: any = {
@@ -14,7 +14,7 @@ export const environment = {
   production: false,
   envName: 'dev',
   debug: false,
-  version: '0.9.1',
+  version: version,
   serverUrl: 'https://api.console.dev.ubirch.com',
   apiPrefix: '/ubirch-web-ui/api/v1/',
   keyServiceServerUrl: 'https://key.dev.ubirch.com',
