@@ -47,6 +47,25 @@
                                 <input tabindex="4" class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}" name="login" id="kc-login" type="submit" value="${msg("doLogIn")}"/>
                             </div>
                         </form>
+                        <#if realm.password && social.providers??>
+                          <div id="kc-social-providers" class="${properties.kcFormSocialAccountSectionClass!}">
+                            <h4>${msg("identity-provider-login-label")}</h4>
+
+                            <ul class="${properties.kcFormSocialAccountListClass!} <#if social.providers?size gt 3>${properties.kcFormSocialAccountListGridClass!}</#if>">
+                                <#list social.providers as p>
+                                  <a id="social-${p.alias}" class="btn-primary"
+                                     type="button" href="${p.loginUrl}">
+                                      <#if p.iconClasses?has_content>
+                                        <i class="${properties.kcCommonLogoIdP!} ${p.iconClasses!}" aria-hidden="true"></i>
+                                        <span class="${properties.kcFormSocialAccountNameClass!} kc-social-icon-text">${p.displayName!}</span>
+                                      <#else>
+                                        <span class="${properties.kcFormSocialAccountNameClass!}">${p.displayName!}</span>
+                                      </#if>
+                                  </a>
+                                </#list>
+                            </ul>
+                          </div>
+                        </#if>
                     </#if>
                 </div>
     <#elseif section = "info" >

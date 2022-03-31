@@ -547,6 +547,17 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
   margin-top: 5px;
 }
 
+#kc-social-providers {
+  margin: 25px;
+}
+
+#kc-social-providers ul a {
+  text-decoration: none;
+  padding: 0.5em;
+  margin-right: 1em;
+  border-radius: 1em;
+}
+
 #kc-reset-password-form .form-group #username {
   font-size: 16px;
   border: 1px solid;
@@ -623,7 +634,7 @@ nav .nav-wrapper ul.mainnav li.noborder:hover div {
   background-color: magenta;
   border: 1px solid magenta;
   color: white;
-  background-image: url("https://ubirch.de/fileadmin/Icons/Doppelpfeile_weiss.svg");
+  background-image: url("../img/Doppelpfeile_weiss.svg");
   cursor: pointer;
 }
 
