@@ -230,16 +230,21 @@ ul#kc-totp-supported-apps {
   margin-top: 0;
 }
 
-.login-pf-page hr {
-  display: none;
-}
-.login-pf-page h4 {
-  display: none;
-}
-
-/* #kc-form-wrapper {
+/*
+#kc-form-wrapper {
   width: 50%;
 } */
+#kc-social-providers-wrapper {
+  padding-bottom: 100px;
+}
+
+#ubirch-employee {
+  float: right;
+}
+
+#ubirch-employee #ubirch-employee-login img {
+  width: 4em;
+}
 
 @media (min-width: 768px) {
   #kc-form-wrapper {
@@ -271,6 +276,7 @@ ul#kc-totp-supported-apps {
     display: grid;
     grid-template-columns: repeat(2, 6fr);
   }
+
 }
 
 .login-pf-page .kc-social-links {
@@ -575,12 +581,12 @@ a.zocial {
 }
 
 /* .pf-c-form-control:hover {
-  border-color: #474747; 
+  border-color: #474747;
   border:#0099d3;
 }
 
 .pf-c-form-control:focus {
-  border-color: #474747; 
+  border-color: #474747;
   box-shadow: none;
 } */
 
