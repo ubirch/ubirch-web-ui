@@ -1,7 +1,7 @@
 <#import "template.ftl" as layout>
 <@layout.registrationLayout displayInfo=social.displayInfo displayWide=(false); section>
     <#if section = "header">
-        ${msg("doLogIn")}
+        ${msg("loginHeader")}
     <#elseif section = "form">
                 <div id="kc-form">
                     <#if realm.password>
@@ -48,24 +48,36 @@
                             </div>
                         </form>
                         <#if realm.password && social.providers??>
-                          <div id="kc-social-providers" class="${properties.kcFormSocialAccountSectionClass!}">
-                            <h4>${msg("identity-provider-login-label")}</h4>
-
-                            <ul class="${properties.kcFormSocialAccountListClass!} <#if social.providers?size gt 3>${properties.kcFormSocialAccountListGridClass!}</#if>">
-                                <#list social.providers as p>
-                                  <a id="social-${p.alias}" class="btn-primary"
-                                     type="button" href="${p.loginUrl}">
-                                      <#if p.iconClasses?has_content>
-                                        <i class="${properties.kcCommonLogoIdP!} ${p.iconClasses!}" aria-hidden="true"></i>
-                                        <span class="${properties.kcFormSocialAccountNameClass!} kc-social-icon-text">${p.displayName!}</span>
-                                      <#else>
-                                        <span class="${properties.kcFormSocialAccountNameClass!}">${p.displayName!}</span>
-                                      </#if>
-                                  </a>
-                                </#list>
-                            </ul>
-                          </div>
-                        </#if>
+                                      <div id="kc-social-providers" class="${properties.kcFormSocialAccountSectionClass!}">
+                                        <#if realm.password && social.providers?? && social.providers?filter(p -> p.alias!="google")?size gt 0>
+                                          <div id="kc-social-providers-wrapper">
+                                            <ul class="${properties.kcFormSocialAccountListClass!} <#if social.providers?size gt 3>${properties.kcFormSocialAccountListGridClass!}</#if>">
+                                                <#list social.providers?filter(p -> p.alias!="google") as p>
+                                                  <a id="social-${p.alias}" class="${properties.kcFormSocialAccountListButtonClass!} <#if social.providers?size gt 3>${properties.kcFormSocialAccountGridItem!}</#if>"
+                                                     type="button" href="${p.loginUrl}">
+                                                      <#if p.iconClasses?has_content>
+                                                        <i class="${properties.kcCommonLogoIdP!} ${p.iconClasses!}" aria-hidden="true"></i>
+                                                        <span class="${properties.kcFormSocialAccountNameClass!} kc-social-icon-text">${p.displayName!}</span>
+                                                      <#else>
+                                                        <span class="${properties.kcFormSocialAccountNameClass!}">${p.displayName!}</span>
+                                                      </#if>
+                                                  </a>
+                                                </#list>
+                                            </ul>
+                                          </div>
+                                        </#if>
+                                        <#if realm.password && social.providers?? && social.providers?filter(p -> p.alias="google")?size gt 0>
+                                          <div id="ubirch-employee">
+                                              <#list social.providers?filter(p -> p.alias="google") as p>
+                                                <a id="ubirch-employee-login"
+                                                   href="${p.loginUrl}">
+                                                  <img src="${url.resourcesPath}/img/UBIRCH_Wort_Bildmarke_black.svg" alt="Login as UBIRCHee">
+                                                </a>
+                                              </#list>
+                                          </div>
+                                        </#if>
+                                      </div>
+                                </#if>
                     </#if>
                 </div>
     <#elseif section = "info" >
