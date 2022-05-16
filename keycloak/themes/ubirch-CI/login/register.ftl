@@ -1,7 +1,20 @@
 <#import "template.ftl" as layout>
 <@layout.registrationLayout; section>
     <#if section = "header">
-        ${msg("registerTitle")}
+        ${msg("registerHeader")}
+        <div class="modalButton">
+            <a href="#open-modal">?</a>
+        </div>
+
+        <div id="open-modal" class="modal-window">
+            <div>
+                <a href="#" title="Close" class="modal-close">Close</a>
+                <h3>${msg("registerDisclaimerHeader")}</h3>
+                <p>
+                    ${msg("registerDisclaimer")}
+                </p>
+            </div>
+        </div>
     <#elseif section = "form">
         <div id="kc-form">
             <form id="kc-register-form" class="${properties.kcFormClass!}" action="${url.registrationAction}"
@@ -137,5 +150,8 @@
                 </div>
             </form>
         </div>
+        <script>
+
+        </script>
     </#if>
 </@layout.registrationLayout>

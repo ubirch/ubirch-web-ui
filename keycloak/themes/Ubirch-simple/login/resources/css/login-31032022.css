@@ -239,11 +239,89 @@ ul#kc-totp-supported-apps {
 }
 
 #ubirch-employee {
-  float: right;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
 }
 
 #ubirch-employee #ubirch-employee-login img {
   width: 4em;
+}
+.modalButton{
+  color: dimgray;
+  text-decoration: none;
+  border: 2px solid dimgray;
+  border-radius: 5px;
+  width: 2rem;
+  height: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalButton a {
+  color: dimgray;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-window {
+  position: fixed;
+  background-color: rgba(2, 2, 2, 0.25);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.modal-window p {
+  font-size: 1rem;
+}
+
+.modal-window:target {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-window > div {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2em;
+  background: white;
+}
+
+.modal-close {
+  font-size: 1rem;
+  color: #aaa;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  text-decoration: none;
+}
+
+.modal-close:hover {
+  color: black;
+}
+
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (min-width: 768px) {
@@ -551,6 +629,7 @@ a.zocial {
   max-width: 500px;
   border-top: 0;
   box-shadow: 0 0 0;
+  position: relative;
 }
 
 .form-control {
