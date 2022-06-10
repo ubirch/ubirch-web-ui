@@ -1,13 +1,13 @@
 queryParamsFromUrl = {
-    account_plan: "free",
-    account_type: "free",
+    account_plan: "private",
+    account_type: "private",
 };
 
 valid_values = {
     account_plan: {
-        free: {
-            account_type: { free: "free"}},
-        pro: {
+        private: {
+            account_type: { private: "private"}},
+        company: {
             account_type: { verifier: "verifier", anchorer: "anchorer"}}}
 };
 
@@ -67,13 +67,32 @@ function setDataIntoForm() {
 
     setInput("account_plan", queryParamsFromUrl.account_plan);
     setInput("account_type", queryParamsFromUrl.account_type);
+    setInput("firstName", allParams.find(param => param.key === "first_name")?.value);
+    setInput("lastName", allParams.find(param => param.key === "last_name")?.value);
+    setInput("email", allParams.find(param => param.key === "email")?.value);
+    setInput("company_name", allParams.find(param => param.key === "company")?.value);
+    setInput("phone", allParams.find(param => param.key === "phone")?.value);
+    setInput("add_info", allParams.find(param => param.key === "add_info")?.value);
+    setInput("agb_version", allParams.find(param => param.key === "agb_version")?.value);
+    setInput("dpa_version", allParams.find(param => param.key === "dpa_version")?.value);
+
+
 }
 
 function setInput(key, value) {
     const elementKey = "user.attributes." + key;
-    if (value && document.getElementById(elementKey) && document.getElementById(elementKey) !== null) {
+    const defaultKey = key;
+
+    const element = document.getElementById(elementKey);
+    const defaultElement = document.getElementById(defaultKey);
+
+    if (value && element) {
         document.getElementById(elementKey).value = value;
-    } else {
+    } else
+    if (value && defaultElement) {
+        document.getElementById(defaultKey).value = value;
+    } else
+    {
         console.warn("missing element with id " + elementKey);
     }
 }
