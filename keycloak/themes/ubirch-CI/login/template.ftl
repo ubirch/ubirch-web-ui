@@ -34,7 +34,7 @@
 
 <body class="">
 <div class="navbar-fixed">
-    <nav class="">
+    <nav class="navElement">
         <div class="container">
             <div class="row">
                 <div class="col s12">
@@ -78,16 +78,6 @@
 </div>
 
   <div class="login-pf-page">
-      <div id="img-col">
-          <div class="ubirchHeadline">Trust, but verify - Cyber Security by UBIRCH</div>
-          <h2>
-              <span class="text white">MAKING.</span>
-              <br>
-              <span class="text white">DATA.</span>
-              <br>
-              <span class="text blue">TRUSTWORTHY.</span>
-          </h2>
-      </div>
       <div id="form-col">
           <div id="kc-content">
             <div id="kc-content-wrapper">
