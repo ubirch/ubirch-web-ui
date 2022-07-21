@@ -1,9 +1,17 @@
+@font-face {
+  font-family: 'raleway';
+  src: url('../fonts/Raleway-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 125 950;
+  font-stretch: 75% 125%;
+  font-style: normal;
+}
+
 .login-pf body {
   background: white;
   /*background: url("../img/Home_Header_Visual_istockphoto-1170938285-1920x1180.jpg")
   no-repeat center center fixed;*/
   background-size: cover;
-  font-family: MuseoSansRounded-300, calibri, sans-serif;
+  font-family: 'raleway', sans-serif;
   font-weight: normal;
   color: rgb(0, 0, 0);
   font-size: 16px;
@@ -29,16 +37,25 @@
   bottom: 1rem;
   right: 1rem;
   padding: 0.5rem;
-  border-radius: 18px;
+  border-radius: 0px;
   transition: box-shadow ease-in-out 0.2s;
 }
 
+#ubirch-employee-login{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  gap: 0.5rem;
+}
+
 #ubirch-employee:hover {
-  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.15);
 }
 
 #ubirch-employee #ubirch-employee-login img {
-  width: 3rem;
+  width: 2rem;
 }
 
 .ubirchHeadline {
@@ -103,14 +120,14 @@ form {
   position: relative;
 }
 #form-col h1 {
-  font-family: MuseoSansRounded-900, calibri, sans-serif;
+  font-family: 'raleway', sans-serif;
+  font-weight: 600;
   display: block;
   font-size: 2em;
   margin-block-start: 0.67em;
   margin-block-end: 0.67em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  font-weight: bold;
 }
 #form-col .form-control {
   font-size: unset;
@@ -138,7 +155,7 @@ form {
   display: inline;
   font-weight: bold;
   text-transform: uppercase;
-  font-family: MuseoSansRounded-900, calibri, sans-serif;
+  font-family: 'raleway', sans-serif;
   padding: 3px 25px 0 15px;
   margin: 15px;
   line-height: 150%;
@@ -185,7 +202,7 @@ form {
 nav .nav-wrapper ul.mainnav li a {
   width: fit-content !important;
   display: inline-block;
-  font-family: MuseoSansRounded-300, calibri, sans-serif;
+  font-family: 'raleway', sans-serif;
   font-size: 12px;
   letter-spacing: 0.02em;
   padding: 0px 15px;
@@ -418,13 +435,15 @@ nav .nav-wrapper ul.mainnav {
 
 .registerButton{
   color: white !important;
-  background-color: #000000 !important;
+  background-color: rgb(255, 0, 140) !important;
+  border-color: rgb(255, 0, 140) !important;
   background-image: unset!important;
   padding-right: 1rem !important;
-  border-radius: 18px;
+  border-radius: 0;
   text-transform: unset !important;
   margin-right: 1rem;
   text-align: center;
+  font-weight: 600 !important;
 }
 
 .backToLoginButton{
@@ -432,7 +451,7 @@ nav .nav-wrapper ul.mainnav {
   background-color: white !important;
   background-image: unset!important;
   padding-right: 1rem !important;
-  border-radius: 18px;
+  border-radius: 0;
   text-transform: unset !important;
   margin-right: 1rem;
   width: 8rem !important;
@@ -443,7 +462,14 @@ nav .nav-wrapper ul.mainnav {
 }
 
 .registerButton:hover{
-  border: 1px solid black !important;
+  border: 1px solid rgba(255, 0, 140, 0.75) !important;
+  background-color: rgba(255, 0, 140, 0.75) !important;
+}
+
+.registerButton:active{
+  border: 1px solid rgba(255, 0, 140, 0.75) !important;
+  background-color: white !important;
+  color: black !important;
 }
 
 .backToLoginButton:hover{
@@ -572,16 +598,16 @@ nav .nav-wrapper ul.mainnav {
   }
 
   nav .nav-wrapper ul.mainnav .langmenuebox span.active {
-    font-family: MuseoSansRounded-900, calibri, sans-serif;
+    font-family: 'raleway', sans-serif;
     font-size: 12px;
   }
 
   nav .nav-wrapper ul.mainnav .langmenuebox span.active a {
-    font-family: MuseoSansRounded-900, calibri, sans-serif;
+    font-family: 'raleway', sans-serif;
   }
 
   nav .nav-wrapper ul.mainnav .langmenuebox span:hover {
-    font-family: MuseoSansRounded-900, calibri, sans-serif;
+    font-family: 'raleway', sans-serif;
   }
 
   nav .nav-wrapper ul.mainnav .langmenuebox span a {
@@ -613,26 +639,26 @@ nav .nav-wrapper ul.mainnav {
   }
 
   nav .nav-wrapper ul.mainnav li.active a {
-    font-family: MuseoSansRounded-900, calibri, sans-serif;
+    font-family: 'raleway', sans-serif;
   }
 
   nav .nav-wrapper ul.mainnav li.tryit a {
     color: #ff008c;
-    font-family: MuseoSansRounded-300, calibri, sans-serif;
+    font-family: 'raleway', sans-serif;
     font-size: 12px;
   }
 
   nav .nav-wrapper ul.mainnav li.tryit a:hover {
-    font-family: MuseoSansRounded-900, calibri, sans-serif;
+    font-family: 'raleway', sans-serif;
   }
 
   nav .nav-wrapper ul.mainnav li.tryit.active > a {
-    font-family: MuseoSansRounded-900, calibri, sans-serif;
+    font-family: 'raleway', sans-serif;
   }
 
   nav .nav-wrapper ul.mainnav li a {
     display: inline-block;
-    font-family: MuseoSansRounded-300, calibri, sans-serif;
+    font-family: 'raleway', sans-serif;
     font-size: 12px;
     letter-spacing: 0.02em;
     padding: 0px 15px;
@@ -642,13 +668,13 @@ nav .nav-wrapper ul.mainnav {
   }
 
   nav .nav-wrapper ul.mainnav li a:hover {
-    font-family: MuseoSansRounded-900, calibri, sans-serif;
+    font-family: 'raleway', sans-serif;
   }
 
   nav .nav-wrapper ul.mainnav li a::after {
     display: block;
     content: attr(title);
-    font-family: MuseoSansRounded-900, calibri, sans-serif;
+    font-family: 'raleway', sans-serif;
     font-size: 12px;
     height: 0;
     letter-spacing: 0.02em;
@@ -712,13 +738,15 @@ nav .nav-wrapper ul.mainnav {
     line-height: inherit !important;
     width: 100% !important;
     max-width: 100% !important;
-    border: 1px solid rgb(209, 209, 209) !important;
+    border: none !important;
+    border-bottom: 1px solid rgb(209, 209, 209) !important;
     color: rgb(31, 31, 31) !important;
     box-shadow: rgba(0, 0, 0, 0.04) 1px 1px 3px !important;
-    transition: border-radius 200ms ease 0s !important;
+    transition: border-radius 200ms ease 0s,
+          border-color 200ms ease 0s !important;
     height: 36px !important;
     padding: 8px 12px !important;
-    border-radius: 18px !important;
+    border-radius: 0 !important;
   }
 
   #kc-form .form-group .input-field {
@@ -728,6 +756,7 @@ nav .nav-wrapper ul.mainnav {
 
   #kc-form .form-group input:focus {
     outline: none;
+    border-color: black !important;
   }
 
   #kc-form .form-group select:focus {
@@ -799,7 +828,7 @@ nav .nav-wrapper ul.mainnav {
     background-repeat: no-repeat;
     box-shadow: none;
     color: rgba(0, 0, 0, 0.9);
-    font-family: MuseoSansRounded-900, calibri, sans-serif;
+    font-family: 'raleway', sans-serif;
     font-weight: bold;
     height: 36px;
     line-height: 32px;
@@ -807,6 +836,32 @@ nav .nav-wrapper ul.mainnav {
     padding-right: 35px;
     text-transform: uppercase;
     width: auto;
+  }
+
+  .eBNWMm {
+    box-shadow: rgba(0, 0, 0, 0.04) 1px 1px 3px;
+    transition: border-radius 200ms ease 0s;
+    height: unset;
+    padding: 8px 10px;
+    margin-top: 24px;
+    min-height: 48px;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    background-color: rgb(255, 0, 140);
+    border: 0px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-family: inherit;
+    font-style: normal;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    outline: none;
   }
 
   /* #kc-form .form-group .btn:hover {
