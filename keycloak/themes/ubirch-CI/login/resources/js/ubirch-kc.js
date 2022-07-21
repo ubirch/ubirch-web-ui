@@ -11,10 +11,11 @@ valid_values = {
             account_type: { verifier: "verifier", anchorer: "anchorer"}}}
 };
 
+allowed_characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;=%"
+
 document.addEventListener("DOMContentLoaded", function() {
     setDataIntoForm();
 });
-
 /**
  * get params of form fields as string from query of url and split them into params
  */
@@ -65,12 +66,14 @@ function setDataIntoForm() {
 
     checkParamsWithDefaults(allParams);
 
+
+
     setInput("account_plan", queryParamsFromUrl.account_plan);
     setInput("account_type", queryParamsFromUrl.account_type);
     setInput("firstName", allParams.find(param => param.key === "first_name")?.value);
     setInput("lastName", allParams.find(param => param.key === "last_name")?.value);
     setInput("email", allParams.find(param => param.key === "email")?.value);
-    setInput("company_name", allParams.find(param => param.key === "company")?.value);
+    setInput("company_name", allParams.find(param => param.key === "company_name")?.value);
     setInput("phone", allParams.find(param => param.key === "phone")?.value);
     setInput("add_info", allParams.find(param => param.key === "add_info")?.value);
     setInput("agb_version", allParams.find(param => param.key === "agb_version")?.value);
@@ -80,6 +83,8 @@ function setDataIntoForm() {
 }
 
 function setInput(key, value) {
+    value = sanitizeInput(value);
+
     const elementKey = "user.attributes." + key;
     const defaultKey = key;
 
@@ -95,4 +100,11 @@ function setInput(key, value) {
     {
         console.warn("missing element with id " + elementKey);
     }
+}
+
+function sanitizeInput(value){
+    // remove all characters that are not part of allowed_characters
+    value = String(value).replace(/[<>`"{}]/g, "");
+    console.log(value);
+    return value;
 }

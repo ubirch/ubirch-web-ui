@@ -101,6 +101,7 @@
                                        href="${p.loginUrl}">
                                         <img title="Login as UBIRCHee" src="${url.resourcesPath}/img/UBIRCH_Wort_Bildmarke_black.svg"
                                              alt="Login as UBIRCHee">
+                                        ${msg("loginAsUBIRCHee")}
                                     </a>
                                 </#list>
                             </div>
