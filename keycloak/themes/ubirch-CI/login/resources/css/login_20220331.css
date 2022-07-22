@@ -32,6 +32,10 @@
   color: red;
 }
 
+.kc-form {
+  border-bottom: 1px solid bla
+}
+
 #ubirch-employee {
   position: absolute;
   bottom: 1rem;
@@ -39,6 +43,15 @@
   padding: 0.5rem;
   border-radius: 0px;
   transition: box-shadow ease-in-out 0.2s;
+}
+
+.login-pf-settings{
+  margin-bottom: 0.5rem;
+}
+
+.login-pf-settings a {
+  text-decoration: none;
+  color: #ff008c;
 }
 
 #ubirch-employee-login{
@@ -433,7 +446,7 @@ nav .nav-wrapper ul.mainnav {
   margin-bottom: 1rem;
 }
 
-.registerButton{
+.registerButton, #kc-form-buttons > input{
   color: white !important;
   background-color: rgb(255, 0, 140) !important;
   border-color: rgb(255, 0, 140) !important;
@@ -444,6 +457,29 @@ nav .nav-wrapper ul.mainnav {
   margin-right: 1rem;
   text-align: center;
   font-weight: 600 !important;
+  width: 5rem;
+  -webkit-transition: background-color 90ms linear, color 90ms linear;
+  -moz-transition: background-color 90ms linear, color 90ms linear;
+  -o-transition: background-color 90ms linear, color 90ms linear;
+  transition: background-color 90ms linear, color 90ms linear;
+  background-color: rgba(255, 255, 255, 1);
+  background-position: right 10px center;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-repeat: no-repeat;
+  box-shadow: none;
+  color: rgba(0, 0, 0, 0.9);
+  font-family: 'raleway', sans-serif;
+  height: 36px;
+  line-height: 32px;
+  padding-left: 16px;
+}
+
+#kc-form-buttons > input:hover{
+  cursor: pointer;
+}
+
+#kc-form-buttons > input{
+  margin-top: 0.5rem;
 }
 
 .backToLoginButton{
@@ -665,6 +701,7 @@ nav .nav-wrapper ul.mainnav {
     position: initial;
     right: 0;
     text-transform: uppercase;
+    width: 64px !important;
   }
 
   nav .nav-wrapper ul.mainnav li a:hover {
@@ -759,6 +796,12 @@ nav .nav-wrapper ul.mainnav {
     border-color: black !important;
   }
 
+  input[type="text"]:focus {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
   #kc-form .form-group select:focus {
     outline: none;
   }
@@ -779,8 +822,9 @@ nav .nav-wrapper ul.mainnav {
     color: white;
     text-decoration: none;
     padding: 0.75rem;
-    margin-right: 1em;
-    border-radius: 18px;
+    margin-right: 1rem;
+    font-size: 0.9rem;
+    max-width: 4rem;
   }
 
   #kc-reset-password-form .form-group #username {
@@ -790,32 +834,39 @@ nav .nav-wrapper ul.mainnav {
     border-color: transparent;
     border-bottom-color: black;
     width: 100%;
+    border-top: none;
+    border-right: none;
+    border-left: none;
     margin-bottom: 15px;
     margin-top: 5px;
     padding-top: 10px;
   }
 
-  /* #kc-form .form-group .btn {
-      -webkit-transition: background-color 90ms linear, color 90ms linear;
-      -moz-transition: background-color 90ms linear, color 90ms linear;
-      -o-transition: background-color 90ms linear, color 90ms linear;
-      transition: background-color 90ms linear, color 90ms linear;
-      background-color: rgba(255, 255, 255, 1);
-      background-image: url('http://ubirch.de/fileadmin/Icons/Doppelpfeile_Magenta.svg');
-      background-position: right 10px center;
-      border: 1px solid rgba(0, 0, 0, 0.5);
-      background-repeat: no-repeat;
-      box-shadow: none;
-      color: rgba(0, 0, 0, 0.9);
-      font-family: MuseoSansRounded-900, calibri, sans-serif;
-      font-weight: bold;
-      height: 36px;
-      line-height: 32px;
-      padding-left: 16px;
-      padding-right: 35px;
-      text-transform: uppercase;
-      width: auto;
-  } */
+  #kc-reset-password-form .form-group #username:focus, #kc-reset-password-form .form-group #username:active {
+    outline: none;
+  }
+
+    /* #kc-form .form-group .btn {
+        -webkit-transition: background-color 90ms linear, color 90ms linear;
+        -moz-transition: background-color 90ms linear, color 90ms linear;
+        -o-transition: background-color 90ms linear, color 90ms linear;
+        transition: background-color 90ms linear, color 90ms linear;
+        background-color: rgba(255, 255, 255, 1);
+        background-image: url('http://ubirch.de/fileadmin/Icons/Doppelpfeile_Magenta.svg');
+        background-position: right 10px center;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        background-repeat: no-repeat;
+        box-shadow: none;
+        color: rgba(0, 0, 0, 0.9);
+        font-family: MuseoSansRounded-900, calibri, sans-serif;
+        font-weight: bold;
+        height: 36px;
+        line-height: 32px;
+        padding-left: 16px;
+        padding-right: 35px;
+        text-transform: uppercase;
+        width: auto;
+    } */
   #kc-form .form-group .pf-c-button {
     -webkit-transition: background-color 90ms linear, color 90ms linear;
     -moz-transition: background-color 90ms linear, color 90ms linear;
