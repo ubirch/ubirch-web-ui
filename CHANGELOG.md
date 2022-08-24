@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - verification widget
-  * added flag NO_LINK_TO_CONSOLE to avoid opening the ubrich web ui from widget on mobile devices
+  * added flag NO_LINK_TO_CONSOLE to avoid opening the ubirch web ui from widget on mobile devices
 
 ### Changed
 - token management

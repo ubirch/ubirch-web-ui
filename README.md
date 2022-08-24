@@ -50,7 +50,7 @@ TODO:
 1. in your ubirch-2.0 realm create a new client from file <REALM_NAME>-connector-import.json 
 
 1. To connect your ubirch-2.0 realm with your new realm in your keycloak instance for single sign on
-    1. regenerate a new secret for the connector client in ubrich-2.0 realm
+    1. regenerate a new secret for the connector client in ubirch-2.0 realm
     1. add this secret to OpenId Connect Config of the IdentityProvider in your new tenant realm
 
 1. You also have to regenerate a new secret for the ubirch-2.0-user-access client in the new tenant realm:
