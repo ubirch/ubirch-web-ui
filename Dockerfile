@@ -22,7 +22,7 @@ RUN \
 # -----------------------------------------------------------------------------
 # Install npm, node, cordova & ionic
 # -----------------------------------------------------------------------------
-RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
+RUN curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
 RUN apt-get install -qqy nodejs
 
 RUN npm config set registry https://registry.npmjs.com
