@@ -61,14 +61,12 @@
                             </div>
                         </div>
 
-                        <#if realm.password && realm.registrationAllowed && !usernameEditDisabled??>
+                        <div id="kc-form-options" class="${properties.kcFormOptionsClass!} backToLogin">
                             <div class="${properties.kcFormOptionsWrapperClass!}">
-                                <input onclick="location.href='https://ubirch.com/sign-up'" readonly="true"
-                                       class="backToLoginButton ${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}"
+                                <input readonly="true" onclick="location.href='${url.registrationUrl}';" class="backToLoginButton ${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}"
                                        value="${kcSanitize(msg("goToRegister"))?no_esc}"/>
-
                             </div>
-                        </#if>
+                        </div>
                     </div>
 
 
