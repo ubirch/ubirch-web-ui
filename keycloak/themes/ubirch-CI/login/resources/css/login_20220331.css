@@ -1084,4 +1084,85 @@ nav .nav-wrapper ul.mainnav {
     .row .col{
         padding: 0;
     }
+
+    #ubirch-employee {
+        position: fixed;
+        bottom: 1rem;
+    }
+
+    #kc-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #kc-social-providers{
+        align-self: center
+    }
+
+    .kc-social-item{
+        margin: 0;
+    }
+
+}
+
+
+
+@media only screen and (max-width: 568px) {
+    #form-col{
+        max-width: 100vw;
+        height: auto;
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 0;
+    }
+
+    .navbar-fixed {
+        width: 100vw;
+    }
+
+    .navbar-fixed nav {
+        max-width: 100vw;
+    }
+
+    .login-pf-page, .login-pf{
+        width: 100vw;
+        margin-top: 0;
+    }
+
+    .buttonGroup {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        height: fit-content;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    .checkboxDiv input {
+        margin-right: 0;
+    }
+
+    #kc-form .form-group .pf-c-button{
+        margin: 0;
+        margin-top: 1rem;
+    }
+
+    .backToLoginButton{
+        margin-top: 0!important;
+    }
+
+    .navbar-fixed nav .container {
+        width: 90%;
+    }
+
+    #form-col h1 {
+        line-height: 1em;
+    }
+
+    .row .col{
+        padding: 0;
+    }
 }
