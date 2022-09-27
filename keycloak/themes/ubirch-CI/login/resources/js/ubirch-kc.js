@@ -1,8 +1,8 @@
 window.onload = function WindowLoad(event) {
-    console.log("Page is loaded");
-    let accountPlan = localStorage.getItem('account_plan');
+    // console.log("Page is loaded");
+    // let accountPlan = localStorage.getItem('account_plan');
     if( accountPlan !== null) {
-        setInput("user.attributes.account_plan", accountPlan);
+        setInput("user.attributes.account_plan", "company");
         checkCompanySelection();
     }
 }
