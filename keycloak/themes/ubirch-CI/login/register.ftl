@@ -19,7 +19,7 @@
         <div id="kc-form">
             <form id="kc-register-form" class="${properties.kcFormClass!}" action="${url.registrationAction}"
                   method="post">
-                <div class="${properties.kcFormGroupClass!} ${messagesPerField.printIfExists('account_plan',properties.kcFormGroupErrorClass!)}">
+                <div hidden class="${properties.kcFormGroupClass!} ${messagesPerField.printIfExists('account_plan',properties.kcFormGroupErrorClass!)}">
                     <div class="${properties.kcLabelWrapperClass!}">
                         <label for="user.attributes.account_plan"
                                class="${properties.kcLabelClass!}">${msg("accountPlan")}</label>
