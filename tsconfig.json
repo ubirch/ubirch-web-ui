@@ -11,7 +11,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "allowJs": true,
     "typeRoots": [
       "node_modules/@types"
@@ -21,7 +21,10 @@
       "dom"
     ],
     "paths": {
-      "@angular/*": ["./node_modules/@angular/*"]
-    }
+      "@angular/*": [
+        "./node_modules/@angular/*"
+      ]
+    },
+    "useDefineForClassFields": false
   }
 }
