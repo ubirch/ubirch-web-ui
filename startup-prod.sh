@@ -30,42 +30,6 @@ sed \
 	-e "s%@@UBIRCH_TR_GRAFANA_DATASOURCE@@%${UBIRCH_TR_GRAFANA_DATASOURCE}%" \
 	src/environments/environment.prod.ts > src/environments/environment.ts
 
-echo "creating widgets/verification/environment.prod.ts"
-sed -i \
-	-e "s%@@UBIRCH_WIDGET_VERIFY_URL@@%${UBIRCH_WIDGET_VERIFY_URL}%" \
-	-e "s%@@UBIRCH_WIDGET_TRANSID_CHECK_URL@@%$(echo $UBIRCH_WIDGET_TRANSID_CHECK_URL | tr '\n' ' ')%" \
-	-e "s%@@UBIRCH_SEAL_ICON_URL@@%${UBIRCH_SEAL_ICON_URL:-ubirch_verify_right.png}%" \
-	-e "s%@@UBIRCH_NO_SEAL_ICON_URL@@%${UBIRCH_NO_SEAL_ICON_URL:-ubirch_verify_wrong.png}%" \
-	-e "s%@@UBIRCH_CONSOLE_VERIFICATION_URL@@%${UBIRCH_CONSOLE_VERIFICATION_URL}%" \
-	-e "s%@@UBIRCH_WIDGET_ASSETS_PREFIX@@%${UBIRCH_WIDGET_ASSETS_PREFIX}%" \
-	widgets/verification/environment.prod.ts
-	-e "s%@@UBIRCH_WIDGET_ASSETS_PREFIX@@%${UBIRCH_WIDGET_ASSETS_PREFIX}%" \
-	widgets/verification-v2/environment.prod.ts
-
-echo "creating widgets/verification-v2/environment.prod.ts"
-sed -i \
-	-e "s%@@UBIRCH_WIDGET_VERIFY_URL@@%${UBIRCH_WIDGET_VERIFY_URL}%" \
-	-e "s%@@UBIRCH_WIDGET_TRANSID_CHECK_URL@@%$(echo $UBIRCH_WIDGET_TRANSID_CHECK_URL | tr '\n' ' ')%" \
-	-e "s%@@UBIRCH_SEAL_ICON_URL@@%${UBIRCH_SEAL_ICON_URL:-ubirch_verify_right.png}%" \
-	-e "s%@@UBIRCH_NO_SEAL_ICON_URL@@%${UBIRCH_NO_SEAL_ICON_URL:-ubirch_verify_wrong.png}%" \
-	-e "s%@@UBIRCH_CONSOLE_VERIFICATION_URL@@%${UBIRCH_CONSOLE_VERIFICATION_URL}%" \
-	-e "s%@@UBIRCH_WIDGET_ASSETS_PREFIX@@%${UBIRCH_WIDGET_ASSETS_PREFIX}%" \
-	widgets/verification-v2/environment.prod.ts
-
-(
-	# build widgets subproject.
-	# This needs to be done at runtime, since it depends on some
-	# variables only available at runtime. Additionally it depends
-	# on the main project being already configured, which happens
-	# at run time.
-	#
-	# This is a horrible design, but it is the only way I could
-	# see, short of rewriting the entire thing.
-	cd widgets
-	npm install
-	npm run "build:prod"
-)
-
 # Run the dev server in production, this will need to be
 # moved into a build step in the future, but for now the
 # build process depends on variables only available at
