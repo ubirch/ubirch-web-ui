@@ -31,15 +31,11 @@ const routes: Routes = [
         ReactiveFormsModule,
         NgxQRCodeModule,
     ],
-  declarations: [
-    TokenManagerPage,
-    NewTokenPopupComponent,
-      TokenQrCodePopupComponent,
-      TokenIdPopupComponent
-  ],
-  entryComponents: [
-    NewTokenPopupComponent,
-      TokenQrCodePopupComponent
-  ],
+    declarations: [
+        TokenManagerPage,
+        NewTokenPopupComponent,
+        TokenQrCodePopupComponent,
+        TokenIdPopupComponent
+    ]
 })
 export class TokenManagerPageModule {}

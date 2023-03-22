@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 
@@ -52,7 +52,7 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
    */
   @Output() public submitForm: EventEmitter<ImportDeviceFormData> = new EventEmitter();
 
-  public importForm: FormGroup;
+  public importForm: UntypedFormGroup;
   /**
    * maximum rows per file subject
    */
@@ -115,7 +115,7 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
   private resetFormSubscription: Subscription;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private validators: ValidatorsService,
   ) {
   }
@@ -182,7 +182,7 @@ export class ImportFormComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * initialize form
    */
-  private initImportForm(): FormGroup {
+  private initImportForm(): UntypedFormGroup {
     return this.fb.group({
       file: [INITIAL_FORM_VALUE.file],
       skip_header: [INITIAL_FORM_VALUE.skip_header, Validators.required],

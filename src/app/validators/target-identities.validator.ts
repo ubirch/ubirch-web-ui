@@ -1,7 +1,7 @@
 /** token is valid for all devices OR at least one device has to be set */
-import {FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {UntypedFormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
 
-export const targetIdentitiesValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+export const targetIdentitiesValidator: ValidatorFn = (control: UntypedFormGroup): ValidationErrors | null => {
   const validForAll: boolean = control.get('validForAll').value;
   if (validForAll) {
     const expiration: string = control.get('expiration').value;

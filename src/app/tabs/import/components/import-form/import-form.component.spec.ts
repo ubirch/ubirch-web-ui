@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
 import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -11,7 +11,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 describe('ImportFormComponent', () => {
   let component: ImportFormComponent;
   let fixture: ComponentFixture<ImportFormComponent>;
-  let form: FormGroup;
+  let form: UntypedFormGroup;
   let nativeElement: HTMLElement;
 
   const rowsCountLimit = 100;
@@ -50,7 +50,7 @@ describe('ImportFormComponent', () => {
   /**
    * util function to fill each form control separately
    */
-  function fillForm(formGroup: FormGroup, values?: object) {
+  function fillForm(formGroup: UntypedFormGroup, values?: object) {
     values = { ...defaultFormValues, ...values };
 
     Object.keys(values).forEach(key => {

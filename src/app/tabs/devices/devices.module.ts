@@ -16,51 +16,46 @@ import {DeviceDetailsResolverService} from 'src/app/resolvers/device-details-res
 import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonicModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    MarkdownModule.forChild(),
-    RouterModule.forChild([
-      {
-        path: '',
-        redirectTo: 'list',
-        pathMatch: 'full'
-      },
-      {
-        path: 'list',
-        component: DevicesListPage
-      },
-      {
-        path: 'details',
-        children: [
-          {
-            path: ':id',
-            loadChildren: () => import('./device-details/device-details.module').then(m => m.DeviceDetailsPageModule),
-            resolve: {
-              device: DeviceDetailsResolverService
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        IonicModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        MarkdownModule.forChild(),
+        RouterModule.forChild([
+            {
+                path: '',
+                redirectTo: 'list',
+                pathMatch: 'full'
+            },
+            {
+                path: 'list',
+                component: DevicesListPage
+            },
+            {
+                path: 'details',
+                children: [
+                    {
+                        path: ':id',
+                        loadChildren: () => import('./device-details/device-details.module').then(m => m.DeviceDetailsPageModule),
+                        resolve: {
+                            device: DeviceDetailsResolverService
+                        }
+                    }
+                ]
             }
-          }
-        ]
-      }
-    ]),
-    ComponentsModule,
-    TranslateModule,
-  ],
-  declarations: [
-    DevicesListPage,
-    NewDevicePopupComponent,
-    ConfirmDeleteDevicePopupComponent,
-    CreatedDevicesListPopupComponent
-  ],
-  entryComponents: [
-    NewDevicePopupComponent,
-    ConfirmDeleteDevicePopupComponent,
-    CreatedDevicesListPopupComponent
-  ]
+        ]),
+        ComponentsModule,
+        TranslateModule,
+    ],
+    declarations: [
+        DevicesListPage,
+        NewDevicePopupComponent,
+        ConfirmDeleteDevicePopupComponent,
+        CreatedDevicesListPopupComponent
+    ]
 })
 export class ListPageModule {
 }

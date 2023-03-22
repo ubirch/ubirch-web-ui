@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, skip } from 'rxjs/operators';
@@ -17,7 +17,7 @@ const ID_VALIDATORS = [ Validators.required, Validators.pattern(/^ *\S{1,} *$/) 
   styleUrls: [ './new-device-popup.component.scss' ],
 })
 export class NewDevicePopupComponent implements OnInit, OnDestroy {
-  deviceDetailsForm: FormGroup;
+  deviceDetailsForm: UntypedFormGroup;
 
   private currentIdType$: BehaviorSubject<EIDType> = new BehaviorSubject(EIDType.UUID);
 
@@ -57,7 +57,7 @@ export class NewDevicePopupComponent implements OnInit, OnDestroy {
 
   constructor(
     public modalCtrl: ModalController,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public toast: ToastService,
     private validatorsService: ValidatorsService,
   ) {

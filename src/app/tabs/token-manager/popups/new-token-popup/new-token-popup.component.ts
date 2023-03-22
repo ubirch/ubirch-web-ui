@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
@@ -25,7 +25,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   public roles: string[] = [];
   public enteredDomains = [];
   public enteredGroups = [];
-  public tokenDetailsForm: FormGroup;
+  public tokenDetailsForm: UntypedFormGroup;
   public selectTargetIdentities = true;
 
   private toggleSubscr: Subscription;
@@ -34,7 +34,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   constructor(
       private modalCtrl: ModalController,
       private deviceService: DeviceService,
-      private fb: FormBuilder,
+      private fb: UntypedFormBuilder,
       private tokenService: TokenService,
       private logger: LoggingService,
       private utils: UbirchWebUIUtilsService,
