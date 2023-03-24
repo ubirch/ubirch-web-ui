@@ -19,13 +19,29 @@
           </ion-item>
           <ion-item>
               <ion-label>{{'token.create.valid_from' | translate}}</ion-label>
-              <ion-datetime display-format="DD MMM, YYYY" max="3000" id="vFrom" slot="end" formControlName="notBefore"></ion-datetime>
-              <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
+              <ion-datetime-button datetime="notBefore"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                      <ion-datetime id="notBefore" formControlName="notBefore"
+                                    [locale]="language"
+                                    [min]="mindate"
+                                    [max]="maxdate"
+                      ></ion-datetime>
+                  </ng-template>
+              </ion-modal>
           </ion-item>
           <ion-item>
               <ion-label>{{'token.create.expiration' | translate}}</ion-label>
-              <ion-datetime display-format="DD MMM, YYYY" max="3000" mode="md" id="expiration" slot="end" formControlName="expiration"></ion-datetime>
-              <img src="assets/app-icons/calendar-outline.svg" class="calendarIcon" slot="end">
+              <ion-datetime-button datetime="expiration"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                      <ion-datetime id="expiration" formControlName="expiration"
+                                    [locale]="language"
+                                    [min]="mindate"
+                                    [max]="maxdate"
+                      ></ion-datetime>
+                  </ng-template>
+              </ion-modal>
           </ion-item>
           <ion-item *ngIf="userCanCreateRiskyTokens">
             <ion-label>{{'token.create.valid_for_all_things' | translate}}</ion-label>

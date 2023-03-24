@@ -27,6 +27,10 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   public enteredGroups = [];
   public tokenDetailsForm: UntypedFormGroup;
   public selectTargetIdentities = true;
+  public language;
+  public now = new Date();
+  public mindate = this.now.toISOString();
+  public maxdate = new Date("2100").toISOString();
 
   private toggleSubscr: Subscription;
   private errorKeyPrefix = 'token.create.error.';
@@ -45,6 +49,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.language = this.translate.currentLang;
     this.getScopes();
     this.getDevices();
     this.getRoles();
