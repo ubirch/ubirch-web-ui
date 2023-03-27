@@ -19,29 +19,45 @@
           </ion-item>
           <ion-item>
               <ion-label>{{'token.create.valid_from' | translate}}</ion-label>
-              <ion-datetime-button datetime="notBefore"></ion-datetime-button>
-              <ion-modal [keepContentsMounted]="true">
-                  <ng-template>
-                      <ion-datetime id="notBefore" formControlName="notBefore"
-                                    [locale]="language"
-                                    [min]="mindate"
-                                    [max]="maxdate"
-                      ></ion-datetime>
-                  </ng-template>
-              </ion-modal>
+              <ng-container *ngIf="notBefore.value === ''; else SELECT_NOTBEFORE_DATE">
+                  <ion-label>{{'token.create.valid_from.placeholder' | translate}}</ion-label>
+                  <ion-button (click)="setValidFromDate()">
+                      <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
+                  </ion-button>
+              </ng-container>
+              <ng-template #SELECT_NOTBEFORE_DATE>
+                  <ion-datetime-button datetime="notBefore"></ion-datetime-button>
+                  <ion-modal [keepContentsMounted]="true">
+                      <ng-template>
+                          <ion-datetime id="notBefore" formControlName="notBefore"
+                                        [locale]="language"
+                                        [min]="mindate"
+                                        [max]="maxdate"
+                          ></ion-datetime>
+                      </ng-template>
+                  </ion-modal>
+              </ng-template>
           </ion-item>
           <ion-item>
               <ion-label>{{'token.create.expiration' | translate}}</ion-label>
-              <ion-datetime-button datetime="expiration"></ion-datetime-button>
-              <ion-modal [keepContentsMounted]="true">
-                  <ng-template>
-                      <ion-datetime id="expiration" formControlName="expiration"
-                                    [locale]="language"
-                                    [min]="mindate"
-                                    [max]="maxdate"
-                      ></ion-datetime>
-                  </ng-template>
-              </ion-modal>
+              <ng-container *ngIf="expiration.value === ''; else SELECT_EXP_DATE">
+                  <ion-label>{{'token.create.expiration.placeholder' | translate}}</ion-label>
+                  <ion-button (click)="setExpireDate()">
+                      <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
+                  </ion-button>
+              </ng-container>
+              <ng-template #SELECT_EXP_DATE>
+                  <ion-datetime-button datetime="expiration"></ion-datetime-button>
+                  <ion-modal [keepContentsMounted]="true">
+                      <ng-template>
+                          <ion-datetime id="expiration" formControlName="expiration"
+                                        [locale]="language"
+                                        [min]="mindate"
+                                        [max]="maxdate"
+                          ></ion-datetime>
+                      </ng-template>
+                  </ion-modal>
+              </ng-template>
           </ion-item>
           <ion-item *ngIf="userCanCreateRiskyTokens">
             <ion-label>{{'token.create.valid_for_all_things' | translate}}</ion-label>

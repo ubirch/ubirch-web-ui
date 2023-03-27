@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
@@ -46,6 +46,14 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
       public userService: UserService,
       protected translate: TranslateService,
   ) {
+  }
+
+  public get expiration(): AbstractControl | null | undefined {
+    return this.tokenDetailsForm?.get('expiration');
+  }
+
+  public get notBefore(): AbstractControl | null | undefined {
+    return this.tokenDetailsForm?.get('notBefore');
   }
 
   public ngOnInit(): void {
@@ -175,5 +183,12 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
 
   public userHasRole(role: string): boolean {
     return this.roles.includes(role);
+  }
+
+  setExpireDate() {
+    this.tokenDetailsForm.patchValue({expiration: this.mindate});
+  }
+  setValidFromDate() {
+    this.tokenDetailsForm.patchValue({notBefore: this.mindate});
   }
 }
