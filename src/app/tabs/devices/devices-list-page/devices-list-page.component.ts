@@ -8,7 +8,7 @@ import {ModalController} from '@ionic/angular';
 import {NewDevicePopupComponent} from './popups/new-device-popup/new-device-popup.component';
 import {ConfirmDeleteDevicePopupComponent} from './popups/confirm-delete-device-popup/confirm-delete-device-popup.component';
 import {CreatedDevicesListPopupComponent} from './popups/created-devices-list-popup/created-devices-list-popup.component';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatLegacyPaginator as MatPaginator} from '@angular/material/legacy-paginator';
 import {HeaderActionButton} from '../../../components/header/header-action-button';
 import {DevicesListWrapper} from '../../../models/devices-list-wrapper';
 import {LoaderService} from '../../../services/loader.service';

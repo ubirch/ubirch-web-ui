@@ -149,6 +149,7 @@
   "token.create.error.expirationDateForWildcardTokenNotSet": "When creating a wildcard tokens you need to set an expiration date!",
   "token.create.error.targetItentitiesOrGroupNotSelected": "You need to select at least one Thing or group for which this token shall be valid.",
   "token.create.error.activateWildcardToken": "Or you activate 'Valid for all Things' (wildcard token - only for UBIRCH admins)",
+  "token.create.error.expirationDateBeforeValidFrom": "Expiration date of token cannot be earlier than the date from which the token is valid.",
 	"token.create.expiration": "Expiration",
 	"token.create.expiration.placeholder": "choose a date",
 	"token.create.info.domains": "The domain must be a valid URL including the 'https://' prefix. ",

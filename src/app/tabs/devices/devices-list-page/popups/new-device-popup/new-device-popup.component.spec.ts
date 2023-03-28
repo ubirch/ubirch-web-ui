@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { By } from '@angular/platform-browser';
 import { CreateDevicesFormData } from '../../../../../models/create-devices-form-data';
@@ -14,7 +14,7 @@ const testDescription = 'Lorem ipsum dolor sit amet';
 const testTags = 'lorem, ipsum, dolor, sit, amet';
 const testPrefix = 'test';
 
-function fillFormWithTestData(form: FormGroup) {
+function fillFormWithTestData(form: UntypedFormGroup) {
   form.get('hwDeviceId').setValue(testUUID);
   form.get('secondaryIndex').setValue(testIMSI);
   form.get('description').setValue(testDescription);

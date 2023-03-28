@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
-import {RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 
 import {DevicesListPage} from './devices-list-page/devices-list-page.component';
 import {ComponentsModule} from '../../components/components.module';
@@ -15,52 +15,49 @@ import {CreatedDevicesListPopupComponent} from './devices-list-page/popups/creat
 import {DeviceDetailsResolverService} from 'src/app/resolvers/device-details-resolver.service';
 import {TranslateModule} from '@ngx-translate/core';
 
-@NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonicModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    MarkdownModule.forChild(),
-    RouterModule.forChild([
-      {
+const routes: Routes = [
+    {
         path: '',
         redirectTo: 'list',
         pathMatch: 'full'
-      },
-      {
+    },
+    {
         path: 'list',
         component: DevicesListPage
-      },
-      {
+    },
+    {
         path: 'details',
         children: [
-          {
-            path: ':id',
-            loadChildren: () => import('./device-details/device-details.module').then(m => m.DeviceDetailsPageModule),
-            resolve: {
-              device: DeviceDetailsResolverService
+            {
+                path: ':id',
+                loadChildren: () => import('./device-details/device-details.module').then(m => m.DeviceDetailsPageModule),
+                resolve: {
+                    device: DeviceDetailsResolverService
+                }
             }
-          }
         ]
-      }
-    ]),
-    ComponentsModule,
-    TranslateModule,
-  ],
-  declarations: [
-    DevicesListPage,
-    NewDevicePopupComponent,
-    ConfirmDeleteDevicePopupComponent,
-    CreatedDevicesListPopupComponent
-  ],
-  entryComponents: [
-    NewDevicePopupComponent,
-    ConfirmDeleteDevicePopupComponent,
-    CreatedDevicesListPopupComponent
-  ]
+    }
+];
+
+@NgModule({
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        IonicModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        MarkdownModule.forChild(),
+        RouterModule.forChild(routes),
+        ComponentsModule,
+        TranslateModule,
+    ],
+    declarations: [
+        DevicesListPage,
+        NewDevicePopupComponent,
+        ConfirmDeleteDevicePopupComponent,
+        CreatedDevicesListPopupComponent
+    ]
 })
 export class ListPageModule {
 }

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
@@ -25,8 +25,12 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   public roles: string[] = [];
   public enteredDomains = [];
   public enteredGroups = [];
-  public tokenDetailsForm: FormGroup;
+  public tokenDetailsForm: UntypedFormGroup;
   public selectTargetIdentities = true;
+  public language;
+  public now = new Date();
+  public mindate = this.now.toISOString();
+  public maxdate = new Date("2100").toISOString();
 
   private toggleSubscr: Subscription;
   private errorKeyPrefix = 'token.create.error.';
@@ -34,7 +38,7 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   constructor(
       private modalCtrl: ModalController,
       private deviceService: DeviceService,
-      private fb: FormBuilder,
+      private fb: UntypedFormBuilder,
       private tokenService: TokenService,
       private logger: LoggingService,
       private utils: UbirchWebUIUtilsService,
@@ -44,7 +48,16 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  public get expiration(): AbstractControl | null | undefined {
+    return this.tokenDetailsForm?.get('expiration');
+  }
+
+  public get notBefore(): AbstractControl | null | undefined {
+    return this.tokenDetailsForm?.get('notBefore');
+  }
+
   public ngOnInit(): void {
+    this.language = this.translate.currentLang;
     this.getScopes();
     this.getDevices();
     this.getRoles();
@@ -170,5 +183,12 @@ export class NewTokenPopupComponent implements OnInit, OnDestroy {
 
   public userHasRole(role: string): boolean {
     return this.roles.includes(role);
+  }
+
+  setExpireDate() {
+    this.tokenDetailsForm.patchValue({expiration: this.mindate});
+  }
+  setValidFromDate() {
+    this.tokenDetailsForm.patchValue({notBefore: this.mindate});
   }
 }

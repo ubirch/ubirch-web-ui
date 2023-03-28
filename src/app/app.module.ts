@@ -26,39 +26,38 @@ registerLocaleData(localeEn, "en");
 registerLocaleData(localeDe, "de");
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    KeycloakAngularModule,
-    HttpClientModule,
-    MarkdownModule.forRoot({ loader: HttpClient }),
-    BrowserAnimationsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-    }),
-    NgxQRCodeModule,
-    ComponentsModule,
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializer,
-      multi: true,
-      deps: [KeycloakService],
-    },
-    sessionExpiredInterceptorProvider,
-  ],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        KeycloakAngularModule,
+        HttpClientModule,
+        MarkdownModule.forRoot({ loader: HttpClient }),
+        BrowserAnimationsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        NgxQRCodeModule,
+        ComponentsModule,
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializer,
+            multi: true,
+            deps: [KeycloakService],
+        },
+        sessionExpiredInterceptorProvider,
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
 

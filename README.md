@@ -279,13 +279,3 @@ can be created from keycloak/realm-templates/ubirch_2.0_REALM-export.json:
 3. select keycloak/realm-templates/ubirch_2.0_REALM-export.json as import file
 4. create
 
-## Ubirch Widgets
-
-### Ubirch Verification Widget
-
-Documentation how to install Ubirch Verification Widget can be found 
-[here](https://github.com/ubirch/ubirch-web-ui/tree/dev/widgets/verification).
-
-Example with documentation how to use it can be found
-[here](https://github.com/ubirch/ubirch-verify-widget).
-

@@ -1,5 +1,5 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, UntypedFormBuilder, UntypedFormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {observableToBeFn} from 'rxjs/internal/testing/TestScheduler';
 
 @Component({
@@ -19,12 +19,12 @@ export class TagListInputComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder = 'You can add tags here';
   public disabled = false;
   public tagsList: string[] = [];
-  public tagFormGroup: FormGroup;
+  public tagFormGroup: UntypedFormGroup;
   private propagateChange = (_: any) => {};
   private propagateTouch = (_: any) => {};
 
   constructor(
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) { }
 
   ngOnInit() {
