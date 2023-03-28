@@ -1,10 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IUbirchBlockchain} from 'src/app/models/iubirch-blockchain';
 import {IUbirchBlockchainNet} from 'src/app/models/iubirch-blockchain-net';
-import {IUbirchAnchorObject} from 'widgets/verification/models';
 import {TrustService} from '../../services/trust.service';
 import {Upp} from '../../models/upp';
 import {LoggingService} from '../../services/logging.service';
+
+export interface IUbirchAnchorObject {
+  href: any;
+  target: string;
+  title: string;
+  icon: string;
+}
 
 @Component({
   selector: 'ubirch-verification-quick-info',

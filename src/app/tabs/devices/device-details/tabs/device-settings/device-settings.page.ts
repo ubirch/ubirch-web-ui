@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {DeviceService} from '../../../../../services/device.service';
 import {ModalController} from '@ionic/angular';
@@ -17,8 +17,8 @@ import {ToastType} from '../../../../../enums/toast-type.enum';
 })
 export class DeviceSettingsPage implements OnInit, OnDestroy {
 
-  deviceDetailsForm: FormGroup;
-  deviceAttributesForm: FormGroup;
+  deviceDetailsForm: UntypedFormGroup;
+  deviceAttributesForm: UntypedFormGroup;
   loadedDevice: BEDevice;
 
   public deviceHasUnsavedChanges = false;
@@ -27,7 +27,7 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
   private updateDeviceSubscr: Subscription;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private deviceService: DeviceService,
     public toast: ToastService,
     public router: Router,
@@ -117,7 +117,7 @@ export class DeviceSettingsPage implements OnInit, OnDestroy {
    * if no item
    * @param data form data, containing several device properties
    */
-  public updateDeviceFromData(data: FormGroup): Observable<BEDevice> {
+  public updateDeviceFromData(data: UntypedFormGroup): Observable<BEDevice> {
     if (data) {
       const device = this.loadedDevice.patch(data);
       if (device && device.hwDeviceId) {

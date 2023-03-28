@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class ValidatorsService {
       throw new Error('Maximum file size cannot be smaller than minimum');
     }
 
-    return (c: FormControl) => {
+    return (c: UntypedFormControl) => {
       const file: File | null = c.value;
 
       if (!file) {

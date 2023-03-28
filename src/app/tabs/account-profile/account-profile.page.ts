@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
 import {ToastType} from '../../enums/toast-type.enum';
 import {ToastService} from '../../services/toast.service';
 
@@ -12,11 +12,11 @@ export class AccountProfilePage implements OnInit {
 
   actionButtons = [];
 
-  public accountProfileForm: FormGroup;
+  public accountProfileForm: UntypedFormGroup;
   public profileHasUnsavedChanges = false;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public toast: ToastService,
   ) { }
 
